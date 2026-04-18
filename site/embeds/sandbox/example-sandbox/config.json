@@ -1,0 +1,16 @@
+{
+  "template": "react-ts",
+  "customSetup": {
+    "dependencies": {
+      "react": "^18.0.0",
+      "react-dom": "^18.0.0",
+      "motion": "^12.0.0"
+    },
+    "entry": "/index.tsx"
+  },
+  "files": {
+    "App.tsx": { "active": true },
+    "index.tsx": { "hidden": true },
+    "index.css": {}
+  }
+}

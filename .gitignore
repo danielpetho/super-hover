@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.vite/
+dist-ssr/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Env & secrets
+.env*
+!.env.example
+*.pem
+
+# Generated (site/scripts/generate-sources)
+site/public/r/
+site/public/l/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Deploy / task caches
+.vercel/
+.turbo/
+
+# OS & editor meta
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+*.swo
+*~
+
+# Tooling caches
+.eslintcache
+.parcel-cache/
+*.local
