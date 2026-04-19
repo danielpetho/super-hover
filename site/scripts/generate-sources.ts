@@ -77,9 +77,9 @@ async function generatePreviews() {
 
   if (!existsSync(PREVIEWS_DIR)) {
     await mkdir(PREVIEWS_DIR, { recursive: true });
-    await writeEmptyRegistry("create embeds/previews/<name>/preview.tsx");
+    await writeEmptyRegistry("create embeds/previews/<name>/index.tsx");
     console.warn(
-      `[generate-sources] Created ${PREVIEWS_DIR}; add preview.tsx folders for inline demos.`
+      `[generate-sources] Created ${PREVIEWS_DIR}; add embeds/previews/<name>/index.tsx for inline demos.`
     );
     return;
   }
@@ -90,10 +90,10 @@ async function generatePreviews() {
   for (const entry of entries) {
     if (!entry.isDirectory() || entry.name.startsWith(".")) continue;
     const name = entry.name;
-    const previewTsx = join(PREVIEWS_DIR, name, "preview.tsx");
-    if (!existsSync(previewTsx)) {
+    const indexTsx = join(PREVIEWS_DIR, name, "index.tsx");
+    if (!existsSync(indexTsx)) {
       console.warn(
-        `[generate-sources] Skipping "${name}": missing preview.tsx`
+        `[generate-sources] Skipping "${name}": missing index.tsx`
       );
       continue;
     }
@@ -121,14 +121,14 @@ async function generatePreviews() {
   await mkdir(join(ROOT, "lib"), { recursive: true });
 
   if (previewNames.length === 0) {
-    await writeEmptyRegistry("no valid embeds/previews/*/preview.tsx");
+    await writeEmptyRegistry("no valid embeds/previews/*/index.tsx");
     return;
   }
 
   const importLines = previewNames
     .map(
       (name, i) =>
-        `import Preview${i} from "@/embeds/previews/${name}/preview";`
+        `import Preview${i} from "@/embeds/previews/${name}";`
     )
     .join("\n");
 

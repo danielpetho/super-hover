@@ -44,7 +44,8 @@ export function Preview({
           files?: { path: string; content: string }[];
         } = await res.json();
         const main =
-          data.files?.find((f) => f.path === "preview.tsx") ??
+          data.files?.find((f) => f.path === "index.tsx") ??
+          data.files?.find((f) => f.path.endsWith("/index.tsx")) ??
           data.files?.find((f) => f.path.endsWith("preview.tsx"));
         if (main && !cancelled) {
           setSourceCode(main.content);
@@ -157,7 +158,7 @@ export function Preview({
 
         <TabsContent value="code" className="mt-0 focus-visible:outline-none w-full p-0!">
           <CodeSnippet
-            title={`${name}/preview.tsx`}
+            title={`${name}/index.tsx`}
             code={sourceCode}
             language="tsx"
           />
