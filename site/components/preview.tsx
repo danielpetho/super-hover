@@ -16,6 +16,8 @@ export interface PreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   showCode?: boolean | "true" | "false";
   /** Show restart control inside the demo frame. */
   showRestart?: boolean;
+  /** Border + rounded frame around the demo. Default `true`. */
+  border?: boolean | "true" | "false";
 }
 
 export function Preview({
@@ -23,6 +25,7 @@ export function Preview({
   className,
   showCode = true,
   showRestart = false,
+  border = true,
   ...props
 }: PreviewProps) {
   const [previewKey, setPreviewKey] = React.useState(0);
@@ -58,6 +61,7 @@ export function Preview({
   }, [name]);
 
   const codeDisabled = showCode === false || showCode === "false";
+  const frameBorder = border !== false && border !== "false";
   /** No Code panel → no Demo/Code switcher; only the framed demo. */
   const showTabs = !codeDisabled && sourceCode.trim().length > 0;
 
@@ -85,8 +89,8 @@ export function Preview({
   const DemoFrame = (
     <div
       className={cn(
-        "border-border bg-background relative flex min-h-[240px] max-h-[min(70vh,560px)] w-full flex-col overflow-hidden rounded-xl border",
-        ""
+        "bg-background relative flex min-h-[240px] max-h-[min(70vh,560px)] w-full flex-col overflow-hidden rounded-xl",
+        frameBorder && "border-border border"
       )}
     >
       {showRestart && (
@@ -104,7 +108,7 @@ export function Preview({
         </div>
       )}
 
-      <div className="flex flex-1 items-center justify-center overflow-auto p-8">
+      <div className="flex flex-1 items-center justify-center overflow-auto">
         <React.Fragment key={previewKey}>{PreviewBody}</React.Fragment>
       </div>
     </div>
@@ -147,11 +151,11 @@ export function Preview({
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="demo" className="mt-0 focus-visible:outline-none">
+        <TabsContent value="demo" className="mt-0 focus-visible:outline-none w-full p-0!">
           {DemoFrame}
         </TabsContent>
 
-        <TabsContent value="code" className="mt-0 focus-visible:outline-none">
+        <TabsContent value="code" className="mt-0 focus-visible:outline-none w-full p-0!">
           <CodeSnippet
             title={`${name}/preview.tsx`}
             code={sourceCode}

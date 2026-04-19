@@ -182,17 +182,20 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       name,
       showCode,
       showRestart,
+      border,
       ...props
     }: React.HTMLAttributes<HTMLElement> & {
       name?: string;
       showCode?: boolean | "true" | "false";
       showRestart?: boolean;
+      border?: boolean | "true" | "false";
     }) =>
       name ? (
         <Preview
           name={name}
           showCode={showCode}
           showRestart={showRestart}
+          border={border}
           className={cn("my-8", className)}
           {...props}
         />

@@ -1,0 +1,1808 @@
+{
+  "generatedAt": "2026-04-19T13:41:32.976Z",
+  "query": "ambient",
+  "requestedCount": 200,
+  "count": 200,
+  "albums": [
+    {
+      "id": 212957,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/75jcfB06UsfeMkEquU3S5QA4ua5LeEDbSTZNd4_N5_4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIxMjk1/Ny0xNDg0ODU2NjAz/LTg4NjUuanBlZw.jpeg",
+      "uri": "/release/212957-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/212957"
+    },
+    {
+      "id": 14779,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/YwbE14YfABTwvfr4MaSm4qoHK5eOcxBbkKX8GyB-RjE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0Nzc5/LTEzNjcwMTQ0MjAt/MjI0Ni5qcGVn.jpeg",
+      "uri": "/release/14779-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/14779"
+    },
+    {
+      "id": 3052756,
+      "artist": "The War On Drugs",
+      "title": "Slave Ambient",
+      "year": "2011",
+      "thumb": "https://i.discogs.com/1XLmQ2CWmVvNSR3hA-c8dVIjFmrUI8210H2KRAIon7k/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwNTI3/NTYtMTMxMzQ5MjUw/Mi5qcGVn.jpeg",
+      "uri": "/release/3052756-The-War-On-Drugs-Slave-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/3052756"
+    },
+    {
+      "id": 609286,
+      "artist": "Death Ambient",
+      "title": "Death Ambient",
+      "year": "1995",
+      "thumb": "https://i.discogs.com/Jhuyib88kXLvoycHV_wtNzIdNRU-1t16BBWBz-j5P0w/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYwOTI4/Ni0xMjcwNzIwODEz/LmpwZWc.jpeg",
+      "uri": "/release/609286-Death-Ambient-Death-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/609286"
+    },
+    {
+      "id": 4887177,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "2013",
+      "thumb": "https://i.discogs.com/8yJDKzm_xh_tAuvascfNGQxjyQOyy6QZ8tf5wDkfl6E/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ4ODcx/NzctMTQ4NzYzMTE0/MS00ODI4LmpwZWc.jpeg",
+      "uri": "/release/4887177-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/4887177"
+    },
+    {
+      "id": 24047771,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": "2022",
+      "thumb": "https://i.discogs.com/2mPAnMGch4j3H-h_7kxnFCELTU0pQg3JUuMp85_nMFk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI0MDQ3/NzcxLTE3MjE0MTA2/ODgtMTI2Ni5wbmc.jpeg",
+      "uri": "/release/24047771-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/24047771"
+    },
+    {
+      "id": 6164016,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": null,
+      "thumb": "https://i.discogs.com/pQSSrFJav1S4ce0wl9z67_z6w-gZGKwh0OMHBofHFlc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYxNjQw/MTYtMTY2NDA2MTg1/MC03MzU3LmpwZWc.jpeg",
+      "uri": "/release/6164016-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/6164016"
+    },
+    {
+      "id": 17164261,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "2021",
+      "thumb": "https://i.discogs.com/2gc8Jd8eS2rjhBBjmHPITh4yAjgoVWAgw4tVx95VYOQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3MTY0/MjYxLTE3NDkzMzAy/MTEtMTExNC5wbmc.jpeg",
+      "uri": "/release/17164261-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/17164261"
+    },
+    {
+      "id": 125776,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/E53bmHi-OaUmaMpzuqQ1l-8kOsTtD5JLLTPHjfnXJjo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyNTc3/Ni0xNjE2NDg1MDk2/LTE5NDIuanBlZw.jpeg",
+      "uri": "/release/125776-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/125776"
+    },
+    {
+      "id": 61712,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/zo5NI7d5mmUjskjzZoF15sjDACOEHWpJQoXF-YoUEhg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYxNzEy/LTEzNDUwMDAxMTct/OTYyOC5qcGVn.jpeg",
+      "uri": "/release/61712-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/61712"
+    },
+    {
+      "id": 31768115,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "2024",
+      "thumb": "https://i.discogs.com/t3HcOo3CPzE4w_6hXqY_TVQYTGYFVyiuK8hXJ7wRkqY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxNzY4/MTE1LTE3MjY2OTEy/OTktNzY0Ny5qcGVn.jpeg",
+      "uri": "/release/31768115-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/31768115"
+    },
+    {
+      "id": 143760,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/i-ZISNqCGctkrWv1tX275Yq_JyJJ81_rHdyNLuJiwog/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0Mzc2/MC0xNjU4NTU4NDI5/LTU3MTcuanBlZw.jpeg",
+      "uri": "/release/143760-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/143760"
+    },
+    {
+      "id": 107637,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": null,
+      "thumb": "https://i.discogs.com/clEhfGkeafcDX33Z2CKFOACsHjPC19VYqpbJ-wTvyJw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwNzYz/Ny0xMjE0NjAxMjcx/LmpwZWc.jpeg",
+      "uri": "/release/107637-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/107637"
+    },
+    {
+      "id": 12800683,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "2018",
+      "thumb": "https://i.discogs.com/YTegCMUuj10w7Tga2kjJq0X33_yGrvqTrHPDB7lOet0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyODAw/NjgzLTE1NDIyODAy/MDktNjE4OC5qcGVn.jpeg",
+      "uri": "/release/12800683-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/12800683"
+    },
+    {
+      "id": 32662,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "1992",
+      "thumb": "https://i.discogs.com/tlKfpkKQmvIY3iYK9eS017WHy2XIkwscm6RM_EDMz7U/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMyNjYy/LTEyMjE4OTY5NTUu/anBlZw.jpeg",
+      "uri": "/release/32662-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/32662"
+    },
+    {
+      "id": 1109432,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/9IwgJwDoOCJyjjsHOpRMSVfncv2tlnD8r-I9kcUaGm8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMDk0/MzItMTYxNjQ3NTk1/OC01Njk1LmpwZWc.jpeg",
+      "uri": "/release/1109432-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/1109432"
+    },
+    {
+      "id": 19270,
+      "artist": "Divination",
+      "title": "Ambient Dub Volume I",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/SJsEVzc-rxA52I-nbSheJyjc4b0sQmAYCwH7ct4DEEw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE5Mjcw/LTEyMTEyMDQ1Nzku/anBlZw.jpeg",
+      "uri": "/release/19270-Divination-Ambient-Dub-Volume-I",
+      "resourceUrl": "https://api.discogs.com/releases/19270"
+    },
+    {
+      "id": 12194395,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "2018",
+      "thumb": "https://i.discogs.com/nnjieS-s0xgLnoUd_Dg9trfYAppf2qqcqmdhwcE4hZ8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyMTk0/Mzk1LTE1MzgyOTg1/MDItMzEwMS5qcGVn.jpeg",
+      "uri": "/release/12194395-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/12194395"
+    },
+    {
+      "id": 8329,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/bxm8ZgkV65GQHsHLO6oR3O69SGcotWZZKpccCxVu7Z8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgzMjkt/MTI4MjUxODczMS5q/cGVn.jpeg",
+      "uri": "/release/8329-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/8329"
+    },
+    {
+      "id": 430687,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": "1997",
+      "thumb": "https://i.discogs.com/ipDidRAy7brbAfWorhKGNylOIv6sLzxY0JR7dKrjTHk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQzMDY4/Ny0xMTEyNDM3MTY3/LmpwZw.jpeg",
+      "uri": "/release/430687-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/430687"
+    },
+    {
+      "id": 3636,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/AkRVXTPmmTWpyXmphG_eXHHAbPmvbqEs7Ac8Rf5fdC0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2MzYt/MTI3MTYyNTc4MS5q/cGVn.jpeg",
+      "uri": "/release/3636-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/3636"
+    },
+    {
+      "id": 3577040,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "2012",
+      "thumb": "https://i.discogs.com/0vF6G8XMi1AGfp_sLLBo7nrLtoVBaSxjV46jDg8uQtg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1Nzcw/NDAtMTQ1NzYyNzMx/OS0zMzI3LmpwZWc.jpeg",
+      "uri": "/release/3577040-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/3577040"
+    },
+    {
+      "id": 111870,
+      "artist": "Harold Budd / Brian Eno",
+      "title": "Ambient 2 (The Plateaux Of Mirror)",
+      "year": "1980",
+      "thumb": "https://i.discogs.com/x0hnasHLBarl4mk1-T5ZuB_3L5YVX7xYEFEJ-3LQ0s8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMTg3/MC0xMzQ1MDAwNzQ4/LTg5MjcuanBlZw.jpeg",
+      "uri": "/release/111870-Harold-Budd-Brian-Eno-Ambient-2-The-Plateaux-Of-Mirror",
+      "resourceUrl": "https://api.discogs.com/releases/111870"
+    },
+    {
+      "id": 3101856,
+      "artist": "The War On Drugs",
+      "title": "Slave Ambient",
+      "year": "2011",
+      "thumb": "https://i.discogs.com/A6DnnydxMrryF3WEZHPyHmVWX7DZlyISzfAlitlqRAE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxMDE4/NTYtMTM4MzAyOTI2/Ny00OTM2LmpwZWc.jpeg",
+      "uri": "/release/3101856-The-War-On-Drugs-Slave-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/3101856"
+    },
+    {
+      "id": 12800739,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "2018",
+      "thumb": "https://i.discogs.com/U7tiweINdR647GVn_kf8wbiuF1-BM6Z29FDGH0GmG2g/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyODAw/NzM5LTE1NDIyODA1/NTItOTI1My5qcGVn.jpeg",
+      "uri": "/release/12800739-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/12800739"
+    },
+    {
+      "id": 704310,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/U6xeLwYh5GF2JrG7ym6q6Y6QnGXWnMmfPphKa-1rLDw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTcwNDMx/MC0xMTcxMTAzMjcy/LmpwZWc.jpeg",
+      "uri": "/release/704310-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/704310"
+    },
+    {
+      "id": 96017,
+      "artist": "Laraaji Produced By Brian Eno",
+      "title": "Ambient 3 (Day Of Radiance)",
+      "year": "1980",
+      "thumb": "https://i.discogs.com/lX_O6fn1qr8Sqqj3ZO6xXudBRExo3cLr32N4zPkeMLs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk2MDE3/LTE2MDY0NjQyNzct/Nzg4NC5qcGVn.jpeg",
+      "uri": "/release/96017-Laraaji-Produced-By-Brian-Eno-Ambient-3-Day-Of-Radiance",
+      "resourceUrl": "https://api.discogs.com/releases/96017"
+    },
+    {
+      "id": 12276021,
+      "artist": "The War On Drugs",
+      "title": "Slave Ambient",
+      "year": "2011",
+      "thumb": "https://i.discogs.com/f_E4aZxvqkais-c9LjRDkGyJVAgmA7ecXm-TCmLmjwg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyMjc2/MDIxLTE1MzE5NjAx/NTctNjgzMC5qcGVn.jpeg",
+      "uri": "/release/12276021-The-War-On-Drugs-Slave-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/12276021"
+    },
+    {
+      "id": 244979,
+      "artist": "Various",
+      "title": "Ambient Boxed: A Guide By Instinct",
+      "year": "2001",
+      "thumb": "https://i.discogs.com/BbcyBPq3A9ZJ8tt3cqVUaKJSi-j8DAWFypx2iTH5G7s/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI0NDk3/OS0xMzcyOTk0NTgz/LTQ3NTUuanBlZw.jpeg",
+      "uri": "/release/244979-Various-Ambient-Boxed-A-Guide-By-Instinct",
+      "resourceUrl": "https://api.discogs.com/releases/244979"
+    },
+    {
+      "id": 10849821,
+      "artist": "The War On Drugs",
+      "title": "Slave Ambient",
+      "year": "2017",
+      "thumb": "https://i.discogs.com/5fEveMmPZKg93Bgrx6p5pcjdBXFafN45H_K7p3W3nww/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwODQ5/ODIxLTE1MDUzMjUz/OTItODc4MS5qcGVn.jpeg",
+      "uri": "/release/10849821-The-War-On-Drugs-Slave-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/10849821"
+    },
+    {
+      "id": 418245,
+      "artist": "Tokyo Offshore Project",
+      "title": "Hyper Ambient",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/Cb0reDCZLJuf__CdN6IIyn8QXfox31a-KVLmKwhwmig/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQxODI0/NS0xNjE0NTMxNDc4/LTMwOTQuanBlZw.jpeg",
+      "uri": "/release/418245-Tokyo-Offshore-Project-Hyper-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/418245"
+    },
+    {
+      "id": 1070483,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": null,
+      "thumb": "https://i.discogs.com/tB6frae_3ifx5K0SyDVIyDUVEKmkyUGr0VltAEOMFPg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwNzA0/ODMtMTU3OTE4NjUy/MS04NDQyLmpwZWc.jpeg",
+      "uri": "/release/1070483-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/1070483"
+    },
+    {
+      "id": 1138729,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": null,
+      "thumb": "https://i.discogs.com/SkhsPZdK26cShXLCq_Q36bST0tRgYQ-UwBcl68HSgj4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMzg3/MjktMTE5NTE2NDE0/NC5qcGVn.jpeg",
+      "uri": "/release/1138729-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/1138729"
+    },
+    {
+      "id": 918346,
+      "artist": "Laraaji Produced By Brian Eno",
+      "title": "Ambient 3 (Day Of Radiance)",
+      "year": "1980",
+      "thumb": "https://i.discogs.com/cO5hQZhgkDEoZ8-qM9Jks3Lh12UyH_2dopj_1tvBc48/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTkxODM0/Ni0xNDYyNzg0MjUw/LTUwMzAuanBlZw.jpeg",
+      "uri": "/release/918346-Laraaji-Produced-By-Brian-Eno-Ambient-3-Day-Of-Radiance",
+      "resourceUrl": "https://api.discogs.com/releases/918346"
+    },
+    {
+      "id": 37984,
+      "artist": "Various",
+      "title": "Ambient Systems",
+      "year": "1995",
+      "thumb": "https://i.discogs.com/c8aVpjxQmrC-E7QNWBd_yk8Z5JDjyfazfXgEE9ZK5qI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3OTg0/LTEzMzU1MzE1NTku/anBlZw.jpeg",
+      "uri": "/release/37984-Various-Ambient-Systems",
+      "resourceUrl": "https://api.discogs.com/releases/37984"
+    },
+    {
+      "id": 54978,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/mP3zQOLF2cSrJU8ssUUIgnh7eNyspUfY4lCmZVYa5iM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU0OTc4/LTE0NzExMTYwMjIt/ODI5NS5qcGVn.jpeg",
+      "uri": "/release/54978-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/54978"
+    },
+    {
+      "id": 11149221,
+      "artist": "Voltage (13)",
+      "title": "Ambient",
+      "year": "2017",
+      "thumb": "https://i.discogs.com/9wNwzdSaZzvvYbR1P90FKDFf-jV1Z5E1eWA5zMPOX6M/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMTQ5/MjIxLTE1MTA3NjI2/MzAtNDk0My5qcGVn.jpeg",
+      "uri": "/Voltage-Ambient/release/11149221",
+      "resourceUrl": "https://api.discogs.com/releases/11149221"
+    },
+    {
+      "id": 12801177,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "2018",
+      "thumb": "https://i.discogs.com/P69iH9B0PRYMxHolHwV9MrJWzuQVUiPRsbKOrb1e13M/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyODAx/MTc3LTE1ODk0NjI1/ODYtMTczMi5qcGVn.jpeg",
+      "uri": "/release/12801177-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/12801177"
+    },
+    {
+      "id": 2096038,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/wjSsftDwszsPheYeQseR0St8ZFyfh62OcEH28zVX4Xo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIwOTYw/MzgtMTM5NTA5NzIy/MS03NTE3LmpwZWc.jpeg",
+      "uri": "/release/2096038-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/2096038"
+    },
+    {
+      "id": 72804,
+      "artist": "Various",
+      "title": "Ambient 4:  Isolationism",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/TnTEIfowLNeasc5568tU8bx29FIsRZYAShbtd0NoyEk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTcyODA0/LTExOTQ5MzczMTMu/anBlZw.jpeg",
+      "uri": "/release/72804-Various-Ambient-4-Isolationism",
+      "resourceUrl": "https://api.discogs.com/releases/72804"
+    },
+    {
+      "id": 17498122,
+      "artist": "Melvins",
+      "title": "Hostile Ambient Takeover",
+      "year": "2021",
+      "thumb": "https://i.discogs.com/TUakIXEAhJOnwckdmwzvfU_3hUxREvM2pFIJKc_jYIM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3NDk4/MTIyLTE3MjU1NzI4/NDgtNjcyNy5qcGVn.jpeg",
+      "uri": "/release/17498122-Melvins-Hostile-Ambient-Takeover",
+      "resourceUrl": "https://api.discogs.com/releases/17498122"
+    },
+    {
+      "id": 12801239,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "2018",
+      "thumb": "https://i.discogs.com/LAwAUkL-Y0Ji85kYP1RSq-6e5oxmmJlOgH580lh8Z5Q/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyODAx/MjM5LTE1OTIwNjQz/MDktNTE2OS5qcGVn.jpeg",
+      "uri": "/release/12801239-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/12801239"
+    },
+    {
+      "id": 1545313,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "1992",
+      "thumb": "https://i.discogs.com/LiU5UqO797lP-D51c17A3OjS2w3s4K_nJ4iNPd3v8y8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NDUz/MTMtMTY2NTQ3OTEw/MS02OTk2LmpwZWc.jpeg",
+      "uri": "/release/1545313-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/1545313"
+    },
+    {
+      "id": 795898,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "2006",
+      "thumb": "https://i.discogs.com/PIFyST2W00-osWZ_UlZq5YpEhDRUt3h5D1EQGCLphK4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc5NTg5/OC0xMzUyNjE3MDQ2/LTI0OTYuanBlZw.jpeg",
+      "uri": "/release/795898-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/795898"
+    },
+    {
+      "id": 12048897,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/3o2oK1aNUOT_pl_bSbWnbKO341HGoN49c5uE15Ja7FQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyMDQ4/ODk3LTE2ODg3OTA0/MDMtNzM2OS5qcGVn.jpeg",
+      "uri": "/release/12048897-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/12048897"
+    },
+    {
+      "id": 15529194,
+      "artist": "The War On Drugs",
+      "title": "Slave Ambient",
+      "year": null,
+      "thumb": "https://i.discogs.com/MmNFecrjko8vySbJty_s1h2QzRPpdopcql1kQvs9h8I/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NTI5/MTk0LTE2ODI2NDUy/MjktNjI1Mi5qcGVn.jpeg",
+      "uri": "/release/15529194-The-War-On-Drugs-Slave-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/15529194"
+    },
+    {
+      "id": 10957681,
+      "artist": "Rainforest Spiritual Enslavement",
+      "title": "Ambient Black Magic",
+      "year": "2017",
+      "thumb": "https://i.discogs.com/zaEx8gbQQHP6gZzpVaj220AKZXNXY6GV8sDRSyxgHsI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwOTU3/NjgxLTE1MDc2MjAw/MTQtNjQ2My5qcGVn.jpeg",
+      "uri": "/release/10957681-Rainforest-Spiritual-Enslavement-Ambient-Black-Magic",
+      "resourceUrl": "https://api.discogs.com/releases/10957681"
+    },
+    {
+      "id": 42889,
+      "artist": "Art Of Noise*",
+      "title": "The Ambient Collection",
+      "year": "1990",
+      "thumb": "https://i.discogs.com/JU_4wEWi5H7v4f6KwU2r9Xk2rvuuI8gtNYBVf15E2o8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQyODg5/LTExODY1NjU0NzMu/anBlZw.jpeg",
+      "uri": "/release/42889-Art-Of-Noise-The-Ambient-Collection",
+      "resourceUrl": "https://api.discogs.com/releases/42889"
+    },
+    {
+      "id": 134403,
+      "artist": "Various",
+      "title": "Ambient Senses - The Vision",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/pRxxn5s0nhTmLGTTQ-ipl9cJf_Aq7wtcIhVW-f_kbVs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzNDQw/My0xNTA3NzYwNjIy/LTI5ODYuanBlZw.jpeg",
+      "uri": "/Various-Ambient-Senses-The-Vision/release/134403",
+      "resourceUrl": "https://api.discogs.com/releases/134403"
+    },
+    {
+      "id": 3762232,
+      "artist": "Robert Piotrowicz / C. Spencer Yeh",
+      "title": "Ambient",
+      "year": "2012",
+      "thumb": "https://i.discogs.com/SUOxCaKeitBX7GZPmZtwJcMVPqI2gOIVeIcUn-r2ekk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3NjIy/MzItMTQ3OTY1MzQw/OC01OTIyLmpwZWc.jpeg",
+      "uri": "/Robert-Piotrowicz-C-Spencer-Yeh-Ambient/release/3762232",
+      "resourceUrl": "https://api.discogs.com/releases/3762232"
+    },
+    {
+      "id": 3065412,
+      "artist": "The War On Drugs",
+      "title": "Slave Ambient",
+      "year": "2011",
+      "thumb": "https://i.discogs.com/UGDJjeIQtD7MQjzGu6vU6e2BVorhEW6DH79hYL0JTpg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwNjU0/MTItMTMxNDEwNzQ1/OS5qcGVn.jpeg",
+      "uri": "/release/3065412-The-War-On-Drugs-Slave-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/3065412"
+    },
+    {
+      "id": 4684,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": null,
+      "thumb": "https://i.discogs.com/lVlK6yPpZYo-4j1O9li249-BJg1XTkIi68rjQaa1Y5M/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ2ODQt/MTI3MjkyNzUyOS5q/cGVn.jpeg",
+      "uri": "/release/4684-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/4684"
+    },
+    {
+      "id": 5357496,
+      "artist": "Various",
+      "title": "Pop Ambient 2014",
+      "year": "2014",
+      "thumb": "https://i.discogs.com/UnSU7GgYCICU6EoP_FlZucuOlFBxPugc_coqmsDXeGY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUzNTc0/OTYtMTUyMTkyNjM0/MC00MjMwLm1wbw.jpeg",
+      "uri": "/release/5357496-Various-Pop-Ambient-2014",
+      "resourceUrl": "https://api.discogs.com/releases/5357496"
+    },
+    {
+      "id": 1545315,
+      "artist": "Harold Budd / Brian Eno",
+      "title": "Ambient 2 (The Plateaux Of Mirror)",
+      "year": "1980",
+      "thumb": "https://i.discogs.com/PpBCbSr_Vt5B92hjUXURo2FvsznN8pcDnrBCXYIRvvk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NDUz/MTUtMTQ1MzM3MzUx/MC0zNDczLmpwZWc.jpeg",
+      "uri": "/release/1545315-Harold-Budd-Brian-Eno-Ambient-2-The-Plateaux-Of-Mirror",
+      "resourceUrl": "https://api.discogs.com/releases/1545315"
+    },
+    {
+      "id": 1736288,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/KOUTyFO-AY75-eWVtSenTWvmgacATQkl-o2YdVcOuC0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3MzYy/ODgtMTQ3MjY0OTM0/NC02Nzk5LmpwZWc.jpeg",
+      "uri": "/release/1736288-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/1736288"
+    },
+    {
+      "id": 6093790,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "2013",
+      "thumb": "https://i.discogs.com/HJ9tx9ht4YHdkB_EQtks8xQQ344tH8MRyts-WTUFHgY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYwOTM3/OTAtMTQyNzU1NzE0/Ny0xODg3LmpwZWc.jpeg",
+      "uri": "/release/6093790-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/6093790"
+    },
+    {
+      "id": 83436,
+      "artist": "Various",
+      "title": "Artcore - Ambient / Jungle",
+      "year": "1995",
+      "thumb": "https://i.discogs.com/bqjOH-ABnBADahmsaaXQI85h_FZV7MB9r97lFfix5Pk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgzNDM2/LTE1Mjg2MzczODQt/MTEzMi5qcGVn.jpeg",
+      "uri": "/release/83436-Various-Artcore-Ambient-Jungle",
+      "resourceUrl": "https://api.discogs.com/releases/83436"
+    },
+    {
+      "id": 9949079,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "2017",
+      "thumb": "https://i.discogs.com/_BAMH7a4wyiYYRWaffM4c-hkufsN8EWD5BznxPetBAk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk5NDkw/NzktMTQ5OTQ0NDE3/Mi0yNTA3LmpwZWc.jpeg",
+      "uri": "/release/9949079-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/9949079"
+    },
+    {
+      "id": 73721,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": null,
+      "thumb": "https://i.discogs.com/DTcHLC6Esr83EuNl1hB2I_PhtCdShY2K6R9jkUkDbB8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTczNzIx/LTE0Njc4NDU2MzQt/OTA4Ni5qcGVn.jpeg",
+      "uri": "/release/73721-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/73721"
+    },
+    {
+      "id": 474136,
+      "artist": "Various",
+      "title": "Ambient Intermix",
+      "year": "1995",
+      "thumb": "https://i.discogs.com/YpZAg6Q1jQ1muREmPoCGYkIUEoaexFgiX0veJN9WYT0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ3NDEz/Ni0xMzEyNjY4ODYz/LmpwZWc.jpeg",
+      "uri": "/Various-Ambient-Intermix/release/474136",
+      "resourceUrl": "https://api.discogs.com/releases/474136"
+    },
+    {
+      "id": 1891580,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "2009",
+      "thumb": "https://i.discogs.com/atPbEA-W2NZgHcPtyP3JWxINSjfl2pfrpkb7TKyYreA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4OTE1/ODAtMTM5NTY1NTk3/NS00MjExLmpwZWc.jpeg",
+      "uri": "/release/1891580-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/1891580"
+    },
+    {
+      "id": 4852926,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": null,
+      "thumb": "https://i.discogs.com/ojSKYPWwsiL8308ydf_Am9-xG-x5T-p3M9KZ80WdLk0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ4NTI5/MjYtMTM3NzUyMzYz/Ni02NjU5LmpwZWc.jpeg",
+      "uri": "/release/4852926-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/4852926"
+    },
+    {
+      "id": 38095,
+      "artist": "Various",
+      "title": "Ambient Systems: Limited Edition",
+      "year": "1999",
+      "thumb": "https://i.discogs.com/D4yNPw-KCTkH6MCmebUmQCJTGwRLjIsGPGaU-0awpF0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4MDk1/LTE2OTAxMjMxNjkt/MzE4My5qcGVn.jpeg",
+      "uri": "/release/38095-Various-Ambient-Systems-Limited-Edition",
+      "resourceUrl": "https://api.discogs.com/releases/38095"
+    },
+    {
+      "id": 16165453,
+      "artist": "STRFKR*",
+      "title": "Ambient 1",
+      "year": "2020",
+      "thumb": "https://i.discogs.com/tsiZ6sULSVNeP2tvn7PSIWZ7SZUpimO4S9bAMAItwMo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2MTY1/NDUzLTE2MzcxNzYw/MjItODAxMC5qcGVn.jpeg",
+      "uri": "/release/16165453-STRFKR-Ambient-1",
+      "resourceUrl": "https://api.discogs.com/releases/16165453"
+    },
+    {
+      "id": 1016723,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/PXh5Y7xg8ywfImnXyLSgadiI5KkRQpz2ykI05-detT4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwMTY3/MjMtMTE4OTIwNTcx/OS5qcGVn.jpeg",
+      "uri": "/release/1016723-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/1016723"
+    },
+    {
+      "id": 1632851,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/4n9wLJO4MkJwaEy-SeHAFSgWOrEja5zbxVtmBLAwMgo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2MzI4/NTEtMTYyODgyMjM5/MS02ODUwLmpwZWc.jpeg",
+      "uri": "/release/1632851-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/1632851"
+    },
+    {
+      "id": 3694732,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "1992",
+      "thumb": "https://i.discogs.com/Pr2W6dDaK4ue9t99jlrpQwMcqphI6ygW8zSaQrUre3Y/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2OTQ3/MzItMTcxOTc1NjIz/Mi0xOTk2LnBuZw.jpeg",
+      "uri": "/release/3694732-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/3694732"
+    },
+    {
+      "id": 52177,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": null,
+      "thumb": "https://i.discogs.com/XvoUxL4WcCkzfvUYxEeXp1Pq5QLVs-dCX4ylXQApQhQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUyMTc3/LTE2OTQ3MzExNzYt/NDA0NC5qcGVn.jpeg",
+      "uri": "/release/52177-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/52177"
+    },
+    {
+      "id": 42849,
+      "artist": "Various",
+      "title": "Ambient Senses (The Vision)",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/kqQRrVyGaGgpkRtjMQu6uqf2g2uoIWmYpF1haKWzrKc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQyODQ5/LTEyMjUxMjE5NzMu/anBlZw.jpeg",
+      "uri": "/release/42849-Various-Ambient-Senses-The-Vision",
+      "resourceUrl": "https://api.discogs.com/releases/42849"
+    },
+    {
+      "id": 3716010,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": "1996",
+      "thumb": "https://i.discogs.com/dSHy5e7KK_xnK4oLNi7na_EEUtce2tGsagTj8IVLbP0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3MTYw/MTAtMTM0MTUwMjA2/NS0yNTkwLmpwZWc.jpeg",
+      "uri": "/release/3716010-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/3716010"
+    },
+    {
+      "id": 5749797,
+      "artist": "Erik Satie, Aldo Ciccolini",
+      "title": "Ambient",
+      "year": "2003",
+      "thumb": "https://i.discogs.com/deJiDuVPP7ZPGtf7tTsWkmaMC6w74Sy8Tx01MprleEM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU3NDk3/OTctMTcxNDcyNjky/My02MTA3LmpwZWc.jpeg",
+      "uri": "/release/5749797-Erik-Satie-Aldo-Ciccolini-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/5749797"
+    },
+    {
+      "id": 1844202,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/MuyF_WXjgDWqDS2TqYfSoE0YJly-aNluvQ7SaoNUNXg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4NDQy/MDItMTI3NTUyNjU0/OC5qcGVn.jpeg",
+      "uri": "/release/1844202-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/1844202"
+    },
+    {
+      "id": 357927,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/N4WEy_JpjINoJA-et0NT2sZ5_2leqIpxG1mAKwoX6BM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1Nzky/Ny0xNzA1NDg2NDAy/LTIxOTIuanBlZw.jpeg",
+      "uri": "/release/357927-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/357927"
+    },
+    {
+      "id": 73705,
+      "artist": "Various",
+      "title": "Pop Ambient 2002",
+      "year": "2001",
+      "thumb": "https://i.discogs.com/baBTDy6DxAf4-SjPB1weQbKfNimJB917ppslguB3kiE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTczNzA1/LTE1OTU4NTQxNjct/OTg4MC5qcGVn.jpeg",
+      "uri": "/release/73705-Various-Pop-Ambient-2002",
+      "resourceUrl": "https://api.discogs.com/releases/73705"
+    },
+    {
+      "id": 1790544,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": null,
+      "thumb": "https://i.discogs.com/m9vQpraELMgQjIaRQ-OuIuZBXezBYy5_pHbCBUPT--A/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3OTA1/NDQtMTU1NjM4Njc2/Ny02NjcxLmpwZWc.jpeg",
+      "uri": "/release/1790544-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/1790544"
+    },
+    {
+      "id": 6947815,
+      "artist": "Moby",
+      "title": "Hotel : Ambient",
+      "year": "2015",
+      "thumb": "https://i.discogs.com/v5bBa5JLfP_K3bTRz5fOlUlKkrDhgwdsuChw4dHqs2E/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY5NDc4/MTUtMTQzMjE5NDE4/Mi0yMTI5LmpwZWc.jpeg",
+      "uri": "/release/6947815-Moby-Hotel-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/6947815"
+    },
+    {
+      "id": 889323,
+      "artist": "D Jay",
+      "title": "Ambient Blue",
+      "year": "1996",
+      "thumb": "https://i.discogs.com/ypTgLtMzFQzuNd9eWAHSB1g30Zrm96N_Yd2yFpsK1ds/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg4OTMy/My0xNjQzMjEzNzk0/LTE4NzguanBlZw.jpeg",
+      "uri": "/D-Jay-Ambient-Blue/release/889323",
+      "resourceUrl": "https://api.discogs.com/releases/889323"
+    },
+    {
+      "id": 150539,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "2002",
+      "thumb": "https://i.discogs.com/xQ4tzcO7d9u7PUuHFNZDaDuWtqfOtxUuNJC5fdtyjQQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1MDUz/OS0xMTYyOTA3Mjcz/LmpwZWc.jpeg",
+      "uri": "/release/150539-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/150539"
+    },
+    {
+      "id": 7634372,
+      "artist": "Laraaji Produced By Brian Eno",
+      "title": "Ambient 3 (Day Of Radiance)",
+      "year": "2015",
+      "thumb": "https://i.discogs.com/xlFFEFHk2LQVI4HjSGXSKOGiu6541z2AzFwCpXsgTlc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc2MzQz/NzItMTczOTU2MTIw/Ny04OTc0LmpwZWc.jpeg",
+      "uri": "/release/7634372-Laraaji-Produced-By-Brian-Eno-Ambient-3-Day-Of-Radiance",
+      "resourceUrl": "https://api.discogs.com/releases/7634372"
+    },
+    {
+      "id": 923856,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1987",
+      "thumb": "https://i.discogs.com/QHXOI2LTrB97w9e_wVeMcuvnnC6IPFSVM-_Uxr5h6wk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTkyMzg1/Ni0xMTczMzA1NTUx/LmpwZWc.jpeg",
+      "uri": "/release/923856-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/923856"
+    },
+    {
+      "id": 33078,
+      "artist": "Various",
+      "title": "Ambient Intermix",
+      "year": "1995",
+      "thumb": "https://i.discogs.com/JSwItaYOiMaF3c4gCzr4GN822KbT7onyT5Rz3lW9stE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMDc4/LTEzMzU1MzE5MjUu/anBlZw.jpeg",
+      "uri": "/release/33078-Various-Ambient-Intermix",
+      "resourceUrl": "https://api.discogs.com/releases/33078"
+    },
+    {
+      "id": 10957568,
+      "artist": "Rainforest Spiritual Enslavement",
+      "title": "Ambient Black Magic",
+      "year": "2017",
+      "thumb": "https://i.discogs.com/WzxS8tPhzTQdo8wwRNhzSAnRsv7j45c5u0R1hcnd_qc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwOTU3/NTY4LTE1MDc5MDk1/OTMtMzYxMi5qcGVn.jpeg",
+      "uri": "/release/10957568-Rainforest-Spiritual-Enslavement-Ambient-Black-Magic",
+      "resourceUrl": "https://api.discogs.com/releases/10957568"
+    },
+    {
+      "id": 143746,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/eIU0p5wMbGdFh7r1bzSEt1JXBta8ep16YEzFjk1lTPE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0Mzc0/Ni0xNDA0NTYyNTE4/LTk2ODguanBlZw.jpeg",
+      "uri": "/release/143746-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/143746"
+    },
+    {
+      "id": 6263852,
+      "artist": "Various",
+      "title": "Pop Ambient 2015",
+      "year": "2014",
+      "thumb": "https://i.discogs.com/CTItrzXFvqlDSk386KfO5rvpuf1yskxTxdae9_hxeIY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYyNjM4/NTItMTUyMTkyNjgw/NS0zMjMxLm1wbw.jpeg",
+      "uri": "/release/6263852-Various-Pop-Ambient-2015",
+      "resourceUrl": "https://api.discogs.com/releases/6263852"
+    },
+    {
+      "id": 373071,
+      "artist": "Melvins",
+      "title": "Hostile Ambient Takeover",
+      "year": "2002",
+      "thumb": "https://i.discogs.com/hbbI2Zzvobs0_wukK1CjjENKSPLVXI53DNBqWCvGuag/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3MzA3/MS0xMzEwMTIwMjAy/LmpwZWc.jpeg",
+      "uri": "/release/373071-Melvins-Hostile-Ambient-Takeover",
+      "resourceUrl": "https://api.discogs.com/releases/373071"
+    },
+    {
+      "id": 29524201,
+      "artist": "Various",
+      "title": "Ambient Light / Ambient Dark",
+      "year": "2024",
+      "thumb": "https://i.discogs.com/DxBRKRN7uVA8mMLQLhpnGV80l3omyWCGmNpg2OpxCXo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5NTI0/MjAxLTE3MDU1ODE5/OTAtNjQ5OC5qcGVn.jpeg",
+      "uri": "/release/29524201-Various-Ambient-Light-Ambient-Dark",
+      "resourceUrl": "https://api.discogs.com/releases/29524201"
+    },
+    {
+      "id": 511370,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/hJs0cDblf9EZJw-oJt9phmuMOetZPO_VcHjbza0shCE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUxMTM3/MC0xNTMwODk5ODYy/LTU4NjcuanBlZw.jpeg",
+      "uri": "/release/511370-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/511370"
+    },
+    {
+      "id": 1127784,
+      "artist": "Various",
+      "title": "Unlimited Ambient",
+      "year": "1997",
+      "thumb": "https://i.discogs.com/uLatTw4Bo2peoQ-GUqAEM8hE0q5wJxG5ZoI2WzcuMW4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMjc3/ODQtMTY5NzIxODAw/MS05ODk5LmpwZWc.jpeg",
+      "uri": "/release/1127784-Various-Unlimited-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/1127784"
+    },
+    {
+      "id": 35671,
+      "artist": "Various",
+      "title": "Ambient Systems II",
+      "year": "1996",
+      "thumb": "https://i.discogs.com/V3QxqJkUQaiMDCghi-q1-H5YFm_PsakwZQQBONzcUpA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1Njcx/LTEzMzU1MzE5NzIu/anBlZw.jpeg",
+      "uri": "/release/35671-Various-Ambient-Systems-II",
+      "resourceUrl": "https://api.discogs.com/releases/35671"
+    },
+    {
+      "id": 7191013,
+      "artist": "Moby",
+      "title": "Hotel : Ambient",
+      "year": "2015",
+      "thumb": "https://i.discogs.com/GkuFuIBwAw3Zdyk5poyTcO9cP8_eVc09Kn00v-278JI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTcxOTEw/MTMtMTQ3MTIxNDAy/Mi0yMDU0LmpwZWc.jpeg",
+      "uri": "/release/7191013-Moby-Hotel-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/7191013"
+    },
+    {
+      "id": 6379671,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": null,
+      "thumb": "https://i.discogs.com/OwJ9uE-t3rnpFPB0_5xsDuI54NQSbODh3L38N3faKtc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYzNzk2/NzEtMTY5NjI1MzU0/Ny0zNDMzLmpwZWc.jpeg",
+      "uri": "/release/6379671-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/6379671"
+    },
+    {
+      "id": 1224505,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/RwgWgx2J3qt2heA7Ic1ouie-P48idhWi9KQjnOmaYaM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyMjQ1/MDUtMTU1MjkzNTEw/MC02NjM0LmpwZWc.jpeg",
+      "uri": "/release/1224505-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/1224505"
+    },
+    {
+      "id": 1106034,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1990",
+      "thumb": "https://i.discogs.com/GZTkmbikcrTen7rgzJvqcvYVStiXn0kg9zTeE8z1Bw0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMDYw/MzQtMTIzNTkyNjQy/Ni5qcGVn.jpeg",
+      "uri": "/release/1106034-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/1106034"
+    },
+    {
+      "id": 13314830,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "1992",
+      "thumb": "https://i.discogs.com/HAE3-Zo1RsT20i9_LORW9zGJ0qa6O0PWxCfoBxcuRgc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzMzE0/ODMwLTE1NTY1MjEx/NDctOTcyOS5qcGVn.jpeg",
+      "uri": "/release/13314830-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/13314830"
+    },
+    {
+      "id": 1903076,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "2009",
+      "thumb": "https://i.discogs.com/uDvTXXeKM-WcvmsilsOvQfm79PqOOUCKeeVYsyCPgnQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE5MDMw/NzYtMTQyOTc4MzAz/Ny01NjAyLmpwZWc.jpeg",
+      "uri": "/release/1903076-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/1903076"
+    },
+    {
+      "id": 10498799,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/QtHDl5w6l26bartCStFuFqj8lp3N82IXhieT-4g6zaA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwNDk4/Nzk5LTE0OTg2ODUy/NTgtMjQzNC5qcGVn.jpeg",
+      "uri": "/release/10498799-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/10498799"
+    },
+    {
+      "id": 3370762,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": null,
+      "thumb": "https://i.discogs.com/NSHAR5Tf8NcGCquaRItDrbqjJ4NwTweoGngrZV5xKGU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzNzA3/NjItMTU0Nzg1MDYx/OS0zNjc0LmpwZWc.jpeg",
+      "uri": "/release/3370762-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/3370762"
+    },
+    {
+      "id": 3200552,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "2006",
+      "thumb": "https://i.discogs.com/zW5ERYDG06IhENsYoskPLF-2JkM2uTr6RHBkj7mCElQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMyMDA1/NTItMTY4NjkwMzMy/OS04NTUxLmpwZWc.jpeg",
+      "uri": "/release/3200552-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/3200552"
+    },
+    {
+      "id": 721632,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/Ep0pOZ-vpRD-c4wMoCJHC3D4SHzC90l-84YUE6nvsHE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTcyMTYz/Mi0xNDY0NzE1ODAw/LTcxOTMuanBlZw.jpeg",
+      "uri": "/release/721632-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/721632"
+    },
+    {
+      "id": 7828600,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works",
+      "year": null,
+      "thumb": "https://i.discogs.com/pHzUs0iIsv9PegGb0ZaP56BOAuP3mBbXi_tBd1IOPaE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc4Mjg2/MDAtMTQ0OTY1OTIz/NS02MjYzLmpwZWc.jpeg",
+      "uri": "/release/7828600-Aphex-Twin-Selected-Ambient-Works",
+      "resourceUrl": "https://api.discogs.com/releases/7828600"
+    },
+    {
+      "id": 7828600,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works",
+      "year": null,
+      "thumb": "https://i.discogs.com/pHzUs0iIsv9PegGb0ZaP56BOAuP3mBbXi_tBd1IOPaE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc4Mjg2/MDAtMTQ0OTY1OTIz/NS02MjYzLmpwZWc.jpeg",
+      "uri": "/release/7828600-Aphex-Twin-Selected-Ambient-Works",
+      "resourceUrl": "https://api.discogs.com/releases/7828600"
+    },
+    {
+      "id": 721632,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/Ep0pOZ-vpRD-c4wMoCJHC3D4SHzC90l-84YUE6nvsHE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTcyMTYz/Mi0xNDY0NzE1ODAw/LTcxOTMuanBlZw.jpeg",
+      "uri": "/release/721632-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/721632"
+    },
+    {
+      "id": 11405,
+      "artist": "Various",
+      "title": "Artcore (Ambient/Jungle)",
+      "year": "1995",
+      "thumb": "https://i.discogs.com/8B0ilXQTWqq1-mcK1E7ttIv87jcVBOpE-nO4w3Qp0IA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExNDA1/LTEzMTM1NzUyMjku/anBlZw.jpeg",
+      "uri": "/release/11405-Various-Artcore-AmbientJungle",
+      "resourceUrl": "https://api.discogs.com/releases/11405"
+    },
+    {
+      "id": 1012597,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/7VYmHLHanWFOAqsjnsO_ijHkmlu7Md0axK32UjzovIA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwMTI1/OTctMTQ1MDAxOTc4/Mi02MTc0LmpwZWc.jpeg",
+      "uri": "/release/1012597-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/1012597"
+    },
+    {
+      "id": 232133,
+      "artist": "Various",
+      "title": "Ambient Dub Volume 2. Earthjuice.",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/jJrdBjoKPXUA23IMyVNk-kiNwgFxli_Ei4DHFxJ4uK4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzMjEz/My0xNjYzNDI2OTIy/LTEyNjIuanBlZw.jpeg",
+      "uri": "/release/232133-Various-Ambient-Dub-Volume-2-Earthjuice",
+      "resourceUrl": "https://api.discogs.com/releases/232133"
+    },
+    {
+      "id": 19076,
+      "artist": "Various",
+      "title": "Pop Ambient 2002",
+      "year": "2001",
+      "thumb": "https://i.discogs.com/_fxN0yigdCnmWPSIzvd2MSz1FPk_zSo2DVuQIs7_68g/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE5MDc2/LTEyNjUzMjAxNDku/anBlZw.jpeg",
+      "uri": "/release/19076-Various-Pop-Ambient-2002",
+      "resourceUrl": "https://api.discogs.com/releases/19076"
+    },
+    {
+      "id": 2748670,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": null,
+      "thumb": "https://i.discogs.com/SKUCJDeFbXiGIkFiYGL4sUxy4mSLH8sMJF9dIiPkTr8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3NDg2/NzAtMTI5OTI3MTE3/MC5qcGVn.jpeg",
+      "uri": "/release/2748670-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/2748670"
+    },
+    {
+      "id": 12565,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": null,
+      "thumb": "https://i.discogs.com/IKQu6BTVxCAyBlTmTh0GlwSeGNle2TkdQznKZtsg0qU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyNTY1/LTEzNTY1NzE5NDUt/MzYzMC5qcGVn.jpeg",
+      "uri": "/release/12565-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/12565"
+    },
+    {
+      "id": 79305,
+      "artist": "Various",
+      "title": "Pop Ambient 2003",
+      "year": "2002",
+      "thumb": "https://i.discogs.com/LHmWDGKEyBrz2qVH6fCSbgtVNnDNrEmdqOI12CO-Gcw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc5MzA1/LTE1OTU4NjE0NzEt/NDQ2Ni5qcGVn.jpeg",
+      "uri": "/release/79305-Various-Pop-Ambient-2003",
+      "resourceUrl": "https://api.discogs.com/releases/79305"
+    },
+    {
+      "id": 15661,
+      "artist": "Billie Ray Martin",
+      "title": "4 Ambient Tales",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/N6F-FPBpP4MJnn8Nj2gIQX8TY0bINDV9VNot6yRYbbg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NjYx/LTE1Mjg2MzY5ODYt/ODAwOC5qcGVn.jpeg",
+      "uri": "/release/15661-Billie-Ray-Martin-4-Ambient-Tales",
+      "resourceUrl": "https://api.discogs.com/releases/15661"
+    },
+    {
+      "id": 36605,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 / On Land",
+      "year": "1986",
+      "thumb": "https://i.discogs.com/RmoF5GLs7lVyOZGUWdqMPWvFPFOlkihJ1nwG430YAYA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2NjA1/LTE0NTA3ODcyNjUt/MTc0Mi5qcGVn.jpeg",
+      "uri": "/release/36605-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/36605"
+    },
+    {
+      "id": 7644379,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "2015",
+      "thumb": "https://i.discogs.com/a205y9EnPaRkcrhjB4gdS5VTS_Z_fyeEfox1bipT47w/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc2NDQz/NzktMTQ0NTgwNzIy/MC00OTEzLmpwZWc.jpeg",
+      "uri": "/release/7644379-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/7644379"
+    },
+    {
+      "id": 172480,
+      "artist": "Various",
+      "title": "Ambient Systems 3",
+      "year": "1997",
+      "thumb": "https://i.discogs.com/KHMikTT-QCTh7wR6aAeL0G6rE-nAXF-BC4ChtiimpOY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3MjQ4/MC0xNjgxOTMzMjE3/LTY3NTYuanBlZw.jpeg",
+      "uri": "/release/172480-Various-Ambient-Systems-3",
+      "resourceUrl": "https://api.discogs.com/releases/172480"
+    },
+    {
+      "id": 42622,
+      "artist": "Grungerman",
+      "title": "In Tyrannis / Ambient Grunge",
+      "year": "1999",
+      "thumb": "https://i.discogs.com/ZJTN-bgVpysHxZtATZCrCl2Qx_5eomqyVmnv4faqNG0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQyNjIy/LTEwNzU2NDgxNzEu/anBn.jpeg",
+      "uri": "/Grungerman-In-Tyrannis-Ambient-Grunge/release/42622",
+      "resourceUrl": "https://api.discogs.com/releases/42622"
+    },
+    {
+      "id": 324166,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "1992",
+      "thumb": "https://i.discogs.com/tKIGjRUurg5zWp3JJe1fxwkSOMuzMm_UEmsxDrl_Jcs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMyNDE2/Ni0xNTY5OTIzNzM4/LTkzMDEuanBlZw.jpeg",
+      "uri": "/release/324166-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/324166"
+    },
+    {
+      "id": 4271147,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/IEs2QrbUNBbqkfeT2-aWRc_P6pbf627fb7nG35h4lZY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQyNzEx/NDctMTM2MDMwMjU0/MS00OTU3LmpwZWc.jpeg",
+      "uri": "/release/4271147-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/4271147"
+    },
+    {
+      "id": 4472355,
+      "artist": "Gravetemple",
+      "title": "Ambient / Ruin",
+      "year": "2013",
+      "thumb": "https://i.discogs.com/b-tarujIo7ssne9TBECzYBAbtmLyV6z0UM66dfhApaM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ0NzIz/NTUtMTQwOTc5NDUw/Mi0xNTcyLmpwZWc.jpeg",
+      "uri": "/Gravetemple-Ambient-Ruin/release/4472355",
+      "resourceUrl": "https://api.discogs.com/releases/4472355"
+    },
+    {
+      "id": 4682282,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/-clCxml98ilqOIkkZeRBppdhVV7Dr-l1Lk81mB4wcAA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ2ODIy/ODItMTM3MjUyNzU5/MS04MjkxLmpwZWc.jpeg",
+      "uri": "/release/4682282-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/4682282"
+    },
+    {
+      "id": 11815414,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/eGVVLXJ3v0FhzTaKNez3_TWQuyU-xDqI3EaoEp8B3hc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExODE1/NDE0LTE2NjkzMjM1/ODktOTc2Mi5qcGVn.jpeg",
+      "uri": "/release/11815414-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/11815414"
+    },
+    {
+      "id": 356769,
+      "artist": "Various",
+      "title": "Pop Ambient 2005",
+      "year": "2004",
+      "thumb": "https://i.discogs.com/BW9_FresykNXOKJI5SiiBNRZ37Wlgk67zGPFFdX5_ew/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1Njc2/OS0xMTg1MzY5ODMz/LmpwZWc.jpeg",
+      "uri": "/release/356769-Various-Pop-Ambient-2005",
+      "resourceUrl": "https://api.discogs.com/releases/356769"
+    },
+    {
+      "id": 211356,
+      "artist": "Various",
+      "title": "Pop Ambient 2004",
+      "year": "2003",
+      "thumb": "https://i.discogs.com/FYDeQ8mB3O7Kbwy5chMDVsg9Kb1v24hSDloBdjI8i4Y/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIxMTM1/Ni0xNDg5OTM0NjAx/LTg0MDkuanBlZw.jpeg",
+      "uri": "/release/211356-Various-Pop-Ambient-2004",
+      "resourceUrl": "https://api.discogs.com/releases/211356"
+    },
+    {
+      "id": 28265,
+      "artist": "Various",
+      "title": "Pop Ambient 2001",
+      "year": "2001",
+      "thumb": "https://i.discogs.com/w92vVP-OZlNzQmNWzHlYGm0YN6Zi1AtF8yvksUYV6RI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4MjY1/LTE1MDE0OTIwMDUt/NDM5OS5qcGVn.jpeg",
+      "uri": "/release/28265-Various-Pop-Ambient-2001",
+      "resourceUrl": "https://api.discogs.com/releases/28265"
+    },
+    {
+      "id": 836363,
+      "artist": "Various",
+      "title": "Pop Ambient 2007",
+      "year": "2006",
+      "thumb": "https://i.discogs.com/Dey-fkpeG3y7mohZp1dmDSgUqF306exZKj70wL6rxVA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgzNjM2/My0xNDgyMjAxOTQ3/LTEyMDUuanBlZw.jpeg",
+      "uri": "/Various-Pop-Ambient-2007/release/836363",
+      "resourceUrl": "https://api.discogs.com/releases/836363"
+    },
+    {
+      "id": 46620,
+      "artist": "Dr Alex Paterson*",
+      "title": "Ambient Meditations 2",
+      "year": "1999",
+      "thumb": "https://i.discogs.com/CM-0RiwbkCBj7sz0X7ofgIvQhMZmJ7vdIhwu5_e4X1o/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ2NjIw/LTEyMDIzMDIzNDcu/anBlZw.jpeg",
+      "uri": "/release/46620-Dr-Alex-Paterson-Ambient-Meditations-2",
+      "resourceUrl": "https://api.discogs.com/releases/46620"
+    },
+    {
+      "id": 660700,
+      "artist": "Various",
+      "title": "Ambient House - The Compilation",
+      "year": "1990",
+      "thumb": "https://i.discogs.com/jpiUGB5WWfUaKLme6Avrtc3TY7Cw49WQ4Q8eAeEWj6o/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY2MDcw/MC0xMjM0ODczMDQ2/LmpwZWc.jpeg",
+      "uri": "/release/660700-Various-Ambient-House-The-Compilation",
+      "resourceUrl": "https://api.discogs.com/releases/660700"
+    },
+    {
+      "id": 309158,
+      "artist": "Pete Namlook",
+      "title": "The Definitive Ambient Collection",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/UzpB1_XGvLv8mHFCdPC5g5ycfZP6-VUoXSrgC7Gr2bM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwOTE1/OC0xMTEwMzA3MjUz/LmpwZw.jpeg",
+      "uri": "/release/309158-Pete-Namlook-The-Definitive-Ambient-Collection",
+      "resourceUrl": "https://api.discogs.com/releases/309158"
+    },
+    {
+      "id": 8039352,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/4A1yciDUxGoyOyf2DgCdNbHM7yXNTapJowBnnWeEXvE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgwMzkz/NTItMTU1ODM2NTg5/MC01NDk2LmpwZWc.jpeg",
+      "uri": "/release/8039352-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/8039352"
+    },
+    {
+      "id": 762660,
+      "artist": "Various",
+      "title": "Ambient Auras: Diverse Dimensions In Ambient Dub",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/D7AFLk9uDr5WPedE4BWtbD7YB6WPA4M5S5RpZjMwvP0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc2MjY2/MC0xNjUzNTYzMDI2/LTU3OTAuanBlZw.jpeg",
+      "uri": "/release/762660-Various-Ambient-Auras-Diverse-Dimensions-In-Ambient-Dub",
+      "resourceUrl": "https://api.discogs.com/releases/762660"
+    },
+    {
+      "id": 1977395,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": null,
+      "thumb": "https://i.discogs.com/e9gTcjGVaogaIxHW5f8_ncCG2cCEjfaIbTUCSltbS8c/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE5Nzcz/OTUtMTI1NjI2NTk0/OC5qcGVn.jpeg",
+      "uri": "/release/1977395-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/1977395"
+    },
+    {
+      "id": 659066,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/XjOI3YJNb9o1Jph9m5U-wL2eeiF2iwNFDhf0gOPIdTE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY1OTA2/Ni0xMTQ0NDIzNDY2/LmpwZWc.jpeg",
+      "uri": "/release/659066-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/659066"
+    },
+    {
+      "id": 332333,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "2004",
+      "thumb": "https://i.discogs.com/oS50jDZAzIcwqvu5VgbVmD3DNMzKFbVW13DaKJQWmLo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMjMz/My0xNDk4NTE0NTg1/LTgyMDMuanBlZw.jpeg",
+      "uri": "/release/332333-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/332333"
+    },
+    {
+      "id": 39995,
+      "artist": "Various",
+      "title": "Ambient Meditations",
+      "year": "1998",
+      "thumb": "https://i.discogs.com/XMFERazvEnYQ7tjCA_QoGeOKyMpeKWyVncEeHCbPtao/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM5OTk1/LTEyMDIyOTU0Nzku/anBlZw.jpeg",
+      "uri": "/release/39995-Various-Ambient-Meditations",
+      "resourceUrl": "https://api.discogs.com/releases/39995"
+    },
+    {
+      "id": 31884112,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "2024",
+      "thumb": "https://i.discogs.com/Iw10Hb3xQ1x0QFUHMKdjYA_HlDUjPJRCC76NiIrMWTM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxODg0/MTEyLTE3NDA4MjM1/ODAtNTg3OC5qcGVn.jpeg",
+      "uri": "/release/31884112-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/31884112"
+    },
+    {
+      "id": 212970,
+      "artist": "Various",
+      "title": "Instinct Ambient",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/Z-yskd4Jb4NQm9kf2vSbs0U6rkmXZQ0SuwRwkKnDSDQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIxMjk3/MC0xMzI0NDc5MjA0/LmpwZWc.jpeg",
+      "uri": "/release/212970-Various-Instinct-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/212970"
+    },
+    {
+      "id": 79083,
+      "artist": "Various",
+      "title": "Pop Ambient 2003",
+      "year": "2002",
+      "thumb": "https://i.discogs.com/batQqPuA5ZgHz5Jzxj9mm4gJIpXqDNdNt8EyjiyelVM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc5MDgz/LTEyNjUzMjA0Mzgu/anBlZw.jpeg",
+      "uri": "/release/79083-Various-Pop-Ambient-2003",
+      "resourceUrl": "https://api.discogs.com/releases/79083"
+    },
+    {
+      "id": 2942867,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/7RcbYOO-YrUgGDayAT7AISwZWGGbKuDjaI_WoD4MlEw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5NDI4/NjctMTMwODQxMTQy/Ny5qcGVn.jpeg",
+      "uri": "/release/2942867-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/2942867"
+    },
+    {
+      "id": 69329,
+      "artist": "Various",
+      "title": "The Ambient Groove",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/on3Nu1bXR_yRqBE5HGj4PasHl2Eiam2v_x73zghP2tI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY5MzI5/LTE0MzM1NTA1MTQt/MzA2MC5qcGVn.jpeg",
+      "uri": "/Various-The-Ambient-Groove/release/69329",
+      "resourceUrl": "https://api.discogs.com/releases/69329"
+    },
+    {
+      "id": 8114350,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": null,
+      "thumb": "https://i.discogs.com/lC0qaMVVnzoSV7Im2ueyu3poVCuTnuBDhc8QAciCQx4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgxMTQz/NTAtMTQ1NTQwMDIw/Ni04MDYzLmpwZWc.jpeg",
+      "uri": "/release/8114350-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/8114350"
+    },
+    {
+      "id": 73812,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/UDndoE5mvzNCHRzEMDXAme6EDDwu3buN6Wahg2MzwCI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTczODEy/LTAwMS5qcGc.jpeg",
+      "uri": "/release/73812-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/73812"
+    },
+    {
+      "id": 839142,
+      "artist": "Various",
+      "title": "Pop Ambient 2007",
+      "year": "2006",
+      "thumb": "https://i.discogs.com/TfhYJFthgDAusI7Mhx-bXQVC5vjRSQ_yjFGuXDTC1MY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgzOTE0/Mi0xMjMyMTM3NjI3/LmpwZWc.jpeg",
+      "uri": "/release/839142-Various-Pop-Ambient-2007",
+      "resourceUrl": "https://api.discogs.com/releases/839142"
+    },
+    {
+      "id": 6045095,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "2002",
+      "thumb": "https://i.discogs.com/TzY-0QFYK7gDiwovPWt41MUQBGyfR9cRPGaNh-rSorM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYwNDUw/OTUtMTQ2NTE3NTM4/OC0yMDg5LmpwZWc.jpeg",
+      "uri": "/release/6045095-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/6045095"
+    },
+    {
+      "id": 12498524,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": null,
+      "thumb": "https://i.discogs.com/SPHLiSS9gP7AfSEMJq96f1xudFwV65k9LVSYorh8Lrk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyNDk4/NTI0LTE2MDU1NjU3/MjgtNDg4Mi5qcGVn.jpeg",
+      "uri": "/release/12498524-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/12498524"
+    },
+    {
+      "id": 1126975,
+      "artist": "Various",
+      "title": "Pop Ambient 2008",
+      "year": "2007",
+      "thumb": "https://i.discogs.com/ztbe3TCOTNNnfDe_A5F8Y-Taue_2neVy03PieBBfteg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMjY5/NzUtMTE5NDIwNTY5/OC5naWY.jpeg",
+      "uri": "/release/1126975-Various-Pop-Ambient-2008",
+      "resourceUrl": "https://api.discogs.com/releases/1126975"
+    },
+    {
+      "id": 32351502,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "2024",
+      "thumb": "https://i.discogs.com/1brAvF6n5v16YVbgrmaT2nxwET7nYUzjY_JiMZ7Yllk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMyMzUx/NTAyLTE3MzI1MjE1/MTEtOTM4MC5qcGVn.jpeg",
+      "uri": "/release/32351502-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/32351502"
+    },
+    {
+      "id": 567254,
+      "artist": "Various",
+      "title": "Pop Ambient 2006",
+      "year": "2005",
+      "thumb": "https://i.discogs.com/fMgXL1zNHRPAe4fT9V1Pd5s-6tsJIvkarLttn4sW_rk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU2NzI1/NC0xMTMyNDIwNTgz/LmpwZWc.jpeg",
+      "uri": "/release/567254-Various-Pop-Ambient-2006",
+      "resourceUrl": "https://api.discogs.com/releases/567254"
+    },
+    {
+      "id": 12177979,
+      "artist": "Ambient Hawai'i",
+      "title": "Ambient Hawaiʻi",
+      "year": "1997",
+      "thumb": "https://i.discogs.com/-_Vd0IaV-Ei3_LbxhM4R4hdDIXGsHc0ZCNQadQ1KqdE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyMTc3/OTc5LTE1Mjk4NTgy/MzYtODYwNC5qcGVn.jpeg",
+      "uri": "/release/12177979-Ambient-Hawaii-Ambient-Hawai%CA%BBi",
+      "resourceUrl": "https://api.discogs.com/releases/12177979"
+    },
+    {
+      "id": 3825904,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/fcKOU5y0OVA1mfOtX3V2qRKloRW2MAU1y8OwYQQgQdk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4MjU5/MDQtMTUwNTMxMDgw/Ny0xNDkyLmpwZWc.jpeg",
+      "uri": "/release/3825904-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/3825904"
+    },
+    {
+      "id": 2882101,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/GI9rzuwZKwkImxFeaQY1ZbnhhN9ZwJxQcby03hGl1CE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4ODIx/MDEtMTMwNTQ5MTk2/MS5qcGVn.jpeg",
+      "uri": "/release/2882101-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/2882101"
+    },
+    {
+      "id": 3834619,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1990",
+      "thumb": "https://i.discogs.com/aPf2sVgFHK5YSVdx85G-yAs9udGYvcekSNOuLHMhW3c/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4MzQ2/MTktMTM0NjI1MTYz/NS0yMTAzLmpwZWc.jpeg",
+      "uri": "/release/3834619-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/3834619"
+    },
+    {
+      "id": 13819,
+      "artist": "Various",
+      "title": "The Ambient Cookbook",
+      "year": "1995",
+      "thumb": "https://i.discogs.com/EgRdJIJQNoFRQCChLKWmiLvpvX498Fn1m1Cs0n3mqrA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzODE5/LTEzMDk2ODg1MzYu/anBlZw.jpeg",
+      "uri": "/release/13819-Various-The-Ambient-Cookbook",
+      "resourceUrl": "https://api.discogs.com/releases/13819"
+    },
+    {
+      "id": 5502220,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1987",
+      "thumb": "https://i.discogs.com/qZBY7yM8SrhLGyPNlLPtkv_uT0TMCScZEZShOTQ5tyQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU1MDIy/MjAtMTYxODA1NTcy/My03ODg1LmpwZWc.jpeg",
+      "uri": "/release/5502220-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/5502220"
+    },
+    {
+      "id": 4479176,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "1992",
+      "thumb": "https://i.discogs.com/I0tSBKGProrXxvMDcLu0kiMm0X7mTLvg31Qv2KFcPhk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ0Nzkx/NzYtMTM2NjAzNzkz/Ni04MTU5LmpwZWc.jpeg",
+      "uri": "/release/4479176-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/4479176"
+    },
+    {
+      "id": 375955,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "2004",
+      "thumb": "https://i.discogs.com/WG7MHsWNUWu-V3ZMl9O6QD3C63hF8ZaOndjLnt-dzqM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3NTk1/NS0xMTk4MTQyNjI2/LmpwZWc.jpeg",
+      "uri": "/release/375955-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/375955"
+    },
+    {
+      "id": 202603,
+      "artist": "Various",
+      "title": "Pop Ambient 2004",
+      "year": "2003",
+      "thumb": "https://i.discogs.com/Wpf1s4Zd2KMiwxCODZC2Wa9TDo_OSHlCuAasR7K5mlE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIwMjYw/My0xMjU4ODM4OTkx/LmpwZWc.jpeg",
+      "uri": "/release/202603-Various-Pop-Ambient-2004",
+      "resourceUrl": "https://api.discogs.com/releases/202603"
+    },
+    {
+      "id": 1561420,
+      "artist": "Laraaji Produced By Brian Eno",
+      "title": "Ambient 3 (Day Of Radiance)",
+      "year": "1980",
+      "thumb": "https://i.discogs.com/n4uCBIv9z_nsy_9BVCLQtPAVSEAR_-DreuOlzozwYCQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NjE0/MjAtMTQ3ODA4ODgy/Mi05NDA5LmpwZWc.jpeg",
+      "uri": "/release/1561420-Laraaji-Produced-By-Brian-Eno-Ambient-3-Day-Of-Radiance",
+      "resourceUrl": "https://api.discogs.com/releases/1561420"
+    },
+    {
+      "id": 10430896,
+      "artist": "Pantha Du Prince",
+      "title": "The Triad Ambient Versions",
+      "year": "2017",
+      "thumb": "https://i.discogs.com/ImhqOLuN-fWEXVKItauQ9je7Q6x15t4yuq9FZYef3rw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwNDMw/ODk2LTE0OTcyODM4/OTMtNDM0OC5qcGVn.jpeg",
+      "uri": "/release/10430896-Pantha-Du-Prince-The-Triad-Ambient-Versions-",
+      "resourceUrl": "https://api.discogs.com/releases/10430896"
+    },
+    {
+      "id": 2215750,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": null,
+      "thumb": "https://i.discogs.com/fUFv6Nxuqzpd2bXIruoxzeHxjORn9aoq4udj3zvubqQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIyMTU3/NTAtMTczODA3MTk3/MC01MjMxLmpwZWc.jpeg",
+      "uri": "/release/2215750-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/2215750"
+    },
+    {
+      "id": 200487,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/Id-zdTWEWUB0orn9dbntSqCRK33tZLCOKgP97RhZdA4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIwMDQ4/Ny0xNDYxMDE1Nzk2/LTI3MDMuanBlZw.jpeg",
+      "uri": "/release/200487-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/200487"
+    },
+    {
+      "id": 353543,
+      "artist": "Various",
+      "title": "Pop Ambient 2005",
+      "year": "2004",
+      "thumb": "https://i.discogs.com/TNcvfYvlOxnRFk9HC86RuikTtava7RgzPVAoAVEn2eA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1MzU0/My0xMjY3MjU0MzQ1/LmpwZWc.jpeg",
+      "uri": "/release/353543-Various-Pop-Ambient-2005",
+      "resourceUrl": "https://api.discogs.com/releases/353543"
+    },
+    {
+      "id": 13134011,
+      "artist": "Slowdive",
+      "title": "Ambient",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/cETJBPP2eifiNV0r8zMRlvvaYRsSAp6bItxR88dvwd8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzMTM0/MDExLTE1NDg2Mzk0/ODUtNjcxOC5qcGVn.jpeg",
+      "uri": "/release/13134011-Slowdive-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/13134011"
+    },
+    {
+      "id": 65931,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/CkL_nWxFHI-7VwWjoMEhUS1Kgtmtxs4mBDHGEi5zHRo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY1OTMx/LTEyNTgyOTk0ODIu/anBlZw.jpeg",
+      "uri": "/release/65931-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/65931"
+    },
+    {
+      "id": 13166005,
+      "artist": "Various",
+      "title": "環境音楽 = Kankyō Ongaku (Japanese Ambient, Environmental & New Age Music 1980 - 1990)",
+      "year": "2019",
+      "thumb": "https://i.discogs.com/MuIXtueZ9j9hVcDU5hb4dZKN61tcQdJsDkx-zIgrLk8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzMTY2/MDA1LTE1NjkzNzIy/MDItNTU0MS5qcGVn.jpeg",
+      "uri": "/release/13166005-Various-%E7%92%B0%E5%A2%83%E9%9F%B3%E6%A5%BD-Kanky%C5%8D-Ongaku-Japanese-Ambient-Environmental-New-Age-Music-1980-1990",
+      "resourceUrl": "https://api.discogs.com/releases/13166005"
+    },
+    {
+      "id": 16569,
+      "artist": "Various",
+      "title": "Ambient-Compilation 4",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/i4gLTVf2dpJfqww59PHxhzxBYY_KmWesGgUeRqnGaXs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2NTY5/LTE1ODY4NzkxNDgt/MTU4My5qcGVn.jpeg",
+      "uri": "/release/16569-Various-Ambient-Compilation-4",
+      "resourceUrl": "https://api.discogs.com/releases/16569"
+    },
+    {
+      "id": 1547423,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "1987",
+      "thumb": "https://i.discogs.com/GYD6LpUdmQF3jf4wVdqL3lsHig2ge41w_pXardRZldI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NDc0/MjMtMTUxNDA2NjI3/OC04MTM2LmpwZWc.jpeg",
+      "uri": "/release/1547423-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/1547423"
+    },
+    {
+      "id": 9647626,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/wt7fKEc8XMEICxhTb9sB7dJRV3VL60tquf6FYisOyro/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk2NDc2/MjYtMTQ4NDE2MjQ1/NS00OTI4LmpwZWc.jpeg",
+      "uri": "/release/9647626-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/9647626"
+    },
+    {
+      "id": 868722,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/d8u6FoMbfifQwoCEzK-GEja5IhcOSoOMhAjgXeUFWeA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg2ODcy/Mi0xMzUxMDU3NjYw/LTc3NjQuanBlZw.jpeg",
+      "uri": "/release/868722-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/868722"
+    },
+    {
+      "id": 169859,
+      "artist": "Various",
+      "title": "Ambient Dub Volume 3 (Aqua)",
+      "year": "1993",
+      "thumb": "https://i.discogs.com/CCT0ce-i0KfRZCAXEKhuxamxTtr7AIqcZ7NXRNj7KMc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2OTg1/OS0xNDUxNTM5NjI3/LTQwMTUucG5n.jpeg",
+      "uri": "/release/169859-Various-Ambient-Dub-Volume-3-Aqua",
+      "resourceUrl": "https://api.discogs.com/releases/169859"
+    },
+    {
+      "id": 552463,
+      "artist": "Various",
+      "title": "Pop Ambient 2006",
+      "year": "2005",
+      "thumb": "https://i.discogs.com/WyGHXckRPrMmCvr3VA1J62yU9EbcoLxL1xrHKRCUHEY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU1MjQ2/My0xMjc2Mzg3NTQ0/LmpwZWc.jpeg",
+      "uri": "/release/552463-Various-Pop-Ambient-2006",
+      "resourceUrl": "https://api.discogs.com/releases/552463"
+    },
+    {
+      "id": 3155123,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "2011",
+      "thumb": "https://i.discogs.com/YYwSWvFRI2mzaofPbVAxGNlfNcXBECZzN0df7oCnHww/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxNTUx/MjMtMTMxODI3Nzcz/OS5qcGVn.jpeg",
+      "uri": "/release/3155123-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/3155123"
+    },
+    {
+      "id": 2011462,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1987",
+      "thumb": "https://i.discogs.com/tPMQMEfe9a1ifYMmoFYeNR0J7v1OYwsVjth8JXRfBdw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIwMTE0/NjItMTMxMTk1MDQ5/MC5qcGVn.jpeg",
+      "uri": "/release/2011462-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/2011462"
+    },
+    {
+      "id": 964297,
+      "artist": "Harold Budd / Brian Eno",
+      "title": "Ambient 2 (The Plateaux Of Mirror)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/-18yw3DsmYhss67-5FqAEmdNzIEkYy_o08CjfBkL2lM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk2NDI5/Ny0xMzkyOTgwNzUx/LTU5NjIuanBlZw.jpeg",
+      "uri": "/release/964297-Harold-Budd-Brian-Eno-Ambient-2-The-Plateaux-Of-Mirror",
+      "resourceUrl": "https://api.discogs.com/releases/964297"
+    },
+    {
+      "id": 16387251,
+      "artist": "Earth Trax",
+      "title": "LP2 Ambient Dance",
+      "year": "2020",
+      "thumb": "https://i.discogs.com/YQxA14-TqRZ5tYlTS1TDa38IvI8owMuQ6CuDETOLiUs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2Mzg3/MjUxLTE2MDc0NDYz/NDctODY1NS5qcGVn.jpeg",
+      "uri": "/release/16387251-Earth-Trax-LP2-Ambient-Dance",
+      "resourceUrl": "https://api.discogs.com/releases/16387251"
+    },
+    {
+      "id": 1404707,
+      "artist": "Laraaji Produced By Brian Eno",
+      "title": "Ambient 3 (Day Of Radiance)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/GR-1Tb2PwYW61XVPhB-nynqXdU0fchAmWdcSAct5e9k/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MDQ3/MDctMTIxNjgxOTU1/My5qcGVn.jpeg",
+      "uri": "/release/1404707-Laraaji-Produced-By-Brian-Eno-Ambient-3-Day-Of-Radiance",
+      "resourceUrl": "https://api.discogs.com/releases/1404707"
+    },
+    {
+      "id": 839755,
+      "artist": "Laraaji Produced By Brian Eno",
+      "title": "Ambient 3 (Day Of Radiance)",
+      "year": "1987",
+      "thumb": "https://i.discogs.com/CotWcrgH4P7JbnaD6ZsmDAAfLCr6Ek5DwwWC1S1C44w/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgzOTc1/NS0xNjc4NTcxMjM0/LTk0NjQuanBlZw.jpeg",
+      "uri": "/release/839755-Laraaji-Produced-By-Brian-Eno-Ambient-3-Day-Of-Radiance",
+      "resourceUrl": "https://api.discogs.com/releases/839755"
+    },
+    {
+      "id": 1125108,
+      "artist": "Various",
+      "title": "Pop Ambient 2008",
+      "year": "2007",
+      "thumb": "https://i.discogs.com/-G78fL8j14HX8RIceToKtI3wiA266c5XxZ7DcQqDMn8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMjUx/MDgtMTI2NTUxMDY4/Ny5qcGVn.jpeg",
+      "uri": "/release/1125108-Various-Pop-Ambient-2008",
+      "resourceUrl": "https://api.discogs.com/releases/1125108"
+    },
+    {
+      "id": 2115398,
+      "artist": "Various",
+      "title": "Pop Ambient 2010",
+      "year": "2010",
+      "thumb": "https://i.discogs.com/KjrcGDGCg9O2bvpUjnE5FNBsz2uo02Wxc6UCdGgCHTA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIxMTUz/OTgtMTI2NDg4ODg2/MS5qcGVn.jpeg",
+      "uri": "/release/2115398-Various-Pop-Ambient-2010",
+      "resourceUrl": "https://api.discogs.com/releases/2115398"
+    },
+    {
+      "id": 357932,
+      "artist": "Harold Budd / Brian Eno",
+      "title": "Ambient 2 (The Plateaux Of Mirror)",
+      "year": "1980",
+      "thumb": "https://i.discogs.com/ME9xQ4G3Es9Pg6OcizGZYFPM7gWbRmoeHpPdZWdIwBA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1Nzkz/Mi0xMTczNTk2NDc2/LmpwZWc.jpeg",
+      "uri": "/release/357932-Harold-Budd-Brian-Eno-Ambient-2-The-Plateaux-Of-Mirror",
+      "resourceUrl": "https://api.discogs.com/releases/357932"
+    },
+    {
+      "id": 13646498,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": null,
+      "thumb": "https://i.discogs.com/bmtxw2g0wdeDuRfCRwTnoBOGKHnh3B-TJgMbKAWBPtc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzNjQ2/NDk4LTE2MDM4MDU1/NjAtOTQxMy5qcGVn.jpeg",
+      "uri": "/release/13646498-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/13646498"
+    },
+    {
+      "id": 504761,
+      "artist": "Various",
+      "title": "Ambient Amazon",
+      "year": "1995",
+      "thumb": "https://i.discogs.com/ASnfFg6wYkF3DIIplnEojOf9-Z_4iuuc69TfzRUtIgQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUwNDc2/MS0xMzY4NTcwNjMx/LTUwMjEuanBlZw.jpeg",
+      "uri": "/release/504761-Various-Ambient-Amazon",
+      "resourceUrl": "https://api.discogs.com/releases/504761"
+    },
+    {
+      "id": 3277944,
+      "artist": "Melvins",
+      "title": "Hostile Ambient Takeover",
+      "year": "2002",
+      "thumb": "https://i.discogs.com/rVQDmD8CdTr8jy3E_tO60_G7o8-YnkByTf4utNTGMwU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMyNzc5/NDQtMTMyOTczMTQx/OS5qcGVn.jpeg",
+      "uri": "/release/3277944-Melvins-Hostile-Ambient-Takeover",
+      "resourceUrl": "https://api.discogs.com/releases/3277944"
+    },
+    {
+      "id": 998269,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": null,
+      "thumb": "https://i.discogs.com/x0HNKNDyqgzbebt6Y6_pTq6Ie8qKmxJSFjT3yU_2XXo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk5ODI2/OS0xNDA1NDcyMDM1/LTg5NjguanBlZw.jpeg",
+      "uri": "/release/998269-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/998269"
+    },
+    {
+      "id": 164322,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "1999",
+      "thumb": "https://i.discogs.com/T3Xq8dmFJk6SjCJlfd7u5EPNxRvCtyRhcs8G_4v2VlA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2NDMy/Mi0xMzkwNjQ4MDM0/LTkwMDUuanBlZw.jpeg",
+      "uri": "/release/164322-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/164322"
+    },
+    {
+      "id": 6489984,
+      "artist": "Moby",
+      "title": "Ambient",
+      "year": null,
+      "thumb": "https://i.discogs.com/vb6-k6TcqXLHfU9ZwlZpeGS6eHPJaa7d93bESkVuVVA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY0ODk5/ODQtMTQyMDQ1NTI1/OS02MTc2LmpwZWc.jpeg",
+      "uri": "/release/6489984-Moby-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/6489984"
+    },
+    {
+      "id": 2703093,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/WI_AEUiGZyHwB6D-ISH5slgxm9FI4lH65mm_WCgMsAU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3MDMw/OTMtMTQ3MDE4MTY5/Ni03Njg5LmpwZWc.jpeg",
+      "uri": "/release/2703093-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/2703093"
+    },
+    {
+      "id": 6978539,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": null,
+      "thumb": "https://i.discogs.com/OIP79wBoqpQhEe8IuC7WHP8VSjwplTMWjpV_QQypExM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY5Nzg1/MzktMTQzMDg1Mjk0/Ny05NTU5LmpwZWc.jpeg",
+      "uri": "/release/6978539-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/6978539"
+    },
+    {
+      "id": 3387713,
+      "artist": "Various",
+      "title": "Pop Ambient 2012",
+      "year": "2012",
+      "thumb": "https://i.discogs.com/s0SwQrF1OHo3zGN-7nxKIvY4ZN_Bcpxdsu9xSDCyrus/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzODc3/MTMtMTUxNTg1NzMx/Mi05MjUxLmpwZWc.jpeg",
+      "uri": "/release/3387713-Various-Pop-Ambient-2012",
+      "resourceUrl": "https://api.discogs.com/releases/3387713"
+    },
+    {
+      "id": 7717625,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": "2000",
+      "thumb": "https://i.discogs.com/K2lTMC3-mXkKxTtYNWhoK3DBMu_-UTAwFIO3eD2Dkb4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc3MTc2/MjUtMTQ0NzM0OTc1/MC04ODIzLmpwZWc.jpeg",
+      "uri": "/release/7717625-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/7717625"
+    },
+    {
+      "id": 10217045,
+      "artist": "Brian Eno",
+      "title": "Ambient 1 (Music For Airports)",
+      "year": "1979",
+      "thumb": "https://i.discogs.com/CxaOG0GOods0rccn_iIOnW-I6UT7tyYXSeTFp0QnrLQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwMjE3/MDQ1LTE0OTM1NjQy/NDMtNjEzNi5qcGVn.jpeg",
+      "uri": "/release/10217045-Brian-Eno-Ambient-1-Music-For-Airports",
+      "resourceUrl": "https://api.discogs.com/releases/10217045"
+    },
+    {
+      "id": 2629917,
+      "artist": "Various",
+      "title": "Pop Ambient 2011",
+      "year": "2011",
+      "thumb": "https://i.discogs.com/xjaQtOVvQ5TjL1VDhOFpHfYp_hxII-Fpmq5UcX5vgvo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2Mjk5/MTctMTM0MTk4OTAx/Mi0yNzI4LmpwZWc.jpeg",
+      "uri": "/release/2629917-Various-Pop-Ambient-2011",
+      "resourceUrl": "https://api.discogs.com/releases/2629917"
+    },
+    {
+      "id": 864752,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/zNYJk7sVFoy12GeOobLQrGrqr5J3t2IDOOeGF38xfpo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg2NDc1/Mi0xNjc1NDM4MTQ0/LTk2NzIuanBlZw.jpeg",
+      "uri": "/release/864752-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/864752"
+    },
+    {
+      "id": 3386781,
+      "artist": "Brian Eno",
+      "title": "Ambient 4 (On Land)",
+      "year": "1982",
+      "thumb": "https://i.discogs.com/Tv7GDkNeMeG4tB53WBNZx4jb0XG6iqlZdnG5y0k4XSM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzODY3/ODEtMTQ2NDc3ODk4/Ny05OTg2LmpwZWc.jpeg",
+      "uri": "/release/3386781-Brian-Eno-Ambient-4-On-Land",
+      "resourceUrl": "https://api.discogs.com/releases/3386781"
+    },
+    {
+      "id": 156665,
+      "artist": "Ambient Theology",
+      "title": "Ambient Theology",
+      "year": "1995",
+      "thumb": "https://i.discogs.com/IvZ8ERoIPi7nCEWGyHvtv30lBBvXBjxZIyHYv9mVEEI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NjY2/NS0wMDEuanBn.jpeg",
+      "uri": "/release/156665-Ambient-Theology-Ambient-Theology",
+      "resourceUrl": "https://api.discogs.com/releases/156665"
+    },
+    {
+      "id": 95840,
+      "artist": "Various",
+      "title": "Ambient Soho",
+      "year": "2000",
+      "thumb": "https://i.discogs.com/mcB70YHR0qDa19Hk7kuCjHXMJIw16SmCBFJAjwtreNc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk1ODQw/LTE3NjYyNTQyNjIt/MzM4NC5qcGVn.jpeg",
+      "uri": "/release/95840-Various-Ambient-Soho",
+      "resourceUrl": "https://api.discogs.com/releases/95840"
+    },
+    {
+      "id": 5357842,
+      "artist": "Laraaji",
+      "title": "Ambient 3 (Day Of Radiance)",
+      "year": "1980",
+      "thumb": "https://i.discogs.com/dkV8o2zuky05KaX7MBLmyhZTi1h-6HPnnPhs-4UNKAQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUzNTc4/NDItMTczODA3MjEy/Ny02NzcxLmpwZWc.jpeg",
+      "uri": "/release/5357842-Laraaji-Ambient-3-Day-Of-Radiance",
+      "resourceUrl": "https://api.discogs.com/releases/5357842"
+    },
+    {
+      "id": 155938,
+      "artist": "Various",
+      "title": "Ambient Amazon",
+      "year": "1995",
+      "thumb": "https://i.discogs.com/ZlTmys2T6wOh0nCLQrdAulJAjD3SL8jJwmuc13v3Xzg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NTkz/OC0xMTkzNzQ1MDI2/LmpwZWc.jpeg",
+      "uri": "/release/155938-Various-Ambient-Amazon",
+      "resourceUrl": "https://api.discogs.com/releases/155938"
+    },
+    {
+      "id": 34596328,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works 85-92",
+      "year": null,
+      "thumb": "https://i.discogs.com/E4fvQT1WxYwVPaC-dQrVwvcmwlexq9SL-4515P2R5AA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM0NTk2/MzI4LTE3NTMwNTE2/MDQtNTYxOC5qcGVn.jpeg",
+      "uri": "/release/34596328-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "resourceUrl": "https://api.discogs.com/releases/34596328"
+    },
+    {
+      "id": 6282031,
+      "artist": "Aphex Twin",
+      "title": "Selected Ambient Works Volume II",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/VF8gkHYDL4jPvIrWfeoiSF3DQyimgN5Xxqy9AsgEaC0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYyODIw/MzEtMTQ2NDUxNzc3/OS03NTQwLmpwZWc.jpeg",
+      "uri": "/release/6282031-Aphex-Twin-Selected-Ambient-Works-Volume-II",
+      "resourceUrl": "https://api.discogs.com/releases/6282031"
+    },
+    {
+      "id": 4074,
+      "artist": "Various",
+      "title": "Freezone 1 : The Phenomenology Of Ambient",
+      "year": "1994",
+      "thumb": "https://i.discogs.com/OSt_yHTDPIyzb3nQGITBlXBLgeYxfvS890wChJLeQcQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQwNzQt/MTI4OTEyMTQwNy5q/cGVn.jpeg",
+      "uri": "/release/4074-Various-Freezone-1-The-Phenomenology-Of-Ambient",
+      "resourceUrl": "https://api.discogs.com/releases/4074"
+    },
+    {
+      "id": 1655668,
+      "artist": "Various",
+      "title": "Pop Ambient 2009",
+      "year": "2009",
+      "thumb": "https://i.discogs.com/zt0BB3zwYobql_If9Hnb0IZl4rq4sPSxsniFyV7oUzY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2NTU2/NjgtMTYxMDU2NDQz/MC0zNDUwLmpwZWc.jpeg",
+      "uri": "/release/1655668-Various-Pop-Ambient-2009",
+      "resourceUrl": "https://api.discogs.com/releases/1655668"
+    },
+    {
+      "id": 5342978,
+      "artist": "Various",
+      "title": "Pop Ambient 2014",
+      "year": "2014",
+      "thumb": "https://i.discogs.com/MHPP4GSOVWXjs3l8S9LXQUEzK6vTdA833t13n8ujgZU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUzNDI5/NzgtMTU0NDAzOTcx/MC03Njc0LmpwZWc.jpeg",
+      "uri": "/release/5342978-Various-Pop-Ambient-2014",
+      "resourceUrl": "https://api.discogs.com/releases/5342978"
+    }
+  ]
+}
