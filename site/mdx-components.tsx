@@ -5,7 +5,7 @@ import { Preview } from "@/components/preview";
 import { CodePen } from "@/components/codepen";
 import { CodeSnippet } from "@/components/code-snippet";
 import { InstallTabs } from "@/components/install-tabs";
-import { Children } from "react";
+import { Children, type ReactNode } from "react";
 import { ExternalLinkIcon } from "lucide-react";
 import { Callout } from "./components/callout";
 import VideoPlayer from "./components/video";
@@ -183,12 +183,14 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       showCode,
       showRestart,
       border,
+      description,
       ...props
     }: React.HTMLAttributes<HTMLElement> & {
       name?: string;
       showCode?: boolean | "true" | "false";
       showRestart?: boolean;
       border?: boolean | "true" | "false";
+      description?: ReactNode;
     }) =>
       name ? (
         <Preview
@@ -196,7 +198,9 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
           showCode={showCode}
           showRestart={showRestart}
           border={border}
+          description={description}
           className={cn("my-8", className)}
+          frameClassName={className}
           {...props}
         />
       ) : null,

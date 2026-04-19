@@ -2,7 +2,9 @@
 
 import * as React from "react";
 import { createSuperHover } from "super-hover";
+import { TextMorph } from "torph/react";
 
+import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
 import discogsData from "@/data/discogs-albums.json";
@@ -36,6 +38,7 @@ const SCROLL_FADE_TOP = `linear-gradient(to bottom, ${SCROLL_FADE_STOPS})`;
 const SCROLL_FADE_BOTTOM = `linear-gradient(to top, ${SCROLL_FADE_STOPS})`;
 
 export default function ScrollListPreview() {
+  const superHoverSwitchId = React.useId();
   const [superHoverOn, setSuperHoverOn] = React.useState(true);
   const [showTopFade, setShowTopFade] = React.useState(false);
   const [showBottomFade, setShowBottomFade] = React.useState(false);
@@ -75,25 +78,33 @@ export default function ScrollListPreview() {
 
   return (
     <div className="flex w-full flex-1 flex-col gap-3">
-      <div className="flex flex-col gap-2 p-8 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-        <label className="flex cursor-pointer items-center gap-2.5 text-sm font-medium text-foreground">
-          <input
-            type="checkbox"
-            className="border-input bg-background text-primary focus-visible:ring-ring h-4 w-4 rounded border shadow-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-4">
+        <div className="flex items-center gap-2.5 px-2 pt-2">
+          <label
+            htmlFor={superHoverSwitchId}
+            className="cursor-pointer text-base text-foreground select-none pb-0.5"
+          >
+            <TextMorph
+              as="span"
+              duration={320}
+              ease="ease-out"
+              locale="en"
+            >
+              {superHoverOn ? "Disable" : "Enable"}
+            </TextMorph>
+          </label>
+          <Switch
+            id={superHoverSwitchId}
             checked={superHoverOn}
-            onChange={(e) => setSuperHoverOn(e.target.checked)}
+            onCheckedChange={setSuperHoverOn}
           />
-          <span>Super hover</span>
-        </label>
-        <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-          Scroll down
-        </p>
+        </div>
       </div>
 
-      <div className="relative px-8">
+      <div className="relative ">
         <div
           aria-hidden
-          className="pointer-events-none absolute left-8 right-8 top-0 z-10 h-20 transition-opacity duration-500 ease-in-out"
+          className="pointer-events-none absolute left-0 right-2 top-0 z-10 h-24 transition-opacity duration-500 ease-in-out"
           style={{
             opacity: showTopFade ? 1 : 0,
             background: SCROLL_FADE_TOP,
@@ -101,7 +112,7 @@ export default function ScrollListPreview() {
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute bottom-0 left-8 right-8 z-10 h-20 transition-opacity duration-500 ease-in-out"
+          className="pointer-events-none absolute bottom-0 left-0 right-2 z-10 h-24 transition-opacity duration-500 ease-in-out"
           style={{
             opacity: showBottomFade ? 1 : 0,
             background: SCROLL_FADE_BOTTOM,
@@ -110,7 +121,7 @@ export default function ScrollListPreview() {
 
         <div
           ref={listRootRef}
-          className="max-h-[min(380px,52vh)] overflow-auto"
+          className="max-h-[min(380px,52vh)] overflow-auto pr-2"
         >
           <div className="text-foreground grid w-full grid-cols-[minmax(0,46%)_minmax(0,42%)_minmax(0,12%)] text-sm">
             {albums.map((album, index) => (

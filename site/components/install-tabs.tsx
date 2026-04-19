@@ -45,13 +45,13 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
         case 'pnpm':
           return 'pnpm add';
         case 'npm':
-          return 'npm install';
+          return 'npm i';
         case 'yarn':
           return 'yarn add';
         case 'bun':
           return 'bun add';
         default:
-          return 'npm install';
+          return 'npm i';
       }
     }
   };

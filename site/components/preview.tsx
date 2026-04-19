@@ -18,6 +18,12 @@ export interface PreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   showRestart?: boolean;
   /** Border + rounded frame around the demo. Default `true`. */
   border?: boolean | "true" | "false";
+  /** Centered caption under the preview (figure description). */
+  description?: React.ReactNode;
+  /** Extra className for the outer wrapper */
+  className?: string;
+  /** Classes merged into the demo frame */
+  frameClassName?: string;
 }
 
 export function Preview({
@@ -26,6 +32,8 @@ export function Preview({
   showCode = true,
   showRestart = false,
   border = true,
+  description,
+  frameClassName,
   ...props
 }: PreviewProps) {
   const [previewKey, setPreviewKey] = React.useState(0);
@@ -91,7 +99,8 @@ export function Preview({
     <div
       className={cn(
         "bg-background relative flex min-h-[240px] max-h-[min(70vh,560px)] w-full flex-col overflow-hidden rounded-xl",
-        frameBorder && "border-border border"
+        frameBorder && "border-border border",
+        frameClassName ?? className,
       )}
     >
       {showRestart && (
@@ -115,55 +124,62 @@ export function Preview({
     </div>
   );
 
-  if (!showTabs) {
-    return (
-      <div
-        data-preview={name}
-        className={cn("relative flex w-full max-w-3xl flex-col gap-0", className)}
-        {...props}
+  const main = showTabs ? (
+    <Tabs defaultValue="demo" className="w-full items-start gap-4">
+      <TabsList
+        variant="line"
+        className="h-auto w-fit shrink-0 justify-start gap-3 self-start rounded-none border-0 bg-transparent p-0 shadow-none"
       >
+        <TabsTrigger
+          value="demo"
+          className="h-auto flex-none cursor-pointer rounded-none border-0 bg-transparent px-0 py-0 text-base font-normal text-muted-foreground shadow-none after:bottom-[-6px] hover:text-foreground data-active:bg-transparent data-active:font-semibold data-active:text-foreground data-active:shadow-none dark:data-active:bg-transparent"
+        >
+          Demo
+        </TabsTrigger>
+        <TabsTrigger
+          value="code"
+          className="h-auto flex-none cursor-pointer rounded-none border-0 bg-transparent px-0 py-0 text-base font-normal text-muted-foreground shadow-none after:bottom-[-6px] hover:text-foreground data-active:bg-transparent data-active:font-semibold data-active:text-foreground data-active:shadow-none dark:data-active:bg-transparent"
+        >
+          Code
+        </TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="demo" className="mt-0 focus-visible:outline-none w-full p-0!">
         {DemoFrame}
-      </div>
-    );
-  }
+      </TabsContent>
+
+      <TabsContent value="code" className="mt-0 focus-visible:outline-none w-full p-0!">
+        <CodeSnippet
+          title={`${name}/index.tsx`}
+          code={sourceCode}
+          language="tsx"
+        />
+      </TabsContent>
+    </Tabs>
+  ) : (
+    DemoFrame
+  );
 
   return (
     <div
       data-preview={name}
-      className={cn("relative flex w-full max-w-3xl flex-col gap-4", className)}
+      className={cn(
+        "relative flex w-full max-w-3xl flex-col",
+        showTabs && !description ? "gap-4" : "gap-0",
+        className,
+      )}
       {...props}
     >
-      <Tabs defaultValue="demo" className="w-full items-start gap-4">
-        <TabsList
-          variant="line"
-          className="h-auto w-fit shrink-0 justify-start gap-3 self-start rounded-none border-0 bg-transparent p-0 shadow-none"
-        >
-          <TabsTrigger
-            value="demo"
-            className="h-auto flex-none cursor-pointer rounded-none border-0 bg-transparent px-0 py-0 text-base font-normal text-muted-foreground shadow-none after:bottom-[-6px] hover:text-foreground data-active:bg-transparent data-active:font-semibold data-active:text-foreground data-active:shadow-none dark:data-active:bg-transparent"
-          >
-            Demo
-          </TabsTrigger>
-          <TabsTrigger
-            value="code"
-            className="h-auto flex-none cursor-pointer rounded-none border-0 bg-transparent px-0 py-0 text-base font-normal text-muted-foreground shadow-none after:bottom-[-6px] hover:text-foreground data-active:bg-transparent data-active:font-semibold data-active:text-foreground data-active:shadow-none dark:data-active:bg-transparent"
-          >
-            Code
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="demo" className="mt-0 focus-visible:outline-none w-full p-0!">
-          {DemoFrame}
-        </TabsContent>
-
-        <TabsContent value="code" className="mt-0 focus-visible:outline-none w-full p-0!">
-          <CodeSnippet
-            title={`${name}/index.tsx`}
-            code={sourceCode}
-            language="tsx"
-          />
-        </TabsContent>
-      </Tabs>
+      {description ? (
+        <figure className="flex w-full flex-col gap-3">
+          {main}
+          <figcaption className="text-muted-foreground mx-auto max-w-prose px-2 text-center text-sm leading-relaxed mt-4 sm:mt-6">
+            {description}
+          </figcaption>
+        </figure>
+      ) : (
+        main
+      )}
     </div>
   );
 }
