@@ -18,7 +18,9 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 
-import spTheme from "@/sandpack-theme.json";
+import spThemeDark from "@/sandpack-theme-dark.json";
+import spThemeLight from "@/sandpack-theme-light.json";
+import { useIsDarkMode } from "@/lib/use-is-dark-mode";
 import SandboxMenu from "./sandbox-menu";
 
 interface ExerciseFile {
@@ -65,14 +67,15 @@ interface DemoData {
 
 // Component for fullscreen layout with resizable panels
 function FullscreenSandboxLayout({ setIsFullscreen }: { setIsFullscreen: (value: boolean) => void }) {
+  const isDark = useIsDarkMode();
   return (
     <ResizablePanelGroup orientation="horizontal" className="h-screen">
       <ResizablePanel defaultSize={50} minSize={20}>
         <SandpackCodeEditor showTabs showLineNumbers className="h-full" />
       </ResizablePanel>
-      <ResizableHandle className="bg-[#252525]" />
+      <ResizableHandle className={isDark ? "bg-[#252525]" : "bg-zinc-200"} />
       <ResizablePanel defaultSize={50} minSize={20} className="h-full">
-        <PreviewConsolePanel isFullscreen={true} setIsFullscreen={setIsFullscreen}  />
+        <PreviewConsolePanel isFullscreen={true} setIsFullscreen={setIsFullscreen} />
       </ResizablePanel>
     </ResizablePanelGroup>
   );
@@ -87,19 +90,19 @@ function PreviewConsolePanel({ isFullscreen, setIsFullscreen }: {
     <div className="flex-1 flex flex-col h-full">
       <Tabs
         defaultValue="preview"
-        className="flex-1 flex flex-col bg-editor-background gap-0 w-full"
+        className="flex-1 flex w-full flex-col gap-0 bg-zinc-100 dark:bg-editor-background"
       >
-        <div className="border-b border-editor-border bg-editor-background p-0 justify-between h-11 flex flex-row px-3">
-          <TabsList className="flex items-center rounded-none bg-editor-background gap-x-3 border-none h-[42px] pt-1 font-normal">
+        <div className="flex h-11 flex-row justify-between border-b border-zinc-200 bg-zinc-100 px-3 dark:border-editor-border dark:bg-editor-background">
+          <TabsList className="flex h-[42px] items-center gap-x-3 rounded-none border-none bg-zinc-100 pt-1 font-normal dark:bg-editor-background">
             <TabsTrigger
               value="preview"
-              className="text-white data-[state=active]:bg-editor-background bg-editor-background data-[state=active]:border-none data-[state=inactive]:bg-transparent border-none data-[state=inactive]:hover:text-white cursor-pointer font-normal"
+              className="h-auto cursor-pointer border-none bg-transparent px-2 py-1 text-sm font-normal text-zinc-450 transition-colors duration-200 ease-out hover:bg-transparent hover:text-zinc-900 data-active:border-none data-active:bg-transparent data-active:text-zinc-950 data-active:shadow-none focus-visible:ring-0 focus-visible:outline-none dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:border-none dark:data-active:bg-transparent dark:data-active:text-white shadow-none! font-medium"
             >
               Preview
             </TabsTrigger>
             <TabsTrigger
               value="console"
-              className="text-white data-[state=active]:bg-editor-background bg-editor-background cursor-pointer data-[state=active]:border-none data-[state=inactive]:bg-transparent border-none data-[state=inactive]:hover:text-white font-normal py-0 h-10"
+              className="h-auto cursor-pointer border-none bg-transparent px-2 py-1 text-sm font-normal text-zinc-450 transition-colors duration-200 ease-out hover:bg-transparent hover:text-zinc-900 data-active:border-none data-active:bg-transparent data-active:text-zinc-950 data-active:shadow-none focus-visible:ring-0 focus-visible:outline-none dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:border-none dark:data-active:bg-transparent dark:data-active:text-white shadow-none! font-medium"
             >
               Console
             </TabsTrigger>
@@ -131,6 +134,7 @@ export function Sandbox({
   /** Folder name under /demos; loads /public/l/<demo>.json */
   demo?: string;
 }) {
+  const isDark = useIsDarkMode();
   const [files, setFiles] = useState<SandpackFiles>({});
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [config, setConfig] = useState<ExerciseConfig>({
@@ -228,7 +232,7 @@ export function Sandbox({
   if (loading) {
     return (
       <div className="relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2  flex w-[850px] !rounded-2xl shadow-xl h-[530px] !border !border-border bg-editor-background justify-center items-center">
+        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-zinc-200 bg-zinc-100 shadow-xl dark:border-editor-border dark:bg-editor-background">
           <div className="text-muted-foreground">Loading exercise...</div>
         </div>
       </div>
@@ -238,7 +242,7 @@ export function Sandbox({
   if (error) {
     return (
       <div className="relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2  flex w-[850px] !rounded-2xl shadow-xl h-[530px] !border !border-border bg-editor-background justify-center items-center">
+        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-zinc-200 bg-zinc-100 shadow-xl dark:border-editor-border dark:bg-editor-background">
           <div className="text-red-400">Error: {error}</div>
         </div>
       </div>
@@ -256,7 +260,7 @@ export function Sandbox({
       <SandpackProvider
         files={files}
         //@ts-expect-error SandpackProvider's theme prop type definition doesn't fully match our custom theme object structure
-        theme={spTheme}
+        theme={isDark ? spThemeDark : spThemeLight}
         template={config.template || "react-ts"}
         customSetup={{
           dependencies: {
@@ -278,13 +282,15 @@ export function Sandbox({
             "sp-layout": `absolute ${
               isFullscreen
                 ? "!w-screen !h-screen !top-0 !left-0 !rounded-none !border-none !overflow-auto"
-                : "top-1/2 left-1/2 -translate-x-1/2 flex w-[850px] h-[530px] !rounded-2xl !border !border-[#252525] !overflow-hidden"
+                : `top-1/2 left-1/2 -translate-x-1/2 flex w-[850px] h-[530px] !rounded-2xl !border !overflow-hidden ${isDark ? "!border-[#252525]" : "!border-[#e4e4e7]"}`
             }`,
             "sp-tabs": "h-11 flex px-3 w-full",
             "sp-tabs-scrollable-container": "!p-0 gap-x-3",
             "sp-tab-container": "flex justify-center !px-0 overflow-auto",
             "sp-tab-button":
-              "hover:text-white! !text-sm font !text-muted-foreground data-[state=active]:text-white! cursor-pointer",
+              isDark
+                ? "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-normal !text-muted-foreground !shadow-none hover:!bg-transparent hover:!text-white aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-white aria-selected:!shadow-none focus-visible:!ring-0 focus-visible:!outline-none"
+                : "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-normal !text-zinc-500 !shadow-none hover:!bg-transparent hover:!text-zinc-900 aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-zinc-950 aria-selected:!shadow-none focus-visible:!ring-0 focus-visible:!outline-none",
             "sp-editor": `!overflow-auto ${isFullscreen ? "!h-screen" : "h-[530px]"}`,
             "sp-code-editor": "!h-full !overflow-auto",
             "sp-preview-container": "!h-full",

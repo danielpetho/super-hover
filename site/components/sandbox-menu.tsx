@@ -83,7 +83,7 @@ const SandboxMenu = ({
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-muted-foreground hover:text-white cursor-pointer"
+                className="cursor-pointer text-zinc-500 hover:text-zinc-900 dark:text-muted-foreground dark:hover:text-white"
               >
                 <ListRestartIcon size={10} className="p-px" />
               </Button>
@@ -100,7 +100,7 @@ const SandboxMenu = ({
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-muted-foreground hover:text-white cursor-pointer"
+                className="cursor-pointer text-zinc-500 hover:text-zinc-900 dark:text-muted-foreground dark:hover:text-white"
               >
                 <SquareArrowOutUpRight size={10} className="p-px" />
               </Button>
@@ -117,7 +117,7 @@ const SandboxMenu = ({
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-muted-foreground hover:text-white cursor-pointer"
+                className="cursor-pointer text-zinc-500 hover:text-zinc-900 dark:text-muted-foreground dark:hover:text-white"
                 onClick={() => setIsFullscreen(!isFullscreen)}
               >
                 <MaximizeIcon size={10} className="p-px" />
@@ -135,7 +135,7 @@ const SandboxMenu = ({
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-muted-foreground hover:text-white cursor-pointer"
+                className="cursor-pointer text-zinc-500 hover:text-zinc-900 dark:text-muted-foreground dark:hover:text-white"
               >
                 <RefreshCcwIcon size={10} className="p-px" />
               </Button>
