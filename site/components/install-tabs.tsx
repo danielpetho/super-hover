@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 import { CopyButton } from './copy-button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Highlight, PrismTheme } from 'prism-react-renderer';
-import theme from '@/prism-theme.json';
+import lightTheme from '@/prism-theme.json';
+import darkTheme from '@/prism-theme-dark.json';
+import { useIsDarkMode } from '@/lib/use-is-dark-mode';
 
 interface InstallTabsProps {
   command: string;
@@ -25,6 +27,7 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
   npx = false,
 }) => {
   const [activeTab, setActiveTab] = useState<PackageManager>('pnpm');
+  const isDark = useIsDarkMode();
 
   const getCommandPrefix = (pm: PackageManager): string => {
     if (npx) {
@@ -67,8 +70,8 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
   };
 
   return (
-    <div className="border border-editor-border rounded-2xl overflow-hidden">
-      <div className="flex items-center justify-between pl-4 pr-3 py-2 border-b border-editor-border bg-editor-background h-11">
+    <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100 dark:border-editor-border dark:bg-editor-background">
+      <div className="flex h-11 items-center justify-between border-b border-zinc-200 bg-zinc-100 py-2 pl-4 pr-3 dark:border-editor-border dark:bg-editor-background">
         <Tabs 
           value={activeTab} 
           onValueChange={(value) => setActiveTab(value as PackageManager)}
@@ -79,7 +82,7 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
               <TabsTrigger
                 key={pm.id}
                 value={pm.id}
-                className="text hover:text-white duration-300 ease-out transition px-2 py-1 h-auto data-[state=active]:bg-editor-background data-[state=active]:text-white text-muted-foreground cursor-pointer"
+                className="h-auto cursor-pointer px-2 py-1 text-sm text-zinc-500 transition-colors duration-200 ease-out hover:bg-zinc-900 hover:bg-transparent hover:text-zinc-900 data-active:text-zinc-950 dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:bg-editor-background dark:data-active:text-white shadow-none!"
               >
                 {pm.label}
               </TabsTrigger>
@@ -88,17 +91,24 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
         </Tabs>
         <CopyButton onCopy={handleCopy} />
       </div>
-      <div className="bg-editor-background py-4">
+      <div className="bg-zinc-100 py-4 dark:bg-editor-background">
         <Highlight
-          theme={theme as PrismTheme}
+          theme={(isDark ? darkTheme : lightTheme) as PrismTheme}
           code={getFullCommand(activeTab)}
           language="bash"
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <pre className={`${className} text-[13px] overflow-x-auto font-mono font-medium`} style={style}>
+            <pre
+              className={`${className} overflow-x-auto font-mono text-[13px] font-medium`}
+              style={style}
+            >
               {tokens.map((line, i) => (
-                <div key={i} {...getLineProps({ line })} className="flex items-center hover:bg-editor-border py-px px-4">
-                  <span className="mr-4 select-none text-muted-foreground text-right text-[10px] items-center flex">
+                <div
+                  key={i}
+                  {...getLineProps({ line })}
+                  className="flex items-center px-4 py-px hover:bg-zinc-200/60 dark:hover:bg-editor-border"
+                >
+                  <span className="mr-4 flex items-center text-right text-[10px] text-zinc-500 select-none dark:text-muted-foreground">
                     1
                   </span>
                   <span>

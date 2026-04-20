@@ -3,7 +3,9 @@
 import React from 'react';
 import { CopyButton } from './copy-button';
 import { Highlight, PrismTheme } from 'prism-react-renderer';
-import theme from '@/prism-theme.json';
+import lightTheme from '@/prism-theme.json';
+import darkTheme from '@/prism-theme-dark.json';
+import { useIsDarkMode } from '@/lib/use-is-dark-mode';
 
 interface CodeSnippetProps {
   title?: string;
@@ -17,20 +19,21 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
   language = 'typescript',
 }) => {
   const lines = code.trim().split('\n');
+  const isDark = useIsDarkMode();
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(code);
   };
 
   return (
-    <div className="border border-editor-border rounded-xl overflow-hidden bg-editor-background">
+    <div className="overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-editor-border dark:bg-editor-background">
       {title ? (
-        <div className="flex h-11 items-center justify-between border-b border-editor-border bg-editor-background py-2 pl-4 pr-3">
-          <h3 className="text-white text-sm font-medium">{title}</h3>
+        <div className="flex h-11 items-center justify-between border-b border-zinc-200 bg-zinc-100 py-2 pl-4 pr-3 dark:border-editor-border dark:bg-editor-background">
+          <h3 className="text-sm font-medium text-zinc-900 dark:text-white">{title}</h3>
           <CopyButton onCopy={handleCopy} />
         </div>
       ) : null}
-      <div className="relative max-h-[min(70vh,520px)] overflow-y-auto bg-editor-background py-4">
+      <div className="relative max-h-[min(70vh,520px)] overflow-y-auto bg-zinc-100 py-4 dark:bg-editor-background">
         {!title && (
           <div className={`absolute ${
             lines.length === 1 
@@ -43,15 +46,15 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
           </div>
         )}
         <Highlight
-          theme={theme as PrismTheme}
+          theme={(isDark ? darkTheme : lightTheme) as PrismTheme}
           code={code.trim()}
           language={language}
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <pre className={`${className} text-[13px] overflow-x-auto font-mono font-medium whitespace-pre-wrap`} style={style}>
               {tokens.map((line, i) => (
-                <div key={i} {...getLineProps({ line })} className="flex items-center hover:bg-editor-border py-px px-4">
-                  <span className="mr-4 select-none text-muted-foreground text-right text-[10px] items-center flex">
+                <div key={i} {...getLineProps({ line })} className="flex items-center py-px px-4 hover:bg-zinc-200/60 dark:hover:bg-editor-border">
+                  <span className="mr-4 flex items-center text-right text-[10px] text-zinc-500 select-none dark:text-muted-foreground">
                     {i + 1}
                   </span>
                   <span>

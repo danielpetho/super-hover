@@ -1,50 +1,50 @@
 {
   "plain": {
-    "color": "#111827",
-    "backgroundColor": "#f4f4f5"
+    "color": "#FFFFFF",
+    "backgroundColor": "#151515"
   },
   "styles": [
     {
       "types": ["comment"],
       "style": {
-        "color": "#71717a",
+        "color": "#757575",
         "fontStyle": "italic"
       }
     },
     {
       "types": ["keyword",  "property", "property-access", "attr-name"],
       "style": {
-        "color": "#1d4ed8"
+        "color": "#77b7d7"
       }
     },
     {
       "types": ["tag"],
       "style": {
-        "color": "#b45309"
+        "color": "#dfab5c"
       }
     },
     {
       "types": ["punctuation", "symbol", "dom"],
       "style": {
-        "color": "#111827"
+        "color": "#ffffff"
       }
     },
     {
       "types": ["definition", "function"],
       "style": {
-        "color": "#0f766e"
+        "color": "#86d9ca"
       }
     },
     {
       "types": ["string", "char", "attr-value"],
       "style": {
-        "color": "#7c3aed"
+        "color": "#977cdc"
       }
     },
     {
       "types": ["static", "number"],
       "style": {
-        "color": "#dc2626"
+        "color": "#ff6658"
       }
     }
   ]

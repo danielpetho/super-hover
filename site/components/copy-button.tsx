@@ -184,7 +184,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({ onCopy }) => {
     <div className="relative">
       {/* animated Background */}
       <motion.div
-        className="absolute inset-0 bg-editor-border rounded-md"
+        className="absolute inset-0 rounded-md bg-zinc-200 dark:bg-editor-border"
         animate={getBackgroundAnimation()}
       />
       
@@ -195,7 +195,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({ onCopy }) => {
         onMouseLeave={handleMouseLeave}
         variant="ghost"
         size="icon"
-        className="relative text-muted-foreground cursor-pointer w-8 h-8 hover:text-white hover:scale-105 duration-200 ease-out"
+        className="relative h-8 w-8 cursor-pointer text-zinc-500 duration-200 ease-out hover:scale-105 hover:text-zinc-900 dark:text-muted-foreground dark:hover:text-white"
         aria-label="Copy code"
         whileTap={{ scale: 0.9 }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
@@ -223,7 +223,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({ onCopy }) => {
               height={16}
               viewBox="0 0 24 24"
               fill="none"
-              stroke="white"
+              stroke="currentColor"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
