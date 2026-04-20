@@ -284,7 +284,7 @@ export function Sandbox({
             "sp-tabs-scrollable-container": "!p-0 gap-x-3",
             "sp-tab-container": "flex justify-center !px-0 overflow-auto",
             "sp-tab-button":
-              "hover:text-white !text-sm font !text-muted-foreground data-[state=active]:!text-white cursor-pointer",
+              "hover:text-white! !text-sm font !text-muted-foreground data-[state=active]:text-white! cursor-pointer",
             "sp-editor": `!overflow-auto ${isFullscreen ? "!h-screen" : "h-[530px]"}`,
             "sp-code-editor": "!h-full !overflow-auto",
             "sp-preview-container": "!h-full",

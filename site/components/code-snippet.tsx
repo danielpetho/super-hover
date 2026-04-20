@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { CopyButton } from './copy-button';
-import { Highlight, PrismTheme, themes } from 'prism-react-renderer';
+import { Highlight, PrismTheme } from 'prism-react-renderer';
 import theme from '@/prism-theme.json';
 
 interface CodeSnippetProps {
@@ -23,14 +23,14 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
   };
 
   return (
-    <div className="border border-editor-border rounded-xl overflow-hidden">
+    <div className="border border-editor-border rounded-xl overflow-hidden bg-editor-background">
       {title ? (
-        <div className="flex items-center justify-between pl-4 pr-3 py-2 border-b border-editor-border bg-editor-background h-11">
+        <div className="flex h-11 items-center justify-between border-b border-editor-border bg-editor-background py-2 pl-4 pr-3">
           <h3 className="text-white text-sm font-medium">{title}</h3>
           <CopyButton onCopy={handleCopy} />
         </div>
       ) : null}
-      <div className="bg-editor-background py-4 relative">
+      <div className="relative max-h-[min(70vh,520px)] overflow-y-auto bg-editor-background py-4">
         {!title && (
           <div className={`absolute ${
             lines.length === 1 
@@ -48,7 +48,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
           language={language}
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <pre className={`${className} text-[13px] overflow-x-auto font-mono font-medium`} style={style}>
+            <pre className={`${className} text-[13px] overflow-x-auto font-mono font-medium whitespace-pre-wrap`} style={style}>
               {tokens.map((line, i) => (
                 <div key={i} {...getLineProps({ line })} className="flex items-center hover:bg-editor-border py-px px-4">
                   <span className="mr-4 select-none text-muted-foreground text-right text-[10px] items-center flex">

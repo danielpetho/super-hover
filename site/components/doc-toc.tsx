@@ -111,7 +111,7 @@ export function DocToc() {
       aria-label="Sections"
       className="fixed left-0 top-0 z-40 hidden max-h-screen w-56 overflow-y-auto pt-64 ml-8 pr-2 lg:block xl:pl-5"
     >
-      <ul className="space-y-2">
+      <ul className="space-y-1">
         {items.map(({ id, label }) => {
           const active = activeId === id;
           return (

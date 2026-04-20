@@ -169,12 +169,15 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     Sandbox: ({
       className,
       demo,
+      name,
       ...props
     }: React.HTMLAttributes<HTMLElement> & {
       demo?: string;
+      /** Alias for `demo` (folder under `embeds/sandbox/`). */
+      name?: string;
     }) => (
       <div className={cn("w-full max-w-3xl", className)} {...props}>
-        <Sandbox demo={demo} />
+        <Sandbox demo={demo ?? name} />
       </div>
     ),
     Preview: ({

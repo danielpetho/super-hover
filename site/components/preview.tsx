@@ -144,11 +144,11 @@ export function Preview({
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="demo" className="mt-0 focus-visible:outline-none w-full p-0!">
+      <TabsContent value="demo" className="mt-0 w-full p-0! focus-visible:outline-none">
         {DemoFrame}
       </TabsContent>
 
-      <TabsContent value="code" className="mt-0 focus-visible:outline-none w-full p-0!">
+      <TabsContent value="code" className="mt-0 w-full p-0! focus-visible:outline-none">
         <CodeSnippet
           title={`${name}/index.tsx`}
           code={sourceCode}
