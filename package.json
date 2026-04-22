@@ -1,12 +1,11 @@
 {
   "name": "super-hover-monorepo",
   "private": true,
-  "description": "Monorepo for super-hover (npm package, docs site, dev playground)",
+  "description": "Monorepo for super-hover (npm package and docs site)",
   "packageManager": "pnpm@10.33.0",
   "scripts": {
     "dev": "pnpm --filter site dev",
     "dev:site": "pnpm --filter site dev",
-    "dev:dev": "pnpm --filter dev dev",
     "build": "pnpm --filter site build",
     "build:lib": "pnpm --filter super-hover build",
     "build:all": "pnpm -r run build",

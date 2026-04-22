@@ -1,0 +1,12 @@
+{
+  "template": "vanilla",
+  "customSetup": {
+    "entry": "/index.js"
+  },
+  "files": {
+    "index.js": { "active": true },
+    "super-hover.js": {},
+    "index.html": { "hidden": true },
+    "index.css": {}
+  }
+}

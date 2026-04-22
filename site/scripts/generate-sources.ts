@@ -44,6 +44,12 @@ async function generateSandboxBundles() {
     const id = entry.name;
     const bundlePath = join(SANDBOX_DIR, id);
     const filePaths = await walkDirectory(bundlePath);
+    if (filePaths.length === 0) {
+      console.warn(
+        `[generate-sources] Skipping sandbox "${id}": folder is empty`
+      );
+      continue;
+    }
     const files: { name: string; content: string }[] = [];
 
     for (const filePath of filePaths) {

@@ -8,7 +8,6 @@ Hit-tested hover state that updates while scrolling—works with vanilla JS, Rea
 |------|---------|
 | [`packages/super-hover`](./packages/super-hover) | **npm package** (`super-hover`) — publish this to npm |
 | [`site/`](./site) | **Docs site** (Next.js) |
-| [`dev/`](./dev) | **Dev playground** — Vite app comparing native `:hover` vs super-hover |
 
 ## Development
 
@@ -21,7 +20,6 @@ pnpm build:lib
 - **Site + generated embeds:** `pnpm build` (runs `site`’s `generate-sources`, then Next.js build)
 - **Build everything:** `pnpm build:all`
 - **Docs site:** `pnpm dev` → [http://localhost:3000](http://localhost:3000)
-- **Dev playground:** `pnpm dev:dev` → [http://localhost:5173](http://localhost:5173)
 - **Tests:** `pnpm test`
 
 ## Publishing
