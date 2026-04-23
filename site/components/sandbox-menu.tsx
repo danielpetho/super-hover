@@ -42,9 +42,11 @@ const items = [
 const SandboxMenu = ({
   isFullscreen,
   setIsFullscreen,
+  onRefreshPreview,
 }: {
   isFullscreen: boolean;
   setIsFullscreen: (isFullscreen: boolean) => void;
+  onRefreshPreview: () => void;
 }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -83,7 +85,7 @@ const SandboxMenu = ({
               <Button
                 variant="ghost"
                 size="icon"
-                className="cursor-pointer text-zinc-500 hover:text-zinc-900 dark:text-muted-foreground dark:hover:text-white"
+                className="cursor-pointer text-neutral-500 hover:text-neutral-900 dark:text-muted-foreground dark:hover:text-white"
               >
                 <ListRestartIcon size={10} className="p-px" />
               </Button>
@@ -100,7 +102,7 @@ const SandboxMenu = ({
               <Button
                 variant="ghost"
                 size="icon"
-                className="cursor-pointer text-zinc-500 hover:text-zinc-900 dark:text-muted-foreground dark:hover:text-white"
+                className="cursor-pointer text-neutral-500 hover:text-neutral-900 dark:text-muted-foreground dark:hover:text-white"
               >
                 <SquareArrowOutUpRight size={10} className="p-px" />
               </Button>
@@ -117,7 +119,7 @@ const SandboxMenu = ({
               <Button
                 variant="ghost"
                 size="icon"
-                className="cursor-pointer text-zinc-500 hover:text-zinc-900 dark:text-muted-foreground dark:hover:text-white"
+                className="cursor-pointer text-neutral-500 hover:text-neutral-900 dark:text-muted-foreground dark:hover:text-white"
                 onClick={() => setIsFullscreen(!isFullscreen)}
               >
                 <MaximizeIcon size={10} className="p-px" />
@@ -135,7 +137,8 @@ const SandboxMenu = ({
               <Button
                 variant="ghost"
                 size="icon"
-                className="cursor-pointer text-zinc-500 hover:text-zinc-900 dark:text-muted-foreground dark:hover:text-white"
+                className="cursor-pointer text-neutral-500 hover:text-neutral-900 dark:text-muted-foreground dark:hover:text-white"
+                onClick={onRefreshPreview}
               >
                 <RefreshCcwIcon size={10} className="p-px" />
               </Button>

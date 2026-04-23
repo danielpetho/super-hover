@@ -66,56 +66,84 @@ interface DemoData {
 }
 
 // Component for fullscreen layout with resizable panels
-function FullscreenSandboxLayout({ setIsFullscreen }: { setIsFullscreen: (value: boolean) => void }) {
+function FullscreenSandboxLayout({
+  setIsFullscreen,
+  previewKey,
+  onRefreshPreview,
+}: {
+  setIsFullscreen: (value: boolean) => void;
+  previewKey: number;
+  onRefreshPreview: () => void;
+}) {
   const isDark = useIsDarkMode();
   return (
     <ResizablePanelGroup orientation="horizontal" className="h-screen">
       <ResizablePanel defaultSize={50} minSize={20}>
         <SandpackCodeEditor showTabs showLineNumbers className="h-full" />
       </ResizablePanel>
-      <ResizableHandle className={isDark ? "bg-[#252525]" : "bg-zinc-200"} />
+      <ResizableHandle className={isDark ? "bg-[#252525]" : "bg-neutral-200"} />
       <ResizablePanel defaultSize={50} minSize={20} className="h-full">
-        <PreviewConsolePanel isFullscreen={true} setIsFullscreen={setIsFullscreen} />
+        <PreviewConsolePanel
+          isFullscreen={true}
+          setIsFullscreen={setIsFullscreen}
+          previewKey={previewKey}
+          onRefreshPreview={onRefreshPreview}
+        />
       </ResizablePanel>
     </ResizablePanelGroup>
   );
 }
 
-// Reusable component for the preview/console panel
-function PreviewConsolePanel({ isFullscreen, setIsFullscreen }: { 
+function PreviewConsolePanel({
+  isFullscreen,
+  setIsFullscreen,
+  previewKey,
+  onRefreshPreview,
+}: { 
   isFullscreen: boolean; 
   setIsFullscreen: (value: boolean) => void; 
+  previewKey: number;
+  onRefreshPreview: () => void;
 }) {
   return (
     <div className="flex-1 flex flex-col h-full">
       <Tabs
         defaultValue="preview"
-        className="flex-1 flex w-full flex-col gap-0 bg-zinc-100 dark:bg-editor-background"
+        className="flex-1 flex w-full flex-col gap-0 bg-neutral-100 dark:bg-editor-background"
       >
-        <div className="flex h-11 flex-row justify-between border-b border-zinc-200 bg-zinc-100 px-3 dark:border-editor-border dark:bg-editor-background">
-          <TabsList className="flex h-[42px] items-center gap-x-3 rounded-none border-none bg-zinc-100 pt-1 font-normal dark:bg-editor-background">
+        <div className="flex h-11 flex-row justify-between border-b border-neutral-200 bg-neutral-100 px-3 dark:border-editor-border dark:bg-editor-background">
+          <TabsList className="flex h-[42px] items-center gap-x-3 rounded-none border-none bg-neutral-100 pt-1 font-normal dark:bg-editor-background">
             <TabsTrigger
               value="preview"
-              className="h-auto cursor-pointer border-none bg-transparent px-2 py-1 text-sm font-normal text-zinc-450 transition-colors duration-200 ease-out hover:bg-transparent hover:text-zinc-900 data-active:border-none data-active:bg-transparent data-active:text-zinc-950 data-active:shadow-none focus-visible:ring-0 focus-visible:outline-none dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:border-none dark:data-active:bg-transparent dark:data-active:text-white shadow-none! font-medium"
+              className="h-auto cursor-pointer border-none bg-transparent px-2 py-1 text-sm font-normal text-neutral-500 transition-colors duration-200 ease-out hover:bg-transparent hover:text-neutral-900 data-active:border-none data-active:bg-transparent data-active:text-neutral-950 data-active:shadow-none focus-visible:ring-0 focus-visible:outline-none dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:border-none dark:data-active:bg-transparent dark:data-active:text-white shadow-none! font-medium duration-200 ease-out transition-all active:scale-97"
             >
               Preview
             </TabsTrigger>
             <TabsTrigger
               value="console"
-              className="h-auto cursor-pointer border-none bg-transparent px-2 py-1 text-sm font-normal text-zinc-450 transition-colors duration-200 ease-out hover:bg-transparent hover:text-zinc-900 data-active:border-none data-active:bg-transparent data-active:text-zinc-950 data-active:shadow-none focus-visible:ring-0 focus-visible:outline-none dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:border-none dark:data-active:bg-transparent dark:data-active:text-white shadow-none! font-medium"
+              className="h-auto cursor-pointer border-none bg-transparent px-2 py-1 text-sm font-normal text-neutral-500 transition-colors duration-200 ease-out hover:bg-transparent hover:text-neutral-900 data-active:border-none data-active:bg-transparent data-active:text-neutral-950 data-active:shadow-none focus-visible:ring-0 focus-visible:outline-none dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:border-none dark:data-active:bg-transparent dark:data-active:text-white shadow-none! font-medium duration-200 ease-out transition-all active:scale-97"
             >
               Console
             </TabsTrigger>
           </TabsList>
 
-          <SandboxMenu isFullscreen={isFullscreen} setIsFullscreen={setIsFullscreen} />
+          <SandboxMenu
+            isFullscreen={isFullscreen}
+            setIsFullscreen={setIsFullscreen}
+            onRefreshPreview={onRefreshPreview}
+          />
         </div>
 
         <TabsContent
           value="preview"
           className="flex-1 m-0 min-h-0 h-full"
         >
-          <SandpackPreview className="h-full" showOpenInCodeSandbox={false}/>
+          <SandpackPreview
+            key={previewKey}
+            className="h-full"
+            showOpenInCodeSandbox={false}
+            showRefreshButton={false}
+          />
         </TabsContent>
         <TabsContent
           value="console"
@@ -137,6 +165,7 @@ export function Sandbox({
   const isDark = useIsDarkMode();
   const [files, setFiles] = useState<SandpackFiles>({});
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [previewKey, setPreviewKey] = useState(0);
   const [config, setConfig] = useState<ExerciseConfig>({
     files: {},
     template: "react-ts",
@@ -150,6 +179,9 @@ export function Sandbox({
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const handleRefreshPreview = () => {
+    setPreviewKey((value) => value + 1);
+  };
 
   useEffect(() => {
     if (!demo) {
@@ -232,7 +264,7 @@ export function Sandbox({
   if (loading) {
     return (
       <div className="relative">
-        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-zinc-200 bg-zinc-100 shadow-xl dark:border-editor-border dark:bg-editor-background">
+        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-100 shadow-xl dark:border-editor-border dark:bg-editor-background">
           <div className="text-muted-foreground">Loading exercise...</div>
         </div>
       </div>
@@ -242,7 +274,7 @@ export function Sandbox({
   if (error) {
     return (
       <div className="relative">
-        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-zinc-200 bg-zinc-100 shadow-xl dark:border-editor-border dark:bg-editor-background">
+        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-100 shadow-xl dark:border-editor-border dark:bg-editor-background">
           <div className="text-red-400">Error: {error}</div>
         </div>
       </div>
@@ -286,11 +318,15 @@ export function Sandbox({
             }`,
             "sp-tabs": "h-11 flex px-3 w-full",
             "sp-tabs-scrollable-container": "!p-0 gap-x-3",
-            "sp-tab-container": "flex justify-center !px-0 overflow-auto",
+            "sp-tab-container":
+              isDark
+                ? "flex justify-center !px-0 overflow-auto outline-none! border-none! ring-0! !text-muted-foreground aria-selected:!text-white!"
+                : "flex justify-center !px-0 overflow-auto outline-none! border-none! ring-0! aria-selected:!text-neutral-950! hover:!text-neutral-950! active:scale-97 duration-200 ease-out",
             "sp-tab-button":
               isDark
-                ? "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-normal !text-muted-foreground !shadow-none hover:!bg-transparent hover:!text-white aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-white aria-selected:!shadow-none focus-visible:!ring-0 focus-visible:!outline-none"
-                : "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-normal !text-zinc-500 !shadow-none hover:!bg-transparent hover:!text-zinc-900 aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-zinc-950 aria-selected:!shadow-none focus-visible:!ring-0 focus-visible:!outline-none",
+                ? "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-medium !shadow-none hover:!bg-transparent hover:!text-white aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-white  focus-visible:!ring-0 focus-visible:!outline-none"
+                : "cursor-pointer !h-auto !border-0 !bg-transparent px-2! py-1! !text-sm !font-medium !text-neutral-500 !shadow-none hover:!bg-transparent hover:!text-neutral-900 aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-neutral-950 focus-visible:!ring-0 focus-visible:!outline-none",
+           
             "sp-editor": `!overflow-auto ${isFullscreen ? "!h-screen" : "h-[530px]"}`,
             "sp-code-editor": "!h-full !overflow-auto",
             "sp-preview-container": "!h-full",
@@ -305,13 +341,22 @@ export function Sandbox({
       >
         <SandpackLayout>
           {isFullscreen ? (
-            <FullscreenSandboxLayout setIsFullscreen={setIsFullscreen} />
+            <FullscreenSandboxLayout
+              setIsFullscreen={setIsFullscreen}
+              previewKey={previewKey}
+              onRefreshPreview={handleRefreshPreview}
+            />
           ) : (
             <>
               <div className="w-1/2">
                 <SandpackCodeEditor showTabs showLineNumbers className="" />
               </div>
-              <PreviewConsolePanel isFullscreen={isFullscreen} setIsFullscreen={setIsFullscreen} />
+              <PreviewConsolePanel
+                isFullscreen={isFullscreen}
+                setIsFullscreen={setIsFullscreen}
+                previewKey={previewKey}
+                onRefreshPreview={handleRefreshPreview}
+              />
             </>
           )}
         </SandpackLayout>

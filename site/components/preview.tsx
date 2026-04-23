@@ -132,13 +132,13 @@ export function Preview({
       >
         <TabsTrigger
           value="demo"
-          className="h-auto flex-none cursor-pointer rounded-none border-0 bg-transparent px-0 py-0 text-base font-normal text-muted-foreground shadow-none after:bottom-[-6px] hover:text-foreground data-active:bg-transparent data-active:font-semibold data-active:text-foreground data-active:shadow-none dark:data-active:bg-transparent"
+          className="h-auto flex-none cursor-pointer rounded-none border-0 bg-transparent px-0 py-0 text-base font-medium text-muted-foreground shadow-none after:bottom-[-6px] hover:text-foreground data-active:bg-transparent data-active:font-medium data-active:text-foreground data-active:shadow-none dark:data-active:bg-transparent active:scale-97 duration-200 ease-out"
         >
           Demo
         </TabsTrigger>
         <TabsTrigger
           value="code"
-          className="h-auto flex-none cursor-pointer rounded-none border-0 bg-transparent px-0 py-0 text-base font-normal text-muted-foreground shadow-none after:bottom-[-6px] hover:text-foreground data-active:bg-transparent data-active:font-semibold data-active:text-foreground data-active:shadow-none dark:data-active:bg-transparent"
+          className="h-auto flex-none cursor-pointer rounded-none border-0 bg-transparent px-0 py-0 text-base font-medium text-muted-foreground shadow-none after:bottom-[-6px] hover:text-foreground data-active:bg-transparent data-active:font-medium data-active:text-foreground data-active:shadow-none dark:data-active:bg-transparent active:scale-97 duration-200 ease-out"
         >
           Code
         </TabsTrigger>

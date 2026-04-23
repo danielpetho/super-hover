@@ -26,14 +26,14 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-editor-border dark:bg-editor-background">
+    <div className="overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 dark:border-editor-border dark:bg-editor-background">
       {title ? (
-        <div className="flex h-11 items-center justify-between border-b border-zinc-200 bg-zinc-100 py-2 pl-4 pr-3 dark:border-editor-border dark:bg-editor-background">
-          <h3 className="text-sm font-medium text-zinc-900 dark:text-white">{title}</h3>
+        <div className="flex h-11 items-center justify-between border-b border-neutral-200 bg-neutral-100 py-2 pl-4 pr-3 dark:border-editor-border dark:bg-editor-background">
+          <h3 className="text-sm font-medium text-neutral-900 dark:text-white">{title}</h3>
           <CopyButton onCopy={handleCopy} />
         </div>
       ) : null}
-      <div className="relative max-h-[min(70vh,520px)] overflow-y-auto bg-zinc-100 pt-4 dark:bg-editor-background">
+      <div className="relative max-h-[min(70vh,520px)] overflow-y-auto bg-neutral-100 pt-4 dark:bg-editor-background">
         {!title && (
           <div className={`absolute ${
             lines.length === 1 
@@ -53,8 +53,8 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <pre className={`${className} text-[13px] overflow-x-auto font-mono font-medium pb-4`} style={style}>
               {tokens.map((line, i) => (
-                <div key={i} {...getLineProps({ line })} className="flex items-center py-px px-4 hover:bg-zinc-200/60 dark:hover:bg-editor-border">
-                  <span className="mr-4 flex items-center text-right text-[10px] text-zinc-500 select-none dark:text-muted-foreground">
+                <div key={i} {...getLineProps({ line })} className="flex items-center py-px px-4 hover:bg-neutral-200/60 dark:hover:bg-editor-border">
+                  <span className="mr-4 flex items-center text-right text-[10px] text-neutral-500 select-none dark:text-muted-foreground">
                     {i + 1}
                   </span>
                   <span>
