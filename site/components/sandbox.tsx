@@ -69,10 +69,12 @@ interface DemoData {
 function FullscreenSandboxLayout({
   setIsFullscreen,
   previewKey,
+  onResetCode,
   onRefreshPreview,
 }: {
   setIsFullscreen: (value: boolean) => void;
   previewKey: number;
+  onResetCode: () => void;
   onRefreshPreview: () => void;
 }) {
   const isDark = useIsDarkMode();
@@ -87,6 +89,7 @@ function FullscreenSandboxLayout({
           isFullscreen={true}
           setIsFullscreen={setIsFullscreen}
           previewKey={previewKey}
+          onResetCode={onResetCode}
           onRefreshPreview={onRefreshPreview}
         />
       </ResizablePanel>
@@ -98,11 +101,13 @@ function PreviewConsolePanel({
   isFullscreen,
   setIsFullscreen,
   previewKey,
+  onResetCode,
   onRefreshPreview,
 }: { 
   isFullscreen: boolean; 
   setIsFullscreen: (value: boolean) => void; 
   previewKey: number;
+  onResetCode: () => void;
   onRefreshPreview: () => void;
 }) {
   return (
@@ -130,6 +135,7 @@ function PreviewConsolePanel({
           <SandboxMenu
             isFullscreen={isFullscreen}
             setIsFullscreen={setIsFullscreen}
+            onResetCode={onResetCode}
             onRefreshPreview={onRefreshPreview}
           />
         </div>
@@ -166,6 +172,7 @@ export function Sandbox({
   const [files, setFiles] = useState<SandpackFiles>({});
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [previewKey, setPreviewKey] = useState(0);
+  const [providerKey, setProviderKey] = useState(0);
   const [config, setConfig] = useState<ExerciseConfig>({
     files: {},
     template: "react-ts",
@@ -179,6 +186,10 @@ export function Sandbox({
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const handleResetCode = () => {
+    setProviderKey((value) => value + 1);
+    setPreviewKey((value) => value + 1);
+  };
   const handleRefreshPreview = () => {
     setPreviewKey((value) => value + 1);
   };
@@ -290,6 +301,7 @@ export function Sandbox({
       }
     >
       <SandpackProvider
+        key={providerKey}
         files={files}
         //@ts-expect-error SandpackProvider's theme prop type definition doesn't fully match our custom theme object structure
         theme={isDark ? spThemeDark : spThemeLight}
@@ -344,6 +356,7 @@ export function Sandbox({
             <FullscreenSandboxLayout
               setIsFullscreen={setIsFullscreen}
               previewKey={previewKey}
+              onResetCode={handleResetCode}
               onRefreshPreview={handleRefreshPreview}
             />
           ) : (
@@ -355,6 +368,7 @@ export function Sandbox({
                 isFullscreen={isFullscreen}
                 setIsFullscreen={setIsFullscreen}
                 previewKey={previewKey}
+                onResetCode={handleResetCode}
                 onRefreshPreview={handleRefreshPreview}
               />
             </>

@@ -42,10 +42,12 @@ const items = [
 const SandboxMenu = ({
   isFullscreen,
   setIsFullscreen,
+  onResetCode,
   onRefreshPreview,
 }: {
   isFullscreen: boolean;
   setIsFullscreen: (isFullscreen: boolean) => void;
+  onResetCode: () => void;
   onRefreshPreview: () => void;
 }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -86,6 +88,7 @@ const SandboxMenu = ({
                 variant="ghost"
                 size="icon"
                 className="cursor-pointer text-neutral-500 hover:text-neutral-900 dark:text-muted-foreground dark:hover:text-white"
+                onClick={onResetCode}
               >
                 <ListRestartIcon size={10} className="p-px" />
               </Button>
