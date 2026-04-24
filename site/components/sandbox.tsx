@@ -8,6 +8,7 @@ import {
   SandpackPreview,
   SandpackConsole,
   SandpackFiles,
+  useSandpack,
 } from "@codesandbox/sandpack-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -142,6 +143,7 @@ function PreviewConsolePanel({
 
         <TabsContent
           value="preview"
+          keepMounted
           className="flex-1 m-0 min-h-0 h-full"
         >
           <SandpackPreview
@@ -153,9 +155,14 @@ function PreviewConsolePanel({
         </TabsContent>
         <TabsContent
           value="console"
+          keepMounted
           className="flex-1 m-0 min-h-0 h-full"
         >
-          <SandpackConsole className="h-full" />
+          <SandpackConsole
+            className="h-full"
+            showHeader
+            resetOnPreviewRestart={false}
+          />
         </TabsContent>
       </Tabs>
     </div>
@@ -320,7 +327,7 @@ export function Sandbox({
           entry: config.customSetup?.entry || "/index.tsx",
         }}
         options={{
-          initMode: "user-visible",
+          initMode: "immediate",
           classes: {
             "sp-wrapper": ``,
             "sp-layout": `absolute ${

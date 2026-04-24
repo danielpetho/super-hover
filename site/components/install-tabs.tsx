@@ -82,7 +82,7 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
               <TabsTrigger
                 key={pm.id}
                 value={pm.id}
-                className="h-auto cursor-pointer px-2 py-1 text-sm text-neutral-500 transition-colors duration-200 ease-out hover:bg-neutral-900 hover:bg-transparent hover:text-neutral-900 data-active:text-neutral-950 dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:bg-editor-background dark:data-active:text-white shadow-none!"
+                className="h-auto cursor-pointer px-2 py-1 text-sm text-neutral-500 duration-200 ease-out hover:bg-neutral-900 hover:bg-transparent hover:text-neutral-900 data-active:text-neutral-950 dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:bg-editor-background dark:data-active:text-white shadow-none! active:scale-96 duration-200 ease-out transition-all"
               >
                 {pm.label}
               </TabsTrigger>

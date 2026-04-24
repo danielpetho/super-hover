@@ -2,6 +2,7 @@ import { createSuperHover } from "./super-hover";
 import "./index.css";
 
 const ITEM_COUNT = 180;
+console.log("super-hover sandbox ready");
 
 function buildLabel(index) {
   return `Item ${String(index + 1)}`;
