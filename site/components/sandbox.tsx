@@ -340,11 +340,11 @@ export function Sandbox({
             "sp-tab-container":
               isDark
                 ? "flex justify-center !px-0 overflow-auto outline-none! border-none! ring-0! !text-muted-foreground aria-selected:!text-white!"
-                : "flex justify-center !px-0 overflow-auto outline-none! border-none! ring-0! aria-selected:!text-neutral-950! hover:!text-neutral-950! active:scale-97 duration-200 ease-out",
+                : "flex justify-center !px-0 overflow-auto outline-none! border-none! ring-0! hover:!text-neutral-950! active:scale-97 duration-200 ease-out aria-selected:!text-neutral-950",
             "sp-tab-button":
               isDark
                 ? "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-medium !shadow-none hover:!bg-transparent hover:!text-white aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-white  focus-visible:!ring-0 focus-visible:!outline-none"
-                : "cursor-pointer !h-auto !border-0 !bg-transparent px-2! py-1! !text-sm !font-medium !text-neutral-500 !shadow-none hover:!bg-transparent hover:!text-neutral-900 aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-neutral-950 focus-visible:!ring-0 focus-visible:!outline-none",
+                : "cursor-pointer !h-auto !border-0 !bg-transparent px-2! py-1! !text-sm !font-medium !text-neutral-500 !shadow-none hover:!bg-transparent hover:!text-neutral-900 aria-selected:!border-0 aria-selected:!bg-transparent focus-visible:!ring-0 focus-visible:!outline-none data-[active=true]:!text-neutral-950",
            
             "sp-editor": `!overflow-auto ${isFullscreen ? "!h-screen" : "h-[530px]"}`,
             "sp-code-editor": "!h-full !overflow-auto",
@@ -355,6 +355,7 @@ export function Sandbox({
             "sp-error": "!h-full",
             "sp-iframe": "!h-full !w-full",
             "cm-gutterElement": "!text-sm",
+            "sp-icon-standalone": "!hidden"
           },
         }}
       >

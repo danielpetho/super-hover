@@ -1,4 +1,5 @@
 import "./globals.css";
+import Script from "next/script";
 
 export default function RootLayout({
   children,
@@ -8,10 +9,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      {/* <script
-          crossOrigin="anonymous"
+        <Script
           src="//unpkg.com/react-scan/dist/auto.global.js"
-        /> */}
+          crossOrigin="anonymous"
+          strategy="beforeInteractive"
+        />
       </head>
       <body
         className="font-overused-grotesk antialiased"

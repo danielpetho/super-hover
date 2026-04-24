@@ -1,11 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { createSuperHover } from "super-hover";
-import { TextMorph } from "torph/react";
+import { useSuperHoverRef } from "super-hover/react";
 
 import ScrambleHover from "@/components/fancy/text/scramble-hover";
-import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
 import discogsData from "@/data/discogs-albums.json";
@@ -17,17 +15,15 @@ type Album = (typeof albums)[number];
 const ScrambleHoverRow = React.memo(function ScrambleHoverRow({
   album,
   rowId,
-  superHoverOn,
   active,
 }: {
   album: Album;
   rowId: string;
-  superHoverOn: boolean;
   active: boolean;
 }) {
   return (
     <div
-      data-super-hover={superHoverOn ? true : undefined}
+      data-super-hover
       data-row-id={rowId}
       className={cn(
         "col-span-3 grid cursor-pointer grid-cols-subgrid gap-x-3 py-1.5 border-y border-transparent",
@@ -69,87 +65,42 @@ const ScrambleHoverRow = React.memo(function ScrambleHoverRow({
 });
 
 export default function ScrambleHoverListPreview() {
-  const superHoverSwitchId = React.useId();
-  const listRootRef = React.useRef<HTMLDivElement>(null);
-  const [superHoverOn, setSuperHoverOn] = React.useState(true);
   const [activeRowId, setActiveRowId] = React.useState<string | null>(null);
 
-  React.useEffect(() => {
-    if (!superHoverOn) {
-      setActiveRowId(null);
-    }
-  }, [superHoverOn]);
+  const onEnter = React.useCallback((e: Event) => {
+    const t = e.target as HTMLElement | null;
+    const id = t?.dataset.rowId;
+    if (id) setActiveRowId(id);
+  }, []);
 
-  React.useEffect(() => {
-    if (!superHoverOn) return;
+  const onLeave = React.useCallback((e: Event) => {
+    const t = e.target as HTMLElement | null;
+    const id = t?.dataset.rowId;
+    if (!id) return;
+    setActiveRowId((prev) => (prev === id ? null : prev));
+  }, []);
 
-    const root = listRootRef.current;
-    if (!root) return;
-
-    const onEnter = (e: Event) => {
-      const t = e.target as HTMLElement | null;
-      const id = t?.dataset.rowId;
-      if (id) setActiveRowId(id);
-    };
-
-    const onLeave = (e: Event) => {
-      const t = e.target as HTMLElement | null;
-      const id = t?.dataset.rowId;
-      if (!id) return;
-      setActiveRowId((prev) => (prev === id ? null : prev));
-    };
-
-    root.addEventListener("superhoverenter", onEnter);
-    root.addEventListener("superhoverleave", onLeave);
-
-    const stop = createSuperHover({ root });
-
-    return () => {
-      root.removeEventListener("superhoverenter", onEnter);
-      root.removeEventListener("superhoverleave", onLeave);
-      stop();
-    };
-  }, [superHoverOn]);
+  const setListRoot = useSuperHoverRef({
+    onEnter,
+    onLeave,
+  });
 
   return (
-    <div className="flex w-full min-h-0 flex-1 flex-col gap-2">
-      <div className="flex shrink-0 items-center justify-end gap-2.5 px-2 pt-2">
-        <label
-          htmlFor={superHoverSwitchId}
-          className="cursor-pointer select-none pb-0.5 text-base text-foreground"
-        >
-          <TextMorph
-            as="span"
-            duration={320}
-            ease="ease-out"
-            locale="en"
-          >
-            {superHoverOn ? "Disable" : "Enable"}
-          </TextMorph>
-        </label>
-        <Switch
-          id={superHoverSwitchId}
-          checked={superHoverOn}
-          onCheckedChange={setSuperHoverOn}
-          aria-label="Toggle super hover"
-        />
-      </div>
-
+    <div className="flex w-full min-h-0 flex-1 flex-col">
       <div
-        ref={listRootRef}
+        ref={setListRoot}
         className="min-h-0 max-h-[min(380px,52vh)] w-full flex-1 overflow-y-auto overflow-x-hidden pr-2"
       >
         <div className="text-foreground grid w-full grid-cols-[minmax(0,46%)_minmax(0,42%)_minmax(0,12%)] text-base">
           {albums.map((album, index) => {
             const rowId = `${album.id}-${index}`;
-            const active = superHoverOn && activeRowId === rowId;
+            const active = activeRowId === rowId;
 
             return (
               <ScrambleHoverRow
                 key={rowId}
                 album={album}
                 rowId={rowId}
-                superHoverOn={superHoverOn}
                 active={active}
               />
             );

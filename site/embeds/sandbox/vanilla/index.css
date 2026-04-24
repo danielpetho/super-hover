@@ -1,12 +1,13 @@
 :root {
   --bg: #ffffff;
-  --fg: #18181b;
+  --fg: #09090b;
   --muted: #71717a;
-  --accent: #27272a;
-  --panel: #fafafa;
+  --accent: #2e56ff;
+  --panel: #ffffff;
   --border: #e4e4e7;
   --code: #3f3f46;
-  --hover-bg: rgba(59, 130, 246, 0.15);
+  --hover-bg: #2e56ff;
+  --hover-fg: #ffffff;
 }
 
 *,
@@ -15,16 +16,8 @@
   box-sizing: border-box;
 }
 
-@font-face {
-  font-family: "Overused Grotesk";
-  src: url("/fonts/overused-grotesk.woff2") format("woff2-variations");
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-}
-
 html {
-  font-family: "Overused Grotesk", system-ui, sans-serif;
+  font-family: "Arial", sans-serif;
   background: var(--bg);
   color: var(--fg);
   line-height: 1.5;
@@ -81,7 +74,7 @@ code {
 .panel {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 1rem;
   overflow: hidden;
   min-height: 0;
   display: flex;
@@ -138,7 +131,7 @@ code {
   border: 1px solid var(--border);
   font-size: 0.83rem;
   color: var(--fg);
-  background: rgba(24, 24, 27, 0.04);
+  background: #f4f4f5;
 }
 
 .scroller:focus-visible {
@@ -147,15 +140,11 @@ code {
 
 .row {
   padding: 0.45rem 1rem;
-  border-radius: 6px;
-  transition: background 0.1s ease;
 }
 
 .row-label {
   display: block;
-  cursor: default;
   color: var(--fg);
-  transition: color 0.12s ease;
 }
 
 .row--native:hover {
@@ -166,7 +155,7 @@ code {
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 0.22em;
-  color: var(--accent);
+  color: var(--hover-fg);
 }
 
 .row--super[data-super-hover-active] {
@@ -177,11 +166,11 @@ code {
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 0.22em;
-  color: var(--accent);
+  color: var(--hover-fg);
 }
 
-.row--event {
-  cursor: pointer;
+.row--event[data-super-hover-active] .row-label {
+  color: var(--hover-fg);
 }
 
 .row--event[data-super-hover-active] {
