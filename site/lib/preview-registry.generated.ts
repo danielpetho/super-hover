@@ -3,8 +3,10 @@
 import type { ComponentType } from "react";
 import Preview0 from "@/embeds/previews/scramble-hover-list";
 import Preview1 from "@/embeds/previews/scroll-list";
+import Preview2 from "@/embeds/previews/super-hover-events";
 
 export const previewRegistry: Record<string, ComponentType<object>> = {
   "scramble-hover-list": Preview0,
-  "scroll-list": Preview1
+  "scroll-list": Preview1,
+  "super-hover-events": Preview2
 };

@@ -1,23 +1,25 @@
+export type SuperHoverOptions = {
+  root?: Document | Element;
+  selector?: string;
+  activeAttribute?: string;
+};
+
 const DEFAULT_SELECTOR = "[data-super-hover]";
 const DEFAULT_ACTIVE = "data-super-hover-active";
 
-export function createSuperHover(options = {}) {
-  const selector =
-    options.selector === undefined ? DEFAULT_SELECTOR : options.selector;
-  const activeAttribute =
-    options.activeAttribute === undefined
-      ? DEFAULT_ACTIVE
-      : options.activeAttribute;
+export function createSuperHover(options: SuperHoverOptions = {}): () => void {
+  const selector = options.selector ?? DEFAULT_SELECTOR;
+  const activeAttribute = options.activeAttribute ?? DEFAULT_ACTIVE;
   const root = options.root;
 
   let lastX = 0;
   let lastY = 0;
   let hasPointer = false;
-  let current = null;
+  let current: Element | null = null;
   let rafId = 0;
   let pending = false;
 
-  function clearActive() {
+  function clearActive(): void {
     if (!current) return;
     const prev = current;
     current = null;
@@ -27,7 +29,7 @@ export function createSuperHover(options = {}) {
     );
   }
 
-  function resolveTarget() {
+  function resolveTarget(): Element | null {
     if (!hasPointer) return null;
     const hit = document.elementFromPoint(lastX, lastY);
     if (!hit) return null;
@@ -37,7 +39,7 @@ export function createSuperHover(options = {}) {
     return el;
   }
 
-  function apply() {
+  function apply(): void {
     const next = resolveTarget();
     if (next === current) return;
 
@@ -59,7 +61,7 @@ export function createSuperHover(options = {}) {
     }
   }
 
-  function schedule() {
+  function schedule(): void {
     if (pending) return;
     pending = true;
     rafId = requestAnimationFrame(() => {
@@ -73,19 +75,19 @@ export function createSuperHover(options = {}) {
     });
   }
 
-  function onPointerMove(event) {
-    lastX = event.clientX;
-    lastY = event.clientY;
+  function onPointerMove(e: PointerEvent): void {
+    lastX = e.clientX;
+    lastY = e.clientY;
     hasPointer = true;
     schedule();
   }
 
-  function onPointerLeaveDocument() {
+  function onPointerLeaveDocument(): void {
     hasPointer = false;
     schedule();
   }
 
-  function onVisibilityChange() {
+  function onVisibilityChange(): void {
     if (document.visibilityState === "hidden") {
       hasPointer = false;
       schedule();

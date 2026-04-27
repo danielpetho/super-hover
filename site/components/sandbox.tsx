@@ -58,7 +58,8 @@ interface ExerciseConfig {
     | "nextjs"
     | "vite"
     | "vite-react"
-    | "vite-react-ts";
+    | "vite-react-ts"
+    | "vite-svelte-ts";
 }
 
 interface DemoData {

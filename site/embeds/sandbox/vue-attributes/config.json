@@ -1,0 +1,12 @@
+{
+  "template": "vue-ts",
+  "customSetup": {
+    "entry": "/src/main.ts"
+  },
+  "files": {
+    "src/main.ts": { "active": true },
+    "src/App.vue": {},
+    "src/super-hover.ts": {},
+    "src/styles.css": {}
+  }
+}

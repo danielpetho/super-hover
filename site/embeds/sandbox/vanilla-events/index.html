@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>super-hover — custom events</title>
+  </head>
+  <body>
+    <div class="page">
+      <section class="panel" aria-labelledby="event-heading">
+        <div class="event-toolbar" aria-live="polite">
+          <span class="event-pill-label">Active:</span>
+          <span id="event-active-pill" class="event-pill">None</span>
+        </div>
+        <div id="event-list" class="scroller" tabindex="0"></div>
+      </section>
+    </div>
+
+    <script type="module" src="./index.ts"></script>
+  </body>
+</html>

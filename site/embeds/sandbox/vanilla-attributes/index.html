@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>super-hover — data attribute (CSS)</title>
+  </head>
+  <body>
+    <div class="page">
+      <div class="compare">
+        <section class="panel" aria-labelledby="native-heading">
+          <div class="panel-head">
+            <h2 id="native-heading">Native <code>:hover</code></h2>
+          </div>
+          <div id="native-list" class="scroller" tabindex="0"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="super-heading">
+          <div class="panel-head">
+            <h2 id="super-heading">super-hover</h2>
+          </div>
+          <div id="super-list" class="scroller" tabindex="0"></div>
+        </section>
+      </div>
+    </div>
+
+    <script type="module" src="./index.ts"></script>
+  </body>
+</html>

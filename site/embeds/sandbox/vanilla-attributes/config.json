@@ -1,0 +1,12 @@
+{
+  "template": "vanilla-ts",
+  "customSetup": {
+    "entry": "/index.ts"
+  },
+  "files": {
+    "index.ts": { "active": true },
+    "super-hover.ts": {},
+    "index.html": { "hidden": true },
+    "index.css": {}
+  }
+}
