@@ -5,6 +5,8 @@ import { Preview } from "@/components/preview";
 import { CodePen } from "@/components/codepen";
 import { CodeSnippet } from "@/components/code-snippet";
 import { InstallTabs } from "@/components/install-tabs";
+import { FrameworkDocs } from "@/components/framework-docs";
+import { FrameworkTabs } from "@/components/framework-tabs";
 import { Children, type ReactNode } from "react";
 import { ExternalLinkIcon } from "lucide-react";
 import { Callout } from "./components/callout";
@@ -247,6 +249,20 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
         npx={npx}
         {...props}
       />
+    ),
+    FrameworkDocs: ({
+      children,
+      defaultFramework,
+    }: React.HTMLAttributes<HTMLElement> & {
+      defaultFramework?: "react" | "ts" | "vue" | "svelte";
+    }) => (
+      <FrameworkDocs defaultFramework={defaultFramework}>{children}</FrameworkDocs>
+    ),
+    FrameworkTabs: ({
+      className,
+      ...props
+    }: React.HTMLAttributes<HTMLElement>) => (
+      <FrameworkTabs className={className} {...props} />
     ),
     Callout: ({
       className,
