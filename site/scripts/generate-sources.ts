@@ -3,12 +3,41 @@ import { join, relative } from "path";
 import { existsSync } from "fs";
 
 const ROOT = process.cwd();
+const WORKSPACE_ROOT = join(ROOT, "..");
 const EMBEDS = join(ROOT, "embeds");
 const SANDBOX_DIR = join(EMBEDS, "sandbox");
 const PREVIEWS_DIR = join(EMBEDS, "previews");
 const OUT_SANDBOX = join(ROOT, "public", "l");
 const OUT_PREVIEWS = join(ROOT, "public", "r");
 const REGISTRY_OUT = join(ROOT, "lib", "preview-registry.generated.ts");
+const SUPER_HOVER_SRC = join(
+  WORKSPACE_ROOT,
+  "packages",
+  "super-hover",
+  "src",
+  "index.ts",
+);
+
+async function loadSuperHoverSource(): Promise<string | null> {
+  if (!existsSync(SUPER_HOVER_SRC)) return null;
+  return await readFile(SUPER_HOVER_SRC, "utf-8");
+}
+
+function maybeVendorSuperHover(
+  files: { name: string; content: string }[],
+  superHoverSource: string | null,
+): void {
+  if (!superHoverSource) return;
+
+  const candidates = ["src/super-hover.ts", "super-hover.ts"];
+  for (const name of candidates) {
+    const hit = files.find((file) => file.name === name);
+    if (hit) {
+      hit.content = superHoverSource;
+      return;
+    }
+  }
+}
 
 async function walkDirectory(dir: string): Promise<string[]> {
   const files: string[] = [];
@@ -35,6 +64,7 @@ async function generateSandboxBundles() {
   }
 
   await mkdir(OUT_SANDBOX, { recursive: true });
+  const superHoverSource = await loadSuperHoverSource();
 
   const entries = await readdir(SANDBOX_DIR, { withFileTypes: true });
 
@@ -57,6 +87,8 @@ async function generateSandboxBundles() {
       const content = await readFile(filePath, "utf-8");
       files.push({ name: rel, content });
     }
+
+    maybeVendorSuperHover(files, superHoverSource);
 
     const jsonData = { demo: id, files };
     const outFile = join(OUT_SANDBOX, `${id}.json`);
