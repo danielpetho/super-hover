@@ -13,6 +13,16 @@ interface CodeSnippetProps {
   language?: string;
 }
 
+function resolvePrismLanguage(language: string): string {
+  const normalized = language.toLowerCase();
+
+  if (normalized === "vue" || normalized === "svelte" || normalized === "html") {
+    return "markup";
+  }
+
+  return normalized;
+}
+
 export const CodeSnippet: React.FC<CodeSnippetProps> = ({
   title,
   code,
@@ -20,6 +30,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
 }) => {
   const lines = code.trim().split('\n');
   const isDark = useIsDarkMode();
+  const prismLanguage = resolvePrismLanguage(language);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(code);
@@ -48,7 +59,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
         <Highlight
           theme={(isDark ? darkTheme : lightTheme) as PrismTheme}
           code={code.trim()}
-          language={language}
+          language={prismLanguage}
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <pre className={`${className} text-[13px] overflow-x-auto font-mono font-medium pb-4`} style={style}>

@@ -7,7 +7,7 @@ import { CodeSnippet } from "@/components/code-snippet";
 import { InstallTabs } from "@/components/install-tabs";
 import { FrameworkDocs } from "@/components/framework-docs";
 import { FrameworkTabs } from "@/components/framework-tabs";
-import { FrameworkUsageSnippet } from "@/components/framework-usage-snippet";
+import { FrameworkCodeSnippet } from "@/components/framework-code-snippet";
 import { Children, type ReactNode } from "react";
 import { ExternalLinkIcon } from "lucide-react";
 import { Callout } from "./components/callout";
@@ -265,9 +265,41 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     }: React.HTMLAttributes<HTMLElement>) => (
       <FrameworkTabs className={className} {...props} />
     ),
-    FrameworkUsageSnippet: ({
+    FrameworkCodeSnippet: ({
+      title,
+      react,
+      ts,
+      vue,
+      svelte,
+      reactLanguage,
+      tsLanguage,
+      vueLanguage,
+      svelteLanguage,
       ...props
-    }: React.HTMLAttributes<HTMLElement>) => <FrameworkUsageSnippet {...props} />,
+    }: React.HTMLAttributes<HTMLElement> & {
+      title?: string;
+      react: string;
+      ts: string;
+      vue: string;
+      svelte: string;
+      reactLanguage?: string;
+      tsLanguage?: string;
+      vueLanguage?: string;
+      svelteLanguage?: string;
+    }) => (
+      <FrameworkCodeSnippet
+        title={title}
+        react={react}
+        ts={ts}
+        vue={vue}
+        svelte={svelte}
+        reactLanguage={reactLanguage}
+        tsLanguage={tsLanguage}
+        vueLanguage={vueLanguage}
+        svelteLanguage={svelteLanguage}
+        {...props}
+      />
+    ),
     Callout: ({
       className,
       variant,
