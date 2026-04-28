@@ -48,13 +48,13 @@ export function FrameworkTabs({ className }: { className?: string }) {
       onValueChange={(value) => setFramework(value as FrameworkId)}
       className={cn("w-full", className)}
     >
-      <TabsList className="h-auto w-full flex-wrap gap-2 bg-transparent p-0">
+      <TabsList className="h-auto w-fit flex-wrap gap-2 bg-transparent p-0">
         {frameworks.map((item) => (
           <TabsTrigger
             key={item.id}
             value={item.id}
             className={cn(
-              "h-10 cursor-pointer rounded-lg border border-transparent bg-transparent px-4 py-2 text-base font-medium text-neutral-500 transition-all duration-200 ease-out hover:text-neutral-900 dark:text-muted-foreground dark:hover:text-white",
+              "h-10 cursor-pointer rounded-lg border border-transparent bg-transparent px-4 w-fit py-2 text-base font-medium text-neutral-500 transition-all duration-200 ease-out hover:text-neutral-900 dark:text-muted-foreground dark:hover:text-white",
               "data-active:bg-neutral-100 data-active:text-neutral-900 dark:data-active:bg-editor-background dark:data-active:text-white shadow-none! active:scale-96 duration-200 ease-out transition-all",
             )}
           >

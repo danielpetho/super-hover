@@ -199,3 +199,14 @@
     font-weight: 700;
   }
 }
+
+/* Light-mode global text selection color */
+:root:not(.dark) ::selection {
+  background: #d9d9de;
+}
+
+/* Keep Sandpack editor selection aligned with global selection color */
+:root:not(.dark) .sp-wrapper .cm-selectionBackground,
+:root:not(.dark) .sp-wrapper .cm-content ::selection {
+  background: #d9d9de !important;
+}
