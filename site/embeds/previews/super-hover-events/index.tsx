@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import { useSuperHoverRef } from "super-hover/react";
 
 import { cn } from "@/lib/utils";
@@ -27,6 +28,29 @@ type ActiveAlbum = {
  */
 export default function SuperHoverEventsPreview() {
   const [active, setActive] = React.useState<ActiveAlbum | null>(null);
+  const [showThumb, setShowThumb] = React.useState(false);
+  const previewRootRef = React.useRef<HTMLDivElement | null>(null);
+  const thumbRef = React.useRef<HTMLDivElement | null>(null);
+  const revealRafRef = React.useRef<number | null>(null);
+  const cursorX = useMotionValue(10);
+  const cursorY = useMotionValue(10);
+  const springX = useSpring(cursorX, {
+    stiffness: 260,
+    damping: 40,
+  });
+  const springY = useSpring(cursorY, {
+    stiffness: 260,
+    damping: 40,
+  });
+
+  const cancelReveal = React.useCallback(() => {
+    if (revealRafRef.current !== null) {
+      cancelAnimationFrame(revealRafRef.current);
+      revealRafRef.current = null;
+    }
+  }, []);
+
+  React.useEffect(() => cancelReveal, [cancelReveal]);
 
   /** Warm the HTTP cache for Discogs thumbs so the corner cover swaps without visible loading. */
   React.useEffect(() => {
@@ -44,7 +68,7 @@ export default function SuperHoverEventsPreview() {
     return () => window.clearTimeout(t);
   }, []);
 
-  const setListRoot = useSuperHoverRef({
+  const listRoot = useSuperHoverRef({
     onEnter: (e) => {
       const t = e.target as HTMLElement | null;
       const raw = t?.dataset.albumIndex;
@@ -58,12 +82,53 @@ export default function SuperHoverEventsPreview() {
     },
   });
 
+  const handlePointerMove = React.useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      const rect = previewRootRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const thumbRect = thumbRef.current?.getBoundingClientRect();
+      const thumbWidth = thumbRect?.width ?? 160;
+      const thumbHeight = thumbRect?.height ?? 160;
+      const rawX = event.clientX - rect.left + 24;
+      const rawY = event.clientY - rect.top + 24;
+      cursorX.set(Math.max(0, Math.min(rawX, rect.width - thumbWidth)));
+      cursorY.set(Math.max(0, Math.min(rawY, rect.height - thumbHeight)));
+    },
+    [cursorX, cursorY],
+  );
+
+  const handlePointerEnter = React.useCallback(() => {
+    cancelReveal();
+    setShowThumb(false);
+
+    let frames = 2;
+    const tick = () => {
+      if (frames > 0) {
+        frames -= 1;
+        revealRafRef.current = requestAnimationFrame(tick);
+        return;
+      }
+      revealRafRef.current = null;
+      setShowThumb(true);
+    };
+
+    revealRafRef.current = requestAnimationFrame(tick);
+  }, [cancelReveal]);
+
+  const handlePointerLeave = React.useCallback(() => {
+    cancelReveal();
+    setShowThumb(false);
+  }, [cancelReveal]);
+
   return (
     <div className="flex w-full min-h-0 flex-1 flex-col gap-2 p-1">
 
-      <div className="relative min-h-0 w-full max-w-full flex-1">
+      <div ref={previewRootRef} className="relative min-h-0 w-full max-w-full flex-1">
         <div
-          ref={setListRoot}
+          ref={listRoot}
+          onPointerEnter={handlePointerEnter}
+          onPointerLeave={handlePointerLeave}
+          onPointerMove={handlePointerMove}
           className="min-h-0 max-h-[min(380px,52vh)] w-full overflow-y-auto pr-2"
         >
           <ul className="m-0 list-none p-0 pb-24 pr-0 text-sm text-foreground ">
@@ -90,9 +155,12 @@ export default function SuperHoverEventsPreview() {
           </ul>
         </div>
 
-        {active && (
-          <div
-            className="pointer-events-none absolute bottom-0 right-0 z-10 w-[min(10rem,28vw)] overflow-hidden"
+        {active && showThumb && (
+          <motion.div
+            ref={thumbRef}
+            className="pointer-events-none absolute z-10 w-[min(10rem,28vw)] overflow-hidden"
+            initial={false}
+            style={{ left: 0, top: 0, x: springX, y: springY }}
             aria-hidden
           >
             {/* eslint-disable-next-line @next/next/no-img-element -- remote Discogs thumb, no size opt */}
@@ -109,7 +177,7 @@ export default function SuperHoverEventsPreview() {
             {/* <p className="m-0 max-w-full truncate px-1 pb-1 pt-0.5 text-center text-[10px] font-medium leading-tight text-foreground">
               {active.title}
             </p> */}
-          </div>
+          </motion.div>
         )}
       </div>
     </div>

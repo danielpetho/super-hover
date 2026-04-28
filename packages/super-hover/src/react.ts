@@ -20,7 +20,7 @@ export type UseSuperHoverOptions = Omit<SuperHoverOptions, "root"> & {
 const noop = () => {};
 
 /**
- * Attaches `superhoverenter` / `superhoverleave` listeners on `root` and runs `createSuperHover({ root, ... })`.
+ * Attaches enter/leave listeners (default `superhoverenter` / `superhoverleave`) on `root` and runs `createSuperHover({ root, ... })`.
  * Prefers a stable `root` (e.g. from {@link useSuperHoverRef}) so the effect re-runs when the node mounts.
  */
 export function useSuperHover(
@@ -31,6 +31,8 @@ export function useSuperHover(
     onLeave = noop,
     selector,
     activeAttribute,
+    enterEventType = "superhoverenter",
+    leaveEventType = "superhoverleave",
   }: UseSuperHoverOptions = {},
 ): void {
   const onEnterRef = useRef(onEnter);
@@ -44,20 +46,22 @@ export function useSuperHover(
     const handleEnter = (e: Event) => onEnterRef.current(e);
     const handleLeave = (e: Event) => onLeaveRef.current(e);
 
-    root.addEventListener("superhoverenter", handleEnter);
-    root.addEventListener("superhoverleave", handleLeave);
+    root.addEventListener(enterEventType, handleEnter);
+    root.addEventListener(leaveEventType, handleLeave);
     const stop = createSuperHover({
       root,
       ...(selector !== undefined && { selector }),
       ...(activeAttribute !== undefined && { activeAttribute }),
+      enterEventType,
+      leaveEventType,
     });
 
     return () => {
-      root.removeEventListener("superhoverenter", handleEnter);
-      root.removeEventListener("superhoverleave", handleLeave);
+      root.removeEventListener(enterEventType, handleEnter);
+      root.removeEventListener(leaveEventType, handleLeave);
       stop();
     };
-  }, [root, enabled, selector, activeAttribute]);
+  }, [root, enabled, selector, activeAttribute, enterEventType, leaveEventType]);
 }
 
 /**

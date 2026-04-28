@@ -41,13 +41,13 @@ import { createSuperHover } from "./super-hover";
 
 const itemCount = 180;
 
-let stop: (() => void) | undefined;
+let superHover: (() => void) | undefined;
 
 onMounted(() => {
-  stop = createSuperHover();
+  superHover = createSuperHover();
 });
 
 onUnmounted(() => {
-  stop?.();
+  superHover?.();
 });
 </script>

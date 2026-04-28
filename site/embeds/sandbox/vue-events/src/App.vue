@@ -29,7 +29,7 @@ const itemCount = 180;
 const elEvent = ref<HTMLElement | null>(null);
 const activePill = ref("None");
 
-let stop: (() => void) | undefined;
+let superHover: (() => void) | undefined;
 let onEnter: ((e: Event) => void) | undefined;
 let onLeave: ((e: Event) => void) | undefined;
 let eventRoot: HTMLElement | null = null;
@@ -51,11 +51,11 @@ onMounted(async () => {
   };
   eventRoot.addEventListener("superhoverenter", onEnter);
   eventRoot.addEventListener("superhoverleave", onLeave);
-  stop = createSuperHover({ root: eventRoot });
+  superHover = createSuperHover({ root: eventRoot });
 });
 
 onUnmounted(() => {
-  stop?.();
+  superHover?.();
   if (eventRoot && onEnter && onLeave) {
     eventRoot.removeEventListener("superhoverenter", onEnter);
     eventRoot.removeEventListener("superhoverleave", onLeave);

@@ -5,14 +5,14 @@
   const itemCount = 180;
   const items: number[] = Array.from({ length: itemCount }, (_, i) => i + 1);
 
-  let stop: (() => void) | undefined;
+  let superHover: (() => void) | undefined;
 
   onMount(() => {
-    stop = createSuperHover();
+    superHover = createSuperHover();
   });
 
   onDestroy(() => {
-    stop?.();
+    superHover?.();
   });
 </script>
 
