@@ -1,0 +1,14 @@
+{
+  "template": "vite-react-ts",
+  "customSetup": {
+    "entry": "/src/main.tsx"
+  },
+  "files": {
+    "src/main.tsx": { "active": true },
+    "src/App.tsx": {},
+    "src/super-hover.ts": {},
+    "src/super-hover-react.ts": {},
+    "src/styles.css": {},
+    "index.html": { "hidden": true }
+  }
+}

@@ -17,10 +17,23 @@ const SUPER_HOVER_SRC = join(
   "src",
   "index.ts",
 );
+const SUPER_HOVER_REACT_SRC = join(
+  WORKSPACE_ROOT,
+  "packages",
+  "super-hover",
+  "src",
+  "react.ts",
+);
 
 async function loadSuperHoverSource(): Promise<string | null> {
   if (!existsSync(SUPER_HOVER_SRC)) return null;
   return await readFile(SUPER_HOVER_SRC, "utf-8");
+}
+
+async function loadSuperHoverReactSource(): Promise<string | null> {
+  if (!existsSync(SUPER_HOVER_REACT_SRC)) return null;
+  const raw = await readFile(SUPER_HOVER_REACT_SRC, "utf-8");
+  return raw.replaceAll('from "./index.js"', 'from "./super-hover"');
 }
 
 function maybeVendorSuperHover(
@@ -34,6 +47,22 @@ function maybeVendorSuperHover(
     const hit = files.find((file) => file.name === name);
     if (hit) {
       hit.content = superHoverSource;
+      return;
+    }
+  }
+}
+
+function maybeVendorSuperHoverReact(
+  files: { name: string; content: string }[],
+  reactSource: string | null,
+): void {
+  if (!reactSource) return;
+
+  const candidates = ["src/super-hover-react.ts"];
+  for (const name of candidates) {
+    const hit = files.find((file) => file.name === name);
+    if (hit) {
+      hit.content = reactSource;
       return;
     }
   }
@@ -65,6 +94,7 @@ async function generateSandboxBundles() {
 
   await mkdir(OUT_SANDBOX, { recursive: true });
   const superHoverSource = await loadSuperHoverSource();
+  const superHoverReactSource = await loadSuperHoverReactSource();
 
   const entries = await readdir(SANDBOX_DIR, { withFileTypes: true });
 
@@ -89,6 +119,7 @@ async function generateSandboxBundles() {
     }
 
     maybeVendorSuperHover(files, superHoverSource);
+    maybeVendorSuperHoverReact(files, superHoverReactSource);
 
     const jsonData = { demo: id, files };
     const outFile = join(OUT_SANDBOX, `${id}.json`);
