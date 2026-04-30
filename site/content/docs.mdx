@@ -3,14 +3,7 @@
 
 <Preview name="scroll-list" showCode={false} className="p-0! rounded-none! border-none!" description="Scroll while keeping the pointer still to see the effect." />
 
-<Preview
-  name="super-hover-events"
-  showCode={false}
-  className="p-0! rounded-none! border-none!"
-  description="Long scrollable list: keep the pointer still and scroll — cover art in the corner follows the real hit target via `superhoverenter` / `superhoverleave` (not `[data-super-hover-active]` styling)."
- />
 
-<Preview name="scramble-hover-list" showCode={true} className="p-0! rounded-none! border-none!" description="Same `data-super-hover` rows, with event listeners used to drive a scramble animation (more involved)." />
 
 ## Installation
 
@@ -65,19 +58,19 @@ for (const row of document.querySelectorAll("#list li")) {
 `}
   vue={`
 <script setup lang="ts">
-import { onMounted, onUnmounted } from "vue";
-import { createSuperHover } from "super-hover";
+  import { onMounted, onUnmounted } from "vue";
+  import { createSuperHover } from "super-hover";
 
-const items = ["Alpha", "Beta", "Gamma"];
-let superHover: (() => void) | undefined;
+  const items = ["Alpha", "Beta", "Gamma"];
+  let superHover: (() => void) | undefined;
 
-onMounted(() => {
-  superHover = createSuperHover();
-});
+  onMounted(() => {
+    superHover = createSuperHover();
+  });
 
-onUnmounted(() => {
-  superHover?.();
-});
+  onUnmounted(() => {
+    superHover?.();
+  });
 </script>
 
 <template>
@@ -123,23 +116,13 @@ onUnmounted(() => {
 `}
 />
 
-### Sandboxes
+<Preview
+  name="super-hover-events"
+  showCode={false}
+  className="p-0! rounded-none! border-none!"
+  description="Long scrollable list: keep the pointer still and scroll — cover art in the corner follows the real hit target via `superhoverenter` / `superhoverleave` (not `[data-super-hover-active]` styling)."
+ />
 
-#### Attribute-driven
-
-<Sandbox name="vanilla-attributes" />
-
-<Sandbox name="vue-attributes" />
-
-<Sandbox name="svelte-attributes" />
-
-#### Event-driven
-
-<Sandbox name="vanilla-events" />
-
-<Sandbox name="vue-events" />
-
-<Sandbox name="svelte-events" />
 </FrameworkDocs>
 
 ## License

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 
@@ -46,7 +47,13 @@ function smoothScrollToElement(el: HTMLElement, durationMs: number) {
   requestAnimationFrame(step);
 }
 
-export function DocToc() {
+export function DocToc({
+  backHref,
+  backLabel = "Back",
+}: {
+  backHref?: string;
+  backLabel?: string;
+}) {
   const [items, setItems] = React.useState<{ id: string; label: string }[]>([]);
   const [activeId, setActiveId] = React.useState<string | null>(null);
 
@@ -111,6 +118,21 @@ export function DocToc() {
       aria-label="Sections"
       className="fixed left-0 top-0 z-40 hidden max-h-screen w-56 overflow-y-auto pt-64 ml-8 pr-2 lg:block xl:pl-5"
     >
+      {backHref ? (
+        <Link
+          href={backHref}
+          draggable={false}
+          className="group mb-4 flex items-center gap-2 pb-3 text-base leading-snug text-muted-foreground transition-colors hover:text-foreground active:scale-97 transition-transform group-hover:-translate-x-0.5 duration-200 ease-out"
+        >
+          <span
+            aria-hidden
+            className="inline-block text-xl leading-none transition-transform duration-200 ease-out group-hover:-translate-x-0.5"
+          >
+            ←
+          </span>
+          {backLabel}
+        </Link>
+      ) : null}
       <ul className="space-y-1">
         {items.map(({ id, label }) => {
           const active = activeId === id;
@@ -119,11 +141,12 @@ export function DocToc() {
               <a
                 href={`#${id}`}
                 className={cn(
-                  "block text-base leading-snug transition-colors",
+                  "block text-base leading-snug transition-colors active:scale-98 transition-[scale] duration-200 ease-out select-none",
                   active
                     ? "font-medium text-black dark:text-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 )}
+                draggable={false}
                 onClick={(e) => {
                   e.preventDefault();
                   const el = document.getElementById(id);

@@ -210,3 +210,42 @@
 :root:not(.dark) .sp-wrapper .cm-content ::selection {
   background: #d9d9de !important;
 }
+
+::view-transition-old(.route-blur-fade) {
+  animation: 420ms ease-out both route-fade-out;
+}
+
+::view-transition-new(.route-blur-fade) {
+  animation: 560ms ease-out 160ms both route-fade-in;
+}
+
+@keyframes route-fade-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes route-fade-out {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    filter: blur(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}

@@ -1,5 +1,6 @@
 import "./globals.css";
 import Script from "next/script";
+import { RouteTransition } from "@/components/route-transition";
 
 export default function RootLayout({
   children,
@@ -18,7 +19,7 @@ export default function RootLayout({
       <body
         className="font-overused-grotesk antialiased"
       >
-        {children}
+        <RouteTransition>{children}</RouteTransition>
       </body>
     </html>
   );

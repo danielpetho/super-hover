@@ -1,4 +1,5 @@
 import type { MDXComponents } from "mdx/types";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Sandbox } from "@/components/sandbox";
 import { Preview } from "@/components/preview";
@@ -60,23 +61,51 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     a: ({
       className,
       children,
+      href,
       ...props
-    }: React.HTMLAttributes<HTMLAnchorElement>) => (
-      <a
-        className={cn(
-          "font-medium text text-blue hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-500 duration-300 ease-out transition inline-flex items-center leading-0",
-          className
-        )}
-        {...props}
-      >
-        {children}
-        <ExternalLinkIcon
-          className="ml-1 pt-px mt-px"
-          size={13}
-          strokeWidth={2.5}
-        />
-      </a>
-    ),
+    }: React.ComponentProps<"a">) => {
+      const isExternal =
+        !!href &&
+        /^(https?:\/\/|\/\/|mailto:|tel:)/i.test(href);
+
+      const linkClassName = cn(
+        "font-medium text text-blue hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-500 duration-300 ease-out transition inline-flex items-center leading-0",
+        className
+      );
+
+      if (!href) {
+        return (
+          <a className={linkClassName} {...props}>
+            {children}
+          </a>
+        );
+      }
+
+      if (isExternal) {
+        return (
+          <a
+            href={href}
+            className={linkClassName}
+            target="_blank"
+            rel="noreferrer"
+            {...props}
+          >
+            {children}
+            <ExternalLinkIcon
+              className="ml-1 pt-px mt-px"
+              size={13}
+              strokeWidth={2.5}
+            />
+          </a>
+        );
+      }
+
+      return (
+        <Link href={href} className={linkClassName} {...props}>
+          {children}
+        </Link>
+      );
+    },
     p: ({
       className,
       ...props
