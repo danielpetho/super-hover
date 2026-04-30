@@ -333,7 +333,7 @@ export function Sandbox({
             "sp-wrapper": ``,
             "sp-layout": `absolute ${
               isFullscreen
-                ? "!w-screen !h-screen !top-0 !left-0 !rounded-none !border-none !overflow-auto"
+                ? "!w-screen !h-screen !top-0 !left-0 !rounded-none !border-none !overflow-auto overscroll-contain"
                 : `top-1/2 left-1/2 -translate-x-1/2 flex w-[850px] h-[530px] !rounded-2xl !border !overflow-hidden ${isDark ? "!border-[#252525]" : "!border-[#e4e4e7]"}`
             }`,
             "sp-tabs": "h-11 flex px-3 w-full",
@@ -347,8 +347,8 @@ export function Sandbox({
                 ? "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-medium !shadow-none hover:!bg-transparent hover:!text-white aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-white  focus-visible:!ring-0 focus-visible:!outline-none"
                 : "cursor-pointer !h-auto !border-0 !bg-transparent px-2! py-1! !text-sm !font-medium !text-neutral-500 !shadow-none hover:!bg-transparent hover:!text-neutral-900 aria-selected:!border-0 aria-selected:!bg-transparent focus-visible:!ring-0 focus-visible:!outline-none data-[active=true]:!text-neutral-950",
            
-            "sp-editor": `!overflow-auto ${isFullscreen ? "!h-screen" : "h-[530px]"}`,
-            "sp-code-editor": "!h-full !overflow-auto",
+            "sp-editor": `!overflow-auto overscroll-contain ${isFullscreen ? "!h-screen" : "h-[530px]"}`,
+            "sp-code-editor": "!h-full !overflow-auto overscroll-contain",
             "sp-preview-container": "!h-full",
             "sp-preview": "!h-full !flex",
             "sp-preview-iframe": "!h-full !flex",

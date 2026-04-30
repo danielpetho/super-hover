@@ -6,10 +6,11 @@
 @theme inline {
   --font-calendas: Calendas Plus, sans-serif;
   --font-overused-grotesk: Overused Grotesk, sans-serif;
+  --font-satoshi: Satoshi, sans-serif;
   --font-fira-mono: Fira Mono, monospace;
   --font-azeret-mono: Azeret Mono, monospace;
 
-  --font-sans: var(--font-overused-grotesk);
+  --font-sans: var(--font-satoshi);
   --font-mono: var(--font-fira-mono);
   
   --color-editor-background: var(--editor-bg);
@@ -113,6 +114,8 @@
   --blue-800: #0619cd;
   --blue-900: #10229f;
   --blue-950: #0a125c;
+
+  --scrollbar-thumb: oklch(0.83 0 0);
 }
 
 .dark {
@@ -147,6 +150,8 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  --scrollbar-thumb: oklch(0.48 0 0);
 }
 
 @layer base {
@@ -158,6 +163,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -172,6 +178,24 @@
     font-family: "Overused Grotesk";
     src: url("/fonts/overused-grotesk.woff2") format("woff2-variations");
     font-weight: 300 900;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: Satoshi;
+    src: url("/fonts/satoshi.ttf") format("truetype-variations"),
+      url("/fonts/satoshi.ttf") format("truetype");
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: Satoshi;
+    src: url("/fonts/satoshi-italic.ttf") format("truetype-variations"),
+      url("/fonts/satoshi-italic.ttf") format("truetype");
+    font-weight: 300 900;
+    font-style: italic;
     font-display: swap;
   }
 
@@ -248,4 +272,29 @@
     animation-duration: 0s !important;
     animation-delay: 0s !important;
   }
+}
+
+/*
+ * Unlayered scrollbars (after `@layer base`): layered Tailwind can supersede
+ * `@layer base` rules; WebKit uses `background` on ::-webkit-scrollbar-thumb.
+ */
+*,
+*::before,
+*::after {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 9999px;
 }

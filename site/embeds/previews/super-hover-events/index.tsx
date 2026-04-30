@@ -164,7 +164,7 @@ export default function SuperHoverEventsPreview() {
             onPointerEnter={handlePointerEnter}
             onPointerLeave={handlePointerLeave}
             onPointerMove={handlePointerMove}
-            className="min-h-0 max-h-[min(380px,52vh)] w-full overflow-y-auto pr-2"
+            className="min-h-0 max-h-[min(380px,52vh)] w-full overflow-y-auto overscroll-contain pr-2"
           >
             <ul className="m-0 list-none p-0 pb-24 pr-0 text-sm text-foreground ">
             {albums.map((album, index) => {

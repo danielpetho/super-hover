@@ -8,12 +8,29 @@
   --code: #3f3f46;
   --hover-bg: #2e56ff;
   --hover-fg: #ffffff;
+  --scrollbar-thumb: oklch(0.83 0 0);
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 9999px;
 }
 
 #root {
@@ -25,6 +42,7 @@ html {
   background: var(--bg);
   color: var(--fg);
   line-height: 1.5;
+  overscroll-behavior: contain;
 }
 
 body {

@@ -118,7 +118,7 @@ export function Preview({
         </div>
       )}
 
-      <div className="flex flex-1 items-center justify-center overflow-auto">
+      <div className="flex flex-1 items-center justify-center overflow-auto overscroll-contain">
         <React.Fragment key={previewKey}>{PreviewBody}</React.Fragment>
       </div>
     </div>

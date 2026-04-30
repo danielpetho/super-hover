@@ -44,7 +44,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
           <CopyButton onCopy={handleCopy} />
         </div>
       ) : null}
-      <div className="relative max-h-[min(70vh,520px)] overflow-y-auto bg-neutral-100 pt-4 dark:bg-editor-background">
+      <div className="relative max-h-[min(70vh,520px)] overflow-y-auto overscroll-contain bg-neutral-100 pt-4 dark:bg-editor-background">
         {!title && (
           <div className={`absolute ${
             lines.length === 1 
