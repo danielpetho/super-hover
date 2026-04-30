@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "generate-sources": "tsx scripts/generate-sources.ts",
-    "build": "pnpm run generate-sources && next build",
+    "build": "pnpm --filter super-hover run build && pnpm run generate-sources && next build",
     "start": "next start",
     "lint": "eslint"
   },
