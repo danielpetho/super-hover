@@ -2,49 +2,44 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
-/** Long, eased scroll — browser `smooth` is too fast to tune. */
-const SCROLL_DURATION_MS = 500;
+const TOC_IO_ROOT_MARGIN = "0% 0% -80% 0%";
 
-function getScrollPaddingTopPx(): number {
-  const raw = getComputedStyle(document.documentElement).scrollPaddingTop;
-  const px = parseFloat(raw);
-  return Number.isFinite(px) ? px : 112;
-}
+const tocMotionTransition = (reduced: boolean) =>
+  reduced
+    ? { duration: 0 }
+    : { duration: 0.3, ease: "easeOut" as const };
 
-function easeInOutCubic(t: number): number {
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-}
+/** Active heading via viewport intersection (same idea as dashboard TOC). */
+function useActiveHeadingItem(ids: string[]) {
+  const [activeId, setActiveId] = React.useState<string | null>(null);
 
-function prefersReducedMotion(): boolean {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
+  React.useEffect(() => {
+    if (ids.length === 0) return;
 
-function smoothScrollToElement(el: HTMLElement, durationMs: number) {
-  const padding = getScrollPaddingTopPx();
-  const targetY = el.getBoundingClientRect().top + window.scrollY - padding;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: TOC_IO_ROOT_MARGIN, threshold: 0 },
+    );
 
-  if (prefersReducedMotion()) {
-    window.scrollTo(0, targetY);
-    return;
-  }
-
-  const startY = window.scrollY;
-  const distance = targetY - startY;
-  const startTime = performance.now();
-
-  function step(now: number) {
-    const elapsed = now - startTime;
-    const t = Math.min(elapsed / durationMs, 1);
-    const eased = easeInOutCubic(t);
-    window.scrollTo(0, startY + distance * eased);
-    if (t < 1) {
-      requestAnimationFrame(step);
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
     }
-  }
-  requestAnimationFrame(step);
+
+    return () => observer.disconnect();
+  }, [ids]);
+
+  return [activeId, setActiveId] as const;
 }
 
 export function DocToc({
@@ -54,8 +49,15 @@ export function DocToc({
   backHref?: string;
   backLabel?: string;
 }) {
+  const reduceMotion = useReducedMotion();
+  const transition = tocMotionTransition(Boolean(reduceMotion));
+
   const [items, setItems] = React.useState<{ id: string; label: string }[]>([]);
-  const [activeId, setActiveId] = React.useState<string | null>(null);
+
+  const itemIdsKey = items.map((item) => item.id).join("\0");
+  const itemIds = React.useMemo(() => items.map((item) => item.id), [itemIdsKey]);
+
+  const [activeId, setActiveId] = useActiveHeadingItem(itemIds);
 
   React.useEffect(() => {
     const root = document.querySelector("[data-doc-content]");
@@ -67,7 +69,7 @@ export function DocToc({
         h2s.map((el) => ({
           id: el.id,
           label: el.textContent?.trim() ?? "",
-        }))
+        })),
       );
     };
 
@@ -78,36 +80,6 @@ export function DocToc({
 
     return () => mo.disconnect();
   }, []);
-
-  React.useEffect(() => {
-    if (items.length === 0) return;
-
-    const offset = 140;
-
-    const updateActive = () => {
-      const scrollY = window.scrollY;
-      let current = items[0]?.id ?? null;
-
-      for (const { id } of items) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const top = el.getBoundingClientRect().top + scrollY;
-        if (scrollY + offset >= top - 2) {
-          current = id;
-        }
-      }
-      setActiveId(current);
-    };
-
-    updateActive();
-    window.addEventListener("scroll", updateActive, { passive: true });
-    window.addEventListener("resize", updateActive, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", updateActive);
-      window.removeEventListener("resize", updateActive);
-    };
-  }, [items]);
 
   if (items.length === 0) {
     return null;
@@ -122,15 +94,30 @@ export function DocToc({
         <Link
           href={backHref}
           draggable={false}
-          className="group mb-4 flex items-center gap-2 pb-3 text-base leading-snug text-muted-foreground transition-colors hover:text-foreground active:scale-97 transition-transform group-hover:-translate-x-0.5 duration-200 ease-out"
+          className="group mb-4 flex origin-left items-center gap-2 pb-3 text-base leading-snug transition-colors transition-transform duration-200 ease-out active:scale-97 group-hover:-translate-x-0.5"
         >
           <span
             aria-hidden
-            className="inline-block text-xl leading-none transition-transform duration-200 ease-out group-hover:-translate-x-0.5"
+            className="inline-block text-xl leading-none text-muted-foreground transition-transform duration-200 ease-out group-hover:-translate-x-0.5 group-hover:text-foreground"
           >
             ←
           </span>
-          {backLabel}
+          <motion.span
+            className="inline-block"
+            initial={false}
+            whileHover={{
+              fontVariationSettings: "'wght' 500",
+              color: "var(--foreground)",
+              transition,
+            }}
+            animate={{
+              fontVariationSettings: "'wght' 400",
+              color: "var(--muted-foreground)",
+              transition,
+            }}
+          >
+            {backLabel}
+          </motion.span>
         </Link>
       ) : null}
       <ul className="space-y-1">
@@ -141,22 +128,39 @@ export function DocToc({
               <a
                 href={`#${id}`}
                 className={cn(
-                  "block text-base leading-snug transition-colors active:scale-98 transition-[scale] duration-200 ease-out select-none",
-                  active
-                    ? "font-medium text-black dark:text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                  "block origin-left text-base leading-snug transition-[scale] duration-200 ease-out select-none active:scale-97",
                 )}
                 draggable={false}
                 onClick={(e) => {
                   e.preventDefault();
                   const el = document.getElementById(id);
                   if (!el) return;
-                  smoothScrollToElement(el, SCROLL_DURATION_MS);
+                  el.scrollIntoView({
+                    behavior: reduceMotion ? "auto" : "smooth",
+                    block: "start",
+                  });
                   window.history.replaceState(null, "", `#${id}`);
                   setActiveId(id);
                 }}
               >
-                {label}
+                <motion.span
+                  className="inline-block w-full"
+                  initial={false}
+                  whileHover={{
+                    fontVariationSettings: "'wght' 500",
+                    color: "var(--foreground)",
+                    transition,
+                  }}
+                  animate={{
+                    fontVariationSettings: active ? "'wght' 500" : "'wght' 400",
+                    color: active
+                      ? "var(--foreground)"
+                      : "var(--muted-foreground)",
+                    transition,
+                  }}
+                >
+                  {label}
+                </motion.span>
               </a>
             </li>
           );
