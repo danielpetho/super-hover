@@ -5,6 +5,11 @@ import { motion, useMotionValue, useSpring } from "motion/react";
 import { useSuperHoverRef } from "super-hover/react";
 
 import { cn } from "@/lib/utils";
+import {
+  SCROLL_FADE_BOTTOM,
+  SCROLL_FADE_TOP,
+  useScrollEdgeFade,
+} from "@/lib/preview-scroll-fade";
 import discogsData from "@/data/discogs-albums.json";
 
 const albums = discogsData.albums;
@@ -68,7 +73,9 @@ export default function SuperHoverEventsPreview() {
     return () => window.clearTimeout(t);
   }, []);
 
-  const listRoot = useSuperHoverRef({
+  const scrollElRef = React.useRef<HTMLDivElement | null>(null);
+
+  const superHoverRefCallback = useSuperHoverRef({
     onEnter: (e) => {
       const t = e.target as HTMLElement | null;
       const raw = t?.dataset.albumIndex;
@@ -81,6 +88,16 @@ export default function SuperHoverEventsPreview() {
       setActive(null);
     },
   });
+
+  const setListRef = React.useCallback(
+    (el: HTMLDivElement | null) => {
+      scrollElRef.current = el;
+      superHoverRefCallback(el);
+    },
+    [superHoverRefCallback],
+  );
+
+  const { showTopFade, showBottomFade } = useScrollEdgeFade(scrollElRef);
 
   const handlePointerMove = React.useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
@@ -124,14 +141,32 @@ export default function SuperHoverEventsPreview() {
     <div className="flex w-full min-h-0 flex-1 flex-col gap-2 p-1">
 
       <div ref={previewRootRef} className="relative min-h-0 w-full max-w-full flex-1">
-        <div
-          ref={listRoot}
-          onPointerEnter={handlePointerEnter}
-          onPointerLeave={handlePointerLeave}
-          onPointerMove={handlePointerMove}
-          className="min-h-0 max-h-[min(380px,52vh)] w-full overflow-y-auto pr-2"
-        >
-          <ul className="m-0 list-none p-0 pb-24 pr-0 text-sm text-foreground ">
+        <div className="relative min-h-0 w-full max-h-[min(380px,52vh)]">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-0 right-2 top-0 z-10 h-24 transition-opacity duration-500 ease-in-out"
+            style={{
+              opacity: showTopFade ? 1 : 0,
+              background: SCROLL_FADE_TOP,
+            }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute bottom-0 left-0 right-2 z-10 h-24 transition-opacity duration-500 ease-in-out"
+            style={{
+              opacity: showBottomFade ? 1 : 0,
+              background: SCROLL_FADE_BOTTOM,
+            }}
+          />
+
+          <div
+            ref={setListRef}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+            onPointerMove={handlePointerMove}
+            className="min-h-0 max-h-[min(380px,52vh)] w-full overflow-y-auto pr-2"
+          >
+            <ul className="m-0 list-none p-0 pb-24 pr-0 text-sm text-foreground ">
             {albums.map((album, index) => {
               const key = `${album.id}-${index}`;
               return (
@@ -141,7 +176,7 @@ export default function SuperHoverEventsPreview() {
                     data-album-index={String(index)}
                     className={cn(
                       "w-full cursor-default border-y border-transparent py-1.5 pl-1 pr-0",
-                      "[&[data-super-hover-active]]:border-black [&[data-super-hover-active]]cursor-pointer",
+                      "[&[data-super-hover-active]]:border-black [&[data-super-hover-active]]:cursor-pointer",
                     )}
                   >
                     <div className="min-w-0 truncate text-lg">{album.title}</div>
@@ -154,11 +189,12 @@ export default function SuperHoverEventsPreview() {
             })}
           </ul>
         </div>
+      </div>
 
         {active && showThumb && (
           <motion.div
             ref={thumbRef}
-            className="pointer-events-none absolute z-10 w-[min(10rem,28vw)] overflow-hidden"
+            className="pointer-events-none absolute z-20 w-[min(10rem,28vw)] overflow-hidden"
             initial={false}
             style={{ left: 0, top: 0, x: springX, y: springY }}
             aria-hidden
