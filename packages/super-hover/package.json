@@ -1,7 +1,7 @@
 {
   "name": "super-hover",
-  "version": "1.0.0",
-  "description": "Hit-tested hover state that updates while scrolling",
+  "version": "0.0.1",
+  "description": "Hit-tested hover state that updates on every frame",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -35,6 +35,17 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/danielpetho/super-hover.git"
+  },
+  "author": {
+    "name": "Daniel Petho",
+    "url": "https://github.com/danielpetho"
+  },
+  "homepage": "https://github.com/danielpetho/super-hover#readme",
+  "bugs": {
+    "url": "https://github.com/danielpetho/super-hover/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
