@@ -58,23 +58,14 @@ for (const row of document.querySelectorAll("#list li")) {
 `}
   vue={`
 <script setup lang="ts">
-  import { onMounted, onUnmounted } from "vue";
-  import { createSuperHover } from "super-hover";
+  import { useSuperHover } from "super-hover/vue";
 
   const items = ["Alpha", "Beta", "Gamma"];
-  let superHover: (() => void) | undefined;
-
-  onMounted(() => {
-    superHover = createSuperHover();
-  });
-
-  onUnmounted(() => {
-    superHover?.();
-  });
+  const rootRef = useSuperHover();
 </script>
 
 <template>
-  <ul class="space-y-1">
+  <ul ref="rootRef" class="space-y-1">
     <li
       v-for="item in items"
       :key="item"
@@ -88,22 +79,12 @@ for (const row of document.querySelectorAll("#list li")) {
 `}
   svelte={`
 <script lang="ts">
-  import { onMount, onDestroy } from "svelte";
-  import { createSuperHover } from "super-hover";
+  import { superHover } from "super-hover/svelte";
 
   const items = ["Alpha", "Beta", "Gamma"];
-  let superHover: (() => void) | undefined;
-
-  onMount(() => {
-    superHover = createSuperHover();
-  });
-
-  onDestroy(() => {
-    superHover?.();
-  });
 </script>
 
-<ul class="space-y-1">
+<ul class="space-y-1" use:superHover>
   {#each items as item (item)}
     <li
       data-super-hover
@@ -124,8 +105,10 @@ for (const row of document.querySelectorAll("#list li")) {
   name="super-hover-events"
   showCode={false}
   className="p-0! rounded-none! border-none!"
-  description="Long scrollable list: keep the pointer still and scroll — cover art in the corner follows the real hit target via `superhoverenter` / `superhoverleave`. The active row uses a light gray background (`[data-super-hover-active]`)."
+  description="While you scroll, whichever row is actually under the pointer becomes the hit target. When it fires `superhoverenter`, we swap the corner cover to that row’s art; `superhoverleave` clears it. The muted row highlight uses `[data-super-hover-active]`."
  />
+
+<FrameworkTabs className="my-6" />
 
 <FrameworkCodeSnippet
   title="Events"
@@ -139,18 +122,26 @@ import { useSuperHoverRef } from "super-hover/react";
 export function Example() {
   const rootRef = useSuperHoverRef({
     onEnter: (e) => {
-      /* e.target is the row that gained super-hover */
+      console.log("enter:", e.target);
     },
     onLeave: (e) => {
-      /* e.target is the row that lost it */
+      console.log("leave:", e.target);
     },
   });
 
+  const items = ["Alpha", "Beta", "Gamma"];
+
   return (
     <ul ref={rootRef} className="space-y-1">
-      <li data-super-hover className="rounded px-3 py-2">
-        Alpha
-      </li>
+      {items.map((item) => (
+        <li
+          key={item}
+          data-super-hover
+          className="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100"
+        >
+          {item}
+        </li>
+      ))}
     </ul>
   );
 }
@@ -160,10 +151,10 @@ import { createSuperHover } from "super-hover";
 
 const root = document.querySelector("#list")!;
 const onEnter = (e: Event) => {
-  /* e.target — row that gained super-hover */
+  console.log("enter:", e.target);
 };
 const onLeave = (e: Event) => {
-  /* e.target — row that lost it */
+  console.log("leave:", e.target);
 };
 
 root.addEventListener("superhoverenter", onEnter);
@@ -175,41 +166,54 @@ const stop = createSuperHover({ root });
 `}
   vue={`
 <script setup lang="ts">
-import { useSuperHover } from "super-hover/vue";
+  import { useSuperHover } from "super-hover/vue";
 
-const rootRef = useSuperHover({
-  onEnter: (e: Event) => {
-    /* e.target — row that gained super-hover */
-  },
-  onLeave: (e: Event) => {
-    /* e.target — row that lost it */
-  },
-});
+  const items = ["Alpha", "Beta", "Gamma"];
+
+  const rootRef = useSuperHover({
+    onEnter: (e: Event) => {
+      console.log("enter:", e.target);
+    },
+    onLeave: (e: Event) => {
+      console.log("leave:", e.target);
+    },
+  });
 </script>
 
 <template>
   <ul ref="rootRef" class="space-y-1">
-    <li data-super-hover class="rounded px-3 py-2">Alpha</li>
+    <li
+      v-for="item in items"
+      :key="item"
+      data-super-hover
+      class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100"
+    >
+      {{ item }}
+    </li>
   </ul>
 </template>
 `}
   svelte={`
 <script lang="ts">
   import { superHover } from "super-hover/svelte";
+
+  const items = ["Alpha", "Beta", "Gamma"];
 </script>
 
 <ul
   class="space-y-1"
   use:superHover={{
     onEnter: (e: Event) => {
-      /* e.target — row that gained super-hover */
+      console.log("enter:", e.target);
     },
     onLeave: (e: Event) => {
-      /* e.target — row that lost it */
+      console.log("leave:", e.target);
     },
   }}
 >
-  <li data-super-hover class="rounded px-3 py-2">Alpha</li>
+  {#each items as item (item)}
+    <li data-super-hover class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100">{item}</li>
+  {/each}
 </ul>
 `}
 />
