@@ -6,16 +6,10 @@ import {
   type RefCallback,
 } from "react";
 
-import { createSuperHover, type SuperHoverOptions } from "./index.js";
+import { createSuperHover } from "./index.js";
+import type { UseSuperHoverOptions } from "./use-super-hover-options.js";
 
-export type UseSuperHoverOptions = Omit<SuperHoverOptions, "root"> & {
-  /** When false, stops hit-testing and removes listeners. Default true. */
-  enabled?: boolean;
-  /** Bubbles from the element that received `data-super-hover-active` (the super-hover target). */
-  onEnter?: (event: Event) => void;
-  /** Bubbles from the element that just lost the active state. */
-  onLeave?: (event: Event) => void;
-};
+export type { UseSuperHoverOptions };
 
 const noop = () => {};
 

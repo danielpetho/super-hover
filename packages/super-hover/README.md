@@ -41,12 +41,43 @@ export function Example() {
 
 React is an **optional** peer dependency — tree-shake if you only use the core entry.
 
+## Vue
+
+```vue
+<script setup lang="ts">
+import { useSuperHover } from "super-hover/vue";
+
+const rootRef = useSuperHover({
+  onEnter(e) {},
+  onLeave(e) {},
+});
+</script>
+
+<template>
+  <ul ref="rootRef">
+    <li data-super-hover>...</li>
+  </ul>
+</template>
+```
+
+## Svelte
+
+Use the `superHover` action on the list root.
+
+```svelte
+<script lang="ts">
+  import { superHover } from "super-hover/svelte";
+</script>
+
+<ul use:superHover={{ onEnter(e) {}, onLeave(e) {} }}>
+  <li data-super-hover>...</li>
+</ul>
+```
+
 ## Links
 
 - **Repository:** [github.com/danielpetho/super-hover](https://github.com/danielpetho/super-hover)
 - **Issues:** use the repo issue tracker
-
-When you have a public docs URL, set `homepage` in `package.json` to that URL so npm shows it prominently.
 
 ## License
 

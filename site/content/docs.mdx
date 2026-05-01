@@ -127,6 +127,93 @@ for (const row of document.querySelectorAll("#list li")) {
   description="Long scrollable list: keep the pointer still and scroll — cover art in the corner follows the real hit target via `superhoverenter` / `superhoverleave`. The active row uses a light gray background (`[data-super-hover-active]`)."
  />
 
+<FrameworkCodeSnippet
+  title="Events"
+  reactLanguage="tsx"
+  tsLanguage="ts"
+  vueLanguage="vue"
+  svelteLanguage="svelte"
+  react={`
+import { useSuperHoverRef } from "super-hover/react";
+
+export function Example() {
+  const rootRef = useSuperHoverRef({
+    onEnter: (e) => {
+      /* e.target is the row that gained super-hover */
+    },
+    onLeave: (e) => {
+      /* e.target is the row that lost it */
+    },
+  });
+
+  return (
+    <ul ref={rootRef} className="space-y-1">
+      <li data-super-hover className="rounded px-3 py-2">
+        Alpha
+      </li>
+    </ul>
+  );
+}
+`}
+  ts={`
+import { createSuperHover } from "super-hover";
+
+const root = document.querySelector("#list")!;
+const onEnter = (e: Event) => {
+  /* e.target — row that gained super-hover */
+};
+const onLeave = (e: Event) => {
+  /* e.target — row that lost it */
+};
+
+root.addEventListener("superhoverenter", onEnter);
+root.addEventListener("superhoverleave", onLeave);
+
+const stop = createSuperHover({ root });
+
+/* cleanup: remove listeners and call stop() */
+`}
+  vue={`
+<script setup lang="ts">
+import { useSuperHover } from "super-hover/vue";
+
+const rootRef = useSuperHover({
+  onEnter: (e: Event) => {
+    /* e.target — row that gained super-hover */
+  },
+  onLeave: (e: Event) => {
+    /* e.target — row that lost it */
+  },
+});
+</script>
+
+<template>
+  <ul ref="rootRef" class="space-y-1">
+    <li data-super-hover class="rounded px-3 py-2">Alpha</li>
+  </ul>
+</template>
+`}
+  svelte={`
+<script lang="ts">
+  import { superHover } from "super-hover/svelte";
+</script>
+
+<ul
+  class="space-y-1"
+  use:superHover={{
+    onEnter: (e: Event) => {
+      /* e.target — row that gained super-hover */
+    },
+    onLeave: (e: Event) => {
+      /* e.target — row that lost it */
+    },
+  }}
+>
+  <li data-super-hover class="rounded px-3 py-2">Alpha</li>
+</ul>
+`}
+/>
+
 ## API
 
 </FrameworkDocs>
