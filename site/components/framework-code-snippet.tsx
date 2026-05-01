@@ -8,6 +8,7 @@ import { Highlight, type PrismTheme } from "prism-react-renderer";
 import { CopyButton } from "@/components/copy-button";
 import { useFrameworkDocs } from "@/components/framework-docs";
 import { useIsDarkMode } from "@/lib/use-is-dark-mode";
+import { prismWithSvelte } from "@/lib/prism-with-svelte";
 import darkTheme from "@/prism-theme-dark.json";
 import lightTheme from "@/prism-theme.json";
 
@@ -51,10 +52,10 @@ export function FrameworkCodeSnippet({
   const code = entry.code.trim();
   const lines = code.split("\n");
   const normalizedLanguage = entry.language.toLowerCase();
-  const prismLanguage =
-    normalizedLanguage === "vue" ||
-    normalizedLanguage === "svelte" ||
-    normalizedLanguage === "html"
+  const useSveltePrism = normalizedLanguage === "svelte";
+  const prismLanguage = useSveltePrism
+    ? "svelte"
+    : normalizedLanguage === "vue" || normalizedLanguage === "html"
       ? "markup"
       : normalizedLanguage;
 
@@ -94,10 +95,9 @@ export function FrameworkCodeSnippet({
 
             <div ref={measureRef} className="pt-4">
               <AnimatePresence mode="popLayout" initial={false}>
-                <motion.div
-                  key={framework}
-                >
+                <motion.div key={framework}>
                   <Highlight
+                    prism={useSveltePrism ? prismWithSvelte : undefined}
                     theme={(isDark ? darkTheme : lightTheme) as PrismTheme}
                     code={code}
                     language={prismLanguage}

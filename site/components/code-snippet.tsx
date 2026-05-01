@@ -5,6 +5,7 @@ import { CopyButton } from './copy-button';
 import { Highlight, PrismTheme } from 'prism-react-renderer';
 import lightTheme from '@/prism-theme.json';
 import darkTheme from '@/prism-theme-dark.json';
+import { prismWithSvelte } from '@/lib/prism-with-svelte';
 import { useIsDarkMode } from '@/lib/use-is-dark-mode';
 
 interface CodeSnippetProps {
@@ -16,7 +17,11 @@ interface CodeSnippetProps {
 function resolvePrismLanguage(language: string): string {
   const normalized = language.toLowerCase();
 
-  if (normalized === "vue" || normalized === "svelte" || normalized === "html") {
+  if (normalized === "svelte") {
+    return "svelte";
+  }
+
+  if (normalized === "vue" || normalized === "html") {
     return "markup";
   }
 
@@ -31,6 +36,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
   const lines = code.trim().split('\n');
   const isDark = useIsDarkMode();
   const prismLanguage = resolvePrismLanguage(language);
+  const useSveltePrism = prismLanguage === "svelte";
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(code);
@@ -57,6 +63,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
           </div>
         )}
         <Highlight
+          prism={useSveltePrism ? prismWithSvelte : undefined}
           theme={(isDark ? darkTheme : lightTheme) as PrismTheme}
           code={code.trim()}
           language={prismLanguage}
