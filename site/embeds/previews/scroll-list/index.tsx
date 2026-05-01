@@ -30,12 +30,12 @@ export default function ScrollListPreview() {
   }, []);
 
   return (
-    <div className="flex w-full flex-1 flex-col gap-3">
+    <div className="flex w-full flex-1 select-none flex-col gap-3">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-4">
         <div className="flex items-center gap-2.5 px-2 pt-2">
           <label
             htmlFor={superHoverSwitchId}
-            className="cursor-pointer text-base text-foreground select-none pb-0.5"
+            className="cursor-pointer select-none pb-0.5 text-base text-foreground"
           >
             <TextMorph
               as="span"
@@ -74,7 +74,7 @@ export default function ScrollListPreview() {
 
         <div
           ref={listRootRef}
-          className="max-h-[min(380px,52vh)] overflow-auto overscroll-contain pr-2"
+          className="max-h-[min(380px,52vh)] cursor-pointer overflow-auto overscroll-contain pr-2"
         >
           <div className="text-foreground grid w-full grid-cols-[minmax(0,46%)_minmax(0,42%)_minmax(0,12%)] text-sm">
             {albums.map((album, index) => (
@@ -88,13 +88,13 @@ export default function ScrollListPreview() {
                     : "hover:bg-blue-500 hover:text-white",
                 )}
               >
-                <div className="min-w-0 cursor-pointer pl-2">
+                <div className="min-w-0 pl-2">
                   <div className="truncate">{album.title}</div>
                 </div>
-                <div className="min-w-0 cursor-pointer">
+                <div className="min-w-0">
                   <div className="truncate">{album.artist}</div>
                 </div>
-                <div className="min-w-0 cursor-pointer pr-2 text-right tabular-nums">
+                <div className="min-w-0 pr-2 text-right tabular-nums">
                   {album.year ?? "—"}
                 </div>
               </div>

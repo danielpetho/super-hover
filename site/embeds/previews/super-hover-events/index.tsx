@@ -28,8 +28,7 @@ type ActiveAlbum = {
 
 /**
  * Event-driven “now playing” with a long scroll: `superhoverenter` / `superhoverleave` update the
- * cover in the corner; the row’s bottom border uses `[data-super-hover-active]` so the active row
- * is visible in CSS and in UI state.
+ * cover in the corner; active rows use `[data-super-hover-active]` with a light gray background.
  */
 export default function SuperHoverEventsPreview() {
   const [active, setActive] = React.useState<ActiveAlbum | null>(null);
@@ -138,7 +137,7 @@ export default function SuperHoverEventsPreview() {
   }, [cancelReveal]);
 
   return (
-    <div className="flex w-full min-h-0 flex-1 flex-col gap-2 p-1">
+    <div className="flex min-h-0 w-full max-w-full flex-1 select-none flex-col gap-2 p-1">
 
       <div ref={previewRootRef} className="relative min-h-0 w-full max-w-full flex-1">
         <div className="relative min-h-0 w-full max-h-[min(380px,52vh)]">
@@ -164,19 +163,19 @@ export default function SuperHoverEventsPreview() {
             onPointerEnter={handlePointerEnter}
             onPointerLeave={handlePointerLeave}
             onPointerMove={handlePointerMove}
-            className="min-h-0 max-h-[min(380px,52vh)] w-full overflow-y-auto overscroll-contain pr-2"
+            className="min-h-0 max-h-[min(380px,52vh)] w-full cursor-pointer select-none overflow-y-auto overscroll-contain pr-2"
           >
             <ul className="m-0 list-none p-0 pb-24 pr-0 text-sm text-foreground ">
             {albums.map((album, index) => {
               const key = `${album.id}-${index}`;
               return (
-                <li key={key} className="last:[&>div]:border-b-0">
+                <li key={key}>
                   <div
                     data-super-hover
                     data-album-index={String(index)}
                     className={cn(
-                      "w-full cursor-default border-y border-transparent py-1.5 pl-1 pr-0",
-                      "[&[data-super-hover-active]]:border-black [&[data-super-hover-active]]:cursor-pointer",
+                      "w-full py-1.5 pl-1 pr-0 transition-colors duration-0 ease-out",
+                      "[&[data-super-hover-active]]:bg-muted [&[data-super-hover-active]]:transition-none",
                     )}
                   >
                     <div className="min-w-0 truncate text-lg">{album.title}</div>

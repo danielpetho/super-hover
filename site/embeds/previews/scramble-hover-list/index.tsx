@@ -12,10 +12,10 @@ export default function ScrambleHoverListPreview() {
   const setListRoot = useSuperHoverRef();
 
   return (
-    <div className="flex w-full min-h-0 flex-1 flex-col">
+    <div className="flex min-h-0 w-full max-w-full flex-1 cursor-default select-none flex-col">
       <div
         ref={setListRoot}
-        className="min-h-0 max-h-[min(380px,52vh)] w-full flex-1 overflow-y-auto overflow-x-hidden overscroll-contain pr-2"
+        className="min-h-0 max-h-[min(380px,52vh)] w-full max-w-full flex-1 cursor-default select-none overflow-y-auto overflow-x-hidden overscroll-contain pr-2"
       >
         <div className="text-foreground grid w-full grid-cols-[minmax(0,46%)_minmax(0,42%)_minmax(0,12%)] text-base">
           {albums.map((album, index) => {

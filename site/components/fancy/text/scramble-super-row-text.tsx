@@ -185,12 +185,12 @@ export function ScrambleSuperListRow({
       ref={rowRef}
       data-super-hover
       className={cn(
-        "col-span-3 grid cursor-pointer grid-cols-subgrid gap-x-3 py-1.5 border-y border-transparent",
+        "col-span-3 grid cursor-default select-none grid-cols-subgrid gap-x-3 border-y border-transparent py-1.5",
         "[&[data-super-hover-active]]:border-y-black",
       )}
     >
       <div className="min-w-0 pl-3">
-        <motion.span className="block min-w-0 max-w-full cursor-pointer overflow-hidden text-ellipsis text-left whitespace-nowrap">
+        <motion.span className="block min-w-0 max-w-full overflow-hidden text-ellipsis text-left whitespace-nowrap">
           <span className="sr-only" ref={tSr}>
             {title}
           </span>
@@ -204,7 +204,7 @@ export function ScrambleSuperListRow({
         </motion.span>
       </div>
       <div className="min-w-0">
-        <motion.span className="block min-w-0 max-w-full cursor-pointer overflow-hidden text-ellipsis text-left  whitespace-nowrap">
+        <motion.span className="block min-w-0 max-w-full overflow-hidden text-ellipsis text-left  whitespace-nowrap">
           <span className="sr-only" ref={aSr}>
             {artist}
           </span>
@@ -218,7 +218,7 @@ export function ScrambleSuperListRow({
         </motion.span>
       </div>
       <div className="min-w-0 pr-3 text-right">
-        <motion.span className="block min-w-0 max-w-full cursor-pointer overflow-hidden text-ellipsis text-right tabular-nums whitespace-nowrap">
+        <motion.span className="block min-w-0 max-w-full overflow-hidden text-ellipsis text-right tabular-nums whitespace-nowrap">
           <span className="sr-only" ref={ySr}>
             {yearLabel}
           </span>
