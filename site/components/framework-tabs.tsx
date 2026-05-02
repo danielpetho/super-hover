@@ -54,8 +54,8 @@ export function FrameworkTabs({ className }: { className?: string }) {
             key={item.id}
             value={item.id}
             className={cn(
-              "h-10 cursor-pointer rounded-lg border border-transparent bg-transparent px-4 w-fit py-2 text-base font-medium text-neutral-500 transition-all duration-200 ease-out hover:text-neutral-900 dark:text-muted-foreground dark:hover:text-white",
-              "data-active:bg-neutral-100 data-active:text-neutral-900 dark:data-active:bg-editor-background dark:data-active:text-white shadow-none! active:scale-96 duration-200 ease-out transition-all",
+              "h-10 cursor-pointer rounded-lg border border-transparent bg-transparent px-4 w-fit py-2 text-base font-medium text-neutral-500 transition-all duration-200 ease-out hover:text-neutral-900 dark:text-muted-foreground border dark:hover:text-white border-transparent",
+              "data-active:bg-neutral-100 data-active:text-neutral-900 dark:data-active:bg-editor-background dark:data-active:text-white shadow-none! active:scale-96 duration-200 ease-out transition-all data-active:border-neutral-200 dark:data-active:border-editor-border",
             )}
           >
             <span className="inline-flex items-center gap-2.5">

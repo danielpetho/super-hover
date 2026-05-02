@@ -23,7 +23,7 @@ const ImageComponent = ({
         height={1080}
       />
       {caption && (
-        <figcaption className="text-sm text-muted-foreground mt-2 text-center">
+        <figcaption className="text-sm text-muted-foreground mt-2 text-center text-pretty px-4">
           {alt}
         </figcaption>
       )}

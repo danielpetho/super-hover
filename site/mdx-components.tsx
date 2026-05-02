@@ -2,6 +2,7 @@ import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Sandbox } from "@/components/sandbox";
+import { mdxAnchorClassName } from "@/lib/mdx-anchor-class";
 import { Preview } from "@/components/preview";
 import { CodePen } from "@/components/codepen";
 import { CodeSnippet } from "@/components/code-snippet";
@@ -68,10 +69,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
         !!href &&
         /^(https?:\/\/|\/\/|mailto:|tel:)/i.test(href);
 
-      const linkClassName = cn(
-        "font-medium text text-blue hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-500 duration-300 ease-out transition inline-flex items-center leading-0",
-        className
-      );
+      const linkClassName = mdxAnchorClassName(className);
 
       if (!href) {
         return (

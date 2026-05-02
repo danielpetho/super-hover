@@ -1,5 +1,6 @@
 import "./globals.css";
 import Script from "next/script";
+import { DocSiteFooter } from "@/components/doc-site-footer";
 import { RouteTransition } from "@/components/route-transition";
 
 const isDev = process.env.NODE_ENV === "development";
@@ -21,7 +22,12 @@ export default function RootLayout({
         ) : null}
       </head>
       <body className="font-satoshi antialiased">
-        <RouteTransition>{children}</RouteTransition>
+        <RouteTransition>
+          <>
+            {children}
+            <DocSiteFooter className="pb-12" />
+          </>
+        </RouteTransition>
       </body>
     </html>
   );
