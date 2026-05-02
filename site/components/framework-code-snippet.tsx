@@ -111,7 +111,7 @@ export function FrameworkCodeSnippet({
                           <div
                             key={i}
                             {...getLineProps({ line })}
-                            className="flex items-center px-4 py-px hover:bg-neutral-200/60 dark:hover:bg-editor-border"
+                            className="flex min-w-full w-max items-center px-4 py-px hover:bg-neutral-200/60 dark:hover:bg-editor-border"
                           >
                             <span className="mr-4 flex items-center select-none text-right text-[10px] text-neutral-500 dark:text-muted-foreground">
                               {i + 1}

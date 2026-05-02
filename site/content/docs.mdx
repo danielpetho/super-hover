@@ -1,9 +1,9 @@
 
 # super-hover
 
-<Preview name="scroll-list" showCode={false} className="p-0! rounded-none! border-none!" description="Scroll while keeping the pointer still to see the effect." />
+A super tiny library for frame-accurate, hit-tested hover, so whatever is under your pointer stays the hover target while you scroll or when layout moves.
 
-
+<Preview name="scroll-list" showCode={false} className="p-0! rounded-none! border-none!" description="Scrollable list comparing native vs super-hover; try scrolling without moving the pointer." />
 
 ## Installation
 
@@ -12,7 +12,7 @@
 ## Usage
 
 <FrameworkDocs defaultFramework="react">
-<FrameworkTabs className="my-6" />
+<FrameworkTabs className="mb-3 mt-6" />
 
 <FrameworkCodeSnippet
   title="Basic usage"
@@ -105,10 +105,10 @@ for (const row of document.querySelectorAll("#list li")) {
   name="super-hover-events"
   showCode={false}
   className="p-0! rounded-none! border-none!"
-  description="While you scroll, whichever row is actually under the pointer becomes the hit target. When it fires `superhoverenter`, we swap the corner cover to that row’s art; `superhoverleave` clears it. The muted row highlight uses `[data-super-hover-active]`."
+  description="`superhoverenter` event swaps the corner cover art while scrolling."
  />
 
-<FrameworkTabs className="my-6" />
+<FrameworkTabs className="mb-3 mt-16" />
 
 <FrameworkCodeSnippet
   title="Events"
@@ -151,10 +151,10 @@ import { createSuperHover } from "super-hover";
 
 const root = document.querySelector("#list")!;
 const onEnter = (e: Event) => {
-  console.log("enter:", e.target);
+    console.log("enter:", e.target);
 };
 const onLeave = (e: Event) => {
-  console.log("leave:", e.target);
+    console.log("leave:", e.target);
 };
 
 root.addEventListener("superhoverenter", onEnter);
@@ -166,54 +166,54 @@ const stop = createSuperHover({ root });
 `}
   vue={`
 <script setup lang="ts">
-  import { useSuperHover } from "super-hover/vue";
+    import { useSuperHover } from "super-hover/vue";
 
-  const items = ["Alpha", "Beta", "Gamma"];
+    const items = ["Alpha", "Beta", "Gamma"];
 
-  const rootRef = useSuperHover({
-    onEnter: (e: Event) => {
-      console.log("enter:", e.target);
-    },
-    onLeave: (e: Event) => {
-      console.log("leave:", e.target);
-    },
-  });
+    const rootRef = useSuperHover({
+      onEnter: (e: Event) => {
+        console.log("enter:", e.target);
+      },
+      onLeave: (e: Event) => {
+        console.log("leave:", e.target);
+      },
+    });
 </script>
 
 <template>
-  <ul ref="rootRef" class="space-y-1">
-    <li
-      v-for="item in items"
-      :key="item"
-      data-super-hover
-      class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100"
-    >
-      {{ item }}
-    </li>
-  </ul>
+    <ul ref="rootRef" class="space-y-1">
+      <li
+        v-for="item in items"
+        :key="item"
+        data-super-hover
+        class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100"
+      >
+        {{ item }}
+      </li>
+    </ul>
 </template>
 `}
   svelte={`
 <script lang="ts">
-  import { superHover } from "super-hover/svelte";
+    import { superHover } from "super-hover/svelte";
 
-  const items = ["Alpha", "Beta", "Gamma"];
+    const items = ["Alpha", "Beta", "Gamma"];
 </script>
 
 <ul
-  class="space-y-1"
-  use:superHover={{
-    onEnter: (e: Event) => {
-      console.log("enter:", e.target);
-    },
-    onLeave: (e: Event) => {
-      console.log("leave:", e.target);
-    },
-  }}
+    class="space-y-1"
+    use:superHover={{
+      onEnter: (e: Event) => {
+        console.log("enter:", e.target);
+      },
+      onLeave: (e: Event) => {
+        console.log("leave:", e.target);
+      },
+    }}
 >
-  {#each items as item (item)}
-    <li data-super-hover class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100">{item}</li>
-  {/each}
+    {#each items as item (item)}
+      <li data-super-hover class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100">{item}</li>
+    {/each}
 </ul>
 `}
 />

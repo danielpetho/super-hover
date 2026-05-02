@@ -88,7 +88,7 @@ export function DocToc({
   return (
     <nav
       aria-label="Sections"
-      className="fixed left-0 top-0 z-40 hidden max-h-screen w-56 overflow-y-auto overscroll-contain pt-64 ml-8 pr-2 lg:block xl:pl-5"
+      className="fixed left-0 top-0 z-40 hidden max-h-screen w-56 overscroll-contain pt-65 ml-8 pr-2 lg:block xl:pl-5"
     >
       {backHref ? (
         <Link

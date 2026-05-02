@@ -173,7 +173,7 @@ export function Preview({
       {description ? (
         <figure className="flex w-full flex-col gap-3">
           {main}
-          <figcaption className="text-muted-foreground mx-auto max-w-prose px-2 text-center text-sm leading-relaxed mt-4 sm:mt-6">
+          <figcaption className="text-muted-foreground mx-auto max-w-prose px-2 text-center text-sm leading-normal mt-4 sm:mt-4">
             {description}
           </figcaption>
         </figure>

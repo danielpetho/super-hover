@@ -71,7 +71,11 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <pre className={`${className} text-[13px] overflow-x-auto font-mono font-medium pb-4`} style={style}>
               {tokens.map((line, i) => (
-                <div key={i} {...getLineProps({ line })} className="flex items-center py-px px-4 hover:bg-neutral-200/60 dark:hover:bg-editor-border">
+                <div
+                  key={i}
+                  {...getLineProps({ line })}
+                  className="flex min-w-full w-max items-center px-4 py-px hover:bg-neutral-200/60 dark:hover:bg-editor-border"
+                >
                   <span className="mr-4 flex items-center text-right text-[10px] text-neutral-500 select-none dark:text-muted-foreground">
                     {i + 1}
                   </span>

@@ -23,7 +23,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       <h1
         id={children?.toString().toLowerCase().replace(/\s+/g, "-")}
         className={cn(
-          "text-[44px] font-satoshi tracking-tighter text-pretty leading-tight pb-12",
+          "text-[44px] font-satoshi font-medium tracking-tighter text-pretty leading-tight pb-12",
           className
         )}
         {...props}
