@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 
 import { cn } from "@/lib/utils";
@@ -50,6 +51,7 @@ export function DocToc({
   backLabel?: string;
 }) {
   const reduceMotion = useReducedMotion();
+  const pathname = usePathname();
   const transition = tocMotionTransition(Boolean(reduceMotion));
 
   const [items, setItems] = React.useState<{ id: string; label: string }[]>([]);
@@ -79,7 +81,7 @@ export function DocToc({
     mo.observe(root, { childList: true, subtree: true, characterData: true });
 
     return () => mo.disconnect();
-  }, []);
+  }, [pathname]);
 
   if (items.length === 0) {
     return null;

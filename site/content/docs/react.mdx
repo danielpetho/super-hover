@@ -1,6 +1,4 @@
 
-# super-hover
-
 A super tiny library that hit-tests hover every frame. Unlike native `:hover`, it stays tied to what's under your pointer while you scroll or when things move.
 
 <Preview name="scroll-list" showCode={false} className="p-0! rounded-none! border-none!" description="Scrollable list comparing native vs super-hover; Scroll without moving the pointer." />
@@ -11,16 +9,10 @@ A super tiny library that hit-tests hover every frame. Unlike native `:hover`, i
 
 ## Usage
 
-<FrameworkDocs defaultFramework="react">
-<FrameworkTabs className="mb-3 mt-6" />
-
-<FrameworkCodeSnippet
+<CodeSnippet
   title="Basic usage"
-  reactLanguage="tsx"
-  tsLanguage="ts"
-  vueLanguage="vue"
-  svelteLanguage="svelte"
-  react={`
+  language="tsx"
+  code={`
 import { useSuperHoverRef } from "super-hover/react";
 
 export function Example() {
@@ -42,59 +34,6 @@ export function Example() {
   );
 }
 `}
-  ts={`
-import { createSuperHover } from "super-hover";
-
-const list = document.querySelector("#list");
-const superHover = createSuperHover({ root: list ?? undefined });
-
-for (const row of document.querySelectorAll("#list li")) {
-  row.setAttribute("data-super-hover", "");
-  row.className =
-    "rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100";
-}
-
-// later: superHover();
-`}
-  vue={`
-<script setup lang="ts">
-  import { useSuperHover } from "super-hover/vue";
-
-  const items = ["Alpha", "Beta", "Gamma"];
-  const rootRef = useSuperHover();
-</script>
-
-<template>
-  <ul ref="rootRef" class="space-y-1">
-    <li
-      v-for="item in items"
-      :key="item"
-      data-super-hover
-      class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100"
-    >
-      {{ item }}
-    </li>
-  </ul>
-</template>
-`}
-  svelte={`
-<script lang="ts">
-  import { superHover } from "super-hover/svelte";
-
-  const items = ["Alpha", "Beta", "Gamma"];
-</script>
-
-<ul class="space-y-1" use:superHover>
-  {#each items as item (item)}
-    <li
-      data-super-hover
-      class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100"
-    >
-      {item}
-    </li>
-  {/each}
-</ul>
-`}
 />
 
 ## Events
@@ -104,17 +43,12 @@ for (const row of document.querySelectorAll("#list li")) {
   showCode={false}
   className="p-0! rounded-none! border-none!"
   description="'superhoverenter' fires when the pointer enters a row and swaps the cover art while scrolling."
- />
+/>
 
-<FrameworkTabs className="mb-3 mt-20" />
-
-<FrameworkCodeSnippet
-  title="Event triggered"
-  reactLanguage="tsx"
-  tsLanguage="ts"
-  vueLanguage="vue"
-  svelteLanguage="svelte"
-  react={`
+<CodeSnippet
+  title="Event handlers"
+  language="tsx"
+  code={`
 import { useSuperHoverRef } from "super-hover/react";
 
 export function Example() {
@@ -143,76 +77,6 @@ export function Example() {
       </ul>
     );
 }
-`}
-  ts={`
-import { createSuperHover } from "super-hover";
-
-const root = document.querySelector("#list")!;
-const onEnter = (e: Event) => {
-    console.log("enter:", e.target);
-};
-const onLeave = (e: Event) => {
-    console.log("leave:", e.target);
-};
-
-root.addEventListener("superhoverenter", onEnter);
-root.addEventListener("superhoverleave", onLeave);
-
-const stop = createSuperHover({ root });
-
-/* cleanup: remove listeners and call stop() */
-`}
-  vue={`
-<script setup lang="ts">
-    import { useSuperHover } from "super-hover/vue";
-
-    const items = ["Alpha", "Beta", "Gamma"];
-
-    const rootRef = useSuperHover({
-      onEnter: (e: Event) => {
-        console.log("enter:", e.target);
-      },
-      onLeave: (e: Event) => {
-        console.log("leave:", e.target);
-      },
-    });
-</script>
-
-<template>
-    <ul ref="rootRef" class="space-y-1">
-      <li
-        v-for="item in items"
-        :key="item"
-        data-super-hover
-        class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100"
-      >
-        {{ item }}
-      </li>
-    </ul>
-</template>
-`}
-  svelte={`
-<script lang="ts">
-    import { superHover } from "super-hover/svelte";
-
-    const items = ["Alpha", "Beta", "Gamma"];
-</script>
-
-<ul
-    class="space-y-1"
-    use:superHover={{
-      onEnter: (e: Event) => {
-        console.log("enter:", e.target);
-      },
-      onLeave: (e: Event) => {
-        console.log("leave:", e.target);
-      },
-    }}
->
-    {#each items as item (item)}
-      <li data-super-hover class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100">{item}</li>
-    {/each}
-</ul>
 `}
 />
 
@@ -267,7 +131,7 @@ Registers pointer, scroll, and resize listeners and hit-tests on each animation 
 
 ### `UseSuperHoverOptions`
 
-Shared options for **`super-hover/react`** (`useSuperHover`, `useSuperHoverRef`), **`super-hover/vue`** (`useSuperHover`), and **`super-hover/svelte`** (`superHover`). The root element is separate from these props: React passes the mounted root as the first argument to `useSuperHover`, or via the callback ref from `useSuperHoverRef`; Vue and Svelte attach to the element you bind `ref` or `use:superHover` to.
+These options apply to **`useSuperHover`** and **`useSuperHoverRef`** from **`super-hover/react`**. Pass the mounted root as the first argument to **`useSuperHover`**, or use the callback ref returned from **`useSuperHoverRef`**.
 
 <Table>
   <TableHeader>
@@ -332,6 +196,4 @@ Shared options for **`super-hover/react`** (`useSuperHover`, `useSuperHoverRef`)
 
 ### Callbacks
 
-Framework helpers register `onEnter` / `onLeave` on **`root`** for `enterEventType` / `leaveEventType`. Each handler receives the same bubbling DOM **`Event`** `createSuperHover` dispatches on the hit-tested row (a `CustomEvent` by default). **`event.target`** is that row element. Use `event.target as HTMLElement` (or narrower typing) when you read `dataset` or measure nodes.
-
-</FrameworkDocs>
+**`useSuperHover`** and **`useSuperHoverRef`** register **`onEnter`** / **`onLeave`** on **`root`** for **`enterEventType`** / **`leaveEventType`**. Each handler receives the same bubbling DOM **`Event`** **`createSuperHover`** dispatches on the hit-tested row (a **`CustomEvent`** by default). **`event.target`** is that row element. Use **`event.target as HTMLElement`** (or narrower typing) when you read **`dataset`** or measure nodes.

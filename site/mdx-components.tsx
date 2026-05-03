@@ -7,9 +7,6 @@ import { Preview } from "@/components/preview";
 import { CodePen } from "@/components/codepen";
 import { CodeSnippet } from "@/components/code-snippet";
 import { InstallTabs } from "@/components/install-tabs";
-import { FrameworkDocs } from "@/components/framework-docs";
-import { FrameworkTabs } from "@/components/framework-tabs";
-import { FrameworkCodeSnippet } from "@/components/framework-code-snippet";
 import { Children, type ReactNode } from "react";
 import { ExternalLinkIcon } from "lucide-react";
 import {
@@ -323,55 +320,6 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       <InstallTabs
         command={command}
         npx={npx}
-        {...props}
-      />
-    ),
-    FrameworkDocs: ({
-      children,
-      defaultFramework,
-    }: React.HTMLAttributes<HTMLElement> & {
-      defaultFramework?: "react" | "ts" | "vue" | "svelte";
-    }) => (
-      <FrameworkDocs defaultFramework={defaultFramework}>{children}</FrameworkDocs>
-    ),
-    FrameworkTabs: ({
-      className,
-      ...props
-    }: React.HTMLAttributes<HTMLElement>) => (
-      <FrameworkTabs className={className} {...props} />
-    ),
-    FrameworkCodeSnippet: ({
-      title,
-      react,
-      ts,
-      vue,
-      svelte,
-      reactLanguage,
-      tsLanguage,
-      vueLanguage,
-      svelteLanguage,
-      ...props
-    }: React.HTMLAttributes<HTMLElement> & {
-      title?: string;
-      react: string;
-      ts: string;
-      vue: string;
-      svelte: string;
-      reactLanguage?: string;
-      tsLanguage?: string;
-      vueLanguage?: string;
-      svelteLanguage?: string;
-    }) => (
-      <FrameworkCodeSnippet
-        title={title}
-        react={react}
-        ts={ts}
-        vue={vue}
-        svelte={svelte}
-        reactLanguage={reactLanguage}
-        tsLanguage={tsLanguage}
-        vueLanguage={vueLanguage}
-        svelteLanguage={svelteLanguage}
         {...props}
       />
     ),

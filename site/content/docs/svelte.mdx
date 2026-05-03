@@ -1,0 +1,188 @@
+
+A super tiny library that hit-tests hover every frame. Unlike native `:hover`, it stays tied to what's under your pointer while you scroll or when things move.
+
+<Preview name="scroll-list" showCode={false} className="p-0! rounded-none! border-none!" description="Scrollable list comparing native vs super-hover; Scroll without moving the pointer." />
+
+## Installation
+
+<InstallTabs command="super-hover" />
+
+## Usage
+
+<CodeSnippet
+  title="Basic usage"
+  language="svelte"
+  code={`
+<script lang="ts">
+  import { superHover } from "super-hover/svelte";
+
+  const items = ["Alpha", "Beta", "Gamma"];
+</script>
+
+<ul class="space-y-1" use:superHover>
+  {#each items as item (item)}
+    <li
+      data-super-hover
+      class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100"
+    >
+      {item}
+    </li>
+  {/each}
+</ul>
+`}
+/>
+
+## Events
+
+<Preview
+  name="super-hover-events"
+  showCode={false}
+  className="p-0! rounded-none! border-none!"
+  description="'superhoverenter' fires when the pointer enters a row and swaps the cover art while scrolling."
+/>
+
+<CodeSnippet
+  title="Event handlers"
+  language="svelte"
+  code={`
+<script lang="ts">
+    import { superHover } from "super-hover/svelte";
+
+    const items = ["Alpha", "Beta", "Gamma"];
+</script>
+
+<ul
+    class="space-y-1"
+    use:superHover={{
+      onEnter: (e: Event) => {
+        console.log("enter:", e.target);
+      },
+      onLeave: (e: Event) => {
+        console.log("leave:", e.target);
+      },
+    }}
+>
+    {#each items as item (item)}
+      <li data-super-hover class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100">{item}</li>
+    {/each}
+</ul>
+`}
+/>
+
+## API
+
+### `createSuperHover(options)`
+
+Registers pointer, scroll, and resize listeners and hit-tests on each animation frame. Returns a **cleanup** function that removes listeners and clears any active target.
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="w-[min(28vw,9rem)] whitespace-normal">Option</TableHead>
+      <TableHead className="min-w-[10rem] whitespace-normal">Type</TableHead>
+      <TableHead className="w-[min(32vw,11rem)] whitespace-normal">Default</TableHead>
+      <TableHead className="min-w-[12rem] whitespace-normal">Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">root</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">Document</code>, <code className="font-fira-mono text-[13px] text-foreground">Element</code>, or omit</TableCell>
+      <TableCell><em className="text-muted-foreground">whole document</em></TableCell>
+      <TableCell>Only candidates inside this subtree can become active. Omit to allow matches anywhere.</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">selector</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">[data-super-hover]</code></TableCell>
+      <TableCell>Which elements participate (passed to <code className="font-fira-mono text-[13px] text-foreground">element.closest</code>).</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">activeAttribute</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">data-super-hover-active</code></TableCell>
+      <TableCell>Empty attribute toggled on the hit-tested row while it is active.</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">enterEventType</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">superhoverenter</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the row when it becomes active (<code className="font-fira-mono text-[13px] text-foreground">bubbles: true</code>).</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">leaveEventType</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">superhoverleave</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the row when it stops being active.</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+### `superHover` action options
+
+These options are passed to **`use:superHover`** from **`super-hover/svelte`**. The action attaches to the element that hosts the directive.
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="w-[min(28vw,9rem)] whitespace-normal">Option</TableHead>
+      <TableHead className="min-w-[10rem] whitespace-normal">Type</TableHead>
+      <TableHead className="w-[min(26vw,9rem)] whitespace-normal">Default</TableHead>
+      <TableHead className="min-w-[12rem] whitespace-normal">Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">enabled</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">boolean</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">true</code></TableCell>
+      <TableCell>When <code className="font-fira-mono text-[13px] text-foreground">false</code>, listeners are removed until enabled again.</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">selector</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">[data-super-hover]</code></TableCell>
+      <TableCell>Same as vanilla <code className="font-fira-mono text-[13px] text-foreground">selector</code>.</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">activeAttribute</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">data-super-hover-active</code></TableCell>
+      <TableCell>Same as vanilla <code className="font-fira-mono text-[13px] text-foreground">activeAttribute</code>.</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">enterEventType</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">superhoverenter</code></TableCell>
+      <TableCell>Same as vanilla <code className="font-fira-mono text-[13px] text-foreground">enterEventType</code>.</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">leaveEventType</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">superhoverleave</code></TableCell>
+      <TableCell>Same as vanilla <code className="font-fira-mono text-[13px] text-foreground">leaveEventType</code>.</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">onEnter</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">{"(event: Event) => void"}</code></TableCell>
+      <TableCell>no-op</TableCell>
+      <TableCell>
+        Runs when an enter event bubbles{" "}
+        <strong>
+          within <code className="font-fira-mono text-[13px] text-foreground">root</code>
+        </strong>
+        .
+      </TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">onLeave</code></TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">{"(event: Event) => void"}</code></TableCell>
+      <TableCell>no-op</TableCell>
+      <TableCell>Runs when a leave event bubbles within <code className="font-fira-mono text-[13px] text-foreground">root</code>.</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+### Callbacks
+
+The **`superHover`** action registers **`onEnter`** / **`onLeave`** on the host element for **`enterEventType`** / **`leaveEventType`**. Each handler receives the same bubbling DOM **`Event`** **`createSuperHover`** dispatches on the hit-tested row (a **`CustomEvent`** by default). **`event.target`** is that row element. Use **`event.target as HTMLElement`** (or narrower typing) when you read **`dataset`** or measure nodes.
