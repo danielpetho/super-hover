@@ -151,25 +151,25 @@ These options are accepted by **`useSuperHover`** from **`super-hover/vue`**. Bi
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">selector</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">[data-super-hover]</code></TableCell>
-      <TableCell>Same as vanilla <code className="font-fira-mono text-[13px] text-foreground">selector</code>.</TableCell>
+      <TableCell>Which elements participate (passed to <code className="font-fira-mono text-[13px] text-foreground">element.closest</code>).</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">activeAttribute</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">data-super-hover-active</code></TableCell>
-      <TableCell>Same as vanilla <code className="font-fira-mono text-[13px] text-foreground">activeAttribute</code>.</TableCell>
+      <TableCell>Empty attribute toggled on the hit-tested row while it is active.</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">enterEventType</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">superhoverenter</code></TableCell>
-      <TableCell>Same as vanilla <code className="font-fira-mono text-[13px] text-foreground">enterEventType</code>.</TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the row when it becomes active (<code className="font-fira-mono text-[13px] text-foreground">bubbles: true</code>).</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">leaveEventType</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">superhoverleave</code></TableCell>
-      <TableCell>Same as vanilla <code className="font-fira-mono text-[13px] text-foreground">leaveEventType</code>.</TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the row when it stops being active.</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">onEnter</code></TableCell>

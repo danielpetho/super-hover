@@ -145,7 +145,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       <div className="my-8 w-full overflow-x-auto rounded-xl border border-neutral-200 dark:border-editor-border">
         <table
           className={cn(
-            "w-full min-w-[min(100%,520px)] border-collapse text-left text-[13px] [&_tbody_tr:last-child_td]:border-b-0",
+            "w-full min-w-[min(100%,520px)] border-collapse text-left text-[13px] [&_code]:font-fira-mono [&_code]:!text-xs [&_tbody_tr:last-child_td]:border-b-0",
             className,
           )}
           {...props}
@@ -210,17 +210,29 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       />
     ),
     CodeSnippet: ({
-      className,
       title,
       children,
-      ...props
+      code: codeProp,
+      language: languageProp,
     }: React.HTMLAttributes<HTMLElement> & {
       title?: string;
+      code?: string;
+      language?: string;
     }) => {
-      // Extract code content and language from children
+      if (typeof codeProp === "string") {
+        return (
+          <CodeSnippet
+            title={title}
+            code={codeProp}
+            language={languageProp ?? "typescript"}
+          />
+        );
+      }
+
+      // Fenced code block: <pre><code className="language-tsx">
       const preElement = Children.toArray(children)[0] as React.ReactElement;
 
-      //@ts-ignore
+      //@ts-expect-error MDX pre/code shape
       const codeElement = preElement?.props?.children as React.ReactElement<{
         className?: string;
         children?: string;
@@ -237,7 +249,6 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
           title={title}
           code={code}
           language={language}
-          {...props}
         />
       );
     },

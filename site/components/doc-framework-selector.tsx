@@ -42,15 +42,21 @@ export function DocFrameworkSelector({ value }: { value: DocFrameworkId }) {
       <Select.Trigger
         aria-label={`Documentation for ${selected.label}`}
         className={cn(
-          "inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-md py-1 text-sm font-medium text-muted-foreground outline-none select-none",
+          "group/trigger inline-flex shrink-0 cursor-pointer items-center gap-1 rounded-md py-1 text-sm font-medium text-muted-foreground outline-none select-none",
+          "transition-all duration-200 ease-out active:scale-96",
           "hover:text-foreground focus-visible:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-          "data-popup-open:text-foreground [&_svg]:opacity-90 [&_svg]:data-popup-open:opacity-100",
+          "data-popup-open:text-foreground",
         )}
       >
         {icons[value]}
         <span>{selected.label}</span>
-        <Select.Icon className="text-muted-foreground opacity-80 data-popup-open:text-foreground">
-          <ChevronDownIcon className="size-4 shrink-0" aria-hidden />
+        <Select.Icon
+          className={cn(
+            "text-muted-foreground transition-colors duration-200 ease-out",
+            "group-hover/trigger:text-foreground group-data-[popup-open]/trigger:text-foreground",
+          )}
+        >
+          <ChevronDownIcon className="size-4 shrink-0 pt-0.5" aria-hidden />
         </Select.Icon>
       </Select.Trigger>
 
@@ -76,6 +82,7 @@ export function DocFrameworkSelector({ value }: { value: DocFrameworkId }) {
                   value={option.id}
                   className={cn(
                     "flex cursor-pointer items-center gap-2 rounded-md py-2 pr-8 pl-2 text-sm outline-none select-none",
+                    "transition-transform duration-200 ease-out active:scale-96",
                     "data-highlighted:bg-accent data-highlighted:text-accent-foreground data-selected:bg-muted data-selected:font-medium",
                   )}
                 >

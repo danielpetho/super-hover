@@ -2,7 +2,6 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-/** Semantic `<table>` with horizontal scroll and bordered shell (Base UI has no table primitive). */
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
     <div
@@ -13,7 +12,7 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
         <table
           data-slot="table"
           className={cn(
-            "w-full min-w-[min(100%,560px)] caption-bottom border-collapse text-left text-sm",
+            "w-full min-w-[min(100%,560px)] caption-bottom border-collapse text-left text-[13px] [&_code]:font-fira-mono [&_code]:!text-xs",
             className,
           )}
           {...props}
@@ -105,7 +104,7 @@ function TableCaption({
   return (
     <caption
       data-slot="table-caption"
-      className={cn("mt-4 px-3 text-muted-foreground text-sm", className)}
+      className={cn("mt-4 px-3 text-muted-foreground text-[13px]", className)}
       {...props}
     />
   )
