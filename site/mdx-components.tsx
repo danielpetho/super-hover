@@ -90,7 +90,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
           >
             {children}
             <ExternalLinkIcon
-              className="ml-1 pt-px mt-px"
+              className="ml-1"
               size={13}
               strokeWidth={2.5}
             />

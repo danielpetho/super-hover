@@ -7,7 +7,7 @@ export default function Home() {
       <DocToc />
       <article
         data-doc-content
-        className="mx-auto w-full max-w-[700px] space-y-6 px-4 py-32"
+        className="mx-auto w-full max-w-[640px] space-y-6 px-4 py-32"
       >
         <Docs />
       </article>

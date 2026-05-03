@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { mdxAnchorClassName } from "@/lib/mdx-anchor-class";
 
 const SITE_URL = "https://danielpetho.com";
+const GITHUB_REPO_URL = "https://github.com/danielpetho/super-hover";
 
 export function DocSiteFooter({
   className,
@@ -13,7 +14,7 @@ export function DocSiteFooter({
   return (
     <footer
       className={cn(
-        "w-full text-center text-sm text-muted-foreground",
+        "flex w-full flex-col items-center gap-2 text-center text-sm text-muted-foreground",
         className,
       )}
       {...props}
@@ -26,9 +27,24 @@ export function DocSiteFooter({
           rel="noreferrer"
           className={mdxAnchorClassName()}
         >
-          daniel petho
+          Daniel Petho
           <ExternalLinkIcon
-            className="ml-1 pt-px mt-px"
+            className="ml-1"
+            size={13}
+            strokeWidth={2.5}
+          />
+        </a>
+      </p>
+      <p>
+        <a
+          href={GITHUB_REPO_URL}
+          target="_blank"
+          rel="noreferrer"
+          className={mdxAnchorClassName()}
+        >
+          GitHub
+          <ExternalLinkIcon
+            className="ml-1"
             size={13}
             strokeWidth={2.5}
           />
