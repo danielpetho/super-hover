@@ -9,7 +9,7 @@ const noop = () => {};
 
 /**
  * Composable that returns a template ref for the list root: wires
- * `createSuperHover` plus `superhoverenter` / `superhoverleave` listeners like React’s `useSuperHoverRef`.
+ * `createSuperHover` plus `superhoverenter` / `superhoverleave` listeners.
  *
  * @example
  * ```vue

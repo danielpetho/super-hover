@@ -12,6 +12,16 @@ import { FrameworkTabs } from "@/components/framework-tabs";
 import { FrameworkCodeSnippet } from "@/components/framework-code-snippet";
 import { Children, type ReactNode } from "react";
 import { ExternalLinkIcon } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Callout } from "./components/callout";
 import VideoPlayer from "./components/video";
 import ImageComponent from "./components/image";
@@ -44,7 +54,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     h3: ({ className, children, ...props }: React.ComponentProps<"h3">) => (
       <h3
         id={children?.toString().toLowerCase().replace(/\s+/g, "-")}
-        className={cn("text-xl font-semibold pt-10", className)}
+        className={cn("text-xl font-semibold pt-4", className)}
         {...props}
       >
         {children}
@@ -133,6 +143,44 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     ),
     li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
       <li className={cn("marker:text-sm first:mt-3", className)} {...props} />
+    ),
+    table: ({ className, ...props }: React.ComponentProps<"table">) => (
+      <div className="my-8 w-full overflow-x-auto rounded-xl border border-neutral-200 dark:border-editor-border">
+        <table
+          className={cn(
+            "w-full min-w-[min(100%,520px)] border-collapse text-left text-[13px] [&_tbody_tr:last-child_td]:border-b-0",
+            className,
+          )}
+          {...props}
+        />
+      </div>
+    ),
+    thead: ({ className, ...props }: React.ComponentProps<"thead">) => (
+      <thead className={className} {...props} />
+    ),
+    tbody: ({ className, ...props }: React.ComponentProps<"tbody">) => (
+      <tbody className={className} {...props} />
+    ),
+    tr: ({ className, ...props }: React.ComponentProps<"tr">) => (
+      <tr className={className} {...props} />
+    ),
+    th: ({ className, ...props }: React.ComponentProps<"th">) => (
+      <th
+        className={cn(
+          "border-b border-neutral-200 bg-neutral-100 px-3 py-2.5 align-top font-semibold text-neutral-900 dark:border-editor-border dark:bg-editor-background dark:text-white",
+          className,
+        )}
+        {...props}
+      />
+    ),
+    td: ({ className, ...props }: React.ComponentProps<"td">) => (
+      <td
+        className={cn(
+          "border-b border-neutral-200 px-3 py-2.5 align-top text-neutral-700 dark:border-editor-border dark:text-muted-foreground",
+          className,
+        )}
+        {...props}
+      />
     ),
     blockquote: ({
       className,
@@ -327,6 +375,14 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
         {...props}
       />
     ),
+    Table,
+    TableHeader,
+    TableBody,
+    TableFooter,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableCaption,
     Callout: ({
       className,
       variant,

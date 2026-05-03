@@ -6,7 +6,7 @@ export type { UseSuperHoverOptions };
 const noop = () => {};
 
 /**
- * Svelte action: attach to the list root element (same wiring as React’s `useSuperHoverRef`).
+ * Svelte action: attach to the list root element.
  *
  * @example
  * ```svelte
