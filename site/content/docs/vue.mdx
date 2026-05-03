@@ -41,7 +41,7 @@ A super tiny library that hit-tests hover every frame. Unlike native `:hover`, i
   name="super-hover-events"
   showCode={false}
   className="p-0! rounded-none! border-none!"
-  description="'superhoverenter' fires when the pointer enters a row and swaps the cover art while scrolling."
+  description="'superhoverenter' when the pointer activates a hit-tested item; cover art swaps while scrolling without moving the pointer."
 />
 
 <CodeSnippet
@@ -82,7 +82,9 @@ A super tiny library that hit-tests hover every frame. Unlike native `:hover`, i
 
 ### `createSuperHover(options)`
 
-Registers pointer, scroll, and resize listeners and hit-tests on each animation frame. Returns a **cleanup** function that removes listeners and clears any active target.
+Registers pointer, scroll, and resize listeners and hit-tests on each animation frame. Returns a `cleanup` function that removes listeners and clears any active target.
+
+Each frame the library reads `elementFromPoint`, walks ancestors with `closest(selector)` to pick one matched element, then optionally checks it lies inside `root`. `selector` defines participation; `root` only limits where hits are considered—it does not opt in every descendant.
 
 <Table>
   <TableHeader>
@@ -98,38 +100,38 @@ Registers pointer, scroll, and resize listeners and hit-tests on each animation 
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">root</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">Document</code>, <code className="font-fira-mono text-[13px] text-foreground">Element</code>, or omit</TableCell>
       <TableCell><em className="text-muted-foreground">whole document</em></TableCell>
-      <TableCell>Only candidates inside this subtree can become active. Omit to allow matches anywhere.</TableCell>
+      <TableCell>Optional boundary: the matched element must lie inside this subtree; omit for the whole document. Does not make every descendant a target—that is controlled by `selector`.</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">selector</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">[data-super-hover]</code></TableCell>
-      <TableCell>Which elements participate (passed to <code className="font-fira-mono text-[13px] text-foreground">element.closest</code>).</TableCell>
+      <TableCell>CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate (default `[data-super-hover]`). Independent of `root`, which only scopes where hits count.</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">activeAttribute</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">data-super-hover-active</code></TableCell>
-      <TableCell>Empty attribute toggled on the hit-tested row while it is active.</TableCell>
+      <TableCell>Attribute toggled on the active matched element (empty string while active, removed otherwise)—use for styling, e.g. `data-[super-hover-active]:…`.</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">enterEventType</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">superhoverenter</code></TableCell>
-      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the row when it becomes active (<code className="font-fira-mono text-[13px] text-foreground">bubbles: true</code>).</TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the matched element when it becomes active (<code className="font-fira-mono text-[13px] text-foreground">bubbles: true</code>).</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">leaveEventType</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">superhoverleave</code></TableCell>
-      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the row when it stops being active.</TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the matched element when it stops being active.</TableCell>
     </TableRow>
   </TableBody>
 </Table>
 
 ### `useSuperHover` options
 
-These options are accepted by **`useSuperHover`** from **`super-hover/vue`**. Bind the returned ref to your root element with **`ref="rootRef"`** (or your chosen name).
+These options are accepted by `useSuperHover` from `super-hover/vue`. Bind the returned ref to your root element with `ref="rootRef"` (or your chosen name).
 
 <Table>
   <TableHeader>
@@ -151,25 +153,25 @@ These options are accepted by **`useSuperHover`** from **`super-hover/vue`**. Bi
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">selector</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">[data-super-hover]</code></TableCell>
-      <TableCell>Which elements participate (passed to <code className="font-fira-mono text-[13px] text-foreground">element.closest</code>).</TableCell>
+      <TableCell>CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate (default `[data-super-hover]`). Independent of `root`, which only scopes where hits count.</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">activeAttribute</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">data-super-hover-active</code></TableCell>
-      <TableCell>Empty attribute toggled on the hit-tested row while it is active.</TableCell>
+      <TableCell>Attribute toggled on the active matched element (empty string while active, removed otherwise)—use for styling, e.g. `data-[super-hover-active]:…`.</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">enterEventType</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">superhoverenter</code></TableCell>
-      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the row when it becomes active (<code className="font-fira-mono text-[13px] text-foreground">bubbles: true</code>).</TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the matched element when it becomes active (<code className="font-fira-mono text-[13px] text-foreground">bubbles: true</code>).</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">leaveEventType</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">string</code></TableCell>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">superhoverleave</code></TableCell>
-      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the row when it stops being active.</TableCell>
+      <TableCell><code className="font-fira-mono text-[13px] text-foreground">CustomEvent</code> type dispatched on the matched element when it stops being active.</TableCell>
     </TableRow>
     <TableRow>
       <TableCell><code className="font-fira-mono text-[13px] text-foreground">onEnter</code></TableCell>
@@ -194,4 +196,4 @@ These options are accepted by **`useSuperHover`** from **`super-hover/vue`**. Bi
 
 ### Callbacks
 
-**`useSuperHover`** registers **`onEnter`** / **`onLeave`** on the bound root element for **`enterEventType`** / **`leaveEventType`**. Each handler receives the same bubbling DOM **`Event`** **`createSuperHover`** dispatches on the hit-tested row (a **`CustomEvent`** by default). **`event.target`** is that row element. Use **`event.target as HTMLElement`** (or narrower typing) when you read **`dataset`** or measure nodes.
+`useSuperHover` registers `onEnter` / `onLeave` on the bound root element for `enterEventType` / `leaveEventType`. Handlers receive the same bubbling `Event` `createSuperHover` dispatches on the matched element (a `CustomEvent` by default). `event.target` is that element. Cast `event.target` when you read `dataset` or measure layout.

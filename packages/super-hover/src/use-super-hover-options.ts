@@ -4,8 +4,8 @@ import type { SuperHoverOptions } from "./index.js";
 export type UseSuperHoverOptions = Omit<SuperHoverOptions, "root"> & {
   /** When false, stops hit-testing and removes listeners. Default true. */
   enabled?: boolean;
-  /** Bubbles from the element that received `data-super-hover-active` (the super-hover target). */
+  /** Fires when enter events bubble within `root`; `event.target` is the matched active element. */
   onEnter?: (event: Event) => void;
-  /** Bubbles from the element that just lost the active state. */
+  /** Fires when leave events bubble within `root`; `event.target` is the element that lost active state. */
   onLeave?: (event: Event) => void;
 };

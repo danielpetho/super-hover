@@ -1,6 +1,6 @@
 # super-hover
 
-Hit-tested hover for lists: tracks which `[data-super-hover]` row sits under the pointer even while the list scrolls (unlike plain `:hover`).
+Hit-tested hover: tracks which marked element sits under the pointer on every frame and while scrolling (unlike plain `:hover`). Participation uses `selector` (default `[data-super-hover]`); optional `root` only scopes where hits apply—not every descendant is targeted automatically.
 
 ## Install
 
@@ -21,7 +21,7 @@ const dispose = createSuperHover({ root: list ?? undefined });
 dispose();
 ```
 
-Mark interactive rows with `data-super-hover`. The active row gets `data-super-hover-active` (customizable). Optional events `superhoverenter` / `superhoverleave` fire on the row (names customizable).
+Mark participating nodes with `data-super-hover` (or change `selector`). The active matched element gets `data-super-hover-active` (customizable). Optional `superhoverenter` / `superhoverleave` fire on that element (`bubbles`; names customizable).
 
 ## React
 
@@ -62,7 +62,7 @@ const rootRef = useSuperHover({
 
 ## Svelte
 
-Use the `superHover` action on the list root.
+Use the `superHover` action on your `root` element (often the list wrapper).
 
 ```svelte
 <script lang="ts">
