@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/table";
 import { Callout } from "./components/callout";
 import { ApiPropList, ApiProp } from "./components/api-prop-list";
+import { DocCodeHeading } from "./components/doc-code-heading";
 import VideoPlayer from "./components/video";
 import ImageComponent from "./components/image";
 import 'katex/dist/katex.min.css';
@@ -345,6 +346,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     TableCaption,
     ApiPropList,
     ApiProp,
+    DocCodeHeading,
     Callout: ({
       className,
       variant,

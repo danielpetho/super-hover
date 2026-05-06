@@ -14,7 +14,7 @@ const AnchorPrefixContext = createContext("");
 
 export function ApiPropList({
   className,
-  "aria-label": ariaLabel = "API options",
+  "aria-label": ariaLabel = "Props",
   anchorPrefix = "",
   children,
 }: {

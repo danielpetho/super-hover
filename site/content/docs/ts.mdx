@@ -60,15 +60,15 @@ const stop = createSuperHover({ root });
 `}
 />
 
-## API
+## Props
 
-### `createSuperHover(options)`
+<DocCodeHeading id="superhoveroptions">SuperHoverOptions</DocCodeHeading>
 
-Registers pointer, scroll, and resize listeners and hit-tests on each animation frame. Returns a `cleanup` function that removes listeners and clears any active target.
+Registers pointer, scroll, and resize listeners and hit-tests on each animation frame. Pass these fields to `createSuperHover(options)`. Returns a `cleanup` function that removes listeners and clears any active target.
 
 Each frame the library reads `elementFromPoint`, walks ancestors with `closest(selector)` to pick one matched element, then optionally checks it lies inside `root`. `selector` defines which nodes may activate; `root` only limits where hits are considered, but it does not opt in every descendant.
 
-<ApiPropList aria-label="createSuperHover options" anchorPrefix="create-super-hover">
+<ApiPropList aria-label="SuperHoverOptions" anchorPrefix="create-super-hover">
   <ApiProp name="root" type="Document, Element, or omit" defaultValue={<em className="text-muted-foreground">whole document</em>}>
     Optional boundary: the matched element must lie inside this subtree; omit for the whole document. Does not make every descendant node a target; that is controlled by `selector` instead.
   </ApiProp>
@@ -90,6 +90,6 @@ Each frame the library reads `elementFromPoint`, walks ancestors with `closest(s
   </ApiProp>
 </ApiPropList>
 
-### Callbacks
+<DocCodeHeading id="callbacks">Callbacks</DocCodeHeading>
 
 Listen on `root` for `superhoverenter` / `superhoverleave` (or your `enterEventType` / `leaveEventType`). `createSuperHover` emits bubbling `CustomEvent`s on the matched element; `event.target` points at that node. Remove listeners and call the `createSuperHover` cleanup when tearing down.
