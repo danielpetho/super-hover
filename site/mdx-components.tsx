@@ -20,6 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Callout } from "./components/callout";
+import { ApiPropList, ApiProp } from "./components/api-prop-list";
 import VideoPlayer from "./components/video";
 import ImageComponent from "./components/image";
 import 'katex/dist/katex.min.css';
@@ -342,6 +343,8 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     TableRow,
     TableCell,
     TableCaption,
+    ApiPropList,
+    ApiProp,
     Callout: ({
       className,
       variant,
