@@ -3,11 +3,19 @@ A super tiny library that hit-tests hover every frame. Unlike native `:hover`, i
 
 <Preview name="scroll-list" showCode={false} className="p-0! rounded-none! border-none!" description="Scrollable list comparing native vs super-hover; Scroll without moving the pointer." />
 
+## Why use this?
+
+Well, you probably don't need this. Browsers don't emit :hover while you're scrolling for performance reasons, which is obviously desired in most cases. But, by enforcing a fake hover state on every frame, it opens up the possibility of some interesting creative effects.
+
 ## Installation
 
 <InstallTabs command="super-hover" />
 
 ## Usage
+
+Just simply import `superHover`, put `use:superHover` on the wrapper around your list (like the `ul` in the snippet), and mark each row with `data-super-hover`. Whatever is under the pointer picks up `data-super-hover-active`, so you can style “the hovered row” with classes such as Tailwind’s `data-[super-hover-active]:…`.
+
+Out of the box it looks for `[data-super-hover]`, but you can customize the [selector](#api-create-super-hover-selector).
 
 <CodeSnippet
   title="Basic usage"
@@ -38,8 +46,12 @@ A super tiny library that hit-tests hover every frame. Unlike native `:hover`, i
   name="super-hover-events"
   showCode={false}
   className="p-0! rounded-none! border-none!"
-  description="'superhoverenter' when the pointer activates a hit-tested item and swaps the cover art."
+  description="'superhoverenter' when the pointer activates a hit-tested item; cover art swaps while scrolling without moving the pointer."
 />
+
+Pass `onEnter` and `onLeave` in the options object for `use:superHover` when you want logic tied to the active row: `onEnter` runs when hit-testing moves onto a new matched row (pointer moves or the list scrolls under a stationary cursor); `onLeave` runs on the row that stopped being active. Both handlers receive the event object, where `event.target` refers to that row element.
+
+The preview above uses `onEnter` to swap the cover image so it matches the active row even while scrolling without moving the mouse.
 
 <CodeSnippet
   title="Event handlers"

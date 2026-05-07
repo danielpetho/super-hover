@@ -224,6 +224,14 @@
   }
 }
 
+body.font-satoshi {
+  font-weight: 450;
+}
+
+body.font-satoshi article[data-doc-content] {
+  font-weight: 450;
+}
+
 /* Light-mode global text selection color */
 :root:not(.dark) ::selection {
   background: #d9d9de;

@@ -3,11 +3,19 @@ A super tiny library that hit-tests hover every frame. Unlike native `:hover`, i
 
 <Preview name="scroll-list" showCode={false} className="p-0! rounded-none! border-none!" description="Scrollable list comparing native vs super-hover; Scroll without moving the pointer." />
 
+## Why use this?
+
+Well, you probably don't need this. Browsers don't emit :hover while you're scrolling for performance reasons, which is obviously desired in most cases. But, by enforcing a fake hover state on every frame, it opens up the possibility of some interesting creative effects.
+
 ## Installation
 
 <InstallTabs command="super-hover" />
 
 ## Usage
+
+Just simply import `createSuperHover` from `super-hover`, pass your list element as `root`, and mark each row with `data-super-hover` (see the snippet for one way to do that). Whatever is under the pointer picks up `data-super-hover-active`, so you can style “the hovered row” with classes such as Tailwind’s `data-[super-hover-active]:…`.
+
+Out of the box it looks for `[data-super-hover]`, but you can customize the [selector](#api-create-super-hover-selector).
 
 <CodeSnippet
   title="Basic usage"
@@ -36,6 +44,10 @@ for (const el of document.querySelectorAll("#list li")) {
   className="p-0! rounded-none! border-none!"
   description="'superhoverenter' when the pointer activates a hit-tested item; cover art swaps while scrolling without moving the pointer."
 />
+
+Register handlers on your list `root` for `superhoverenter` and `superhoverleave` when you want logic tied to the active row: `superhoverenter` runs when hit-testing moves onto a new matched row (pointer moves or the list scrolls under a stationary cursor); `superhoverleave` runs on the row that stopped being active. Events bubble, so listening on `root` works—`event.target` is the row element.
+
+The preview above does exactly that so the cover image swaps with the active row even while scrolling without moving the mouse.
 
 <CodeSnippet
   title="Listening on the root"

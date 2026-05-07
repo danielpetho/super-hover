@@ -117,7 +117,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       className,
       ...props
     }: React.HTMLAttributes<HTMLParagraphElement>) => (
-      <p className={cn("text-base text-pretty", className)} {...props} />
+      <p className={cn("text-base text-pretty leading-6", className)} {...props} />
     ),
     ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
       <ul
@@ -205,7 +205,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
       <code
         className={cn(
-          "font-fira-mono text-[13px] px-1.5 py-0.5 border border-border rounded-md leading-6 bg-muted whitespace-nowrap",
+          "font-fira-mono text-[13px] px-0.5 py-0.5 border-[0.5px] border-border rounded-[6px] leading-6 bg-muted whitespace-nowrap font-[400]",
           className
         )}
         {...props}
