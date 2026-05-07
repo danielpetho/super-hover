@@ -82,11 +82,11 @@ export function Preview({
           data-preview-missing
         >
           Preview{" "}
-          <code className="bg-muted px-1.5 py-0.5 font-mono text-xs">
+          <code className="bg-editor-bg px-1.5 py-0.5 font-mono text-xs border border-neutral-200 rounded dark:border-editor-border">
             {name}
           </code>{" "}
           not in registry — run{" "}
-          <code className="bg-muted px-1.5 py-0.5 font-mono text-xs">
+          <code className="bg-editor-bg px-1.5 py-0.5 font-mono text-xs border border-neutral-200 rounded dark:border-editor-border">
             pnpm generate-sources
           </code>
         </p>

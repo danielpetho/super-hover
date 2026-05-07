@@ -42,7 +42,7 @@ function DefaultLine({ children: value }: { children: ReactNode }) {
     <p className="mt-1.5 text-[13px] leading-snug text-muted-foreground">
       <span className="font-medium text-muted-foreground">Default:</span>{" "}
       {typeof value === "string" ? (
-        <code className="rounded-md bg-muted/60 px-1 py-px font-fira-mono text-[12px] text-foreground/85">
+        <code className="rounded-[5px] border-[0.5px] border-neutral-200 bg-editor-bg px-0.5 py-0.5 font-fira-mono text-[12px] text-foreground/85 dark:border-editor-border">
           {value}
         </code>
       ) : (
@@ -92,7 +92,7 @@ export function ApiProp({
         <div
           className={cn(
             "mt-3 space-y-3 text-[15px] leading-relaxed text-pretty text-muted-foreground",
-            "[&_a]:underline [&_a]:underline-offset-4 [&_p]:text-[15px] [&_p]:leading-relaxed [&_code]:whitespace-pre-wrap [&_code]:break-words [&_code]:rounded-md [&_code]:border [&_code]:border-border [&_code]:bg-muted/50 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-fira-mono [&_code]:text-[13px] [&_code]:text-foreground/90",
+            "[&_a]:underline [&_a]:underline-offset-4 [&_p]:text-[15px] [&_code]:rounded-[5px] [&_code]:border-[0.5px] [&_p]:leading-relaxed [&_code]:whitespace-pre-wrap [&_code]:break-words [&_code]:border-neutral-200 [&_code]:bg-editor-bg [&_code]:px-0.5 [&_code]:py-0.5 [&_code]:font-fira-mono [&_code]:text-[13px] [&_code]:text-foreground/90 [&_code]:dark:border-editor-border",
           )}
         >
           {children}

@@ -22,6 +22,7 @@ import {
 import { Callout } from "./components/callout";
 import { ApiPropList, ApiProp } from "./components/api-prop-list";
 import { DocCodeHeading } from "./components/doc-code-heading";
+import { DocMobileHoverNotice } from "./components/doc-mobile-hover-notice";
 import VideoPlayer from "./components/video";
 import ImageComponent from "./components/image";
 import 'katex/dist/katex.min.css';
@@ -172,7 +173,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     th: ({ className, ...props }: React.ComponentProps<"th">) => (
       <th
         className={cn(
-          "border-b border-neutral-200 bg-neutral-100 px-3 py-2.5 align-top font-semibold text-neutral-900 dark:border-editor-border dark:bg-editor-background dark:text-white",
+          "border-b border-neutral-200 bg-editor-bg px-3 py-2.5 align-top font-semibold text-neutral-900 dark:border-editor-border dark:text-white",
           className,
         )}
         {...props}
@@ -211,7 +212,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
       <code
         className={cn(
-          "font-fira-mono text-[13px] px-0.5 py-0.5 border-[0.5px] border-border rounded-[6px] leading-6 bg-muted whitespace-nowrap font-[400]",
+          "font-fira-mono text-[13px] px-0.5 py-0.5 border-[0.5px] border-neutral-200 rounded-[6px] leading-6 bg-editor-bg whitespace-nowrap font-[400] dark:border-editor-border",
           className
         )}
         {...props}
@@ -353,6 +354,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     ApiPropList,
     ApiProp,
     DocCodeHeading,
+    DocMobileHoverNotice,
     Callout: ({
       className,
       variant,
@@ -360,7 +362,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       children,
       ...props
     }: React.HTMLAttributes<HTMLElement> & {
-      variant?: "info" | "warning";
+      variant?: "info" | "warning" | "neutral";
       badge?: {
         type: "icon" | "badge";
         content: React.ReactNode;

@@ -70,8 +70,8 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 dark:border-editor-border dark:bg-editor-background">
-      <div className="flex h-11 items-center justify-between border-b border-neutral-200 bg-neutral-100 py-2 pl-4 pr-3 dark:border-editor-border dark:bg-editor-background">
+    <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-editor-bg dark:border-editor-border">
+      <div className="flex h-11 items-center justify-between border-b border-neutral-200 bg-editor-bg py-2 pl-4 pr-3 dark:border-editor-border">
         <Tabs 
           value={activeTab} 
           onValueChange={(value) => setActiveTab(value as PackageManager)}
@@ -82,7 +82,7 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
               <TabsTrigger
                 key={pm.id}
                 value={pm.id}
-                className="h-auto cursor-pointer px-2 py-1 text-sm text-neutral-500 duration-200 ease-out hover:bg-neutral-900 hover:bg-transparent hover:text-neutral-900 data-active:text-neutral-950 dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:bg-editor-background dark:data-active:text-white shadow-none! active:scale-96 duration-200 ease-out transition-all"
+                className="h-auto cursor-pointer px-2 py-1 text-sm text-neutral-500 duration-200 ease-out hover:bg-neutral-900 hover:bg-transparent hover:text-neutral-900 data-active:text-neutral-950 dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:bg-editor-bg dark:data-active:text-white shadow-none! active:scale-96 duration-200 ease-out transition-all"
               >
                 {pm.label}
               </TabsTrigger>
@@ -91,7 +91,7 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
         </Tabs>
         <CopyButton onCopy={handleCopy} />
       </div>
-      <div className="bg-neutral-100 py-4 dark:bg-editor-background">
+      <div className="bg-editor-bg py-4">
         <Highlight
           theme={(isDark ? darkTheme : lightTheme) as PrismTheme}
           code={getFullCommand(activeTab)}

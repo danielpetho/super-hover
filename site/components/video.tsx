@@ -54,7 +54,7 @@ const VideoPlayer = ({
         className="absolute inset-0 h-full w-full bg-transparent cursor-pointer"
         aria-label={isPlaying ? "Pause video" : "Play video"}
       >
-        <div className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-editor-background/50 text-white/90 opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100 duration-200 ease-out">
+        <div className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white/90 opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100 duration-200 ease-out">
           {isPlaying ? (
             <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
               <rect x="6" y="4" width="4" height="16" rx="1" />

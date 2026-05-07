@@ -62,7 +62,7 @@ export function DocCodeHeading({
       <span
         className={cn(
           "inline-block max-w-full whitespace-pre-wrap break-words font-fira-mono font-semibold tracking-tight",
-          "rounded-md border border-border bg-muted",
+          "rounded-md border-[0.5px] border-neutral-200 bg-editor-bg dark:border-editor-border",
           "px-2 py-1 text-[15px] leading-normal text-foreground",
         )}
       >

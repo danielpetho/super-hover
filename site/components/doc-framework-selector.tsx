@@ -70,7 +70,7 @@ export function DocFrameworkSelector({ value }: { value: DocFrameworkId }) {
         >
           <Select.Popup
             className={cn(
-              "max-h-[min(var(--available-height),320px)] min-w-[11rem] overflow-y-auto overflow-hidden rounded-xl border border-neutral-200 bg-white p-1 text-neutral-900 outline-none dark:border-editor-border dark:bg-editor-background dark:text-white",
+              "max-h-[min(var(--available-height),320px)] min-w-[11rem] overflow-y-auto overflow-hidden rounded-xl border border-neutral-200 bg-white p-1 text-neutral-900 outline-none dark:border-editor-border dark:bg-editor-bg dark:text-white",
               "shadow-2xl/15 dark:shadow-[0_1px_2px_rgb(0_0_0_/0.09)]",
               "origin-[var(--transform-origin)] transition-[transform,scale,opacity] data-ending-style:scale-98 data-ending-style:opacity-0 data-starting-style:scale-98 data-starting-style:opacity-0",
             )}

@@ -116,10 +116,10 @@ function PreviewConsolePanel({
     <div className="flex-1 flex flex-col h-full">
       <Tabs
         defaultValue="preview"
-        className="flex-1 flex w-full flex-col gap-0 bg-neutral-100 dark:bg-editor-background"
+        className="flex-1 flex w-full flex-col gap-0 bg-editor-bg"
       >
-        <div className="flex h-11 flex-row justify-between border-b border-neutral-200 bg-neutral-100 px-3 dark:border-editor-border dark:bg-editor-background">
-          <TabsList className="flex h-[42px] items-center gap-x-3 rounded-none border-none bg-neutral-100 pt-1 font-normal dark:bg-editor-background">
+        <div className="flex h-11 flex-row justify-between border-b border-neutral-200 bg-editor-bg px-3 dark:border-editor-border">
+          <TabsList className="flex h-[42px] items-center gap-x-3 rounded-none border-none bg-editor-bg pt-1 font-normal">
             <TabsTrigger
               value="preview"
               className="h-auto cursor-pointer border-none bg-transparent px-2 py-1 text-sm font-normal text-neutral-500 transition-colors duration-200 ease-out hover:bg-transparent hover:text-neutral-900 data-active:border-none data-active:bg-transparent data-active:text-neutral-950 data-active:shadow-none focus-visible:ring-0 focus-visible:outline-none dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:border-none dark:data-active:bg-transparent dark:data-active:text-white shadow-none! font-medium duration-200 ease-out transition-all active:scale-97"
@@ -283,7 +283,7 @@ export function Sandbox({
   if (loading) {
     return (
       <div className="relative">
-        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-100 shadow-xl dark:border-editor-border dark:bg-editor-background">
+        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-neutral-200 bg-editor-bg shadow-xl dark:border-editor-border">
           <div className="text-muted-foreground">Loading exercise...</div>
         </div>
       </div>
@@ -293,7 +293,7 @@ export function Sandbox({
   if (error) {
     return (
       <div className="relative">
-        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-100 shadow-xl dark:border-editor-border dark:bg-editor-background">
+        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-neutral-200 bg-editor-bg shadow-xl dark:border-editor-border">
           <div className="text-red-400">Error: {error}</div>
         </div>
       </div>

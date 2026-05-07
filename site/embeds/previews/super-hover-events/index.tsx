@@ -175,7 +175,7 @@ export default function SuperHoverEventsPreview() {
                     data-album-index={String(index)}
                     className={cn(
                       "w-full py-1.5 pl-1 pr-0 transition-colors duration-0 ease-out",
-                      "[&[data-super-hover-active]]:bg-muted [&[data-super-hover-active]]:transition-none",
+                      "[&[data-super-hover-active]]:bg-editor-bg [&[data-super-hover-active]]:transition-none",
                     )}
                   >
                     <div className="min-w-0 truncate text-lg">{album.title}</div>

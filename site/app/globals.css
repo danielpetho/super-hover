@@ -13,7 +13,7 @@
   --font-sans: var(--font-satoshi);
   --font-mono: var(--font-fira-mono);
   
-  --color-editor-background: var(--editor-bg);
+  --color-editor-bg: var(--editor-bg);
   --color-editor-border: var(--editor-border);
 
   --color-background: var(--background);
@@ -100,7 +100,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  --editor-bg: #151515;
+  --editor-bg: color-mix(in oklab, #fafafa 50%, #f5f5f5 50%);
   --editor-border: #252525;
 
   --blue-50: #e8f3ff;
@@ -152,6 +152,8 @@
   --sidebar-ring: oklch(0.556 0 0);
 
   --scrollbar-thumb: oklch(0.48 0 0);
+
+  --editor-bg: #151515;
 }
 
 @layer base {

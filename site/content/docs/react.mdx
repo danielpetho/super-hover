@@ -1,6 +1,8 @@
 
 A super tiny library that hit-tests hover every frame. Unlike native `:hover`, it keeps tracking whatever sits under your pointer while you scroll or when things move on screen.
 
+<DocMobileHoverNotice />
+
 <Preview name="scroll-list" showCode={false} className="p-0! rounded-none! border-none!" description="Scrollable list comparing native vs super-hover; Scroll without moving the pointer." />
 
 ## Why use this?
@@ -33,7 +35,7 @@ export function Example() {
         <li
           key={item}
           data-super-hover
-          className="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100"
+          className="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-editor-bg"
         >
           {item}
         </li>
@@ -81,7 +83,7 @@ export function Example() {
           <li
             key={item}
             data-super-hover
-            className="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-neutral-100"
+            className="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-editor-bg"
           >
             {item}
           </li>

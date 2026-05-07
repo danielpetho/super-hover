@@ -7,6 +7,8 @@ import lightTheme from '@/prism-theme.json';
 import darkTheme from '@/prism-theme-dark.json';
 import { prismWithSvelte } from '@/lib/prism-with-svelte';
 import { useIsDarkMode } from '@/lib/use-is-dark-mode';
+import { cn } from "@/lib/utils";
+import { docSnippetSurfaceClasses } from "@/lib/doc-snippet-surface";
 
 interface CodeSnippetProps {
   title?: string;
@@ -45,15 +47,15 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
   return (
     <div
       data-mdx-code-snippet
-      className="overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 dark:border-editor-border dark:bg-editor-background"
+      className={cn("overflow-hidden", docSnippetSurfaceClasses)}
     >
       {title ? (
-        <div className="flex h-11 items-center justify-between border-b border-neutral-200 bg-neutral-100 py-2 pl-4 pr-3 dark:border-editor-border dark:bg-editor-background">
+        <div className="flex h-11 items-center justify-between border-b border-neutral-200 bg-editor-bg py-2 pl-4 pr-3 dark:border-editor-border">
           <h3 className="text-sm font-medium text-neutral-900 dark:text-white">{title}</h3>
           <CopyButton onCopy={handleCopy} />
         </div>
       ) : null}
-      <div className="relative max-h-[min(70vh,520px)] overflow-y-auto overscroll-contain bg-neutral-100 pt-4 dark:bg-editor-background">
+      <div className="relative max-h-[min(70vh,520px)] overflow-y-auto overscroll-contain bg-editor-bg pt-4">
         {!title && (
           <div className={`absolute ${
             lines.length === 1 
