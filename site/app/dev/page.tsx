@@ -1,9 +1,11 @@
 import Dev from "@/content/dev.mdx";
+import { DocScrollTargetFlash } from "@/components/doc-scroll-target-flash";
 import { DocToc } from "@/components/doc-toc";
 
 export default function DevPage() {
   return (
     <div className="relative w-full">
+      <DocScrollTargetFlash />
       <DocToc backHref="/" backLabel="Back to docs" />
       <article
         data-doc-content

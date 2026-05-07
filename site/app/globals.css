@@ -100,7 +100,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  --editor-bg: color-mix(in oklab, #fafafa 50%, #f5f5f5 50%);
+  --editor-bg: color-mix(in oklab, #fafafa 50%, #f4f4f3 50%);
   --editor-border: #252525;
 
   --blue-50: #e8f3ff;
@@ -116,6 +116,10 @@
   --blue-950: #0a125c;
 
   --scrollbar-thumb: oklch(0.83 0 0);
+
+  /* Scroll-to / in-page jump highlight (see `.scroll-target-flash`) — soft marker yellow */
+  --scroll-target-highlight: color-mix(in oklab, oklch(0.94 0.1 98) 44%, transparent);
+  --scroll-target-flash-duration: 1.85s;
 }
 
 .dark {
@@ -154,6 +158,8 @@
   --scrollbar-thumb: oklch(0.48 0 0);
 
   --editor-bg: #151515;
+
+  --scroll-target-highlight: color-mix(in oklab, oklch(0.74 0.08 92) 32%, transparent);
 }
 
 @layer base {
@@ -275,12 +281,38 @@ body.font-satoshi article[data-doc-content] {
   }
 }
 
+@keyframes scroll-target-flash-kf {
+  from {
+    background-color: var(--scroll-target-highlight);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+/* Padding + rounding live here so the highlight hugs text (see MDX / DocCodeHeading). */
+.scroll-target-flash-inner {
+  border-radius: 0.5rem;
+  padding: 0.1em 0.26em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.scroll-target-flash {
+  animation: scroll-target-flash-kf var(--scroll-target-flash-duration, 1.85s)
+    ease-out forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(*),
   ::view-transition-new(*),
   ::view-transition-group(*) {
     animation-duration: 0s !important;
     animation-delay: 0s !important;
+  }
+
+  .scroll-target-flash {
+    animation: none !important;
   }
 }
 

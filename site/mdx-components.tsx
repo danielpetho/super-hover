@@ -27,6 +27,7 @@ import VideoPlayer from "./components/video";
 import ImageComponent from "./components/image";
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
+import { SCROLL_TARGET_FLASH_INNER_CLASS } from "@/lib/flash-scroll-target";
 
 export function useMDXComponents(components?: MDXComponents): MDXComponents {
   return {
@@ -39,7 +40,9 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
         )}
         {...props}
       >
-        {children}
+        <span className={cn(SCROLL_TARGET_FLASH_INNER_CLASS, "inline")}>
+          {children}
+        </span>
       </h1>
     ),
     h2: ({ className, children, ...props }: React.ComponentProps<"h2">) => (
@@ -48,7 +51,9 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
         className={cn("text-2xl font-semibold pt-10", className)}
         {...props}
       >
-        {children}
+        <span className={cn(SCROLL_TARGET_FLASH_INNER_CLASS, "inline")}>
+          {children}
+        </span>
       </h2>
     ),
     h3: ({ className, children, ...props }: React.ComponentProps<"h3">) => (
@@ -57,7 +62,9 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
         className={cn("text-xl font-semibold pt-4", className)}
         {...props}
       >
-        {children}
+        <span className={cn(SCROLL_TARGET_FLASH_INNER_CLASS, "inline")}>
+          {children}
+        </span>
       </h3>
     ),
     h4: ({ className, children, ...props }: React.ComponentProps<"h4">) => (
@@ -66,7 +73,9 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
         className={cn("text-lg font-semibold pt-4", className)}
         {...props}
       >
-        {children}
+        <span className={cn(SCROLL_TARGET_FLASH_INNER_CLASS, "inline")}>
+          {children}
+        </span>
       </h4>
     ),
     a: ({

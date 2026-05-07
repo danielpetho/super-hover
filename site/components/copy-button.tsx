@@ -184,7 +184,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({ onCopy }) => {
     <div className="relative">
       {/* animated Background */}
       <motion.div
-        className="absolute inset-0 rounded-md bg-neutral-200 dark:bg-editor-border"
+        className="absolute inset-0 rounded-md bg-neutral-200/60 dark:bg-editor-border/60"
         animate={getBackgroundAnimation()}
       />
       

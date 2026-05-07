@@ -50,7 +50,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
       className={cn("overflow-hidden", docSnippetSurfaceClasses)}
     >
       {title ? (
-        <div className="flex h-11 items-center justify-between border-b border-neutral-200 bg-editor-bg py-2 pl-4 pr-3 dark:border-editor-border">
+        <div className="flex h-11 items-center justify-between border-b-[0.5px] border-neutral-200 bg-editor-bg py-2 pl-4 pr-3 dark:border-editor-border">
           <h3 className="text-sm font-medium text-neutral-900 dark:text-white">{title}</h3>
           <CopyButton onCopy={handleCopy} />
         </div>

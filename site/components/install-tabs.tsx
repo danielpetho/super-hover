@@ -70,8 +70,8 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-editor-bg dark:border-editor-border">
-      <div className="flex h-11 items-center justify-between border-b border-neutral-200 bg-editor-bg py-2 pl-4 pr-3 dark:border-editor-border">
+    <div className="overflow-hidden rounded-2xl border-[0.5px] border-neutral-200 bg-editor-bg dark:border-editor-border">
+      <div className="flex h-11 items-center justify-between border-b-[0.5px] border-neutral-200 bg-editor-bg py-2 pl-4 pr-3 dark:border-editor-border">
         <Tabs 
           value={activeTab} 
           onValueChange={(value) => setActiveTab(value as PackageManager)}

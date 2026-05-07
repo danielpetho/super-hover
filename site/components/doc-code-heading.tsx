@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { SCROLL_TARGET_FLASH_INNER_CLASS } from "@/lib/flash-scroll-target";
 
 function slugFromLabel(label: string) {
   return label
@@ -55,24 +56,31 @@ export function DocCodeHeading({
     <Tag
       id={resolvedId}
       className={cn(
-        "scroll-mt-24 flex flex-wrap items-baseline gap-x-2 gap-y-1 pt-4 text-xl font-semibold leading-snug text-foreground",
+        "scroll-mt-24 pt-4 text-xl font-semibold leading-snug text-foreground -ml-[5px]",
         className,
       )}
     >
       <span
         className={cn(
-          "inline-block max-w-full whitespace-pre-wrap break-words font-fira-mono font-semibold tracking-tight",
-          "rounded-md border-[0.5px] border-neutral-200 bg-editor-bg dark:border-editor-border",
-          "px-2 py-1 text-[15px] leading-normal text-foreground",
+          SCROLL_TARGET_FLASH_INNER_CLASS,
+          "inline-flex max-w-full flex-wrap items-baseline gap-x-2 gap-y-1",
         )}
       >
-        {children}
-      </span>
-      {suffix ? (
-        <span className="min-w-0 font-semibold tracking-tight text-foreground">
-          {suffix}
+        <span
+          className={cn(
+            "inline-block max-w-full whitespace-pre-wrap break-words font-fira-mono font-semibold tracking-tight",
+            "rounded-md border-[0.5px] border-neutral-200 bg-editor-bg dark:border-editor-border",
+            "px-[3px] py-0.5 text-[15px] leading-normal text-foreground",
+          )}
+        >
+          {children}
         </span>
-      ) : null}
+        {suffix ? (
+          <span className="min-w-0 font-semibold tracking-tight text-foreground">
+            {suffix}
+          </span>
+        ) : null}
+      </span>
     </Tag>
   );
 }
