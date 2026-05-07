@@ -117,7 +117,13 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       className,
       ...props
     }: React.HTMLAttributes<HTMLParagraphElement>) => (
-      <p className={cn("text-base text-pretty leading-6", className)} {...props} />
+      <p
+        className={cn(
+          "text-base text-pretty leading-6 [&_li:last-child>p:last-child]:pb-2 [&:has(+_[data-mdx-code-snippet])]:pb-2",
+          className
+        )}
+        {...props}
+      />
     ),
     ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
       <ul

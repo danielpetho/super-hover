@@ -43,7 +43,10 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 dark:border-editor-border dark:bg-editor-background">
+    <div
+      data-mdx-code-snippet
+      className="overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 dark:border-editor-border dark:bg-editor-background"
+    >
       {title ? (
         <div className="flex h-11 items-center justify-between border-b border-neutral-200 bg-neutral-100 py-2 pl-4 pr-3 dark:border-editor-border dark:bg-editor-background">
           <h3 className="text-sm font-medium text-neutral-900 dark:text-white">{title}</h3>
