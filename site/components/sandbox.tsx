@@ -116,9 +116,9 @@ function PreviewConsolePanel({
     <div className="flex-1 flex flex-col h-full">
       <Tabs
         defaultValue="preview"
-        className="flex-1 flex w-full flex-col gap-0 bg-editor-bg"
+        className="flex-1 flex w-full flex-col gap-0 bg-editor-bg!"
       >
-        <div className="flex h-11 flex-row justify-between border-b border-neutral-200 bg-editor-bg px-3 dark:border-editor-border">
+        <div className="flex h-11 flex-row justify-between border-b-[0.5px] border-neutral-200 bg-editor-bg px-3 dark:border-editor-border">
           <TabsList className="flex h-[42px] items-center gap-x-3 rounded-none border-none bg-editor-bg pt-1 font-normal">
             <TabsTrigger
               value="preview"
@@ -283,7 +283,7 @@ export function Sandbox({
   if (loading) {
     return (
       <div className="relative">
-        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-neutral-200 bg-editor-bg shadow-xl dark:border-editor-border">
+        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border-[0.5px] border-neutral-200 bg-editor-bg shadow-xl dark:border-editor-border">
           <div className="text-muted-foreground">Loading exercise...</div>
         </div>
       </div>
@@ -293,7 +293,7 @@ export function Sandbox({
   if (error) {
     return (
       <div className="relative">
-        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border border-neutral-200 bg-editor-bg shadow-xl dark:border-editor-border">
+        <div className="absolute top-1/2 left-1/2 flex h-[530px] w-[850px] -translate-x-1/2 items-center justify-center rounded-2xl border-[0.5px] border-neutral-200 bg-editor-bg shadow-xl dark:border-editor-border">
           <div className="text-red-400">Error: {error}</div>
         </div>
       </div>
@@ -334,9 +334,9 @@ export function Sandbox({
             "sp-layout": `absolute ${
               isFullscreen
                 ? "!w-screen !h-screen !top-0 !left-0 !rounded-none !border-none !overflow-auto overscroll-contain"
-                : `top-1/2 left-1/2 -translate-x-1/2 flex w-[850px] h-[530px] !rounded-2xl !border !overflow-hidden ${isDark ? "!border-[#252525]" : "!border-[#e4e4e7]"}`
+                : `top-1/2 left-1/2 -translate-x-1/2 flex w-[850px] h-[530px] !rounded-2xl !border-[0.5px] !overflow-hidden ${isDark ? "!border-[#252525]" : "!border-[#e4e4e7]"}`
             }`,
-            "sp-tabs": "h-11 flex px-3 w-full",
+            "sp-tabs": "h-11 flex px-3 w-full border-b-[0.5px]!",
             "sp-tabs-scrollable-container": "!p-0 gap-x-3",
             "sp-tab-container":
               isDark
@@ -347,8 +347,8 @@ export function Sandbox({
                 ? "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-medium !shadow-none hover:!bg-transparent hover:!text-white aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-white  focus-visible:!ring-0 focus-visible:!outline-none"
                 : "cursor-pointer !h-auto !border-0 !bg-transparent px-2! py-1! !text-sm !font-medium !text-neutral-500 !shadow-none hover:!bg-transparent hover:!text-neutral-900 aria-selected:!border-0 aria-selected:!bg-transparent focus-visible:!ring-0 focus-visible:!outline-none data-[active=true]:!text-neutral-950",
            
-            "sp-editor": `!overflow-auto overscroll-contain ${isFullscreen ? "!h-screen" : "h-[530px]"}`,
-            "sp-code-editor": "!h-full !overflow-auto overscroll-contain",
+            "sp-editor": `!overflow-auto overscroll-contain  ${isFullscreen ? "!h-screen" : "h-[530px]"}`,
+            "sp-code-editor": "!h-full !overflow-auto overscroll-contain border-none!",
             "sp-preview-container": "!h-full",
             "sp-preview": "!h-full !flex",
             "sp-preview-iframe": "!h-full !flex",

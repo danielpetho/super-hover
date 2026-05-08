@@ -100,7 +100,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  --editor-bg: color-mix(in oklab, #fafafa 50%, #f4f4f3 50%);
+  --editor-bg: #f8f8f8;
   --editor-border: #252525;
 
   --blue-50: #e8f3ff;
