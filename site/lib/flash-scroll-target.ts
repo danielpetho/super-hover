@@ -1,5 +1,5 @@
 /** Matches `--scroll-target-flash-duration` in globals.css (ms fallback). */
-const FLASH_FALLBACK_MS = 2000;
+const FLASH_FALLBACK_MS = 2500;
 
 /** Ignore duplicate flashes for the same node (e.g. pathname effect + hashchange). */
 const FLASH_DEBOUNCE_MS = 600;

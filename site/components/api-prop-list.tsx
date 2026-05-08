@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, type ReactNode } from "react";
+import { SCROLL_TARGET_FLASH_INNER_CLASS } from "@/lib/flash-scroll-target";
 import { cn } from "@/lib/utils";
 
 function slugFromName(name: string) {
@@ -73,8 +74,14 @@ export function ApiProp({
       : `api-${slug}`;
 
   return (
-    <div role="listitem" className={cn("scroll-mt-24", className)} id={id}>
-      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+    <div role="listitem" className={cn(className)}>
+      <div
+        id={id}
+        className={cn(
+          "scroll-mt-24 inline-flex max-w-full flex-wrap items-baseline gap-x-2 gap-y-0.5",
+          SCROLL_TARGET_FLASH_INNER_CLASS,
+        )}
+      >
         <span className="font-semibold text-foreground">{name}</span>
         <span className="text-muted-foreground">:</span>
         <span className="min-w-0 font-fira-mono text-[13px] leading-snug text-muted-foreground [&_code]:border-0 [&_code]:bg-transparent [&_code]:p-0 [&_code]:font-fira-mono [&_code]:text-[13px] [&_code]:text-muted-foreground">

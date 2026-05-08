@@ -119,7 +119,7 @@
 
   /* Scroll-to / in-page jump highlight (see `.scroll-target-flash`) — soft marker yellow */
   --scroll-target-highlight: color-mix(in oklab, oklch(0.94 0.1 98) 44%, transparent);
-  --scroll-target-flash-duration: 1.85s;
+  --scroll-target-flash-duration: 2.5s;
 }
 
 .dark {
