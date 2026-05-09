@@ -7,7 +7,7 @@ A super tiny library that hit-tests hover every frame. Unlike native `:hover`, i
 
 ## Why use this?
 
-Well, you probably don't need this. Browsers don't emit :hover while you're scrolling for performance reasons, which is obviously desired in most cases. But, by enforcing a fake hover state on every frame, it opens up the possibility of some interesting creative effects.
+Well, you probably don't need this. While scrolling, browsers mostly skip updating `:hover` for performance reasons, which most sites actually need. But super-hover recomputes a hover-like hit every frame, which opens up some fun creative effects!
 
 ## Installation
 
@@ -15,7 +15,7 @@ Well, you probably don't need this. Browsers don't emit :hover while you're scro
 
 ## Usage
 
-Just simply import `superHover`, put `use:superHover` on the wrapper around your list (like the `ul` in the snippet), and mark each row with `data-super-hover`. Whatever is under the pointer picks up `data-super-hover-active`, so you can style “the hovered row” with classes such as Tailwind’s `data-[super-hover-active]:…`.
+Just simply import `superHover`, put `use:superHover` on the wrapper around your list (such as the `ul` in the snippet), and mark each row with `data-super-hover`. Whatever is under the pointer picks up `data-super-hover-active`, so you can style “the hovered row” with `data-[super-hover-active]:…`.
 
 Out of the box it looks for `[data-super-hover]`, but you can customize the [selector](#api-create-super-hover-selector).
 
@@ -48,7 +48,7 @@ Out of the box it looks for `[data-super-hover]`, but you can customize the [sel
   name="super-hover-events"
   showCode={false}
   className="p-0! rounded-none! border-none!"
-  description="'superhoverenter' when the pointer activates a hit-tested item; cover art swaps while scrolling without moving the pointer."
+  description="`superhoverenter` fires when the pointer activates a hit-tested item, which swaps the cover art."
 />
 
 Pass `onEnter` and `onLeave` in the options object for `use:superHover` when you want logic tied to the active row: `onEnter` runs when hit-testing moves onto a new matched row (pointer moves or the list scrolls under a stationary cursor); `onLeave` runs on the row that stopped being active. Both handlers receive the event object, where `event.target` refers to that row element.
@@ -87,9 +87,9 @@ The preview above uses `onEnter` to swap the cover image so it matches the activ
 
 <DocCodeHeading id="superhoveroptions">SuperHoverOptions</DocCodeHeading>
 
-Registers pointer, scroll, and resize listeners and hit-tests on each animation frame. Pass these fields to `createSuperHover(options)`. Returns a `cleanup` function that removes listeners and clears any active target.
+`createSuperHover` registers listeners for pointer moves, scroll, and resize, then hit-tests once per animation frame (updates are coalesced). Pass these fields as `options`. The returned function removes listeners and clears any active target.
 
-Each frame the library reads `elementFromPoint`, walks ancestors with `closest(selector)` to pick one matched element, then optionally checks it lies inside `root`. `selector` defines which nodes may activate; `root` only limits where hits are considered, but it does not opt in every descendant.
+Every frame, the library calls `elementFromPoint`, walks ancestors with `closest(selector)` to pick the nearest matched element, and—when `root` is set—verifies that it lies inside `root`. `selector` decides which nodes may activate; `root` only limits where hits count—it does not automatically target every descendant.
 
 <ApiPropList aria-label="SuperHoverOptions" anchorPrefix="create-super-hover">
   <ApiProp name="root" type="Document, Element, or omit" defaultValue={<em className="text-muted-foreground">whole document</em>}>
@@ -115,7 +115,7 @@ Each frame the library reads `elementFromPoint`, walks ancestors with `closest(s
 
 <DocCodeHeading id="usesuperhoveroptions">UseSuperHoverOptions</DocCodeHeading>
 
-Shape passed to the `superHover` action (`use:superHover`) from `super-hover/svelte` on the element that hosts the directive.
+`UseSuperHoverOptions` for the `superHover` action (`use:superHover`) from `super-hover/svelte`, on the element that hosts the directive.
 
 <ApiPropList aria-label="UseSuperHoverOptions" anchorPrefix="svelte-super-hover-action">
   <ApiProp name="enabled" type="boolean" defaultValue="true">
@@ -146,7 +146,3 @@ Shape passed to the `superHover` action (`use:superHover`) from `super-hover/sve
     Runs when a leave event bubbles within `root`.
   </ApiProp>
 </ApiPropList>
-
-<DocCodeHeading id="callbacks">Callbacks</DocCodeHeading>
-
-The `superHover` action registers `onEnter` / `onLeave` on the host element for `enterEventType` / `leaveEventType`. Handlers receive the same bubbling `Event` `createSuperHover` dispatches on the matched element (a `CustomEvent` by default). `event.target` is that element. Cast `event.target` when you read `dataset` or measure layout.
