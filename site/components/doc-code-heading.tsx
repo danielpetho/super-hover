@@ -56,7 +56,7 @@ export function DocCodeHeading({
     <Tag
       id={resolvedId}
       className={cn(
-        "scroll-mt-24 pt-4 text-xl font-semibold leading-snug text-foreground -ml-[5px]",
+        "scroll-mt-24 pt-4 text-xl font-semibold leading-snug text-foreground",
         className,
       )}
     >

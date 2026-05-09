@@ -31,8 +31,8 @@ export function DocsLayout({
               super-hover
             </span>
           </h1>
-          <div className="mt-3">
-          <DocFrameworkSelector value={framework} />
+          <div className="mt-3 shrink-0">
+            <DocFrameworkSelector value={framework} />
           </div>
         </header>
         {children}

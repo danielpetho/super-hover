@@ -12,7 +12,7 @@ const TOC_IO_ROOT_MARGIN = "0% 0% -80% 0%";
 const tocMotionTransition = (reduced: boolean) =>
   reduced
     ? { duration: 0 }
-    : { duration: 0.3, ease: "easeOut" as const };
+    : { duration: 0.1, ease: "easeOut" as const };
 
 /** Active heading via viewport intersection (same idea as dashboard TOC). */
 function useActiveHeadingItem(ids: string[]) {
@@ -66,9 +66,11 @@ export function DocToc({
     if (!root) return;
 
     const collect = () => {
-      const h2s = Array.from(root.querySelectorAll("h2[id]")) as HTMLHeadingElement[];
+      const headings = Array.from(
+        root.querySelectorAll("h1[id], h2[id]"),
+      ) as HTMLHeadingElement[];
       setItems(
-        h2s.map((el) => ({
+        headings.map((el) => ({
           id: el.id,
           label: el.textContent?.trim() ?? "",
         })),
@@ -123,10 +125,18 @@ export function DocToc({
         </Link>
       ) : null}
       <ul className="space-y-1">
-        {items.map(({ id, label }) => {
+        {items.map(({ id, label }, index) => {
           const active = activeId === id;
+          const separateLeadFromSections =
+            index === 0 && items.length > 1;
           return (
-            <li key={id}>
+            <li
+              key={id}
+              className={cn(
+                separateLeadFromSections &&
+                  "mb-4",
+              )}
+            >
               <a
                 href={`#${id}`}
                 className={cn(

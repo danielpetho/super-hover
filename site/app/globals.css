@@ -290,10 +290,14 @@ body.font-satoshi article[data-doc-content] {
   }
 }
 
-/* Padding + rounding live here so the highlight hugs text (see MDX / DocCodeHeading). */
+/* Highlight sits slightly inset from the text; negative margin keeps layout aligned (see MDX / DocCodeHeading). */
 .scroll-target-flash-inner {
   border-radius: 0.5rem;
-  padding: 0.1em 0.26em;
+  --flash-highlight-inset-block: 0.14em;
+  --flash-highlight-inset-inline: 0.34em;
+  padding: var(--flash-highlight-inset-block) var(--flash-highlight-inset-inline);
+  margin: calc(-1 * var(--flash-highlight-inset-block))
+    calc(-1 * var(--flash-highlight-inset-inline));
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
