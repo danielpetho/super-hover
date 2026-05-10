@@ -2,6 +2,8 @@ import { readdir, readFile, writeFile, mkdir } from "fs/promises";
 import { join, relative } from "path";
 import { existsSync } from "fs";
 
+import { generateAgentMarkdownDocs } from "./generate-agent-markdown";
+
 const ROOT = process.cwd();
 const WORKSPACE_ROOT = join(ROOT, "..");
 const EMBEDS = join(ROOT, "embeds");
@@ -223,6 +225,7 @@ async function main() {
   await mkdir(EMBEDS, { recursive: true });
   await generateSandboxBundles();
   await generatePreviews();
+  await generateAgentMarkdownDocs();
 }
 
 main().catch((err) => {
