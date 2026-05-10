@@ -1,7 +1,7 @@
 {
   "name": "super-hover",
   "version": "0.0.1",
-  "description": "Hit-tested hover state that updates on every frame",
+  "description": "A super tiny library that hit-tests hover every frame. Unlike native :hover, it keeps tracking whatever sits under your pointer while you scroll or when things move on screen.",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
