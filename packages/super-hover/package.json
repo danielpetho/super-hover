@@ -1,6 +1,6 @@
 {
   "name": "super-hover",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A super tiny library that hit-tests hover every frame. Unlike native :hover, it keeps tracking whatever sits under your pointer while you scroll or when things move on screen.",
   "type": "module",
   "main": "./dist/index.js",
@@ -24,7 +24,11 @@
       "import": "./dist/svelte.js"
     }
   },
-  "files": ["dist", "LICENSE", "README.md"],
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
   "sideEffects": false,
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -42,7 +46,12 @@
     "build": "tsup",
     "test": "vitest run"
   },
-  "keywords": ["hover", "scroll", "pointer", "dom"],
+  "keywords": [
+    "hover",
+    "scroll",
+    "pointer",
+    "dom"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
