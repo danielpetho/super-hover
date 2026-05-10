@@ -22,7 +22,9 @@ The **`super-hover`** entry is framework-free. **`super-hover/react`**, **`super
 - Mark participating nodes with **`data-super-hover`** (or pass a custom `selector`).
 - The active matched element gets **`data-super-hover-active`** (customizable). Style it with attribute selectors, e.g. Tailwind `data-[super-hover-active]:…`.
 
-## Vanilla (`createSuperHover`)
+## Usage
+
+### Vanilla (`createSuperHover`)
 
 ```ts
 import { createSuperHover } from "super-hover";
@@ -66,7 +68,7 @@ export function Example() {
 
 Use **`useSuperHover(root, options)`** if you already hold an `HTMLElement | null`. **`UseSuperHoverOptions`** adds **`enabled`**, **`onEnter`**, **`onLeave`**, plus the vanilla options except `root`.
 
-## Vue
+### Vue
 
 ```vue
 <script setup lang="ts">
@@ -87,7 +89,7 @@ const rootRef = useSuperHover({
 </template>
 ```
 
-## Svelte
+### Svelte
 
 Attach the **`superHover`** action to the list root:
 
@@ -103,7 +105,7 @@ Attach the **`superHover`** action to the list root:
 </ul>
 ```
 
-## Events
+### Events
 
 Framework helpers listen on **`root`** for bubbling **`superhoverenter`** / **`superhoverleave`** (names configurable). **`onEnter`** / **`onLeave`** receive the DOM event; **`event.target`** is the matched row.
 
