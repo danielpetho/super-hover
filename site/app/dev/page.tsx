@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
+
 import Dev from "@/content/dev.mdx";
 import { DocScrollTargetFlash } from "@/components/doc-scroll-target-flash";
 import { DocToc } from "@/components/doc-toc";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: true },
+};
 
 export default function DevPage() {
   return (
