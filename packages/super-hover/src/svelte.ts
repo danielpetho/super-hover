@@ -1,9 +1,20 @@
 import { createSuperHover } from "./index.js";
-import type { UseSuperHoverOptions } from "./use-super-hover-options.js";
+import type {
+  SuperHoverEnterEvent,
+  SuperHoverLeaveEvent,
+  SuperHoverMoveEvent,
+  UseSuperHoverOptions,
+} from "./use-super-hover-options.js";
 
-export type { UseSuperHoverOptions };
+export type {
+  SuperHoverEnterEvent,
+  SuperHoverLeaveEvent,
+  SuperHoverMoveEvent,
+  UseSuperHoverOptions,
+};
 
-const noop = () => {};
+const noopEnter: (event: SuperHoverEnterEvent) => void = () => {};
+const noopLeave: (event: SuperHoverLeaveEvent) => void = () => {};
 
 /**
  * Svelte action: attach enter/leave on the list root (and move when `onMove` is passed).
@@ -36,9 +47,12 @@ export function superHover(
     const resolvedMove =
       opts.moveEventType === false ? null : (opts.moveEventType ?? "superhovermove");
 
-    const handleEnter = (e: Event) => (opts.onEnter ?? noop)(e);
-    const handleLeave = (e: Event) => (opts.onLeave ?? noop)(e);
-    const handleMove = (e: Event) => opts.onMove?.(e);
+    const handleEnter = (e: Event) =>
+      (opts.onEnter ?? noopEnter)(e as SuperHoverEnterEvent);
+    const handleLeave = (e: Event) =>
+      (opts.onLeave ?? noopLeave)(e as SuperHoverLeaveEvent);
+    const handleMove = (e: Event) =>
+      opts.onMove?.(e as SuperHoverMoveEvent);
 
     const listenMove =
       resolvedMove !== null && opts.onMove !== undefined;

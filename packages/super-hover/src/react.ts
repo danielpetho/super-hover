@@ -7,11 +7,22 @@ import {
 } from "react";
 
 import { createSuperHover } from "./index.js";
-import type { UseSuperHoverOptions } from "./use-super-hover-options.js";
+import type {
+  SuperHoverEnterEvent,
+  SuperHoverLeaveEvent,
+  SuperHoverMoveEvent,
+  UseSuperHoverOptions,
+} from "./use-super-hover-options.js";
 
-export type { UseSuperHoverOptions };
+export type {
+  SuperHoverEnterEvent,
+  SuperHoverLeaveEvent,
+  SuperHoverMoveEvent,
+  UseSuperHoverOptions,
+};
 
-const noop = () => {};
+const noopEnter: (event: SuperHoverEnterEvent) => void = () => {};
+const noopLeave: (event: SuperHoverLeaveEvent) => void = () => {};
 
 /**
  * Enter/leave always; move listener only when {@link UseSuperHoverOptions.onMove}
@@ -23,8 +34,8 @@ export function useSuperHover(
   root: HTMLElement | null,
   {
     enabled = true,
-    onEnter = noop,
-    onLeave = noop,
+    onEnter = noopEnter,
+    onLeave = noopLeave,
     onMove,
     selector,
     activeAttribute,
@@ -44,10 +55,12 @@ export function useSuperHover(
   useEffect(() => {
     if (!enabled || !root) return;
 
-    const handleEnter = (e: Event) => onEnterRef.current(e);
-    const handleLeave = (e: Event) => onLeaveRef.current(e);
+    const handleEnter = (e: Event) =>
+      onEnterRef.current(e as SuperHoverEnterEvent);
+    const handleLeave = (e: Event) =>
+      onLeaveRef.current(e as SuperHoverLeaveEvent);
     const handleMove = (e: Event) => {
-      onMoveRef.current?.(e);
+      onMoveRef.current?.(e as SuperHoverMoveEvent);
     };
 
     const resolvedMove =
