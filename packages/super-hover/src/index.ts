@@ -1,4 +1,14 @@
+/** Pointer kinds accepted for position updates via `pointermove`. */
+export type SuperHoverPointerType = "mouse" | "pen" | "touch";
+
 export type SuperHoverOptions = {
+  /**
+   * Pointer kinds whose `pointermove` events update the hit-test position.
+   * Touch is omitted by default so scrolling on touch devices does not drive “hover”.
+   *
+   * Default `["mouse", "pen"]`.
+   */
+  pointerTypes?: SuperHoverPointerType[];
   /**
    * Optional subtree boundary: the matched element must be contained here (or in `document` when omitted).
    * Does not opt in every descendant; see `selector` for which nodes can activate.
@@ -30,6 +40,7 @@ const DEFAULT_SELECTOR = "[data-super-hover]";
 const DEFAULT_ACTIVE = "data-super-hover-active";
 const DEFAULT_ENTER_EVENT = "superhoverenter";
 const DEFAULT_LEAVE_EVENT = "superhoverleave";
+const DEFAULT_POINTER_TYPES: readonly SuperHoverPointerType[] = ["mouse", "pen"];
 
 /**
  * Tracks pointer position and hit-tests on each frame (and on scroll) so
@@ -45,6 +56,9 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   const enterEventType = options.enterEventType ?? DEFAULT_ENTER_EVENT;
   const leaveEventType = options.leaveEventType ?? DEFAULT_LEAVE_EVENT;
   const root = options.root;
+  const allowedPointerTypes = new Set<string>(
+    options.pointerTypes ?? [...DEFAULT_POINTER_TYPES],
+  );
 
   let lastX = 0;
   let lastY = 0;
@@ -110,6 +124,8 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   }
 
   function onPointerMove(e: PointerEvent): void {
+    if (!allowedPointerTypes.has(e.pointerType)) return;
+
     lastX = e.clientX;
     lastY = e.clientY;
     hasPointer = true;

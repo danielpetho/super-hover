@@ -43,6 +43,7 @@ export function superHover(
       root: node,
       ...(opts.selector !== undefined && { selector: opts.selector }),
       ...(opts.activeAttribute !== undefined && { activeAttribute: opts.activeAttribute }),
+      ...(opts.pointerTypes !== undefined && { pointerTypes: opts.pointerTypes }),
       enterEventType,
       leaveEventType,
     });

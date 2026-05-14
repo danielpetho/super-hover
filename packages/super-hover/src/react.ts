@@ -25,6 +25,7 @@ export function useSuperHover(
     onLeave = noop,
     selector,
     activeAttribute,
+    pointerTypes,
     enterEventType = "superhoverenter",
     leaveEventType = "superhoverleave",
   }: UseSuperHoverOptions = {},
@@ -46,6 +47,7 @@ export function useSuperHover(
       root,
       ...(selector !== undefined && { selector }),
       ...(activeAttribute !== undefined && { activeAttribute }),
+      ...(pointerTypes !== undefined && { pointerTypes }),
       enterEventType,
       leaveEventType,
     });
@@ -55,7 +57,15 @@ export function useSuperHover(
       root.removeEventListener(leaveEventType, handleLeave);
       stop();
     };
-  }, [root, enabled, selector, activeAttribute, enterEventType, leaveEventType]);
+  }, [
+    root,
+    enabled,
+    selector,
+    activeAttribute,
+    pointerTypes,
+    enterEventType,
+    leaveEventType,
+  ]);
 }
 
 /**
