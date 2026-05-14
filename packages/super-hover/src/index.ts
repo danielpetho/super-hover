@@ -37,8 +37,11 @@ export type SuperHoverOptions = {
    */
   pointerTypes?: SuperHoverPointerType[];
   /**
-   * Optional subtree boundary: the matched element must be contained here (or in `document` when omitted).
+   * Optional subtree boundary: the matched element must be contained here (or in the active `document` when omitted).
    * Does not opt in every descendant; see `selector` for which nodes can activate.
+   *
+   * You may pass an iframe **`Document`** (`contentDocument`) or any **`Element`** inside that frame — hit-testing uses
+   * that node's document (`elementFromPoint`, listeners).
    */
   root?: Document | Element;
   /**
@@ -79,6 +82,20 @@ const DEFAULT_LEAVE_EVENT = "superhoverleave";
 const DEFAULT_MOVE_EVENT = "superhovermove";
 const DEFAULT_POINTER_TYPES: readonly SuperHoverPointerType[] = ["mouse", "pen"];
 
+/** `DOCUMENT_NODE` ({@link https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType Node.nodeType}). */
+const DOCUMENT_NODE = 9;
+
+/**
+ * Resolve the `Document` used for {@link Document.elementFromPoint} and subtree checks from optional `root`.
+ * Detects document nodes via `nodeType`, not `instanceof Document`, so same-origin iframe `Document` instances
+ * (a different realm’s `Document` constructor) still resolve correctly.
+ */
+function getScopeDocument(root?: Document | Element): Document {
+  if (!root) return document;
+  if (root.nodeType === DOCUMENT_NODE) return root as Document;
+  return root.ownerDocument ?? document;
+}
+
 /**
  * Tracks pointer position and hit-tests on each frame (and on scroll) so
  * “hover” state updates while scrolling, unlike native `:hover`.
@@ -100,8 +117,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
       ? null
       : (options.moveEventType ?? DEFAULT_MOVE_EVENT);
   const root = options.root;
-  const scopeDoc =
-    root instanceof Document ? root : (root?.ownerDocument ?? document);
+  const scopeDoc = getScopeDocument(root);
   const scopeWin = scopeDoc.defaultView ?? window;
   const allowedPointerTypes = new Set<string>(
     options.pointerTypes ?? [...DEFAULT_POINTER_TYPES],
