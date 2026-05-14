@@ -1,3 +1,11 @@
+/** Payload on `superhoverenter` / `superhoverleave` `CustomEvent`s (`event.detail`). */
+export type SuperHoverEventDetail = {
+  x: number;
+  y: number;
+  previous: Element | null;
+  current: Element | null;
+};
+
 /** Pointer kinds accepted for position updates via `pointermove`. */
 export type SuperHoverPointerType = "mouse" | "pen" | "touch";
 
@@ -26,11 +34,13 @@ export type SuperHoverOptions = {
   activeAttribute?: string;
   /**
    * `CustomEvent` type dispatched on the matched element when it becomes active (`bubbles: true`).
+   * `detail` is {@link SuperHoverEventDetail} (hit coordinates and previous/current targets).
    * Default `superhoverenter`.
    */
   enterEventType?: string;
   /**
    * `CustomEvent` type dispatched on the matched element when it stops being active.
+   * `detail` is {@link SuperHoverEventDetail}.
    * Default `superhoverleave`.
    */
   leaveEventType?: string;
@@ -49,7 +59,8 @@ const DEFAULT_POINTER_TYPES: readonly SuperHoverPointerType[] = ["mouse", "pen"]
  * Resolves `elementFromPoint` on the same `Document` as `root` (or the active document when `root` is omitted),
  * walks ancestors with `closest(selector)` to pick the active
  * matched element, optionally constrains with `root`, then toggles `activeAttribute` and dispatches
- * enter/leave events (default `superhoverenter` / `superhoverleave`) on that element.
+ * enter/leave events (default `superhoverenter` / `superhoverleave`) on that element,
+ * each with {@link SuperHoverEventDetail} on `event.detail`.
  */
 export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   const selector = options.selector ?? DEFAULT_SELECTOR;
@@ -77,7 +88,11 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
     current = null;
     prev.removeAttribute(activeAttribute);
     prev.dispatchEvent(
-      new CustomEvent(leaveEventType, { bubbles: true, cancelable: false }),
+      new CustomEvent<SuperHoverEventDetail>(leaveEventType, {
+        bubbles: true,
+        cancelable: false,
+        detail: { x: lastX, y: lastY, previous: prev, current: null },
+      }),
     );
   }
 
@@ -95,12 +110,18 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
     const next = resolveTarget();
     if (next === current) return;
 
+    const previousElement = current;
+
     if (current) {
       const prev = current;
       current = null;
       prev.removeAttribute(activeAttribute);
       prev.dispatchEvent(
-        new CustomEvent(leaveEventType, { bubbles: true, cancelable: false }),
+        new CustomEvent<SuperHoverEventDetail>(leaveEventType, {
+          bubbles: true,
+          cancelable: false,
+          detail: { x: lastX, y: lastY, previous: prev, current: next },
+        }),
       );
     }
 
@@ -108,7 +129,16 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
     if (current) {
       current.setAttribute(activeAttribute, "");
       current.dispatchEvent(
-        new CustomEvent(enterEventType, { bubbles: true, cancelable: false }),
+        new CustomEvent<SuperHoverEventDetail>(enterEventType, {
+          bubbles: true,
+          cancelable: false,
+          detail: {
+            x: lastX,
+            y: lastY,
+            previous: previousElement,
+            current,
+          },
+        }),
       );
     }
   }
