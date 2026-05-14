@@ -28,6 +28,8 @@ const noopLeave: (event: SuperHoverLeaveEvent) => void = () => {};
  * Enter/leave always; move listener only when {@link UseSuperHoverOptions.onMove}
  * is passed. Omitting both `moveEventType` and `onMove` passes `moveEventType: false`
  * into `createSuperHover` so unused move work is skipped.
+ * Callbacks are read from refs each event; **`onMove` identity does not rerun the effect—only whether it is passed**
+ * (`onMove !== undefined`) does (so inline `onMove` handlers avoid remounting Super Hover).
  * Prefers a stable `root` (e.g. from {@link useSuperHoverRef}) so the effect re-runs when the node mounts.
  */
 export function useSuperHover(
@@ -52,6 +54,8 @@ export function useSuperHover(
   onLeaveRef.current = onLeave;
   onMoveRef.current = onMove;
 
+  const hasOnMove = onMove !== undefined;
+
   useEffect(() => {
     if (!enabled || !root) return;
 
@@ -66,8 +70,7 @@ export function useSuperHover(
     const resolvedMove =
       moveEventType === false ? null : (moveEventType ?? "superhovermove");
 
-    const listenMove =
-      resolvedMove !== null && onMove !== undefined;
+    const listenMove = resolvedMove !== null && hasOnMove;
 
     root.addEventListener(enterEventType, handleEnter);
     root.addEventListener(leaveEventType, handleLeave);
@@ -84,7 +87,7 @@ export function useSuperHover(
       leaveEventType,
       ...(moveEventType !== undefined
         ? { moveEventType }
-        : onMove !== undefined
+        : hasOnMove
           ? {}
           : { moveEventType: false }),
     });
@@ -106,7 +109,7 @@ export function useSuperHover(
     enterEventType,
     leaveEventType,
     moveEventType,
-    onMove,
+    hasOnMove,
   ]);
 }
 
