@@ -1,13 +1,13 @@
 <script lang="ts">
   import { onMount, onDestroy, tick } from "svelte";
-  import { createSuperHover } from "./super-hover";
+  import { createSuperHover, type SuperHoverController } from "./super-hover";
 
   const itemCount = 180;
   const items: number[] = Array.from({ length: itemCount }, (_, i) => i + 1);
 
   let elEvent: HTMLDivElement | undefined;
   let activePill = "None";
-  let stop: (() => void) | undefined;
+  let ctrl: SuperHoverController | undefined;
   let onEnter: ((e: Event) => void) | undefined;
   let onLeave: ((e: Event) => void) | undefined;
   let eventRoot: HTMLDivElement | undefined;
@@ -29,11 +29,11 @@
     };
     elEvent.addEventListener("superhoverenter", onEnter);
     elEvent.addEventListener("superhoverleave", onLeave);
-    stop = createSuperHover({ root: elEvent });
+    ctrl = createSuperHover({ root: elEvent });
   });
 
   onDestroy(() => {
-    if (stop) stop();
+    if (ctrl) ctrl.destroy();
     if (eventRoot && onEnter && onLeave) {
       eventRoot.removeEventListener("superhoverenter", onEnter);
       eventRoot.removeEventListener("superhoverleave", onLeave);

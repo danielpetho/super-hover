@@ -37,17 +37,17 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted } from "vue";
-import { createSuperHover } from "./super-hover";
+import { createSuperHover, type SuperHoverController } from "./super-hover";
 
 const itemCount = 180;
 
-let superHover: (() => void) | undefined;
+let superHover: SuperHoverController | undefined;
 
 onMounted(() => {
   superHover = createSuperHover();
 });
 
 onUnmounted(() => {
-  superHover?.();
+  superHover?.destroy();
 });
 </script>

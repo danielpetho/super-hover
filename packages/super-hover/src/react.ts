@@ -62,7 +62,7 @@ export function useSuperHover(
       root.addEventListener(resolvedMove, handleMove);
     }
 
-    const stop = createSuperHover({
+    const ctrl = createSuperHover({
       root,
       ...(selector !== undefined && { selector }),
       ...(activeAttribute !== undefined && { activeAttribute }),
@@ -82,7 +82,7 @@ export function useSuperHover(
       if (listenMove) {
         root.removeEventListener(resolvedMove, handleMove);
       }
-      stop();
+      ctrl.destroy();
     };
   }, [
     root,

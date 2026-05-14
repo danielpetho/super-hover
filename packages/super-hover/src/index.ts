@@ -16,7 +16,19 @@ export type SuperHoverEventDetail = {
 /** Pointer kinds accepted for position updates via `pointermove`. */
 export type SuperHoverPointerType = "mouse" | "pen" | "touch";
 
+/** Returned by {@link createSuperHover}; safe to call after {@link SuperHoverController.destroy} is a no-op. */
+export type SuperHoverController = {
+  pause(): void;
+  resume(): void;
+  refresh(): void;
+  destroy(): void;
+};
+
 export type SuperHoverOptions = {
+  /**
+   * When false, starts in a paused state (same as {@link SuperHoverController.pause}). Default true.
+   */
+  enabled?: boolean;
   /**
    * Pointer kinds whose `pointermove` events update the hit-test position.
    * Touch is omitted by default so scrolling on touch devices does not drive “hover”.
@@ -78,7 +90,7 @@ const DEFAULT_POINTER_TYPES: readonly SuperHoverPointerType[] = ["mouse", "pen"]
  * each with {@link SuperHoverEventDetail} on `event.detail`; optionally `superhovermove` once per scheduled
  * tick while active (see {@link SuperHoverOptions.moveEventType}).
  */
-export function createSuperHover(options: SuperHoverOptions = {}): () => void {
+export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverController {
   const selector = options.selector ?? DEFAULT_SELECTOR;
   const activeAttribute = options.activeAttribute ?? DEFAULT_ACTIVE;
   const enterEventType = options.enterEventType ?? DEFAULT_ENTER_EVENT;
@@ -95,12 +107,23 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
     options.pointerTypes ?? [...DEFAULT_POINTER_TYPES],
   );
 
+  let running = options.enabled ?? true;
+  let destroyed = false;
+
   let lastX = 0;
   let lastY = 0;
   let hasPointer = false;
   let current: Element | null = null;
   let rafId = 0;
   let pending = false;
+
+  function cancelPendingFrame(): void {
+    if (rafId !== 0) {
+      scopeWin.cancelAnimationFrame(rafId);
+      rafId = 0;
+      pending = false;
+    }
+  }
 
   function clearActive(): void {
     if (!current) return;
@@ -117,7 +140,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   }
 
   function resolveTarget(): Element | null {
-    if (!hasPointer) return null;
+    if (!running || !hasPointer) return null;
     const hit = scopeDoc.elementFromPoint(lastX, lastY);
     if (!hit) return null;
     const el = hit.closest(selector);
@@ -127,6 +150,11 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   }
 
   function apply(): void {
+    if (destroyed || !running) {
+      clearActive();
+      return;
+    }
+
     const next = resolveTarget();
     if (next === current) return;
 
@@ -164,12 +192,13 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   }
 
   function schedule(): void {
-    if (pending) return;
+    if (destroyed || pending) return;
     pending = true;
     rafId = scopeWin.requestAnimationFrame(() => {
       rafId = 0;
       pending = false;
-      if (!hasPointer) {
+      if (destroyed) return;
+      if (!running || !hasPointer) {
         clearActive();
         return;
       }
@@ -187,6 +216,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   }
 
   function onPointerMove(e: PointerEvent): void {
+    if (destroyed || !running) return;
     if (!allowedPointerTypes.has(e.pointerType)) return;
 
     lastX = e.clientX;
@@ -225,17 +255,42 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
 
   schedule();
 
-  return () => {
-    scopeWin.removeEventListener("pointermove", onPointerMove);
-    scopeDoc.removeEventListener("scroll", schedule, { capture: true });
-    scopeWin.removeEventListener("resize", schedule);
-    scopeWin.removeEventListener("blur", onPointerLeaveDocument);
-    scopeDoc.removeEventListener("pointerleave", onPointerLeaveDocument);
-    scopeDoc.removeEventListener("pointercancel", onPointerLeaveDocument);
-    scopeDoc.removeEventListener("pointerout", onPointerOut);
-    scopeDoc.removeEventListener("visibilitychange", onVisibilityChange);
-    if (rafId !== 0) scopeWin.cancelAnimationFrame(rafId);
-    hasPointer = false;
-    clearActive();
+  return {
+    pause() {
+      if (destroyed) return;
+      running = false;
+      cancelPendingFrame();
+      clearActive();
+    },
+
+    resume() {
+      if (destroyed) return;
+      running = true;
+      schedule();
+    },
+
+    refresh() {
+      if (destroyed) return;
+      schedule();
+    },
+
+    destroy() {
+      if (destroyed) return;
+
+      destroyed = true;
+
+      scopeWin.removeEventListener("pointermove", onPointerMove);
+      scopeDoc.removeEventListener("scroll", schedule, { capture: true });
+      scopeWin.removeEventListener("resize", schedule);
+      scopeWin.removeEventListener("blur", onPointerLeaveDocument);
+      scopeDoc.removeEventListener("pointerleave", onPointerLeaveDocument);
+      scopeDoc.removeEventListener("pointercancel", onPointerLeaveDocument);
+      scopeDoc.removeEventListener("pointerout", onPointerOut);
+      scopeDoc.removeEventListener("visibilitychange", onVisibilityChange);
+
+      cancelPendingFrame();
+      hasPointer = false;
+      clearActive();
+    },
   };
 }

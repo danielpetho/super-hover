@@ -31,7 +31,8 @@ export default function ScrollListPreview() {
   React.useEffect(() => {
     const root = listRootRef.current;
     if (!root) return;
-    return createSuperHover({ root });
+    const ctrl = createSuperHover({ root });
+    return () => ctrl.destroy();
   }, []);
 
   return (

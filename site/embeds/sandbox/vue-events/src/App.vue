@@ -23,13 +23,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
-import { createSuperHover } from "./super-hover";
+import { createSuperHover, type SuperHoverController } from "./super-hover";
 
 const itemCount = 180;
 const elEvent = ref<HTMLElement | null>(null);
 const activePill = ref("None");
 
-let superHover: (() => void) | undefined;
+let superHover: SuperHoverController | undefined;
 let onEnter: ((e: Event) => void) | undefined;
 let onLeave: ((e: Event) => void) | undefined;
 let eventRoot: HTMLElement | null = null;
@@ -55,7 +55,7 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-  superHover?.();
+  superHover?.destroy();
   if (eventRoot && onEnter && onLeave) {
     eventRoot.removeEventListener("superhoverenter", onEnter);
     eventRoot.removeEventListener("superhoverleave", onLeave);

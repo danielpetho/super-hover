@@ -48,7 +48,7 @@ export function superHover(
     if (listenMove) {
       node.addEventListener(resolvedMove, handleMove);
     }
-    const stop = createSuperHover({
+    const ctrl = createSuperHover({
       root: node,
       ...(opts.selector !== undefined && { selector: opts.selector }),
       ...(opts.activeAttribute !== undefined && { activeAttribute: opts.activeAttribute }),
@@ -68,7 +68,7 @@ export function superHover(
       if (listenMove) {
         node.removeEventListener(resolvedMove, handleMove);
       }
-      stop();
+      ctrl.destroy();
     };
   }
 

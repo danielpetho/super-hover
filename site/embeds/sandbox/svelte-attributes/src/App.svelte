@@ -1,18 +1,18 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import { createSuperHover } from "./super-hover";
+  import { createSuperHover, type SuperHoverController } from "./super-hover";
 
   const itemCount = 180;
   const items: number[] = Array.from({ length: itemCount }, (_, i) => i + 1);
 
-  let superHover: (() => void) | undefined;
+  let superHover: SuperHoverController | undefined;
 
   onMount(() => {
     superHover = createSuperHover();
   });
 
   onDestroy(() => {
-    superHover?.();
+    superHover?.destroy();
   });
 </script>
 

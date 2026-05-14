@@ -22,20 +22,23 @@ The **`super-hover`** entry is framework-free. **`super-hover/react`**, **`super
 - Mark participating nodes with **`data-super-hover`** (or pass a custom `selector`).
 - The active matched element gets **`data-super-hover-active`** (customizable). Style it with attribute selectors, e.g. Tailwind `data-[super-hover-active]:…`.
 
+You get a **`SuperHoverController`** with **`pause()`**, **`resume()`**, **`refresh()`**, and **`destroy()`**. `.pause()` clears the active element and stops responding until `.resume()`; `.refresh()` schedules a hit-test pass (still frame-coalesced). Prefer **`destroy()`** on teardown instead of older dispose-call patterns.
+
 ```ts
 import { createSuperHover } from "super-hover";
 
 const list = document.querySelector("#list") as HTMLElement | null;
-const dispose = createSuperHover({ root: list ?? undefined });
+const ctrl = createSuperHover({ root: list ?? undefined });
 
 // Later:
-dispose();
+ctrl.destroy();
 ```
 
 #### Options (`SuperHoverOptions`)
 
 | Option | Default | Purpose |
 |--------|---------|---------|
+| `enabled` | `true` | When `false`, starts paused (same as `.pause()` until `.resume()`). |
 | `root` | omit (whole document) | Hit-tested nodes must be **inside** this subtree. Does **not** opt in every descendant—that’s still gated by `selector`. |
 | `selector` | `[data-super-hover]` | Passed to `closest()` from the node under the pointer. |
 | `activeAttribute` | `data-super-hover-active` | Set on the active element while active (empty string), removed when inactive. |
