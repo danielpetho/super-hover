@@ -76,8 +76,9 @@ export default function SuperHoverEventsPreview() {
 
   const superHoverRefCallback = useSuperHoverRef({
     onEnter: (e) => {
-      const t = e.target as HTMLElement | null;
-      const raw = t?.dataset.albumIndex;
+      const el = e.detail.current;
+      if (!(el instanceof HTMLElement)) return;
+      const raw = el.dataset.albumIndex;
       if (raw === undefined) return;
       const a = albums[Number.parseInt(raw, 10)];
       if (!a?.thumb) return;

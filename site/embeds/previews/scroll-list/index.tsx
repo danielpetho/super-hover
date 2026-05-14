@@ -124,7 +124,7 @@ export default function ScrollListPreview() {
                     ? "[&[data-super-hover-active]]:bg-blue-500 [&[data-super-hover-active]]:text-white"
                     : "hover:bg-blue-500 hover:text-white",
                 )}
-                style={{ contentVisibility: "auto" }}
+                // style={{ contentVisibility: "auto" }}
               >
                 <div className="min-w-0 pl-2">
                   <div className="truncate">{album.title}</div>
