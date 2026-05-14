@@ -5,6 +5,8 @@
   const itemCount = 180;
   const items: number[] = Array.from({ length: itemCount }, (_, i) => i + 1);
 
+  let paused = false;
+
   let elEvent: HTMLDivElement | undefined;
   let activePill = "None";
   let ctrl: SuperHoverController | undefined;
@@ -30,7 +32,14 @@
     elEvent.addEventListener("superhoverenter", onEnter);
     elEvent.addEventListener("superhoverleave", onLeave);
     ctrl = createSuperHover({ root: elEvent });
+    if (paused) ctrl.pause();
   });
+
+  function syncPause(): void {
+    if (!ctrl) return;
+    if (paused) ctrl.pause();
+    else ctrl.resume();
+  }
 
   onDestroy(() => {
     if (ctrl) ctrl.destroy();
@@ -46,6 +55,10 @@
     <div class="event-toolbar" aria-live="polite">
       <span class="event-pill-label">Active:</span>
       <span class="event-pill">{activePill}</span>
+      <label class="event-toolbar-switch">
+        <input type="checkbox" bind:checked={paused} on:change={syncPause} />
+        Pause hit-test
+      </label>
     </div>
     <div bind:this={elEvent} class="scroller" tabindex="0">
       {#each items as n (n + 10000)}

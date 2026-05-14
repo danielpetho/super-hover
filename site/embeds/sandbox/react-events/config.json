@@ -8,6 +8,7 @@
     "src/App.tsx": {},
     "src/super-hover.ts": {},
     "src/super-hover-react.ts": {},
+    "src/use-super-hover-options.ts": {},
     "src/styles.css": {},
     "index.html": { "hidden": true }
   }

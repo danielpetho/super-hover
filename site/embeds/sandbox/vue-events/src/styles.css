@@ -139,6 +139,21 @@ code {
   border-bottom: 1px solid var(--border);
 }
 
+.event-toolbar-switch {
+  margin-inline-start: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.84rem;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.event-toolbar-switch input {
+  accent-color: var(--accent);
+}
+
 .event-pill-label {
   color: var(--muted);
   font-size: 0.84rem;

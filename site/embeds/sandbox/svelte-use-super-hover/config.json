@@ -1,0 +1,15 @@
+{
+  "template": "vite-svelte-ts",
+  "customSetup": {
+    "entry": "/src/main.ts"
+  },
+  "files": {
+    "src/main.ts": { "active": true },
+    "src/App.svelte": {},
+    "src/super-hover.ts": {},
+    "src/super-hover-svelte.ts": {},
+    "src/use-super-hover-options.ts": {},
+    "src/styles.css": {},
+    "vite.config.ts": { "hidden": true }
+  }
+}

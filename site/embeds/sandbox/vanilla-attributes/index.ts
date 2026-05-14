@@ -1,4 +1,7 @@
-import { createSuperHover } from "./super-hover";
+import {
+  createSuperHover,
+  type SuperHoverController,
+} from "./super-hover";
 import "./index.css";
 
 const ITEM_COUNT = 180;
@@ -41,4 +44,14 @@ if (
 fillScroller(nativeList, "native");
 fillScroller(superList, "super");
 
-createSuperHover();
+const pauseInput = document.querySelector("#super-pause");
+if (!(pauseInput instanceof HTMLInputElement)) {
+  throw new Error("Pause control missing");
+}
+
+const hover: SuperHoverController = createSuperHover();
+
+pauseInput.addEventListener("change", () => {
+  if (pauseInput.checked) hover.pause();
+  else hover.resume();
+});

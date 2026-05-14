@@ -1,4 +1,7 @@
-import { createSuperHover } from "./super-hover";
+import {
+  createSuperHover,
+  type SuperHoverController,
+} from "./super-hover";
 import "./index.css";
 
 const ITEM_COUNT = 180;
@@ -52,4 +55,14 @@ eventList.addEventListener("superhoverleave", (event) => {
   eventActivePill.textContent = "None";
 });
 
-createSuperHover({ root: eventList });
+const pauseInput = document.querySelector("#event-pause");
+if (!(pauseInput instanceof HTMLInputElement)) {
+  throw new Error("Pause control missing");
+}
+
+const hover: SuperHoverController = createSuperHover({ root: eventList });
+
+pauseInput.addEventListener("change", () => {
+  if (pauseInput.checked) hover.pause();
+  else hover.resume();
+});

@@ -5,10 +5,19 @@
   const itemCount = 180;
   const items: number[] = Array.from({ length: itemCount }, (_, i) => i + 1);
 
+  let paused = false;
+
   let superHover: SuperHoverController | undefined;
+
+  function syncPause(): void {
+    if (!superHover) return;
+    if (paused) superHover.pause();
+    else superHover.resume();
+  }
 
   onMount(() => {
     superHover = createSuperHover();
+    if (paused) superHover.pause();
   });
 
   onDestroy(() => {
@@ -32,8 +41,12 @@
     </section>
 
     <section class="panel" aria-labelledby="super-heading">
-      <div class="panel-head">
+      <div class="panel-head panel-head--row">
         <h2 id="super-heading">super-hover</h2>
+        <label class="pause-switch">
+          <input type="checkbox" bind:checked={paused} on:change={syncPause} />
+          Pause
+        </label>
       </div>
       <div class="scroller" tabindex="0">
         {#each items as n (n)}

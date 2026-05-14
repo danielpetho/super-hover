@@ -2,6 +2,28 @@
 
 # Dev Sandboxes
 
+## Framework helpers (`super-hover/react|vue|svelte`)
+
+These mirror the published helpers: event listeners on the list root plus `createSuperHover` under the hood.
+
+### React — `useSuperHover`
+
+**Sandbox (`react-use-super-hover`):** bundled sources are published at `/l/react-use-super-hover.json` on the docs site.
+
+
+
+### Vue — `useSuperHover`
+
+**Sandbox (`vue-use-super-hover`):** bundled sources are published at `/l/vue-use-super-hover.json` on the docs site.
+
+
+
+### Svelte — `superHover` action
+
+**Sandbox (`svelte-use-super-hover`):** bundled sources are published at `/l/svelte-use-super-hover.json` on the docs site.
+
+
+
 ## TypeScript — Attribute-driven
 
 **Sandbox (`vanilla-attributes`):** bundled sources are published at `/l/vanilla-attributes.json` on the docs site.

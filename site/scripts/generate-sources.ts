@@ -26,6 +26,27 @@ const SUPER_HOVER_REACT_SRC = join(
   "src",
   "react.ts",
 );
+const SUPER_HOVER_VUE_SRC = join(
+  WORKSPACE_ROOT,
+  "packages",
+  "super-hover",
+  "src",
+  "vue.ts",
+);
+const SUPER_HOVER_SVELTE_SRC = join(
+  WORKSPACE_ROOT,
+  "packages",
+  "super-hover",
+  "src",
+  "svelte.ts",
+);
+const USE_SUPER_HOVER_OPTIONS_SRC = join(
+  WORKSPACE_ROOT,
+  "packages",
+  "super-hover",
+  "src",
+  "use-super-hover-options.ts",
+);
 
 async function loadSuperHoverSource(): Promise<string | null> {
   if (!existsSync(SUPER_HOVER_SRC)) return null;
@@ -35,6 +56,39 @@ async function loadSuperHoverSource(): Promise<string | null> {
 async function loadSuperHoverReactSource(): Promise<string | null> {
   if (!existsSync(SUPER_HOVER_REACT_SRC)) return null;
   const raw = await readFile(SUPER_HOVER_REACT_SRC, "utf-8");
+  return raw
+    .replaceAll('from "./index.js"', 'from "./super-hover"')
+    .replaceAll(
+      'from "./use-super-hover-options.js"',
+      'from "./use-super-hover-options"',
+    );
+}
+
+async function loadSuperHoverVueSource(): Promise<string | null> {
+  if (!existsSync(SUPER_HOVER_VUE_SRC)) return null;
+  const raw = await readFile(SUPER_HOVER_VUE_SRC, "utf-8");
+  return raw
+    .replaceAll('from "./index.js"', 'from "./super-hover"')
+    .replaceAll(
+      'from "./use-super-hover-options.js"',
+      'from "./use-super-hover-options"',
+    );
+}
+
+async function loadSuperHoverSvelteSource(): Promise<string | null> {
+  if (!existsSync(SUPER_HOVER_SVELTE_SRC)) return null;
+  const raw = await readFile(SUPER_HOVER_SVELTE_SRC, "utf-8");
+  return raw
+    .replaceAll('from "./index.js"', 'from "./super-hover"')
+    .replaceAll(
+      'from "./use-super-hover-options.js"',
+      'from "./use-super-hover-options"',
+    );
+}
+
+async function loadUseSuperHoverOptionsSource(): Promise<string | null> {
+  if (!existsSync(USE_SUPER_HOVER_OPTIONS_SRC)) return null;
+  const raw = await readFile(USE_SUPER_HOVER_OPTIONS_SRC, "utf-8");
   return raw.replaceAll('from "./index.js"', 'from "./super-hover"');
 }
 
@@ -70,6 +124,54 @@ function maybeVendorSuperHoverReact(
   }
 }
 
+function maybeVendorSuperHoverVue(
+  files: { name: string; content: string }[],
+  vueSource: string | null,
+): void {
+  if (!vueSource) return;
+
+  const candidates = ["src/super-hover-vue.ts"];
+  for (const name of candidates) {
+    const hit = files.find((file) => file.name === name);
+    if (hit) {
+      hit.content = vueSource;
+      return;
+    }
+  }
+}
+
+function maybeVendorSuperHoverSvelte(
+  files: { name: string; content: string }[],
+  svelteSource: string | null,
+): void {
+  if (!svelteSource) return;
+
+  const candidates = ["src/super-hover-svelte.ts"];
+  for (const name of candidates) {
+    const hit = files.find((file) => file.name === name);
+    if (hit) {
+      hit.content = svelteSource;
+      return;
+    }
+  }
+}
+
+function maybeVendorUseSuperHoverOptions(
+  files: { name: string; content: string }[],
+  optionsSource: string | null,
+): void {
+  if (!optionsSource) return;
+
+  const candidates = ["src/use-super-hover-options.ts"];
+  for (const name of candidates) {
+    const hit = files.find((file) => file.name === name);
+    if (hit) {
+      hit.content = optionsSource;
+      return;
+    }
+  }
+}
+
 async function walkDirectory(dir: string): Promise<string[]> {
   const files: string[] = [];
   const entries = await readdir(dir, { withFileTypes: true });
@@ -97,6 +199,9 @@ async function generateSandboxBundles() {
   await mkdir(OUT_SANDBOX, { recursive: true });
   const superHoverSource = await loadSuperHoverSource();
   const superHoverReactSource = await loadSuperHoverReactSource();
+  const superHoverVueSource = await loadSuperHoverVueSource();
+  const superHoverSvelteSource = await loadSuperHoverSvelteSource();
+  const useSuperHoverOptionsSource = await loadUseSuperHoverOptionsSource();
 
   const entries = await readdir(SANDBOX_DIR, { withFileTypes: true });
 
@@ -122,6 +227,9 @@ async function generateSandboxBundles() {
 
     maybeVendorSuperHover(files, superHoverSource);
     maybeVendorSuperHoverReact(files, superHoverReactSource);
+    maybeVendorSuperHoverVue(files, superHoverVueSource);
+    maybeVendorSuperHoverSvelte(files, superHoverSvelteSource);
+    maybeVendorUseSuperHoverOptions(files, useSuperHoverOptionsSource);
 
     const jsonData = { demo: id, files };
     const outFile = join(OUT_SANDBOX, `${id}.json`);

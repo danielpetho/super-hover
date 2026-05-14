@@ -17,8 +17,12 @@
       </section>
 
       <section class="panel" aria-labelledby="super-heading">
-        <div class="panel-head">
-          <h2 id="native-heading">super-hover</h2>
+        <div class="panel-head panel-head--row">
+          <h2 id="super-heading">super-hover</h2>
+          <label class="pause-switch">
+            <input v-model="ui.paused" type="checkbox" @change="syncPause" />
+            Pause
+          </label>
         </div>
         <div class="scroller" tabindex="0">
           <div
@@ -36,15 +40,24 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from "vue";
+import { reactive, onMounted, onUnmounted } from "vue";
 import { createSuperHover, type SuperHoverController } from "./super-hover";
 
 const itemCount = 180;
 
+const ui = reactive({ paused: false });
+
 let superHover: SuperHoverController | undefined;
+
+function syncPause(): void {
+  if (!superHover) return;
+  if (ui.paused) superHover.pause();
+  else superHover.resume();
+}
 
 onMounted(() => {
   superHover = createSuperHover();
+  if (ui.paused) superHover.pause();
 });
 
 onUnmounted(() => {

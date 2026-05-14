@@ -118,6 +118,32 @@ code {
   font-weight: 600;
 }
 
+.panel-head--row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.panel-head--row h2 {
+  margin-bottom: 0;
+}
+
+.pause-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.84rem;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.pause-switch input {
+  accent-color: var(--accent);
+}
+
 .hint {
   margin: 0;
   font-size: 0.86rem;

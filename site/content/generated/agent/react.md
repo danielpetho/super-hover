@@ -12,7 +12,7 @@ A super tiny library that hit-tests hover every frame. Unlike native `:hover`, i
 
 ## Why use this?
 
-Well, you probably don't need this. While scrolling, browsers mostly skip updating `:hover` for performance reasons, which most sites actually need. But super-hover recomputes a hover-like hit every frame, which opens up some fun creative effects!
+Well, you probably don't need this. While scrolling, browsers mostly skip updating `:hover` for performance reasons, which most sites actually need. But super-hover recomputes a hover-like hit every frame, which opens up the possibility of some fun creative effects!
 
 ## Installation
 
