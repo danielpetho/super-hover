@@ -206,6 +206,7 @@ export default function SuperHoverEventsPreview() {
               width={150}
               height={150}
               loading="eager"
+              fetchPriority="high"
               decoding="async"
               draggable={false}
             />

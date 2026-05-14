@@ -60,7 +60,7 @@ function Switch({
         "relative inline-flex shrink-0 cursor-pointer items-center rounded-full border border-transparent outline-none transition-colors duration-200 ease-out",
         "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
         "disabled:pointer-events-none disabled:opacity-50",
-        checked ? "bg-blue-500" : "bg-neutral-300 dark:bg-neutral-600",
+        checked ? "bg-neutral-300 dark:bg-neutral-600" : "bg-neutral-300 dark:bg-neutral-600",
         className,
       )}
       style={{ width: TRACK_W, height: TRACK_H, padding: TRACK_PAD }}
