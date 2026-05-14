@@ -16,7 +16,6 @@ export type SuperHoverEventDetail = {
 /** Pointer kinds accepted for position updates via `pointermove`. */
 export type SuperHoverPointerType = "mouse" | "pen" | "touch";
 
-/** Returned by {@link createSuperHover}; safe to call after {@link SuperHoverController.destroy} is a no-op. */
 export type SuperHoverController = {
   pause(): void;
   resume(): void;
@@ -229,13 +228,14 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
   }
 
   function onPointerMove(e: PointerEvent): void {
-    if (destroyed || !running) return;
+    if (destroyed) return;
     if (!allowedPointerTypes.has(e.pointerType)) return;
 
     lastX = e.clientX;
     lastY = e.clientY;
     hasPointer = true;
-    schedule();
+
+    if (running) schedule();
   }
 
   function onPointerLeaveDocument(): void {

@@ -21,8 +21,7 @@ The **`super-hover`** entry is framework-free. **`super-hover/react`**, **`super
 
 - Mark participating nodes with **`data-super-hover`** (or pass a custom `selector`).
 - The active matched element gets **`data-super-hover-active`** (customizable). Style it with attribute selectors, e.g. Tailwind `data-[super-hover-active]:…`.
-
-You get a **`SuperHoverController`** with **`pause()`**, **`resume()`**, **`refresh()`**, and **`destroy()`**. `.pause()` clears the active element and stops responding until `.resume()`; `.refresh()` schedules a hit-test pass (still frame-coalesced). Prefer **`destroy()`** on teardown instead of older dispose-call patterns.
+- **`pause()`** / **`resume()`**: pause clears active state and skips hit-tests until resume, but **pointer position still updates** while paused, so **`resume()`** immediately matches whatever is under the cursor (no extra move required).
 
 ```ts
 import { createSuperHover } from "super-hover";
