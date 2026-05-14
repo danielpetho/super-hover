@@ -125,18 +125,22 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
     }
   }
 
-  function clearActive(): void {
-    if (!current) return;
-    const prev = current;
-    current = null;
+  function deactivate(prev: Element, next: Element | null): void {
     prev.removeAttribute(activeAttribute);
     prev.dispatchEvent(
       new CustomEvent<SuperHoverEventDetail>(leaveEventType, {
         bubbles: true,
         cancelable: false,
-        detail: { x: lastX, y: lastY, previous: prev, current: null },
+        detail: { x: lastX, y: lastY, previous: prev, current: next },
       }),
     );
+  }
+
+  function clearActive(): void {
+    if (!current) return;
+    const prev = current;
+    current = null;
+    deactivate(prev, null);
   }
 
   function resolveTarget(): Element | null {
@@ -163,14 +167,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
     if (current) {
       const prev = current;
       current = null;
-      prev.removeAttribute(activeAttribute);
-      prev.dispatchEvent(
-        new CustomEvent<SuperHoverEventDetail>(leaveEventType, {
-          bubbles: true,
-          cancelable: false,
-          detail: { x: lastX, y: lastY, previous: prev, current: next },
-        }),
-      );
+      deactivate(prev, next);
     }
 
     current = next;
