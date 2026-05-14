@@ -151,7 +151,7 @@ export function DocToc({
                     behavior: reduceMotion ? "auto" : "smooth",
                     block: "start",
                   });
-                  window.history.replaceState(null, "", `#${id}`);
+                  window.history.pushState(null, "", `#${id}`);
                   setActiveId(id);
                 }}
               >
