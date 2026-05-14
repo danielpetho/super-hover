@@ -46,7 +46,8 @@ const DEFAULT_POINTER_TYPES: readonly SuperHoverPointerType[] = ["mouse", "pen"]
  * Tracks pointer position and hit-tests on each frame (and on scroll) so
  * “hover” state updates while scrolling, unlike native `:hover`.
  *
- * Resolves `document.elementFromPoint`, walks ancestors with `closest(selector)` to pick the active
+ * Resolves `elementFromPoint` on the same `Document` as `root` (or the active document when `root` is omitted),
+ * walks ancestors with `closest(selector)` to pick the active
  * matched element, optionally constrains with `root`, then toggles `activeAttribute` and dispatches
  * enter/leave events (default `superhoverenter` / `superhoverleave`) on that element.
  */
@@ -56,6 +57,9 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   const enterEventType = options.enterEventType ?? DEFAULT_ENTER_EVENT;
   const leaveEventType = options.leaveEventType ?? DEFAULT_LEAVE_EVENT;
   const root = options.root;
+  const scopeDoc =
+    root instanceof Document ? root : (root?.ownerDocument ?? document);
+  const scopeWin = scopeDoc.defaultView ?? window;
   const allowedPointerTypes = new Set<string>(
     options.pointerTypes ?? [...DEFAULT_POINTER_TYPES],
   );
@@ -79,7 +83,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
 
   function resolveTarget(): Element | null {
     if (!hasPointer) return null;
-    const hit = document.elementFromPoint(lastX, lastY);
+    const hit = scopeDoc.elementFromPoint(lastX, lastY);
     if (!hit) return null;
     const el = hit.closest(selector);
     if (!el) return null;
@@ -112,7 +116,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   function schedule(): void {
     if (pending) return;
     pending = true;
-    rafId = requestAnimationFrame(() => {
+    rafId = scopeWin.requestAnimationFrame(() => {
       rafId = 0;
       pending = false;
       if (!hasPointer) {
@@ -138,27 +142,30 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   }
 
   function onVisibilityChange(): void {
-    if (document.visibilityState === "hidden") {
+    if (scopeDoc.visibilityState === "hidden") {
       hasPointer = false;
       schedule();
     }
   }
 
-  window.addEventListener("pointermove", onPointerMove, { passive: true });
-  document.addEventListener("scroll", schedule, { capture: true, passive: true });
-  window.addEventListener("resize", schedule, { passive: true });
-  document.addEventListener("mouseleave", onPointerLeaveDocument);
-  document.addEventListener("visibilitychange", onVisibilityChange);
+  scopeWin.addEventListener("pointermove", onPointerMove, { passive: true });
+  scopeDoc.addEventListener("scroll", schedule, {
+    capture: true,
+    passive: true,
+  });
+  scopeWin.addEventListener("resize", schedule, { passive: true });
+  scopeDoc.addEventListener("mouseleave", onPointerLeaveDocument);
+  scopeDoc.addEventListener("visibilitychange", onVisibilityChange);
 
   schedule();
 
   return () => {
-    window.removeEventListener("pointermove", onPointerMove);
-    document.removeEventListener("scroll", schedule, { capture: true });
-    window.removeEventListener("resize", schedule);
-    document.removeEventListener("mouseleave", onPointerLeaveDocument);
-    document.removeEventListener("visibilitychange", onVisibilityChange);
-    if (rafId !== 0) cancelAnimationFrame(rafId);
+    scopeWin.removeEventListener("pointermove", onPointerMove);
+    scopeDoc.removeEventListener("scroll", schedule, { capture: true });
+    scopeWin.removeEventListener("resize", schedule);
+    scopeDoc.removeEventListener("mouseleave", onPointerLeaveDocument);
+    scopeDoc.removeEventListener("visibilitychange", onVisibilityChange);
+    if (rafId !== 0) scopeWin.cancelAnimationFrame(rafId);
     hasPointer = false;
     clearActive();
   };
