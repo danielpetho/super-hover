@@ -141,6 +141,10 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
     schedule();
   }
 
+  function onPointerOut(e: PointerEvent): void {
+    if (!e.relatedTarget) onPointerLeaveDocument();
+  }
+
   function onVisibilityChange(): void {
     if (scopeDoc.visibilityState === "hidden") {
       hasPointer = false;
@@ -154,7 +158,10 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
     passive: true,
   });
   scopeWin.addEventListener("resize", schedule, { passive: true });
-  scopeDoc.addEventListener("mouseleave", onPointerLeaveDocument);
+  scopeWin.addEventListener("blur", onPointerLeaveDocument);
+  scopeDoc.addEventListener("pointerleave", onPointerLeaveDocument);
+  scopeDoc.addEventListener("pointercancel", onPointerLeaveDocument);
+  scopeDoc.addEventListener("pointerout", onPointerOut);
   scopeDoc.addEventListener("visibilitychange", onVisibilityChange);
 
   schedule();
@@ -163,7 +170,10 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
     scopeWin.removeEventListener("pointermove", onPointerMove);
     scopeDoc.removeEventListener("scroll", schedule, { capture: true });
     scopeWin.removeEventListener("resize", schedule);
-    scopeDoc.removeEventListener("mouseleave", onPointerLeaveDocument);
+    scopeWin.removeEventListener("blur", onPointerLeaveDocument);
+    scopeDoc.removeEventListener("pointerleave", onPointerLeaveDocument);
+    scopeDoc.removeEventListener("pointercancel", onPointerLeaveDocument);
+    scopeDoc.removeEventListener("pointerout", onPointerOut);
     scopeDoc.removeEventListener("visibilitychange", onVisibilityChange);
     if (rafId !== 0) scopeWin.cancelAnimationFrame(rafId);
     hasPointer = false;
