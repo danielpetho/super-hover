@@ -8,4 +8,12 @@ export type UseSuperHoverOptions = Omit<SuperHoverOptions, "root"> & {
   onEnter?: (event: Event) => void;
   /** Fires when leave events bubble within `root`; `event.target` is the element that lost active state. */
   onLeave?: (event: Event) => void;
+  /**
+   * Fires each hit-test tick while a matched element stays active (`event.target`).
+   *
+   * Helpers attach a bubbling listener only when `onMove` is passed.
+   * If neither `onMove` nor `moveEventType` is set, helpers disable move emission via `moveEventType: false`.
+   * If only `moveEventType` is set (custom name while skipping `onMove`), move events still dispatch for listeners you add elsewhere.
+   */
+  onMove?: (event: Event) => void;
 };

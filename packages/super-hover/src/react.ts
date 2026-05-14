@@ -14,7 +14,9 @@ export type { UseSuperHoverOptions };
 const noop = () => {};
 
 /**
- * Attaches enter/leave listeners (default `superhoverenter` / `superhoverleave`) on `root` and runs `createSuperHover({ root, ... })`.
+ * Enter/leave always; move listener only when {@link UseSuperHoverOptions.onMove}
+ * is passed. Omitting both `moveEventType` and `onMove` passes `moveEventType: false`
+ * into `createSuperHover` so unused move work is skipped.
  * Prefers a stable `root` (e.g. from {@link useSuperHoverRef}) so the effect re-runs when the node mounts.
  */
 export function useSuperHover(
@@ -23,26 +25,43 @@ export function useSuperHover(
     enabled = true,
     onEnter = noop,
     onLeave = noop,
+    onMove,
     selector,
     activeAttribute,
     pointerTypes,
     enterEventType = "superhoverenter",
     leaveEventType = "superhoverleave",
+    moveEventType,
   }: UseSuperHoverOptions = {},
 ): void {
   const onEnterRef = useRef(onEnter);
   const onLeaveRef = useRef(onLeave);
+  const onMoveRef = useRef(onMove);
   onEnterRef.current = onEnter;
   onLeaveRef.current = onLeave;
+  onMoveRef.current = onMove;
 
   useEffect(() => {
     if (!enabled || !root) return;
 
     const handleEnter = (e: Event) => onEnterRef.current(e);
     const handleLeave = (e: Event) => onLeaveRef.current(e);
+    const handleMove = (e: Event) => {
+      onMoveRef.current?.(e);
+    };
+
+    const resolvedMove =
+      moveEventType === false ? null : (moveEventType ?? "superhovermove");
+
+    const listenMove =
+      resolvedMove !== null && onMove !== undefined;
 
     root.addEventListener(enterEventType, handleEnter);
     root.addEventListener(leaveEventType, handleLeave);
+    if (listenMove) {
+      root.addEventListener(resolvedMove, handleMove);
+    }
+
     const stop = createSuperHover({
       root,
       ...(selector !== undefined && { selector }),
@@ -50,11 +69,19 @@ export function useSuperHover(
       ...(pointerTypes !== undefined && { pointerTypes }),
       enterEventType,
       leaveEventType,
+      ...(moveEventType !== undefined
+        ? { moveEventType }
+        : onMove !== undefined
+          ? {}
+          : { moveEventType: false }),
     });
 
     return () => {
       root.removeEventListener(enterEventType, handleEnter);
       root.removeEventListener(leaveEventType, handleLeave);
+      if (listenMove) {
+        root.removeEventListener(resolvedMove, handleMove);
+      }
       stop();
     };
   }, [
@@ -65,6 +92,8 @@ export function useSuperHover(
     pointerTypes,
     enterEventType,
     leaveEventType,
+    moveEventType,
+    onMove,
   ]);
 }
 

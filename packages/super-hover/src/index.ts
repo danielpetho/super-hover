@@ -1,3 +1,10 @@
+/** Payload on move `CustomEvent`s fired each hit-test frame while active (`event.detail`). */
+export type SuperHoverMoveEventDetail = {
+  x: number;
+  y: number;
+  current: Element;
+};
+
 /** Payload on `superhoverenter` / `superhoverleave` `CustomEvent`s (`event.detail`). */
 export type SuperHoverEventDetail = {
   x: number;
@@ -44,12 +51,20 @@ export type SuperHoverOptions = {
    * Default `superhoverleave`.
    */
   leaveEventType?: string;
+  /**
+   * `CustomEvent` type dispatched on each hit-test tick while an element is active
+   * (after updates from that tick, including the enter event when the active target changed; `bubbles: true`).
+   * `detail` is {@link SuperHoverMoveEventDetail}.
+   * Set to `false` to disable. Default `superhovermove`.
+   */
+  moveEventType?: string | false;
 };
 
 const DEFAULT_SELECTOR = "[data-super-hover]";
 const DEFAULT_ACTIVE = "data-super-hover-active";
 const DEFAULT_ENTER_EVENT = "superhoverenter";
 const DEFAULT_LEAVE_EVENT = "superhoverleave";
+const DEFAULT_MOVE_EVENT = "superhovermove";
 const DEFAULT_POINTER_TYPES: readonly SuperHoverPointerType[] = ["mouse", "pen"];
 
 /**
@@ -60,13 +75,18 @@ const DEFAULT_POINTER_TYPES: readonly SuperHoverPointerType[] = ["mouse", "pen"]
  * walks ancestors with `closest(selector)` to pick the active
  * matched element, optionally constrains with `root`, then toggles `activeAttribute` and dispatches
  * enter/leave events (default `superhoverenter` / `superhoverleave`) on that element,
- * each with {@link SuperHoverEventDetail} on `event.detail`.
+ * each with {@link SuperHoverEventDetail} on `event.detail`; optionally `superhovermove` once per scheduled
+ * tick while active (see {@link SuperHoverOptions.moveEventType}).
  */
 export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   const selector = options.selector ?? DEFAULT_SELECTOR;
   const activeAttribute = options.activeAttribute ?? DEFAULT_ACTIVE;
   const enterEventType = options.enterEventType ?? DEFAULT_ENTER_EVENT;
   const leaveEventType = options.leaveEventType ?? DEFAULT_LEAVE_EVENT;
+  const moveEventName =
+    options.moveEventType === false
+      ? null
+      : (options.moveEventType ?? DEFAULT_MOVE_EVENT);
   const root = options.root;
   const scopeDoc =
     root instanceof Document ? root : (root?.ownerDocument ?? document);
@@ -154,6 +174,15 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
         return;
       }
       apply();
+      if (moveEventName !== null && current !== null) {
+        current.dispatchEvent(
+          new CustomEvent<SuperHoverMoveEventDetail>(moveEventName, {
+            bubbles: true,
+            cancelable: false,
+            detail: { x: lastX, y: lastY, current },
+          }),
+        );
+      }
     });
   }
 

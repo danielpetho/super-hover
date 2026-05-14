@@ -9,13 +9,13 @@ const noop = () => {};
 
 /**
  * Composable that returns a template ref for the list root: wires
- * `createSuperHover` plus `superhoverenter` / `superhoverleave` listeners.
+ * `createSuperHover` plus enter/leave listeners, and move when `onMove` is passed.
  *
  * @example
  * ```vue
  * <script setup lang="ts">
  * import { useSuperHover } from "super-hover/vue";
- * const rootRef = useSuperHover({ onEnter(e) {}, onLeave(e) {} });
+ * const rootRef = useSuperHover({ onEnter(e) {}, onLeave(e) {}, onMove(e) {} });
  * </script>
  * <template>
  *   <ul ref="rootRef">
@@ -37,12 +37,21 @@ export function useSuperHover(
 
     const enterEventType = opts.enterEventType ?? "superhoverenter";
     const leaveEventType = opts.leaveEventType ?? "superhoverleave";
+    const resolvedMove =
+      opts.moveEventType === false ? null : (opts.moveEventType ?? "superhovermove");
 
     const handleEnter = (e: Event) => (opts.onEnter ?? noop)(e);
     const handleLeave = (e: Event) => (opts.onLeave ?? noop)(e);
+    const handleMove = (e: Event) => opts.onMove?.(e);
+
+    const listenMove =
+      resolvedMove !== null && opts.onMove !== undefined;
 
     el.addEventListener(enterEventType, handleEnter);
     el.addEventListener(leaveEventType, handleLeave);
+    if (listenMove) {
+      el.addEventListener(resolvedMove, handleMove);
+    }
     const stop = createSuperHover({
       root: el,
       ...(opts.selector !== undefined && { selector: opts.selector }),
@@ -50,11 +59,19 @@ export function useSuperHover(
       ...(opts.pointerTypes !== undefined && { pointerTypes: opts.pointerTypes }),
       enterEventType,
       leaveEventType,
+      ...(opts.moveEventType !== undefined
+        ? { moveEventType: opts.moveEventType }
+        : opts.onMove !== undefined
+          ? {}
+          : { moveEventType: false }),
     });
 
     onCleanup(() => {
       el.removeEventListener(enterEventType, handleEnter);
       el.removeEventListener(leaveEventType, handleLeave);
+      if (listenMove) {
+        el.removeEventListener(resolvedMove, handleMove);
+      }
       stop();
     });
   });
