@@ -13,9 +13,10 @@ export type SuperHoverEventDetail = {
   current: Element | null;
 };
 
-/** Pointer kinds accepted for position updates via `pointermove`. */
+/** Pointer kinds accepted for position updates https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/pointerType. */
 export type SuperHoverPointerType = "mouse" | "pen" | "touch";
 
+/** Controller for a {@link createSuperHover} instance. */
 export type SuperHoverController = {
   pause(): void;
   resume(): void;
@@ -40,7 +41,8 @@ export type SuperHoverOptions = {
    * Does not opt in every descendant; see `selector` for which nodes can activate.
    *
    * You may pass an iframe **`Document`** (`contentDocument`) or any **`Element`** inside that frame — hit-testing uses
-   * that node's document (`elementFromPoint`, listeners).
+   * that node's document (`elementFromPoint`, listeners). When `root` is a document, participations are constrained with
+   * `documentElement.contains(…)`.
    */
   root?: Document | Element;
   /**
@@ -93,6 +95,18 @@ function getScopeDocument(root?: Document | Element): Document {
   if (!root) return document;
   if (root.nodeType === DOCUMENT_NODE) return root as Document;
   return root.ownerDocument ?? document;
+}
+
+/** Whether `el` is inside the optional hit-test boundary (`root`). For a {@link Document} root, uses `documentElement.contains`. */
+function rootContains(root: Document | Element | undefined, el: Element): boolean {
+  if (!root) return true;
+
+  if (root.nodeType === DOCUMENT_NODE) {
+    const html = (root as Document).documentElement;
+    return html ? html.contains(el) : false;
+  }
+
+  return root.contains(el);
 }
 
 /**
@@ -164,7 +178,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
     if (!hit) return null;
     const el = hit.closest(selector);
     if (!el) return null;
-    if (root && !root.contains(el)) return null;
+    if (!rootContains(root, el)) return null;
     return el;
   }
 
