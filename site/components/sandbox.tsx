@@ -333,8 +333,10 @@ export function Sandbox({
                 ? "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-medium !shadow-none whitespace-nowrap! hover:!bg-transparent hover:!text-white aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-white  focus-visible:!ring-0 focus-visible:!outline-none"
                 : "cursor-pointer !h-auto !border-0 !bg-transparent px-2! py-1! !text-sm !font-medium !text-neutral-500 !shadow-none whitespace-nowrap! hover:!bg-transparent hover:!text-neutral-900 aria-selected:!border-0 aria-selected:!bg-transparent focus-visible:!ring-0 focus-visible:!outline-none data-[active=true]:!text-neutral-950",
            
-            "sp-editor": "!h-full !overflow-auto overscroll-contain",
-            "sp-code-editor": "!h-full !overflow-auto overscroll-contain border-none!",
+            "sp-editor": "!flex !h-full !min-h-0 !flex-col !overflow-hidden",
+            "sp-code-editor": "!min-h-0 !flex-1 !overflow-hidden border-none!",
+            "cm-editor": "!h-full !min-h-0",
+            "cm-scroller": "!overflow-auto overscroll-contain",
             "sp-preview-container": "!h-full",
             "sp-preview": "!h-full !flex",
             "sp-preview-iframe": "!h-full !flex",
@@ -356,7 +358,7 @@ export function Sandbox({
           ) : (
             <>
               <div
-                className={`min-w-0 w-1/2 overflow-hidden border-r-[0.5px] max-xl:h-1/2 max-xl:w-full max-xl:border-r-0 ${
+                className={`h-full min-h-0 min-w-0 w-1/2 overflow-hidden border-r-[0.5px] max-xl:h-1/2 max-xl:w-full max-xl:border-r-0 ${
                   isDark
                     ? "border-[#252525] max-xl:border-t-[0.5px]"
                     : "border-[#e4e4e7] max-xl:border-t-[0.5px]"
