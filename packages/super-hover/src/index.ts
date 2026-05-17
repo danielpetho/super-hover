@@ -41,8 +41,7 @@ export type SuperHoverOptions = {
    * Does not opt in every descendant; see `selector` for which nodes can activate.
    *
    * You may pass an iframe **`Document`** (`contentDocument`) or any **`Element`** inside that frame — hit-testing uses
-   * that node's document (`elementFromPoint`, listeners). When `root` is a document, participations are constrained with
-   * `documentElement.contains(…)`.
+   * that node's document (`elementFromPoint`, listeners).
    */
   root?: Document | Element;
   /**
@@ -175,10 +174,13 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
   function resolveTarget(): Element | null {
     if (!running || !hasPointer) return null;
     const hit = scopeDoc.elementFromPoint(lastX, lastY);
+
     if (!hit) return null;
     const el = hit.closest(selector);
+
     if (!el) return null;
     if (!rootContains(root, el)) return null;
+    
     return el;
   }
 
@@ -219,6 +221,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
 
   function schedule(): void {
     if (destroyed || pending) return;
+    // Coalesce many pointer/scroll/resize events into one hit-test before the next paint.
     pending = true;
     rafId = scopeWin.requestAnimationFrame(() => {
       rafId = 0;
@@ -249,6 +252,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
     lastY = e.clientY;
     hasPointer = true;
 
+    // Keep coordinates fresh while paused so resume() can hit-test the latest pointer position.
     if (running) schedule();
   }
 
