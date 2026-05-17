@@ -100,17 +100,80 @@ export function Example() {
 
 `onMove` is off by default. If you need pointer coordinates for things like tooltips or previews, pass `onMove` and read `event.detail.x` / `event.detail.y`.
 
-## Props
+## Event detail
+
+The events are `CustomEvent`s, so the useful data lives on `event.detail`.
+
+For `superhoverenter` and `superhoverleave`, `detail` has:
+
+- `x` and `y`: the last pointer position, in viewport coordinates
+- `previous`: the element that was active before this change, or `null`
+- `current`: the element that is active after this change, or `null`
+
+For `superhovermove`, `detail` has:
+
+- `x` and `y`: the last pointer position, in viewport coordinates
+- `current`: the currently active element
+
+`previous` and `current` are DOM elements. If you need a value from your item, read it from the element with `dataset`, `id`, or whatever you rendered there.
+
+<CodeSnippet
+  title="Reading event detail"
+  language="tsx"
+  code={`
+import { useSuperHoverRef } from "super-hover/react";
+
+export function Example() {
+  const rootRef = useSuperHoverRef({
+    onEnter(event) {
+      const { x, y, previous, current } = event.detail;
+
+      console.log(x, y);
+      console.log(previous?.id);
+      console.log(current?.id);
+    },
+  });
+
+  return (
+    <ul ref={rootRef}>
+      <li id="inbox" data-super-hover>Inbox</li>
+      <li id="projects" data-super-hover>Projects</li>
+      <li id="settings" data-super-hover>Settings</li>
+    </ul>
+  );
+}
+`}
+/>
+
+## How it works
+
+SuperHover stores the last pointer position.
+
+When the pointer moves, the page scrolls, or the viewport changes, it schedules a hit-test with `requestAnimationFrame`. Multiple updates in the same frame are coalesced, so they only produce one hit-test.
+
+On that frame, SuperHover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
+
+If the active element changes, SuperHover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
+
+## API
 
 <DocCodeHeading id="superhoveroptions">SuperHoverOptions</DocCodeHeading>
 
-`createSuperHover` registers listeners for pointer moves, scroll, and resize, then hit-tests once per animation frame (updates are coalesced). Pass these fields as `options`. The returned function removes listeners and clears any active target.
+`createSuperHover` registers listeners for pointer moves, scroll, and resize, then hit-tests on scheduled animation frames. Pass these fields as `options`. It returns a controller with `pause()`, `resume()`, `refresh()`, and `destroy()`.
 
-Every frame, the library calls `elementFromPoint`, walks ancestors with `closest(selector)` to pick the nearest matched element, and—when `root` is set—verifies that it lies inside `root`. `selector` decides which nodes may activate; `root` only limits where hits count—it does not automatically target every descendant.
+On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestors with `closest(selector)` to pick the nearest matched element, and—when `root` is set—verifies that it lies inside `root`. `selector` decides which nodes may activate; `root` only limits where hits count—it does not automatically target every descendant.
 
 <ApiPropList aria-label="SuperHoverOptions" anchorPrefix="create-super-hover">
+  <ApiProp name="enabled" type="boolean" defaultValue="true">
+    Starts the controller running. When `false`, it starts paused and waits for `resume()`.
+  </ApiProp>
+
+  <ApiProp name="pointerTypes" type={`("mouse" | "pen" | "touch")[]`} defaultValue={`["mouse", "pen"]`}>
+    Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state.
+  </ApiProp>
+
   <ApiProp name="root" type="Document, Element, or omit" defaultValue={<em className="text-muted-foreground">whole document</em>}>
-    Optional boundary: the matched element must lie inside this subtree; omit for the whole document. Does not make every descendant node a target; that is controlled by `selector` instead.
+    Optional boundary: the matched element must lie inside this subtree; omit for the whole document. You can pass an iframe `Document` or an element inside a same-origin iframe. Does not make every descendant node a target; that is controlled by `selector` instead.
   </ApiProp>
 
   <ApiProp name="selector" type="string" defaultValue="[data-super-hover]">
@@ -126,7 +189,11 @@ Every frame, the library calls `elementFromPoint`, walks ancestors with `closest
   </ApiProp>
 
   <ApiProp name="leaveEventType" type="string" defaultValue="superhoverleave">
-    `CustomEvent` type dispatched on the matched element when it stops being active.
+    `CustomEvent` type dispatched on the matched element when it stops being active. `event.detail` includes `x`, `y`, `previous`, and `current`.
+  </ApiProp>
+
+  <ApiProp name="moveEventType" type="string or false" defaultValue="superhovermove">
+    `CustomEvent` type dispatched on each scheduled hit-test while an element is active. Set to `false` to disable move events.
   </ApiProp>
 </ApiPropList>
 
@@ -136,7 +203,11 @@ Every frame, the library calls `elementFromPoint`, walks ancestors with `closest
 
 <ApiPropList aria-label="UseSuperHoverOptions (React)" anchorPrefix="react-use-super-hover">
   <ApiProp name="enabled" type="boolean" defaultValue="true">
-    When `false`, listeners are removed until enabled again.
+    When `false`, the React helper does not mount SuperHover on the root.
+  </ApiProp>
+
+  <ApiProp name="pointerTypes" type={`("mouse" | "pen" | "touch")[]`} defaultValue={`["mouse", "pen"]`}>
+    Pointer types allowed to update the tracked pointer position. Touch is off by default.
   </ApiProp>
 
   <ApiProp name="selector" type="string" defaultValue="[data-super-hover]">
@@ -155,11 +226,59 @@ Every frame, the library calls `elementFromPoint`, walks ancestors with `closest
     `CustomEvent` type dispatched on the matched element when it stops being active.
   </ApiProp>
 
-  <ApiProp name="onEnter" type="(event: Event) => void" defaultValue="no-op">
-    Runs when an enter event bubbles within `root`.
+  <ApiProp name="moveEventType" type="string or false" defaultValue={<em className="text-muted-foreground">auto</em>}>
+    Custom move event name, or `false` to disable move events. If neither `onMove` nor `moveEventType` is passed, the React helper disables move events for you.
   </ApiProp>
 
-  <ApiProp name="onLeave" type="(event: Event) => void" defaultValue="no-op">
-    Runs when a leave event bubbles within `root`.
+  <ApiProp name="onEnter" type="(event: SuperHoverEnterEvent) => void" defaultValue="no-op">
+    Runs when an enter event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`.
+  </ApiProp>
+
+  <ApiProp name="onLeave" type="(event: SuperHoverLeaveEvent) => void" defaultValue="no-op">
+    Runs when a leave event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`.
+  </ApiProp>
+
+  <ApiProp name="onMove" type="(event: SuperHoverMoveEvent) => void" defaultValue="off">
+    Runs on move events while an element is active. The helper only listens for move events when `onMove` is passed.
+  </ApiProp>
+</ApiPropList>
+
+<DocCodeHeading id="superhovereventdetail">SuperHoverEventDetail</DocCodeHeading>
+
+Used by `superhoverenter`, `superhoverleave`, `onEnter`, and `onLeave`.
+
+<ApiPropList aria-label="SuperHoverEventDetail" anchorPrefix="super-hover-event-detail">
+  <ApiProp name="x" type="number">
+    Last pointer x position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="y" type="number">
+    Last pointer y position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="previous" type="Element | null">
+    Element that was active before this change, or `null`.
+  </ApiProp>
+
+  <ApiProp name="current" type="Element | null">
+    Element that is active after this change, or `null`.
+  </ApiProp>
+</ApiPropList>
+
+<DocCodeHeading id="superhovermoveeventdetail">SuperHoverMoveEventDetail</DocCodeHeading>
+
+Used by `superhovermove` and `onMove`.
+
+<ApiPropList aria-label="SuperHoverMoveEventDetail" anchorPrefix="super-hover-move-event-detail">
+  <ApiProp name="x" type="number">
+    Last pointer x position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="y" type="number">
+    Last pointer y position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="current" type="Element">
+    Currently active element.
   </ApiProp>
 </ApiPropList>
