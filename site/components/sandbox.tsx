@@ -6,7 +6,6 @@ import {
   SandpackLayout,
   SandpackCodeEditor,
   SandpackPreview,
-  SandpackConsole,
   SandpackFiles,
   useSandpackNavigation,
 } from "@codesandbox/sandpack-react";
@@ -23,6 +22,7 @@ import spThemeDark from "@/sandpack-theme-dark.json";
 import spThemeLight from "@/sandpack-theme-light.json";
 import { useIsDarkMode } from "@/lib/use-is-dark-mode";
 import SandboxMenu from "./sandbox-menu";
+import { SandboxConsole } from "./sandbox-console";
 
 interface ExerciseFile {
   name: string;
@@ -59,6 +59,7 @@ interface ExerciseConfig {
     | "vite"
     | "vite-react"
     | "vite-react-ts"
+    | "vite-vue-ts"
     | "vite-svelte-ts";
 }
 
@@ -157,16 +158,12 @@ function PreviewConsolePanel({
         </TabsContent>
         <TabsContent
           value="console"
+          keepMounted
           className="relative flex-1 m-0 min-h-0 h-full"
         >
-          <SandpackConsole
-            className="h-full"
-            onLogsChange={(logs) => setConsoleLogCount(logs.length)}
-            showHeader
-            resetOnPreviewRestart={false}
-          />
+          <SandboxConsole onLogsChange={setConsoleLogCount} />
           {activePanel === "console" && consoleLogCount === 0 ? (
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-6 text-center text-sm text-muted-foreground">
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-6 text-center text-xs text-muted-foreground">
               No console output yet. Logs and errors from the preview will appear here.
             </div>
           ) : null}
