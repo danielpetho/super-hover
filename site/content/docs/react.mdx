@@ -15,9 +15,9 @@ Well, you probably don't need this. While scrolling, browsers mostly skip updati
 
 ## Usage
 
-Just simply import `useSuperHoverRef`, attach the returned ref to the wrapper around your list (such as the `ul` in the snippet), and mark each row with `data-super-hover`. Whatever is under the pointer picks up `data-super-hover-active`, so you can style “the hovered row” with `data-[super-hover-active]:…`.
+Wrap the area you care about, then mark the things that should act hoverable.
 
-Out of the box it looks for `[data-super-hover]`, but you can customize the [selector](#api-create-super-hover-selector).
+The active element gets `data-super-hover-active`, which is usually enough if you only want styling.
 
 <CodeSnippet
   title="Basic usage"
@@ -26,56 +26,8 @@ Out of the box it looks for `[data-super-hover]`, but you can customize the [sel
 import { useSuperHoverRef } from "super-hover/react";
 
 export function Example() {
-  const rootRef = useSuperHoverRef();
-  const items = ["Alpha", "Beta", "Gamma"];
-
-  return (
-    <ul ref={rootRef} className="space-y-1">
-      {items.map((item) => (
-        <li
-          key={item}
-          data-super-hover
-          className="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-editor-bg"
-        >
-          {item}
-        </li>
-      ))}
-    </ul>
-  );
-}
-`}
-/>
-
-## Events
-
-<Preview
-  name="super-hover-events"
-  showCode={false}
-  className="p-0! rounded-none! border-none!"
-  description="`superhoverenter` fires when the pointer activates a hit-tested item, which swaps the cover art."
-/>
-
-Pass `onEnter` and `onLeave` into `useSuperHoverRef` when you want logic tied to the active row: `onEnter` runs when hit-testing moves onto a new matched row (pointer moves or the list scrolls under a stationary cursor); `onLeave` runs on the row that stopped being active. Both handlers receive the event object, where `event.target` refers to that row element.
-
-The preview above uses `onEnter` to swap the cover image so it matches the active row even while scrolling without moving the mouse.
-
-<CodeSnippet
-  title="Event handlers"
-  language="tsx"
-  code={`
-import { useSuperHoverRef } from "super-hover/react";
-
-export function Example() {
-    const rootRef = useSuperHoverRef({
-      onEnter: (e) => {
-        console.log("enter:", e.target);
-      },
-      onLeave: (e) => {
-        console.log("leave:", e.target);
-      },
-    });
-
-    const items = ["Alpha", "Beta", "Gamma"];
+    const rootRef = useSuperHoverRef();
+    const items = ["Inbox", "Projects", "Settings"];
 
     return (
       <ul ref={rootRef} className="space-y-1">
@@ -83,7 +35,7 @@ export function Example() {
           <li
             key={item}
             data-super-hover
-            className="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-editor-bg"
+            className="rounded-md px-3 py-2 data-[super-hover-active]:bg-neutral-100"
           >
             {item}
           </li>
@@ -93,6 +45,60 @@ export function Example() {
 }
 `}
 />
+
+## Events
+
+If styling is not enough, you can run code when the active element changes. SuperHover dispatches three custom events:
+
+- `superhoverenter` when an element becomes active
+- `superhoverleave` when an element stops being active
+- `superhovermove` while an element is active
+
+In React, `useSuperHoverRef` exposes these as `onEnter`, `onLeave`, and `onMove`.
+
+<Preview
+  name="super-hover-events"
+  showCode={false}
+  className="p-0! rounded-none! border-none!"
+  description="`superhoverenter` fires when the pointer activates a hit-tested item, which swaps the cover art."
+/>
+
+<CodeSnippet
+  title="Event handlers"
+  language="tsx"
+  code={`
+import { useSuperHoverRef } from "super-hover/react";
+
+export function Example() {
+    const rootRef = useSuperHoverRef({
+      onEnter(event) {
+        console.log("entered", event.detail.current);
+      },
+      onLeave(event) {
+        console.log("left", event.detail.previous);
+      },
+    });
+
+    const items = ["Inbox", "Projects", "Settings"];
+
+    return (
+      <ul ref={rootRef} className="space-y-1">
+        {items.map((item) => (
+          <li
+            key={item}
+            data-super-hover
+            className="rounded-md px-3 py-2 data-[super-hover-active]:bg-neutral-100"
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    );
+}
+`}
+/>
+
+`onMove` is off by default. If you need pointer coordinates for things like tooltips or previews, pass `onMove` and read `event.detail.x` / `event.detail.y`.
 
 ## Props
 
