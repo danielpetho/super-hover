@@ -28,9 +28,9 @@ bun add super-hover
 
 ## Usage
 
-Just simply import `useSuperHoverRef`, attach the returned ref to the wrapper around your list (such as the `ul` in the snippet), and mark each row with `data-super-hover`. Whatever is under the pointer picks up `data-super-hover-active`, so you can style “the hovered row” with `data-[super-hover-active]:…`.
+Wrap the area you care about, then mark the things that should act hoverable.
 
-Out of the box it looks for `[data-super-hover]`, but you can customize the [selector](#api-create-super-hover-selector).
+The active element gets `data-super-hover-active`, which is usually enough if you only want styling.
 
 **Basic usage**
 
@@ -38,52 +38,8 @@ Out of the box it looks for `[data-super-hover]`, but you can customize the [sel
 import { useSuperHoverRef } from "super-hover/react";
 
 export function Example() {
-  const rootRef = useSuperHoverRef();
-  const items = ["Alpha", "Beta", "Gamma"];
-
-  return (
-    <ul ref={rootRef} className="space-y-1">
-      {items.map((item) => (
-        <li
-          key={item}
-          data-super-hover
-          className="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-editor-bg"
-        >
-          {item}
-        </li>
-      ))}
-    </ul>
-  );
-}
-```
-
-
-## Events
-
-**Interactive demo (`super-hover-events`):** `superhoverenter` fires when the pointer activates a hit-tested item, which swaps the cover art.
-
-
-
-Pass `onEnter` and `onLeave` into `useSuperHoverRef` when you want logic tied to the active row: `onEnter` runs when hit-testing moves onto a new matched row (pointer moves or the list scrolls under a stationary cursor); `onLeave` runs on the row that stopped being active. Both handlers receive the event object, where `event.target` refers to that row element.
-
-The preview above uses `onEnter` to swap the cover image so it matches the active row even while scrolling without moving the mouse.
-
-**Event handlers**
-
-```tsx
-import { useSuperHoverRef } from "super-hover/react";
-
-export function Example() {
-    const rootRef = useSuperHoverRef({
-      onEnter: (e) => {
-        console.log("enter:", e.target);
-      },
-      onLeave: (e) => {
-        console.log("leave:", e.target);
-      },
-    });
-
-    const items = ["Alpha", "Beta", "Gamma"];
+    const rootRef = useSuperHoverRef();
+    const items = ["Inbox", "Projects", "Settings"];
 
     return (
       <ul ref={rootRef} className="space-y-1">
@@ -91,7 +47,7 @@ export function Example() {
           <li
             key={item}
             data-super-hover
-            className="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-editor-bg"
+            className="rounded-md px-3 py-2 data-[super-hover-active]:bg-neutral-100"
           >
             {item}
           </li>
@@ -102,25 +58,132 @@ export function Example() {
 ```
 
 
-## Props
+## Events
+
+If styling is not enough, you can run code when the active element changes. SuperHover dispatches three custom events:
+
+- `superhoverenter` when an element becomes active
+- `superhoverleave` when an element stops being active
+- `superhovermove` while an element is active
+
+In React, `useSuperHoverRef` exposes these as `onEnter`, `onLeave`, and `onMove`.
+
+**Interactive demo (`super-hover-events`):** `superhoverenter` fires when the pointer activates a hit-tested item, which swaps the cover art.
+
+
+
+**Event handlers**
+
+```tsx
+import { useSuperHoverRef } from "super-hover/react";
+
+export function Example() {
+    const rootRef = useSuperHoverRef({
+      onEnter(event) {
+        console.log("entered", event.detail.current);
+      },
+      onLeave(event) {
+        console.log("left", event.detail.previous);
+      },
+    });
+
+    const items = ["Inbox", "Projects", "Settings"];
+
+    return (
+      <ul ref={rootRef} className="space-y-1">
+        {items.map((item) => (
+          <li
+            key={item}
+            data-super-hover
+            className="rounded-md px-3 py-2 data-[super-hover-active]:bg-neutral-100"
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    );
+}
+```
+
+
+`onMove` is off by default. If you need pointer coordinates for things like tooltips or previews, pass `onMove` and read `event.detail.x` / `event.detail.y`.
+
+## Event detail
+
+The events are `CustomEvent`s, so the useful data lives on `event.detail`.
+
+For `superhoverenter` and `superhoverleave`, `detail` has:
+
+- `x` and `y`: the last pointer position, in viewport coordinates
+- `previous`: the element that was active before this change, or `null`
+- `current`: the element that is active after this change, or `null`
+
+For `superhovermove`, `detail` has:
+
+- `x` and `y`: the last pointer position, in viewport coordinates
+- `current`: the currently active element
+
+`previous` and `current` are DOM elements. If you need a value from your item, read it from the element with `dataset`, `id`, or whatever you rendered there.
+
+**Reading event detail**
+
+```tsx
+import { useSuperHoverRef } from "super-hover/react";
+
+export function Example() {
+  const rootRef = useSuperHoverRef({
+    onEnter(event) {
+      const { x, y, previous, current } = event.detail;
+
+      console.log(x, y);
+      console.log(previous?.id);
+      console.log(current?.id);
+    },
+  });
+
+  return (
+    <ul ref={rootRef}>
+      <li id="inbox" data-super-hover>Inbox</li>
+      <li id="projects" data-super-hover>Projects</li>
+      <li id="settings" data-super-hover>Settings</li>
+    </ul>
+  );
+}
+```
+
+
+## How it works
+
+SuperHover stores the last pointer position.
+
+When the pointer moves, the page scrolls, or the viewport changes, it schedules a hit-test with `requestAnimationFrame`. Multiple updates in the same frame are coalesced, so they only produce one hit-test.
+
+On that frame, SuperHover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
+
+If the active element changes, SuperHover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
+
+## API
 
 ### SuperHoverOptions
 
 
 
-`createSuperHover` registers listeners for pointer moves, scroll, and resize, then hit-tests once per animation frame (updates are coalesced). Pass these fields as `options`. The returned function removes listeners and clears any active target.
+`createSuperHover` registers listeners for pointer moves, scroll, and resize, then hit-tests on scheduled animation frames. Pass these fields as `options`. It returns a controller with `pause()`, `resume()`, `refresh()`, and `destroy()`.
 
-Every frame, the library calls `elementFromPoint`, walks ancestors with `closest(selector)` to pick the nearest matched element, and—when `root` is set—verifies that it lies inside `root`. `selector` decides which nodes may activate; `root` only limits where hits count—it does not automatically target every descendant.
+On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestors with `closest(selector)` to pick the nearest matched element, and—when `root` is set—verifies that it lies inside `root`. `selector` decides which nodes may activate; `root` only limits where hits count—it does not automatically target every descendant.
 
 
 
 | Property | Type | Default | Description |
 | --- | --- | --- | --- |
-| root | Document, Element, or omit | whole document | Optional boundary: the matched element must lie inside this subtree; omit for the whole document. Does not make every descendant node a target; that is controlled by `selector` instead. |
+| enabled | boolean | true | Starts the controller running. When `false`, it starts paused and waits for `resume()`. |
+| pointerTypes |  | `["mouse", "pen"]` | Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state. |
+| root | Document, Element, or omit | whole document | Optional boundary: the matched element must lie inside this subtree; omit for the whole document. You can pass an iframe `Document` or an element inside a same-origin iframe. Does not make every descendant node a target; that is controlled by `selector` instead. |
 | selector | string | [data-super-hover] | CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate (default `[data-super-hover]`). Independent of `root`, which only scopes where hits count. |
 | activeAttribute | string | data-super-hover-active | Attribute toggled on the active matched element (empty string while active, removed otherwise). Use it for styling, e.g. `data-[super-hover-active]:…`. |
 | enterEventType | string | superhoverenter | `CustomEvent` type dispatched on the matched element when it becomes active (`bubbles: true`). |
-| leaveEventType | string | superhoverleave | `CustomEvent` type dispatched on the matched element when it stops being active. |
+| leaveEventType | string | superhoverleave | `CustomEvent` type dispatched on the matched element when it stops being active. `event.detail` includes `x`, `y`, `previous`, and `current`. |
+| moveEventType | string or false | superhovermove | `CustomEvent` type dispatched on each scheduled hit-test while an element is active. Set to `false` to disable move events. |
 
 
 
@@ -134,10 +197,46 @@ Every frame, the library calls `elementFromPoint`, walks ancestors with `closest
 
 | Property | Type | Default | Description |
 | --- | --- | --- | --- |
-| enabled | boolean | true | When `false`, listeners are removed until enabled again. |
+| enabled | boolean | true | When `false`, the React helper does not mount SuperHover on the root. |
+| pointerTypes |  | `["mouse", "pen"]` | Pointer types allowed to update the tracked pointer position. Touch is off by default. |
 | selector | string | [data-super-hover] | CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate (default `[data-super-hover]`). Independent of `root`, which only scopes where hits count. |
 | activeAttribute | string | data-super-hover-active | Attribute toggled on the active matched element (empty string while active, removed otherwise). Use it for styling, e.g. `data-[super-hover-active]:…`. |
 | enterEventType | string | superhoverenter | `CustomEvent` type dispatched on the matched element when it becomes active (`bubbles: true`). |
 | leaveEventType | string | superhoverleave | `CustomEvent` type dispatched on the matched element when it stops being active. |
-| onEnter | (event: Event) => void | no-op | Runs when an enter event bubbles within `root`. |
-| onLeave | (event: Event) => void | no-op | Runs when a leave event bubbles within `root`. |
+| moveEventType | string or false | auto | Custom move event name, or `false` to disable move events. If neither `onMove` nor `moveEventType` is passed, the React helper disables move events for you. |
+| onEnter | (event: SuperHoverEnterEvent) => void | no-op | Runs when an enter event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`. |
+| onLeave | (event: SuperHoverLeaveEvent) => void | no-op | Runs when a leave event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`. |
+| onMove | (event: SuperHoverMoveEvent) => void | off | Runs on move events while an element is active. The helper only listens for move events when `onMove` is passed. |
+
+
+
+### SuperHoverEventDetail
+
+
+
+Used by `superhoverenter`, `superhoverleave`, `onEnter`, and `onLeave`.
+
+
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| x | number |  | Last pointer x position in viewport coordinates. |
+| y | number |  | Last pointer y position in viewport coordinates. |
+| previous | Element \| null |  | Element that was active before this change, or `null`. |
+| current | Element \| null |  | Element that is active after this change, or `null`. |
+
+
+
+### SuperHoverMoveEventDetail
+
+
+
+Used by `superhovermove` and `onMove`.
+
+
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| x | number |  | Last pointer x position in viewport coordinates. |
+| y | number |  | Last pointer y position in viewport coordinates. |
+| current | Element |  | Currently active element. |

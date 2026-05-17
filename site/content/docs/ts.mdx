@@ -15,9 +15,9 @@ Well, you probably don't need this. While scrolling, browsers mostly skip updati
 
 ## Usage
 
-Just simply import `createSuperHover` from `super-hover`, pass your list element as `root`, and mark each row with `data-super-hover` (see the snippet). Whatever is under the pointer picks up `data-super-hover-active`, so you can style “the hovered row” with `data-[super-hover-active]:…`.
+Wrap the area you care about, then mark the things that should act hoverable.
 
-Out of the box it looks for `[data-super-hover]`, but you can customize the [selector](#api-create-super-hover-selector).
+The active element gets `data-super-hover-active`, which is usually enough if you only want styling.
 
 <CodeSnippet
   title="Basic usage"
@@ -25,20 +25,51 @@ Out of the box it looks for `[data-super-hover]`, but you can customize the [sel
   code={`
 import { createSuperHover } from "super-hover";
 
-const list = document.querySelector("#list");
-const superHover = createSuperHover({ root: list ?? undefined });
+const root = document.querySelector<HTMLElement>("#list")!;
 
-for (const el of document.querySelectorAll("#list li")) {
-  el.setAttribute("data-super-hover", "");
-  el.className =
-    "rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-editor-bg";
-}
+const superHover = createSuperHover({ root });
 
-// later: superHover();
+// later
+superHover.destroy();
+`}
+/>
+
+<CodeSnippet
+  title="HTML"
+  language="html"
+  code={`
+<ul id="list" class="space-y-1">
+    <li
+      data-super-hover
+      class="rounded-md px-3 py-2 data-[super-hover-active]:bg-neutral-100"
+    >
+      Inbox
+    </li>
+    <li
+      data-super-hover
+      class="rounded-md px-3 py-2 data-[super-hover-active]:bg-neutral-100"
+    >
+      Projects
+    </li>
+    <li
+      data-super-hover
+      class="rounded-md px-3 py-2 data-[super-hover-active]:bg-neutral-100"
+    >
+      Settings
+    </li>
+</ul>
 `}
 />
 
 ## Events
+
+If styling is not enough, you can run code when the active element changes. SuperHover dispatches three custom events:
+
+- `superhoverenter` when an element becomes active
+- `superhoverleave` when an element stops being active
+- `superhovermove` while an element is active
+
+In TypeScript, listen for those events on the root. They bubble from the active element.
 
 <Preview
   name="super-hover-events"
@@ -47,59 +78,177 @@ for (const el of document.querySelectorAll("#list li")) {
   description="`superhoverenter` fires when the pointer activates a hit-tested item, which swaps the cover art."
 />
 
-Register handlers on your list `root` for `superhoverenter` and `superhoverleave` when you want logic tied to the active row: `superhoverenter` runs when hit-testing moves onto a new matched row (pointer moves or the list scrolls under a stationary cursor); `superhoverleave` runs on the row that stopped being active. Events bubble, so listening on `root` works—`event.target` is the row element.
-
-The preview above registers those listeners so the cover image matches the active row even while scrolling without moving the mouse.
-
 <CodeSnippet
   title="Listening on the root"
   language="typescript"
   code={`
-import { createSuperHover } from "super-hover";
+import {
+    createSuperHover,
+    type SuperHoverEventDetail,
+} from "super-hover";
 
-const root = document.querySelector("#list")!;
-const onEnter = (e: Event) => {
-    console.log("enter:", e.target);
-};
-const onLeave = (e: Event) => {
-    console.log("leave:", e.target);
-};
+const root = document.querySelector<HTMLElement>("#list")!;
 
-root.addEventListener("superhoverenter", onEnter);
-root.addEventListener("superhoverleave", onLeave);
+root.addEventListener("superhoverenter", (event) => {
+    const e = event as CustomEvent<SuperHoverEventDetail>;
+    console.log("entered", e.detail.current);
+});
 
-const stop = createSuperHover({ root });
+root.addEventListener("superhoverleave", (event) => {
+    const e = event as CustomEvent<SuperHoverEventDetail>;
+    console.log("left", e.detail.previous);
+});
 
-/* cleanup: remove listeners and call stop() */
+const superHover = createSuperHover({ root });
 `}
 />
 
-## Props
+`superhovermove` is on by default in the core library. If you do not need move events, pass `moveEventType: false`.
+
+## Event detail
+
+The events are `CustomEvent`s, so the useful data lives on `event.detail`.
+
+For `superhoverenter` and `superhoverleave`, `detail` has:
+
+- `x` and `y`: the last pointer position, in viewport coordinates
+- `previous`: the element that was active before this change, or `null`
+- `current`: the element that is active after this change, or `null`
+
+For `superhovermove`, `detail` has:
+
+- `x` and `y`: the last pointer position, in viewport coordinates
+- `current`: the currently active element
+
+`previous` and `current` are DOM elements. If you need a value from your item, read it from the element with `dataset`, `id`, or whatever you rendered there.
+
+<CodeSnippet
+  title="Reading event detail"
+  language="typescript"
+  code={`
+import type { SuperHoverEventDetail } from "super-hover";
+
+root.addEventListener("superhoverenter", (event) => {
+    const e = event as CustomEvent<SuperHoverEventDetail>;
+    const { x, y, previous, current } = e.detail;
+
+    console.log(x, y);
+    console.log(previous?.id);
+    console.log(current?.id);
+});
+`}
+/>
+
+## How it works
+
+SuperHover stores the last pointer position.
+
+When the pointer moves, the page scrolls, or the viewport changes, it schedules a hit-test with `requestAnimationFrame`. Multiple updates in the same frame are coalesced, so they only produce one hit-test.
+
+On that frame, SuperHover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
+
+If the active element changes, SuperHover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
+
+## API
 
 <DocCodeHeading id="superhoveroptions">SuperHoverOptions</DocCodeHeading>
 
-`createSuperHover` registers listeners for pointer moves, scroll, and resize, then hit-tests once per animation frame (updates are coalesced). Pass these fields as `options`. The returned function removes listeners and clears any active target.
+`createSuperHover` registers listeners for pointer moves, scroll, and resize, then hit-tests on scheduled animation frames. Pass these fields as `options`. It returns a controller with `pause()`, `resume()`, `refresh()`, and `destroy()`.
 
-Every frame, the library calls `elementFromPoint`, walks ancestors with `closest(selector)` to pick the nearest matched element, and—when `root` is set—verifies that it lies inside `root`. `selector` decides which nodes may activate; `root` only limits where hits count—it does not automatically target every descendant.
+On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestors with `closest(selector)` to pick the nearest matched element, and—when `root` is set—verifies that it lies inside `root`. `selector` decides which nodes may activate; `root` only limits where hits count—it does not automatically target every descendant.
 
 <ApiPropList aria-label="SuperHoverOptions" anchorPrefix="create-super-hover">
+  <ApiProp name="enabled" type="boolean" defaultValue="true">
+    Starts the controller running. When `false`, it starts paused and waits for `resume()`.
+  </ApiProp>
+
+  <ApiProp name="pointerTypes" type={`("mouse" | "pen" | "touch")[]`} defaultValue={`["mouse", "pen"]`}>
+    Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state.
+  </ApiProp>
+
   <ApiProp name="root" type="Document, Element, or omit" defaultValue={<em className="text-muted-foreground">whole document</em>}>
-    Optional boundary: the matched element must lie inside this subtree; omit for the whole document. Does not make every descendant node a target; that is controlled by `selector` instead.
+    Optional boundary: the matched element must lie inside this subtree; omit for the whole document. You can pass an iframe `Document` or an element inside a same-origin iframe. Does not make every descendant node a target; that is controlled by `selector` instead.
   </ApiProp>
 
   <ApiProp name="selector" type="string" defaultValue="[data-super-hover]">
-    CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate (default `[data-super-hover]`). Independent of `root`, which only scopes where hits count.
+    CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate. Independent of `root`, which only scopes where hits count.
   </ApiProp>
 
   <ApiProp name="activeAttribute" type="string" defaultValue="data-super-hover-active">
-    Attribute toggled on the active matched element (empty string while active, removed otherwise). Use it for styling, e.g. `data-[super-hover-active]:…`.
+    Attribute toggled on the active matched element while active, then removed when inactive.
   </ApiProp>
 
   <ApiProp name="enterEventType" type="string" defaultValue="superhoverenter">
-    `CustomEvent` type dispatched on the matched element when it becomes active (`bubbles: true`).
+    `CustomEvent` type dispatched on the matched element when it becomes active. `event.detail` includes `x`, `y`, `previous`, and `current`.
   </ApiProp>
 
   <ApiProp name="leaveEventType" type="string" defaultValue="superhoverleave">
-    `CustomEvent` type dispatched on the matched element when it stops being active.
+    `CustomEvent` type dispatched on the matched element when it stops being active. `event.detail` includes `x`, `y`, `previous`, and `current`.
+  </ApiProp>
+
+  <ApiProp name="moveEventType" type="string or false" defaultValue="superhovermove">
+    `CustomEvent` type dispatched on each scheduled hit-test while an element is active. Set to `false` to disable move events.
+  </ApiProp>
+</ApiPropList>
+
+<DocCodeHeading id="superhovercontroller">SuperHoverController</DocCodeHeading>
+
+Returned by `createSuperHover`.
+
+<ApiPropList aria-label="SuperHoverController" anchorPrefix="super-hover-controller">
+  <ApiProp name="pause" type="() => void">
+    Pauses hit-testing and clears the active element.
+  </ApiProp>
+
+  <ApiProp name="resume" type="() => void">
+    Resumes hit-testing and schedules a fresh hit-test.
+  </ApiProp>
+
+  <ApiProp name="refresh" type="() => void">
+    Schedules a fresh hit-test without changing the paused or destroyed state.
+  </ApiProp>
+
+  <ApiProp name="destroy" type="() => void">
+    Removes listeners, cancels pending animation frames, and clears the active element.
+  </ApiProp>
+</ApiPropList>
+
+<DocCodeHeading id="superhovereventdetail">SuperHoverEventDetail</DocCodeHeading>
+
+Used by `superhoverenter` and `superhoverleave`.
+
+<ApiPropList aria-label="SuperHoverEventDetail" anchorPrefix="super-hover-event-detail">
+  <ApiProp name="x" type="number">
+    Last pointer x position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="y" type="number">
+    Last pointer y position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="previous" type="Element | null">
+    Element that was active before this change, or `null`.
+  </ApiProp>
+
+  <ApiProp name="current" type="Element | null">
+    Element that is active after this change, or `null`.
+  </ApiProp>
+</ApiPropList>
+
+<DocCodeHeading id="superhovermoveeventdetail">SuperHoverMoveEventDetail</DocCodeHeading>
+
+Used by `superhovermove`.
+
+<ApiPropList aria-label="SuperHoverMoveEventDetail" anchorPrefix="super-hover-move-event-detail">
+  <ApiProp name="x" type="number">
+    Last pointer x position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="y" type="number">
+    Last pointer y position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="current" type="Element">
+    Currently active element.
   </ApiProp>
 </ApiPropList>

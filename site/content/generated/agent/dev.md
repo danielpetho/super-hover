@@ -2,70 +2,76 @@
 
 # Dev Sandboxes
 
-## Framework helpers (`super-hover/react|vue|svelte`)
+## TypeScript
 
-These mirror the published helpers: event listeners on the list root plus `createSuperHover` under the hood.
-
-### React — `useSuperHover`
-
-**Sandbox (`react-use-super-hover`):** bundled sources are published at `/l/react-use-super-hover.json` on the docs site.
-
-
-
-### Vue — `useSuperHover`
-
-**Sandbox (`vue-use-super-hover`):** bundled sources are published at `/l/vue-use-super-hover.json` on the docs site.
-
-
-
-### Svelte — `superHover` action
-
-**Sandbox (`svelte-use-super-hover`):** bundled sources are published at `/l/svelte-use-super-hover.json` on the docs site.
-
-
-
-## TypeScript — Attribute-driven
+{/* ### Attribute-driven
 
 **Sandbox (`vanilla-attributes`):** bundled sources are published at `/l/vanilla-attributes.json` on the docs site.
 
+ */}
 
+### Event-driven
 
-## React — Attribute-driven
+**Sandbox (`vanilla-events`):** bundled sources are published at `/l/vanilla-events.json` on the docs site.
+
+ 
+
+{/* ## React 
+
+### `useSuperHover`
+
+**Sandbox (`react-use-super-hover`):** bundled sources are published at `/l/react-use-super-hover.json` on the docs site.
+
+ */}
+
+{/* ### Attribute-driven
 
 **Sandbox (`react-attributes`):** bundled sources are published at `/l/react-attributes.json` on the docs site.
 
 
 
-## Vue — Attribute-driven
-
-**Sandbox (`vue-attributes`):** bundled sources are published at `/l/vue-attributes.json` on the docs site.
-
-
-
-## Svelte — Attribute-driven
-
-**Sandbox (`svelte-attributes`):** bundled sources are published at `/l/svelte-attributes.json` on the docs site.
-
-
-
-## TypeScript — Event-driven
-
-**Sandbox (`vanilla-events`):** bundled sources are published at `/l/vanilla-events.json` on the docs site.
-
-
-
-## React — Event-driven
+### Event-driven
 
 **Sandbox (`react-events`):** bundled sources are published at `/l/react-events.json` on the docs site.
 
 
 
-## Vue — Event-driven
+## Svelte
+
+### Attribute-driven
+
+**Sandbox (`svelte-attributes`):** bundled sources are published at `/l/svelte-attributes.json` on the docs site.
+
+
+
+### Event-driven
+
+**Sandbox (`svelte-events`):** bundled sources are published at `/l/svelte-events.json` on the docs site.
+
+
+
+### `superHover` action
+
+**Sandbox (`svelte-super-hover`):** bundled sources are published at `/l/svelte-super-hover.json` on the docs site.
+
+
+
+## Vue
+
+### Attribute-driven
+
+**Sandbox (`vue-attributes`):** bundled sources are published at `/l/vue-attributes.json` on the docs site.
+
+
+
+### Event-driven
 
 **Sandbox (`vue-events`):** bundled sources are published at `/l/vue-events.json` on the docs site.
 
 
 
-## Svelte — Event-driven
+### `useSuperHover`
 
-**Sandbox (`svelte-events`):** bundled sources are published at `/l/svelte-events.json` on the docs site.
+**Sandbox (`vue-use-super-hover`):** bundled sources are published at `/l/vue-use-super-hover.json` on the docs site.
+
+ */}

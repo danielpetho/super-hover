@@ -15,66 +15,19 @@ Well, you probably don't need this. While scrolling, browsers mostly skip updati
 
 ## Usage
 
-Just simply import `useSuperHover`, bind the returned ref to the wrapper around your list (such as the `ul` in the snippet), and mark each row with `data-super-hover`. Whatever is under the pointer picks up `data-super-hover-active`, so you can style “the hovered row” with `data-[super-hover-active]:…`.
+Wrap the area you care about, then mark the things that should act hoverable.
 
-Out of the box it looks for `[data-super-hover]`, but you can customize the [selector](#api-create-super-hover-selector).
+The active element gets `data-super-hover-active`, which is usually enough if you only want styling.
 
 <CodeSnippet
   title="Basic usage"
   language="vue"
   code={`
 <script setup lang="ts">
-  import { useSuperHover } from "super-hover/vue";
-
-  const items = ["Alpha", "Beta", "Gamma"];
-  const rootRef = useSuperHover();
-</script>
-
-<template>
-  <ul ref="rootRef" class="space-y-1">
-    <li
-      v-for="item in items"
-      :key="item"
-      data-super-hover
-      class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-editor-bg"
-    >
-      {{ item }}
-    </li>
-  </ul>
-</template>
-`}
-/>
-
-## Events
-
-<Preview
-  name="super-hover-events"
-  showCode={false}
-  className="p-0! rounded-none! border-none!"
-  description="`superhoverenter` fires when the pointer activates a hit-tested item, which swaps the cover art."
-/>
-
-Pass `onEnter` and `onLeave` into `useSuperHover` when you want logic tied to the active row: `onEnter` runs when hit-testing moves onto a new matched row (pointer moves or the list scrolls under a stationary cursor); `onLeave` runs on the row that stopped being active. Both handlers receive the event object, where `event.target` refers to that row element.
-
-The preview above uses `onEnter` to swap the cover image so it matches the active row even while scrolling without moving the mouse.
-
-<CodeSnippet
-  title="Event handlers"
-  language="vue"
-  code={`
-<script setup lang="ts">
     import { useSuperHover } from "super-hover/vue";
 
-    const items = ["Alpha", "Beta", "Gamma"];
-
-    const rootRef = useSuperHover({
-      onEnter: (e: Event) => {
-        console.log("enter:", e.target);
-      },
-      onLeave: (e: Event) => {
-        console.log("leave:", e.target);
-      },
-    });
+    const rootRef = useSuperHover();
+    const items = ["Inbox", "Projects", "Settings"];
 </script>
 
 <template>
@@ -83,7 +36,7 @@ The preview above uses `onEnter` to swap the cover image so it matches the activ
         v-for="item in items"
         :key="item"
         data-super-hover
-        class="rounded px-3 py-2 transition-colors data-[super-hover-active]:bg-editor-bg"
+        class="rounded-md px-3 py-2 data-[super-hover-active]:bg-neutral-100"
       >
         {{ item }}
       </li>
@@ -92,66 +45,238 @@ The preview above uses `onEnter` to swap the cover image so it matches the activ
 `}
 />
 
-## Props
+## Events
+
+If styling is not enough, you can run code when the active element changes. SuperHover dispatches three custom events:
+
+- `superhoverenter` when an element becomes active
+- `superhoverleave` when an element stops being active
+- `superhovermove` while an element is active
+
+In Vue, `useSuperHover` exposes these as `onEnter`, `onLeave`, and `onMove`.
+
+<Preview
+  name="super-hover-events"
+  showCode={false}
+  className="p-0! rounded-none! border-none!"
+  description="`superhoverenter` fires when the pointer activates a hit-tested item, which swaps the cover art."
+/>
+
+<CodeSnippet
+  title="Event handlers"
+  language="vue"
+  code={`
+<script setup lang="ts">
+    import { useSuperHover } from "super-hover/vue";
+
+    const rootRef = useSuperHover({
+      onEnter(event) {
+        console.log("entered", event.detail.current);
+      },
+      onLeave(event) {
+        console.log("left", event.detail.previous);
+      },
+    });
+
+    const items = ["Inbox", "Projects", "Settings"];
+</script>
+
+<template>
+    <ul ref="rootRef" class="space-y-1">
+      <li
+        v-for="item in items"
+        :key="item"
+        data-super-hover
+        class="rounded-md px-3 py-2 data-[super-hover-active]:bg-neutral-100"
+      >
+        {{ item }}
+      </li>
+    </ul>
+</template>
+`}
+/>
+
+`onMove` is off by default. If you need pointer coordinates for things like tooltips or previews, pass `onMove` and read `event.detail.x` / `event.detail.y`.
+
+## Event detail
+
+The events are `CustomEvent`s, so the useful data lives on `event.detail`.
+
+For `superhoverenter` and `superhoverleave`, `detail` has:
+
+- `x` and `y`: the last pointer position, in viewport coordinates
+- `previous`: the element that was active before this change, or `null`
+- `current`: the element that is active after this change, or `null`
+
+For `superhovermove`, `detail` has:
+
+- `x` and `y`: the last pointer position, in viewport coordinates
+- `current`: the currently active element
+
+`previous` and `current` are DOM elements. If you need a value from your item, read it from the element with `dataset`, `id`, or whatever you rendered there.
+
+<CodeSnippet
+  title="Reading event detail"
+  language="vue"
+  code={`
+<script setup lang="ts">
+    import { useSuperHover } from "super-hover/vue";
+
+    const rootRef = useSuperHover({
+      onEnter(event) {
+        const { x, y, previous, current } = event.detail;
+
+        console.log(x, y);
+        console.log(previous?.id);
+        console.log(current?.id);
+      },
+    });
+</script>
+
+<template>
+    <ul ref="rootRef">
+      <li id="inbox" data-super-hover>Inbox</li>
+      <li id="projects" data-super-hover>Projects</li>
+      <li id="settings" data-super-hover>Settings</li>
+    </ul>
+</template>
+`}
+/>
+
+## How it works
+
+SuperHover stores the last pointer position.
+
+When the pointer moves, the page scrolls, or the viewport changes, it schedules a hit-test with `requestAnimationFrame`. Multiple updates in the same frame are coalesced, so they only produce one hit-test.
+
+On that frame, SuperHover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
+
+If the active element changes, SuperHover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
+
+## API
 
 <DocCodeHeading id="superhoveroptions">SuperHoverOptions</DocCodeHeading>
 
-`createSuperHover` registers listeners for pointer moves, scroll, and resize, then hit-tests once per animation frame (updates are coalesced). Pass these fields as `options`. The returned function removes listeners and clears any active target.
+`createSuperHover` registers listeners for pointer moves, scroll, and resize, then hit-tests on scheduled animation frames. Pass these fields as `options`. It returns a controller with `pause()`, `resume()`, `refresh()`, and `destroy()`.
 
-Every frame, the library calls `elementFromPoint`, walks ancestors with `closest(selector)` to pick the nearest matched element, and—when `root` is set—verifies that it lies inside `root`. `selector` decides which nodes may activate; `root` only limits where hits count—it does not automatically target every descendant.
+On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestors with `closest(selector)` to pick the nearest matched element, and—when `root` is set—verifies that it lies inside `root`. `selector` decides which nodes may activate; `root` only limits where hits count—it does not automatically target every descendant.
 
 <ApiPropList aria-label="SuperHoverOptions" anchorPrefix="create-super-hover">
+  <ApiProp name="enabled" type="boolean" defaultValue="true">
+    Starts the controller running. When `false`, it starts paused and waits for `resume()`.
+  </ApiProp>
+
+  <ApiProp name="pointerTypes" type={`("mouse" | "pen" | "touch")[]`} defaultValue={`["mouse", "pen"]`}>
+    Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state.
+  </ApiProp>
+
   <ApiProp name="root" type="Document, Element, or omit" defaultValue={<em className="text-muted-foreground">whole document</em>}>
-    Optional boundary: the matched element must lie inside this subtree; omit for the whole document. Does not make every descendant node a target; that is controlled by `selector` instead.
+    Optional boundary: the matched element must lie inside this subtree; omit for the whole document. You can pass an iframe `Document` or an element inside a same-origin iframe. Does not make every descendant node a target; that is controlled by `selector` instead.
   </ApiProp>
 
   <ApiProp name="selector" type="string" defaultValue="[data-super-hover]">
-    CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate (default `[data-super-hover]`). Independent of `root`, which only scopes where hits count.
+    CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate. Independent of `root`, which only scopes where hits count.
   </ApiProp>
 
   <ApiProp name="activeAttribute" type="string" defaultValue="data-super-hover-active">
-    Attribute toggled on the active matched element (empty string while active, removed otherwise). Use it for styling, e.g. `data-[super-hover-active]:…`.
+    Attribute toggled on the active matched element while active, then removed when inactive.
   </ApiProp>
 
   <ApiProp name="enterEventType" type="string" defaultValue="superhoverenter">
-    `CustomEvent` type dispatched on the matched element when it becomes active (`bubbles: true`).
+    `CustomEvent` type dispatched on the matched element when it becomes active. `event.detail` includes `x`, `y`, `previous`, and `current`.
   </ApiProp>
 
   <ApiProp name="leaveEventType" type="string" defaultValue="superhoverleave">
-    `CustomEvent` type dispatched on the matched element when it stops being active.
+    `CustomEvent` type dispatched on the matched element when it stops being active. `event.detail` includes `x`, `y`, `previous`, and `current`.
+  </ApiProp>
+
+  <ApiProp name="moveEventType" type="string or false" defaultValue="superhovermove">
+    `CustomEvent` type dispatched on each scheduled hit-test while an element is active. Set to `false` to disable move events.
   </ApiProp>
 </ApiPropList>
 
 <DocCodeHeading id="usesuperhoveroptions">UseSuperHoverOptions</DocCodeHeading>
 
-`UseSuperHoverOptions` for `useSuperHover()` from `super-hover/vue`. Bind the returned ref to your root element with `ref="rootRef"` (or your chosen name).
+`UseSuperHoverOptions` for `useSuperHover(options)` from `super-hover/vue`. Bind the returned ref to your root element with `ref="rootRef"` or your chosen name.
 
 <ApiPropList aria-label="UseSuperHoverOptions" anchorPrefix="vue-use-super-hover">
   <ApiProp name="enabled" type="boolean" defaultValue="true">
-    When `false`, listeners are removed until enabled again.
+    When `false`, the Vue helper does not mount SuperHover on the root.
+  </ApiProp>
+
+  <ApiProp name="pointerTypes" type={`("mouse" | "pen" | "touch")[]`} defaultValue={`["mouse", "pen"]`}>
+    Pointer types allowed to update the tracked pointer position. Touch is off by default.
   </ApiProp>
 
   <ApiProp name="selector" type="string" defaultValue="[data-super-hover]">
-    CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate (default `[data-super-hover]`). Independent of `root`, which only scopes where hits count.
+    CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate. Independent of `root`, which only scopes where hits count.
   </ApiProp>
 
   <ApiProp name="activeAttribute" type="string" defaultValue="data-super-hover-active">
-    Attribute toggled on the active matched element (empty string while active, removed otherwise). Use it for styling, e.g. `data-[super-hover-active]:…`.
+    Attribute toggled on the active matched element while active, then removed when inactive.
   </ApiProp>
 
   <ApiProp name="enterEventType" type="string" defaultValue="superhoverenter">
-    `CustomEvent` type dispatched on the matched element when it becomes active (`bubbles: true`).
+    `CustomEvent` type dispatched on the matched element when it becomes active.
   </ApiProp>
 
   <ApiProp name="leaveEventType" type="string" defaultValue="superhoverleave">
     `CustomEvent` type dispatched on the matched element when it stops being active.
   </ApiProp>
 
-  <ApiProp name="onEnter" type="(event: Event) => void" defaultValue="no-op">
-    Runs when an enter event bubbles within `root`.
+  <ApiProp name="moveEventType" type="string or false" defaultValue={<em className="text-muted-foreground">auto</em>}>
+    Custom move event name, or `false` to disable move events. If neither `onMove` nor `moveEventType` is passed, the Vue helper disables move events for you.
   </ApiProp>
 
-  <ApiProp name="onLeave" type="(event: Event) => void" defaultValue="no-op">
-    Runs when a leave event bubbles within `root`.
+  <ApiProp name="onEnter" type="(event: SuperHoverEnterEvent) => void" defaultValue="no-op">
+    Runs when an enter event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`.
+  </ApiProp>
+
+  <ApiProp name="onLeave" type="(event: SuperHoverLeaveEvent) => void" defaultValue="no-op">
+    Runs when a leave event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`.
+  </ApiProp>
+
+  <ApiProp name="onMove" type="(event: SuperHoverMoveEvent) => void" defaultValue="off">
+    Runs on move events while an element is active. The helper only listens for move events when `onMove` is passed.
+  </ApiProp>
+</ApiPropList>
+
+<DocCodeHeading id="superhovereventdetail">SuperHoverEventDetail</DocCodeHeading>
+
+Used by `superhoverenter`, `superhoverleave`, `onEnter`, and `onLeave`.
+
+<ApiPropList aria-label="SuperHoverEventDetail" anchorPrefix="super-hover-event-detail">
+  <ApiProp name="x" type="number">
+    Last pointer x position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="y" type="number">
+    Last pointer y position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="previous" type="Element | null">
+    Element that was active before this change, or `null`.
+  </ApiProp>
+
+  <ApiProp name="current" type="Element | null">
+    Element that is active after this change, or `null`.
+  </ApiProp>
+</ApiPropList>
+
+<DocCodeHeading id="superhovermoveeventdetail">SuperHoverMoveEventDetail</DocCodeHeading>
+
+Used by `superhovermove` and `onMove`.
+
+<ApiPropList aria-label="SuperHoverMoveEventDetail" anchorPrefix="super-hover-move-event-detail">
+  <ApiProp name="x" type="number">
+    Last pointer x position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="y" type="number">
+    Last pointer y position in viewport coordinates.
+  </ApiProp>
+
+  <ApiProp name="current" type="Element">
+    Currently active element.
   </ApiProp>
 </ApiPropList>
