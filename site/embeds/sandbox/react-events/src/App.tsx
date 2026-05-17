@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   createSuperHover,
   type SuperHoverController,
+  type SuperHoverMoveEventDetail,
 } from "./super-hover";
 
 const ITEM_COUNT = 180;
@@ -12,6 +13,8 @@ const superHoverRowProps = { "data-super-hover": "" } as const;
 export default function App() {
   const [eventRoot, setEventRoot] = useState<HTMLDivElement | null>(null);
   const [activePill, setActivePill] = useState("None");
+  const [moveCount, setMoveCount] = useState(0);
+  const [movePoint, setMovePoint] = useState("—");
   const [paused, setPaused] = useState(false);
 
   const ctrlRef = useRef<SuperHoverController | null>(null);
@@ -38,13 +41,20 @@ export default function App() {
       if (!(t instanceof HTMLElement)) return;
       if (t.dataset.rowId) setActivePill("None");
     };
+    const onMove = (e: Event) => {
+      const detail = (e as CustomEvent<SuperHoverMoveEventDetail>).detail;
+      setMoveCount((count) => count + 1);
+      setMovePoint(`${Math.round(detail.x)}, ${Math.round(detail.y)}`);
+    };
 
     eventRoot.addEventListener("superhoverenter", onEnter);
     eventRoot.addEventListener("superhoverleave", onLeave);
+    eventRoot.addEventListener("superhovermove", onMove);
 
     return () => {
       eventRoot.removeEventListener("superhoverenter", onEnter);
       eventRoot.removeEventListener("superhoverleave", onLeave);
+      eventRoot.removeEventListener("superhovermove", onMove);
       ctrl.destroy();
       ctrlRef.current = null;
     };
@@ -63,6 +73,10 @@ export default function App() {
         <div className="event-toolbar" aria-live="polite">
           <span className="event-pill-label">Active:</span>
           <span className="event-pill">{activePill}</span>
+          <span className="event-pill-label">Moves:</span>
+          <span className="event-pill event-pill--metric">{moveCount}</span>
+          <span className="event-pill-label">Last:</span>
+          <span className="event-pill event-pill--metric">{movePoint}</span>
           <label className="event-toolbar-switch">
             <input
               type="checkbox"

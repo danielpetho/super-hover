@@ -1,6 +1,7 @@
 import {
   createSuperHover,
   type SuperHoverController,
+  type SuperHoverMoveEventDetail,
 } from "./super-hover";
 import "./index.css";
 
@@ -30,15 +31,21 @@ function fillEventScroller(container: HTMLElement): void {
 
 const eventList = document.querySelector("#event-list");
 const eventActivePill = document.querySelector("#event-active-pill");
+const eventMoveCount = document.querySelector("#event-move-count");
+const eventMovePoint = document.querySelector("#event-move-point");
 
 if (
   !(eventList instanceof HTMLElement) ||
-  !(eventActivePill instanceof HTMLElement)
+  !(eventActivePill instanceof HTMLElement) ||
+  !(eventMoveCount instanceof HTMLElement) ||
+  !(eventMovePoint instanceof HTMLElement)
 ) {
   throw new Error("Demo containers missing");
 }
 
 fillEventScroller(eventList);
+
+let moveCount = 0;
 
 eventList.addEventListener("superhoverenter", (event) => {
   const target = event.target;
@@ -53,6 +60,13 @@ eventList.addEventListener("superhoverleave", (event) => {
   if (!(target instanceof HTMLElement)) return;
   if (!target.dataset.rowId) return;
   eventActivePill.textContent = "None";
+});
+
+eventList.addEventListener("superhovermove", (event) => {
+  const e = event as CustomEvent<SuperHoverMoveEventDetail>;
+  moveCount += 1;
+  eventMoveCount.textContent = String(moveCount);
+  eventMovePoint.textContent = `${Math.round(e.detail.x)}, ${Math.round(e.detail.y)}`;
 });
 
 const pauseInput = document.querySelector("#event-pause");

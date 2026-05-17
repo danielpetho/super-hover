@@ -5,6 +5,10 @@
         <div class="event-toolbar" aria-live="polite">
           <span class="event-pill-label">Active:</span>
           <span class="event-pill">{{ activePill }}</span>
+          <span class="event-pill-label">Moves:</span>
+          <span class="event-pill event-pill--metric">{{ moveCount }}</span>
+          <span class="event-pill-label">Last:</span>
+          <span class="event-pill event-pill--metric">{{ movePoint }}</span>
           <label class="event-toolbar-switch">
             <input v-model="paused" type="checkbox" @change="syncPause" />
             Pause hit-test
@@ -27,16 +31,23 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
-import { createSuperHover, type SuperHoverController } from "./super-hover";
+import {
+  createSuperHover,
+  type SuperHoverController,
+  type SuperHoverMoveEventDetail,
+} from "./super-hover";
 
 const itemCount = 180;
 const elEvent = ref<HTMLElement | null>(null);
 const activePill = ref("None");
+const moveCount = ref(0);
+const movePoint = ref("—");
 const paused = ref(false);
 
 let superHover: SuperHoverController | undefined;
 let onEnter: ((e: Event) => void) | undefined;
 let onLeave: ((e: Event) => void) | undefined;
+let onMove: ((e: Event) => void) | undefined;
 let eventRoot: HTMLElement | null = null;
 
 onMounted(async () => {
@@ -55,8 +66,14 @@ onMounted(async () => {
     if (!(t instanceof HTMLElement)) return;
     if (t.dataset.rowId) activePill.value = "None";
   };
+  onMove = (e) => {
+    const detail = (e as CustomEvent<SuperHoverMoveEventDetail>).detail;
+    moveCount.value += 1;
+    movePoint.value = `${Math.round(detail.x)}, ${Math.round(detail.y)}`;
+  };
   root.addEventListener("superhoverenter", onEnter);
   root.addEventListener("superhoverleave", onLeave);
+  root.addEventListener("superhovermove", onMove);
   superHover = createSuperHover({ root });
   if (paused.value) superHover.pause();
 });
@@ -69,9 +86,10 @@ function syncPause(): void {
 
 onUnmounted(() => {
   superHover?.destroy();
-  if (eventRoot && onEnter && onLeave) {
+  if (eventRoot && onEnter && onLeave && onMove) {
     eventRoot.removeEventListener("superhoverenter", onEnter);
     eventRoot.removeEventListener("superhoverleave", onLeave);
+    eventRoot.removeEventListener("superhovermove", onMove);
   }
 });
 </script>

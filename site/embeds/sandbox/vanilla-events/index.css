@@ -112,6 +112,7 @@ code {
 .event-toolbar {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.8rem 1rem 0.75rem;
   border-bottom: 1px solid var(--border);
@@ -147,6 +148,12 @@ code {
   font-size: 0.83rem;
   color: var(--fg);
   background: #f4f4f5;
+}
+
+.event-pill--metric {
+  min-width: 3.2rem;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
 }
 
 .scroller:focus-visible {
