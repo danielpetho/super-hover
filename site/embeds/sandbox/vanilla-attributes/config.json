@@ -1,5 +1,5 @@
 {
-  "template": "vanilla-ts",
+  "template": "vite",
   "customSetup": {
     "entry": "/index.ts"
   },

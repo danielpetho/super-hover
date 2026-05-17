@@ -1,5 +1,5 @@
 {
-  "template": "vue-ts",
+  "template": "vite-vue-ts",
   "customSetup": {
     "entry": "/src/main.ts"
   },

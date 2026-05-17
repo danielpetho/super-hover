@@ -8,6 +8,7 @@ import {
   SandpackPreview,
   SandpackConsole,
   SandpackFiles,
+  useSandpackNavigation,
 } from "@codesandbox/sandpack-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -69,15 +70,12 @@ interface DemoData {
 // Component for fullscreen layout with resizable panels
 function FullscreenSandboxLayout({
   setIsFullscreen,
-  previewKey,
   onResetCode,
-  onRefreshPreview,
 }: {
   setIsFullscreen: (value: boolean) => void;
-  previewKey: number;
   onResetCode: () => void;
-  onRefreshPreview: () => void;
 }) {
+  const { refresh } = useSandpackNavigation();
   const isDark = useIsDarkMode();
   return (
     <ResizablePanelGroup orientation="horizontal" className="h-screen">
@@ -89,9 +87,8 @@ function FullscreenSandboxLayout({
         <PreviewConsolePanel
           isFullscreen={true}
           setIsFullscreen={setIsFullscreen}
-          previewKey={previewKey}
           onResetCode={onResetCode}
-          onRefreshPreview={onRefreshPreview}
+          onRefreshPreview={refresh}
         />
       </ResizablePanel>
     </ResizablePanelGroup>
@@ -101,20 +98,26 @@ function FullscreenSandboxLayout({
 function PreviewConsolePanel({
   isFullscreen,
   setIsFullscreen,
-  previewKey,
   onResetCode,
   onRefreshPreview,
 }: { 
   isFullscreen: boolean; 
   setIsFullscreen: (value: boolean) => void; 
-  previewKey: number;
   onResetCode: () => void;
-  onRefreshPreview: () => void;
+  onRefreshPreview?: () => void;
 }) {
+  const navigation = useSandpackNavigation();
+  const refreshPreview = onRefreshPreview ?? navigation.refresh;
+  const [activePanel, setActivePanel] = useState<"preview" | "console">("preview");
+  const [consoleLogCount, setConsoleLogCount] = useState(0);
+
   return (
     <div className="flex-1 flex flex-col h-full">
       <Tabs
-        defaultValue="preview"
+        value={activePanel}
+        onValueChange={(value) => {
+          setActivePanel(value as "preview" | "console");
+        }}
         className="flex-1 flex w-full flex-col gap-0 bg-editor-bg!"
       >
         <div className="flex h-11 flex-row justify-between border-b-[0.5px] border-neutral-200 bg-editor-bg px-3 dark:border-editor-border">
@@ -137,7 +140,7 @@ function PreviewConsolePanel({
             isFullscreen={isFullscreen}
             setIsFullscreen={setIsFullscreen}
             onResetCode={onResetCode}
-            onRefreshPreview={onRefreshPreview}
+            onRefreshPreview={refreshPreview}
           />
         </div>
 
@@ -147,7 +150,6 @@ function PreviewConsolePanel({
           className="flex-1 m-0 min-h-0 h-full"
         >
           <SandpackPreview
-            key={previewKey}
             className="h-full"
             showOpenInCodeSandbox={false}
             showRefreshButton={false}
@@ -155,14 +157,19 @@ function PreviewConsolePanel({
         </TabsContent>
         <TabsContent
           value="console"
-          keepMounted
-          className="flex-1 m-0 min-h-0 h-full"
+          className="relative flex-1 m-0 min-h-0 h-full"
         >
           <SandpackConsole
             className="h-full"
+            onLogsChange={(logs) => setConsoleLogCount(logs.length)}
             showHeader
             resetOnPreviewRestart={false}
           />
+          {activePanel === "console" && consoleLogCount === 0 ? (
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-6 text-center text-sm text-muted-foreground">
+              No console output yet. Logs and errors from the preview will appear here.
+            </div>
+          ) : null}
         </TabsContent>
       </Tabs>
     </div>
@@ -178,7 +185,6 @@ export function Sandbox({
   const isDark = useIsDarkMode();
   const [files, setFiles] = useState<SandpackFiles>({});
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [previewKey, setPreviewKey] = useState(0);
   const [providerKey, setProviderKey] = useState(0);
   const [config, setConfig] = useState<ExerciseConfig>({
     files: {},
@@ -195,10 +201,6 @@ export function Sandbox({
   const [error, setError] = useState<string | null>(null);
   const handleResetCode = () => {
     setProviderKey((value) => value + 1);
-    setPreviewKey((value) => value + 1);
-  };
-  const handleRefreshPreview = () => {
-    setPreviewKey((value) => value + 1);
   };
 
   useEffect(() => {
@@ -313,19 +315,7 @@ export function Sandbox({
         //@ts-expect-error SandpackProvider's theme prop type definition doesn't fully match our custom theme object structure
         theme={isDark ? spThemeDark : spThemeLight}
         template={config.template || "react-ts"}
-        customSetup={{
-          dependencies: {
-            react: "^18.0.0",
-            "react-dom": "^18.0.0",
-            ...(config.customSetup?.dependencies || {}),
-          },
-          // devDependencies: {
-          //   "@types/react": "^18.0.0",
-          //   "@types/react-dom": "^18.0.0",
-          //   "typescript": "^5",
-          // },
-          entry: config.customSetup?.entry || "/index.tsx",
-        }}
+        customSetup={config.customSetup}
         options={{
           initMode: "immediate",
           classes: {
@@ -363,9 +353,7 @@ export function Sandbox({
           {isFullscreen ? (
             <FullscreenSandboxLayout
               setIsFullscreen={setIsFullscreen}
-              previewKey={previewKey}
               onResetCode={handleResetCode}
-              onRefreshPreview={handleRefreshPreview}
             />
           ) : (
             <>
@@ -375,9 +363,7 @@ export function Sandbox({
               <PreviewConsolePanel
                 isFullscreen={isFullscreen}
                 setIsFullscreen={setIsFullscreen}
-                previewKey={previewKey}
                 onResetCode={handleResetCode}
-                onRefreshPreview={handleRefreshPreview}
               />
             </>
           )}

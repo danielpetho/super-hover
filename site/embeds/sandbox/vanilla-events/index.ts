@@ -7,6 +7,8 @@ import "./index.css";
 
 const ITEM_COUNT = 180;
 console.log("vanilla-events: super-hover ready");
+console.warn("vanilla-events: warning sample for Sandpack console");
+console.error("vanilla-events: error sample for Sandpack console");
 
 function buildLabel(index: number): string {
   return `Item ${String(index + 1)}`;
