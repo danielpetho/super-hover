@@ -60,8 +60,8 @@ export function SandboxConsole({
   }
 
   return (
-    <div className="relative flex h-full min-h-0 flex-col overflow-hidden bg-editor-bg text-[11px] leading-5">
-      <div className="min-h-0 flex-1 overflow-x-auto overflow-y-auto overscroll-contain pb-12 font-mono">
+    <div className="absolute inset-0 overflow-hidden bg-white text-[11px] leading-5 dark:bg-editor-bg">
+      <div className="absolute inset-0 overflow-x-auto overflow-y-scroll overscroll-contain pb-12">
         {clientLogs.map((log) => {
           const method = log.method ?? "log";
           const message =
@@ -80,11 +80,11 @@ export function SandboxConsole({
         })}
       </div>
       <button
-        className="absolute right-3 bottom-3 cursor-pointer rounded-md bg-background/90 px-2.5 py-1 text-[11px] text-muted-foreground ring-[0.5px] ring-black/10 backdrop-blur transition-colors transition-[transform,background-color] hover:bg-neutral-100 hover:text-foreground active:scale-[0.96] dark:bg-neutral-900/90 dark:ring-white/10 dark:hover:bg-neutral-800"
+        className="absolute right-3 bottom-3 cursor-pointer rounded-md bg-editor-bg px-2.5 py-1 text-xs border-[0.5px] border-border transition-colors transition-[transform,scale,background-color] hover:bg-neutral-100 text-muted-foreground hover:text-foreground active:scale-[0.96] dark:bg-neutral-900/90 dark:ring-white/10 dark:hover:bg-neutral-800"
         onClick={clear}
         type="button"
       >
-        Clear
+        Clear Console
       </button>
     </div>
   );
