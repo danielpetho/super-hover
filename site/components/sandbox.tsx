@@ -8,7 +8,6 @@ import {
   SandpackPreview,
   SandpackConsole,
   SandpackFiles,
-  useSandpack,
 } from "@codesandbox/sandpack-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -82,11 +81,11 @@ function FullscreenSandboxLayout({
   const isDark = useIsDarkMode();
   return (
     <ResizablePanelGroup orientation="horizontal" className="h-screen">
-      <ResizablePanel defaultSize={50} minSize={20}>
+      <ResizablePanel defaultSize={50} minSize={20} className="min-w-0">
         <SandpackCodeEditor showTabs showLineNumbers className="h-full" />
       </ResizablePanel>
       <ResizableHandle className={isDark ? "bg-[#252525]" : "bg-neutral-200"} />
-      <ResizablePanel defaultSize={50} minSize={20} className="h-full">
+      <ResizablePanel defaultSize={50} minSize={20} className="h-full min-w-0">
         <PreviewConsolePanel
           isFullscreen={true}
           setIsFullscreen={setIsFullscreen}
@@ -336,16 +335,16 @@ export function Sandbox({
                 ? "!w-screen !h-screen !top-0 !left-0 !rounded-none !border-none !overflow-auto overscroll-contain"
                 : `top-1/2 left-1/2 -translate-x-1/2 flex w-[850px] h-[530px] !rounded-2xl !border-[0.5px] !overflow-hidden ${isDark ? "!border-[#252525]" : "!border-[#e4e4e7]"}`
             }`,
-            "sp-tabs": "h-11 flex px-3 w-full border-b-[0.5px]!",
-            "sp-tabs-scrollable-container": "!p-0 gap-x-3",
+            "sp-tabs": "h-11 flex! min-w-0 w-full! border-b-[0.5px]! overflow-hidden!",
+            "sp-tabs-scrollable-container": "!p-0 gap-x-2 flex! min-w-0 max-w-full !px-2 overflow-x-auto! overflow-y-hidden! overscroll-x-contain whitespace-nowrap",
             "sp-tab-container":
               isDark
-                ? "flex justify-center !px-0 overflow-auto outline-none! border-none! ring-0! !text-muted-foreground aria-selected:!text-white!"
-                : "flex justify-center !px-0 overflow-auto outline-none! border-none! ring-0! hover:!text-neutral-950! active:scale-97 duration-200 ease-out aria-selected:!text-neutral-950",
+                ? "flex shrink-0! justify-center !px-0 outline-none! border-none! ring-0! !text-muted-foreground aria-selected:!text-white!"
+                : "flex shrink-0! justify-center !px-0 outline-none! border-none! ring-0! hover:!text-neutral-950! active:scale-97 duration-200 ease-out aria-selected:!text-neutral-950",
             "sp-tab-button":
               isDark
-                ? "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-medium !shadow-none hover:!bg-transparent hover:!text-white aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-white  focus-visible:!ring-0 focus-visible:!outline-none"
-                : "cursor-pointer !h-auto !border-0 !bg-transparent px-2! py-1! !text-sm !font-medium !text-neutral-500 !shadow-none hover:!bg-transparent hover:!text-neutral-900 aria-selected:!border-0 aria-selected:!bg-transparent focus-visible:!ring-0 focus-visible:!outline-none data-[active=true]:!text-neutral-950",
+                ? "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-medium !shadow-none whitespace-nowrap! hover:!bg-transparent hover:!text-white aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-white  focus-visible:!ring-0 focus-visible:!outline-none"
+                : "cursor-pointer !h-auto !border-0 !bg-transparent px-2! py-1! !text-sm !font-medium !text-neutral-500 !shadow-none whitespace-nowrap! hover:!bg-transparent hover:!text-neutral-900 aria-selected:!border-0 aria-selected:!bg-transparent focus-visible:!ring-0 focus-visible:!outline-none data-[active=true]:!text-neutral-950",
            
             "sp-editor": `!overflow-auto overscroll-contain  ${isFullscreen ? "!h-screen" : "h-[530px]"}`,
             "sp-code-editor": "!h-full !overflow-auto overscroll-contain border-none!",
@@ -370,7 +369,7 @@ export function Sandbox({
             />
           ) : (
             <>
-              <div className="w-1/2">
+              <div className="min-w-0 w-1/2 overflow-hidden">
                 <SandpackCodeEditor showTabs showLineNumbers className="" />
               </div>
               <PreviewConsolePanel
