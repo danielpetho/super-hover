@@ -98,7 +98,7 @@ export function DocToc({
         <Link
           href={backHref}
           draggable={false}
-          className="group mb-4 flex origin-left items-center gap-2 pb-3 text-base leading-snug transition-colors transition-transform duration-200 ease-out active:scale-97 group-hover:-translate-x-0.5"
+          className="group mb-4 flex origin-left items-center gap-2 pb-3 text-base leading-snug transition-colors transition-transform duration-200 ease-out group-hover:-translate-x-0.5"
         >
           <span
             aria-hidden
@@ -140,7 +140,7 @@ export function DocToc({
               <a
                 href={`#${id}`}
                 className={cn(
-                  "block origin-left text-base leading-snug transition-[scale] duration-200 ease-out select-none active:scale-97",
+                  "block origin-left text-base leading-snug transition-[scale] duration-200 ease-out select-none",
                 )}
                 draggable={false}
                 onClick={(e) => {

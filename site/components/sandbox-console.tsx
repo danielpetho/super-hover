@@ -80,7 +80,7 @@ export function SandboxConsole({
         })}
       </div>
       <button
-        className="absolute right-3 bottom-3 cursor-pointer rounded-md bg-editor-bg px-2.5 py-1 text-xs border-[0.5px] border-border transition-colors transition-[transform,scale,background-color] hover:bg-neutral-100 text-muted-foreground hover:text-foreground active:scale-[0.96] dark:bg-neutral-900/90 dark:ring-white/10 dark:hover:bg-neutral-800"
+        className="absolute right-3 bottom-3 cursor-pointer rounded-md bg-editor-bg px-2.5 py-1 text-xs border-[0.5px] border-border transition-colors transition-[scale,background-color] hover:bg-neutral-100 text-muted-foreground hover:text-foreground active:scale-97 dark:bg-neutral-900/90 dark:ring-white/10 dark:hover:bg-neutral-800"
         onClick={clear}
         type="button"
       >

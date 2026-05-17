@@ -125,13 +125,13 @@ function PreviewConsolePanel({
           <TabsList className="flex h-[42px] items-center gap-x-3 rounded-none border-none bg-editor-bg pt-1 font-normal">
             <TabsTrigger
               value="preview"
-              className="h-auto cursor-pointer border-none bg-transparent px-2 py-1 text-sm font-normal text-neutral-500 transition-colors duration-200 ease-out hover:bg-transparent hover:text-neutral-900 data-active:border-none data-active:bg-transparent data-active:text-neutral-950 data-active:shadow-none focus-visible:ring-0 focus-visible:outline-none dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:border-none dark:data-active:bg-transparent dark:data-active:text-white shadow-none! font-medium duration-200 ease-out transition-all active:scale-97"
+              className="h-auto cursor-pointer border-none bg-transparent px-2 py-1 text-sm font-normal text-neutral-500 transition-colors duration-200 ease-out hover:bg-transparent hover:text-neutral-900 data-active:border-none data-active:bg-transparent data-active:text-neutral-950 data-active:shadow-none focus-visible:ring-0 focus-visible:outline-none dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:border-none dark:data-active:bg-transparent dark:data-active:text-white shadow-none! font-medium duration-200 ease-out transition-all"
             >
               Preview
             </TabsTrigger>
             <TabsTrigger
               value="console"
-              className="h-auto cursor-pointer border-none bg-transparent px-2 py-1 text-sm font-normal text-neutral-500 transition-colors duration-200 ease-out hover:bg-transparent hover:text-neutral-900 data-active:border-none data-active:bg-transparent data-active:text-neutral-950 data-active:shadow-none focus-visible:ring-0 focus-visible:outline-none dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:border-none dark:data-active:bg-transparent dark:data-active:text-white shadow-none! font-medium duration-200 ease-out transition-all active:scale-97"
+              className="h-auto cursor-pointer border-none bg-transparent px-2 py-1 text-sm font-normal text-neutral-500 transition-colors duration-200 ease-out hover:bg-transparent hover:text-neutral-900 data-active:border-none data-active:bg-transparent data-active:text-neutral-950 data-active:shadow-none focus-visible:ring-0 focus-visible:outline-none dark:text-muted-foreground dark:hover:bg-transparent dark:hover:text-white dark:data-active:border-none dark:data-active:bg-transparent dark:data-active:text-white shadow-none! font-medium duration-200 ease-out transition-all"
             >
               Console
             </TabsTrigger>
@@ -303,7 +303,7 @@ export function Sandbox({
       className={
         isFullscreen
           ? "fixed w-screen h-screen top-0 left-0 z-50"
-          : "relative min-h-[530px]"
+          : "relative min-h-[530px] max-xl:min-h-[760px]"
       }
     >
       <SandpackProvider
@@ -320,20 +320,20 @@ export function Sandbox({
             "sp-layout": `absolute ${
               isFullscreen
                 ? "!w-screen !h-screen !top-0 !left-0 !rounded-none !border-none !overflow-auto overscroll-contain"
-                : `top-1/2 left-1/2 -translate-x-1/2 flex w-[850px] h-[530px] !rounded-2xl !border-[0.5px] !overflow-hidden ${isDark ? "!border-[#252525]" : "!border-[#e4e4e7]"}`
+                : `top-1/2 left-1/2 -translate-x-1/2 flex w-[850px] h-[530px] max-xl:!h-[760px] max-xl:!w-full max-xl:!flex-col-reverse !gap-0 !rounded-2xl !border-[0.5px] !overflow-hidden ${isDark ? "!border-[#252525]" : "!border-[#e4e4e7]"}`
             }`,
             "sp-tabs": "h-11 flex! min-w-0 w-full! border-b-[0.5px]! overflow-hidden!",
             "sp-tabs-scrollable-container": "!p-0 gap-x-2 flex! min-w-0 max-w-full !px-2 overflow-x-auto! overflow-y-hidden! overscroll-x-contain whitespace-nowrap",
             "sp-tab-container":
               isDark
                 ? "flex shrink-0! justify-center !px-0 outline-none! border-none! ring-0! !text-muted-foreground aria-selected:!text-white!"
-                : "flex shrink-0! justify-center !px-0 outline-none! border-none! ring-0! hover:!text-neutral-950! active:scale-97 duration-200 ease-out aria-selected:!text-neutral-950",
+                : "flex shrink-0! justify-center !px-0 outline-none! border-none! ring-0! hover:!text-neutral-950! duration-200 ease-out aria-selected:!text-neutral-950",
             "sp-tab-button":
               isDark
                 ? "cursor-pointer !h-auto !border-0 !bg-transparent !px-2 !py-1 !text-sm !font-medium !shadow-none whitespace-nowrap! hover:!bg-transparent hover:!text-white aria-selected:!border-0 aria-selected:!bg-transparent aria-selected:!text-white  focus-visible:!ring-0 focus-visible:!outline-none"
                 : "cursor-pointer !h-auto !border-0 !bg-transparent px-2! py-1! !text-sm !font-medium !text-neutral-500 !shadow-none whitespace-nowrap! hover:!bg-transparent hover:!text-neutral-900 aria-selected:!border-0 aria-selected:!bg-transparent focus-visible:!ring-0 focus-visible:!outline-none data-[active=true]:!text-neutral-950",
            
-            "sp-editor": `!overflow-auto overscroll-contain  ${isFullscreen ? "!h-screen" : "h-[530px]"}`,
+            "sp-editor": "!h-full !overflow-auto overscroll-contain",
             "sp-code-editor": "!h-full !overflow-auto overscroll-contain border-none!",
             "sp-preview-container": "!h-full",
             "sp-preview": "!h-full !flex",
@@ -342,6 +342,7 @@ export function Sandbox({
             "sp-error": "!h-full",
             "sp-iframe": "!h-full !w-full",
             "cm-gutterElement": "!text-sm",
+            "cm-activeLine": "!rounded-none",
             "sp-icon-standalone": "!hidden"
           },
         }}
@@ -354,7 +355,13 @@ export function Sandbox({
             />
           ) : (
             <>
-              <div className="min-w-0 w-1/2 overflow-hidden">
+              <div
+                className={`min-w-0 w-1/2 overflow-hidden border-r-[0.5px] max-xl:h-1/2 max-xl:w-full max-xl:border-r-0 ${
+                  isDark
+                    ? "border-[#252525] max-xl:border-t-[0.5px]"
+                    : "border-[#e4e4e7] max-xl:border-t-[0.5px]"
+                }`}
+              >
                 <SandpackCodeEditor showTabs showLineNumbers className="" />
               </div>
               <PreviewConsolePanel
