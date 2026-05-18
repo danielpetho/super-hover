@@ -82,7 +82,7 @@ If styling is not enough, you can run code when the active element changes. Supe
 
 In TypeScript, listen for those events on the root. They bubble from the active element.
 
-**Interactive demo (`super-hover-events`):** `superhoverenter` fires when the pointer activates a hit-tested item, which swaps the cover art.
+**Interactive demo (`scroll-menu`):** A dropdown-style menu where `superhoverenter` keeps the detail panel in sync while the list scrolls under the pointer.
 
 
 
@@ -90,20 +90,20 @@ In TypeScript, listen for those events on the root. They bubble from the active 
 
 ```typescript
 import {
-  createSuperHover,
-  type SuperHoverEventDetail,
+    createSuperHover,
+    type SuperHoverEventDetail,
 } from "super-hover";
 
 const root = document.querySelector<HTMLElement>("#list")!;
 
 root.addEventListener("superhoverenter", (event) => {
-  const e = event as CustomEvent<SuperHoverEventDetail>;
-  console.log("entered", e.detail.current);
+    const e = event as CustomEvent<SuperHoverEventDetail>;
+    console.log("entered", e.detail.current);
 });
 
 root.addEventListener("superhoverleave", (event) => {
-  const e = event as CustomEvent<SuperHoverEventDetail>;
-  console.log("left", e.detail.previous);
+    const e = event as CustomEvent<SuperHoverEventDetail>;
+    console.log("left", e.detail.previous);
 });
 
 const superHover = createSuperHover({ root });

@@ -36,20 +36,20 @@ The active element gets `data-super-hover-active`, which is usually enough if yo
 
 ```svelte
 <script lang="ts">
-  import { superHover } from "super-hover/svelte";
+    import { superHover } from "super-hover/svelte";
 
-  const items = ["Inbox", "Projects", "Settings"];
+    const items = ["Inbox", "Projects", "Settings"];
 </script>
 
 <ul use:superHover class="space-y-1">
-  {#each items as item (item)}
-    <li
-      data-super-hover
-      class="rounded-md px-3 py-2 data-[super-hover-active]:bg-neutral-100"
-    >
-      {item}
-    </li>
-  {/each}
+    {#each items as item (item)}
+      <li
+        data-super-hover
+        class="rounded-md px-3 py-2 data-[super-hover-active]:bg-neutral-100"
+      >
+        {item}
+      </li>
+    {/each}
 </ul>
 ```
 
@@ -64,7 +64,7 @@ If styling is not enough, you can run code when the active element changes. Supe
 
 In Svelte, pass `onEnter`, `onLeave`, and `onMove` to the `superHover` action.
 
-**Interactive demo (`super-hover-events`):** `superhoverenter` fires when the pointer activates a hit-tested item, which swaps the cover art.
+**Interactive demo (`scroll-menu`):** A dropdown-style menu where `superhoverenter` keeps the detail panel in sync while the list scrolls under the pointer.
 
 
 

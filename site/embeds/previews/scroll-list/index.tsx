@@ -36,7 +36,7 @@ export default function ScrollListPreview() {
   }, []);
 
   return (
-    <div className="flex w-full flex-1 select-none flex-col gap-3">
+    <div className="flex w-full flex-1 select-none flex-col gap-3 rounded-xl">
       <div className="flex w-full items-center px-2 pt-2 pb-1">
         <button
           type="button"

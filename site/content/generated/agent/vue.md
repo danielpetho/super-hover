@@ -67,7 +67,7 @@ If styling is not enough, you can run code when the active element changes. Supe
 
 In Vue, `useSuperHover` exposes these as `onEnter`, `onLeave`, and `onMove`.
 
-**Interactive demo (`super-hover-events`):** `superhoverenter` fires when the pointer activates a hit-tested item, which swaps the cover art.
+**Interactive demo (`scroll-menu`):** A dropdown-style menu where `superhoverenter` keeps the detail panel in sync while the list scrolls under the pointer.
 
 
 

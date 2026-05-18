@@ -175,6 +175,7 @@ code {
 
 .row--native:hover {
   background: var(--hover-bg);
+  will-change: background-color;
 }
 
 .row--native:hover .row-label {

@@ -4,17 +4,17 @@
 
 ## TypeScript
 
-{/* ### Attribute-driven
+### Attribute-driven
 
 **Sandbox (`vanilla-attributes`):** bundled sources are published at `/l/vanilla-attributes.json` on the docs site.
 
- */}
 
-### Event-driven
+
+{/* ### Event-driven
 
 **Sandbox (`vanilla-events`):** bundled sources are published at `/l/vanilla-events.json` on the docs site.
 
- 
+  */}
 
 {/* ## React 
 
