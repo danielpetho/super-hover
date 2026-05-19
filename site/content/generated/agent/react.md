@@ -68,7 +68,7 @@ If styling is not enough, you can run code when the active element changes. Supe
 
 In React, `useSuperHoverRef` exposes these as `onEnter`, `onLeave`, and `onMove`.
 
-**Interactive demo (`scroll-menu`):** A dropdown-style menu where `superhoverenter` keeps the detail panel in sync while the list scrolls under the pointer.
+**Interactive demo (`scroll-menu`):** Detail panel data on the right side is synced on superhoverenter. 
 
 
 
@@ -131,36 +131,40 @@ For `superhovermove`, `detail` has:
 import { useSuperHoverRef } from "super-hover/react";
 
 export function Example() {
-  const rootRef = useSuperHoverRef({
-    onEnter(event) {
-      const { x, y, previous, current } = event.detail;
+    const rootRef = useSuperHoverRef({
+      onEnter(event) {
+        const { x, y, previous, current } = event.detail;
 
-      console.log(x, y);
-      console.log(previous?.id);
-      console.log(current?.id);
-    },
-  });
+        console.log(x, y);
+        console.log(previous?.id);
+        console.log(current?.id);
+      },
+    });
 
-  return (
-    <ul ref={rootRef}>
-      <li id="inbox" data-super-hover>Inbox</li>
-      <li id="projects" data-super-hover>Projects</li>
-      <li id="settings" data-super-hover>Settings</li>
-    </ul>
-  );
+    return (
+      <ul ref={rootRef}>
+        <li id="inbox" data-super-hover>Inbox</li>
+        <li id="projects" data-super-hover>Projects</li>
+        <li id="settings" data-super-hover>Settings</li>
+      </ul>
+    );
 }
 ```
 
 
 ## How it works
 
-SuperHover stores the last pointer position.
+The library is very simple and short, so please read the [source code](https://github.com/danielpetho/super-hover/blob/main/packages/super-hover/src/index.ts) for the full details. 
 
-When the pointer moves, the page scrolls, or the viewport changes, it schedules a hit-test with `requestAnimationFrame`. Multiple updates in the same frame are coalesced, so they only produce one hit-test.
+In short, SuperHover keeps track of the last pointer and when the pointer moves, the page scrolls, or the viewport changes, it schedules a hit-test with `requestAnimationFrame`. Multiple updates in the same frame are coalesced, so they only produce one hit-test.
 
 On that frame, SuperHover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
 
 If the active element changes, SuperHover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
+
+### What about `content-visibility: auto`?
+
+While working on this library, I noticed that using the fairly new `content-visibility: auto` can 
 
 ## API
 

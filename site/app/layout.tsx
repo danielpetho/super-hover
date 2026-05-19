@@ -21,7 +21,7 @@ export default function RootLayout({
           />
         ) : null}
       </head>
-      <body className="font-satoshi antialiased">
+      <body className="font-overused-grotesk antialiased">
         <RouteTransition>
           <>
             {children}

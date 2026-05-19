@@ -19,20 +19,16 @@ export function DocSiteFooter({
       )}
       {...props}
     >
+  
+      <div className="flex items-center gap-3">
       <p>
-        Built by{" "}
         <a
-          href={SITE_URL}
+          href={`${SITE_URL}/llms.txt`}
           target="_blank"
           rel="noreferrer"
           className={mdxAnchorClassName()}
         >
-          Daniel Petho
-          <ExternalLinkIcon
-            className="ml-1"
-            size={13}
-            strokeWidth={2.5}
-          />
+          llms.txt
         </a>
       </p>
       <p>
@@ -44,7 +40,24 @@ export function DocSiteFooter({
         >
           GitHub
           <ExternalLinkIcon
-            className="ml-1"
+            className="ml-1 mt-[1px]"
+            size={13}
+            strokeWidth={2.5}
+          />
+        </a>
+      </p>
+      </div>
+      <p>
+        Built by{" "}
+        <a
+          href={SITE_URL}
+          target="_blank"
+          rel="noreferrer"
+          className={mdxAnchorClassName()}
+        >
+          Daniel Petho
+          <ExternalLinkIcon
+            className="ml-1 mt-[1px]"
             size={13}
             strokeWidth={2.5}
           />

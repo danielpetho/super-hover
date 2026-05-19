@@ -4,6 +4,7 @@ import * as React from "react";
 import { useSuperHoverRef } from "super-hover/react";
 
 import { cn } from "@/lib/utils";
+import { HoverModeSwitch } from "@/embeds/previews/hover-mode-switch";
 
 const ARENA_BASE_URL = "https://api.are.na/v2";
 const DEFAULT_ARENA_CHANNEL_SLUG = "grafik-j9_shkfbj2e";
@@ -91,6 +92,7 @@ const menuItems = Array.from({ length: 72 }, (_, index) => {
 type MenuItem = (typeof menuItems)[number];
 
 export default function ScrollMenuPreview() {
+  const [superHoverOn, setSuperHoverOn] = React.useState(true);
   const [activeId, setActiveId] = React.useState<string | null>(null);
   const [arenaImages, setArenaImages] = React.useState<ArenaImage[]>([]);
   const [isLoadingArenaImages, setIsLoadingArenaImages] = React.useState(true);
@@ -146,6 +148,8 @@ export default function ScrollMenuPreview() {
 
   const superHoverRef = useSuperHoverRef({
     onEnter(event) {
+      if (!superHoverOn) return;
+
       const el = event.detail.current;
       if (!(el instanceof HTMLElement)) return;
       const optionId = el.dataset.optionId;
@@ -164,16 +168,21 @@ export default function ScrollMenuPreview() {
   );
 
   return (
-    <div className="flex h-full w-full items-center justify-start">
-      <div className="relative h-[23rem] w-full overflow-hidden">
+    <div className="flex h-full min-h-[23rem] w-full select-none flex-col gap-2">
+      <HoverModeSwitch
+        superHoverOn={superHoverOn}
+        onSuperHoverOnChange={setSuperHoverOn}
+      />
+
+      <div className="relative h-[calc(23rem-3rem)] min-h-0 overflow-hidden">
         <div
-          className="absolute inset-y-0 left-0 z-10 flex w-full overflow-hidden rounded-lg border-[0.5px] border-border bg-background outline-none"
+          className="absolute inset-y-0 left-0 z-10 flex w-full overflow-hidden rounded-xl border-[0.5px] border-border bg-background outline-none"
           role="menu"
         >
           <div className="relative h-full w-[12rem] shrink-0">
             <div
               ref={setListRef}
-              className="h-full overflow-y-auto overscroll-contain p-1.5"
+              className="h-full overflow-y-auto overscroll-contain"
             >
               <div className="flex flex-col gap-0.5">
                 {menuItems.map((item) => (
@@ -181,6 +190,9 @@ export default function ScrollMenuPreview() {
                     active={item.id === activeId}
                     item={item}
                     key={item.id}
+                    onNativeEnter={() => {
+                      if (!superHoverOn) setActiveId(item.id);
+                    }}
                   />
                 ))}
               </div>
@@ -192,22 +204,27 @@ export default function ScrollMenuPreview() {
             aria-live="polite"
           >
             {activeItem ? (
-              <div className="absolute inset-0 flex flex-col overflow-hidden p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <div className="truncate text-base font-medium text-foreground">
+              <div className="absolute inset-0 flex flex-col overflow-hidden">
+                <div className="flex items-start justify-between gap-3 pt-4 px-4 pb-2">
+                  <div className="min-w-0 leading-tight">
+                    <div className="truncate text-xl font-medium text-foreground">
                       {activeItem.label}
                     </div>
-                    <div className="mt-0.5 truncate text-xs text-muted-foreground">
-                      {activeItem.images} · {activeItem.size}
-                    </div>
+                    {/* <div className="inline-flex items-center text-xs text-muted-foreground tabular-nums">
+                      <span className=" w-[2rem]">
+                        File{activeItem.imageCount === 1 ? "" : "s"}:
+                      </span>
+                      <span className="w-[3ch] text-left">
+                        {activeItem.imageCount}
+                      </span>
+                    </div> */}
                   </div>
-                  <div className="max-w-[8.5rem] truncate rounded-full bg-editor-bg px-2 py-0.5 text-[11px] text-muted-foreground">
-                    {activeItem.createdAt}
+                  <div className="rounded-full px-2 py-0.5 text-xs text-muted-foreground tabular-nums">
+                    {activeItem.imageCount} file{activeItem.imageCount === 1 ? "" : "s"}
                   </div>
                 </div>
 
-                <div className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
+                <div className="mt-4 min-h-0 flex-1 overflow-y-auto px-4">
                   <div className="grid grid-cols-4 gap-1">
                     {isLoadingArenaImages ? (
                       <ArenaImageLoader count={activeItem.imageCount} />
@@ -221,7 +238,6 @@ export default function ScrollMenuPreview() {
                     )}
                   </div>
                 </div>
-
               </div>
             ) : null}
           </div>
@@ -279,14 +295,23 @@ function ArenaImageTile({ image }: { image: ArenaImage }) {
   );
 }
 
-function MenuRow({ active, item }: { active: boolean; item: MenuItem }) {
+function MenuRow({
+  active,
+  item,
+  onNativeEnter,
+}: {
+  active: boolean;
+  item: MenuItem;
+  onNativeEnter: () => void;
+}) {
   return (
     <div
       data-super-hover
       data-option-id={item.id}
+      onMouseEnter={onNativeEnter}
       role="menuitem"
       className={cn(
-        "flex cursor-default items-center gap-2 rounded-md px-2 py-1.5 text-sm outline-none transition-colors",
+        "flex cursor-default items-center gap-2 px-2 py-1.5 text-sm outline-none transition-colors",
         active && "bg-editor-bg",
       )}
     >
