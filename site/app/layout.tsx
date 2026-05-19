@@ -27,6 +27,22 @@ export const metadata: Metadata = {
   authors: [author],
   creator: author.name,
   publisher: author.name,
+  icons: {
+    icon: [
+      {
+        url: "/icon.png",
+        type: "image/png",
+        sizes: "1024x1024",
+      },
+    ],
+    apple: [
+      {
+        url: "/apple-icon.png",
+        type: "image/png",
+        sizes: "180x180",
+      },
+    ],
+  },
   keywords: [
     "hover",
     "pointer",

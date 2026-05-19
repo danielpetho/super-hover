@@ -5,7 +5,7 @@ import { getSiteBaseUrl } from "@/lib/site-url";
 export async function GET() {
   const base = getSiteBaseUrl();
 
-  const body = `# super-hover
+  const body = `# Super Hover
 
 > A super tiny library that hit-tests hover every frame. Unlike native \`:hover\`, it keeps tracking whatever sits under your pointer while you scroll or when things move on screen.
 

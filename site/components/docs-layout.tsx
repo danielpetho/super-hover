@@ -28,7 +28,7 @@ export function DocsLayout({
             className="min-w-0 text-[44px] font-satoshi font-medium tracking-tighter text-pretty leading-tight text-foreground"
           >
             <span className={cn(SCROLL_TARGET_FLASH_INNER_CLASS, "inline")}>
-              super-hover
+              Super Hover
             </span>
           </h1>
           <div className="mt-3 shrink-0">

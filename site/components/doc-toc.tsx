@@ -56,8 +56,7 @@ export function DocToc({
 
   const [items, setItems] = React.useState<{ id: string; label: string }[]>([]);
 
-  const itemIdsKey = items.map((item) => item.id).join("\0");
-  const itemIds = React.useMemo(() => items.map((item) => item.id), [itemIdsKey]);
+  const itemIds = React.useMemo(() => items.map((item) => item.id), [items]);
 
   const [activeId, setActiveId] = useActiveHeadingItem(itemIds);
 
@@ -65,24 +64,15 @@ export function DocToc({
     const root = document.querySelector("[data-doc-content]");
     if (!root) return;
 
-    const collect = () => {
-      const headings = Array.from(
-        root.querySelectorAll("h1[id], h2[id]"),
-      ) as HTMLHeadingElement[];
-      setItems(
-        headings.map((el) => ({
-          id: el.id,
-          label: el.textContent?.trim() ?? "",
-        })),
-      );
-    };
-
-    collect();
-
-    const mo = new MutationObserver(collect);
-    mo.observe(root, { childList: true, subtree: true, characterData: true });
-
-    return () => mo.disconnect();
+    const headings = Array.from(
+      root.querySelectorAll("h1[id], h2[id]"),
+    ) as HTMLHeadingElement[];
+    setItems(
+      headings.map((el) => ({
+        id: el.id,
+        label: el.textContent?.trim() ?? "",
+      })),
+    );
   }, [pathname]);
 
   if (items.length === 0) {
