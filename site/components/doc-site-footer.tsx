@@ -4,7 +4,7 @@ import { ExternalLinkIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mdxAnchorClassName } from "@/lib/mdx-anchor-class";
 
-const SITE_URL = "https://danielpetho.com";
+const SITE_URL = "https://super-hover.danielpetho.com";
 const GITHUB_REPO_URL = "https://github.com/danielpetho/super-hover";
 
 export function DocSiteFooter({
