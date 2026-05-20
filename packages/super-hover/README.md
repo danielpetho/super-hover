@@ -1,4 +1,4 @@
-# super-hover
+# Super Hover
 
 A super tiny library that hit-tests hover every frame. Unlike native `:hover`, it keeps tracking whatever sits under your pointer while you scroll or when things move on screen.
 
@@ -13,7 +13,7 @@ pnpm add super-hover
 # or npm / yarn
 ```
 
-The **`super-hover`** entry is framework-free. **`super-hover/react`**, **`super-hover/vue`**, and **`super-hover/svelte`** add small helpers. React and Vue are **optional** peer dependencies.
+The core **`super-hover`** package entry is framework-free. **`super-hover/react`**, **`super-hover/vue`**, and **`super-hover/svelte`** add small helpers. React and Vue are **optional** peer dependencies.
 
 ## Usage
 
@@ -165,7 +165,7 @@ For `superhovermove`, `event.detail` has:
 
 ## Links
 
-- **Docs:** [superhover.danielpetho.com](https://superhover.danielpetho.com)
+- **Docs:** [super-hover.danielpetho.com](https://super-hover.danielpetho.com)
 - **Repository:** [github.com/danielpetho/super-hover](https://github.com/danielpetho/super-hover)
 - **Issues:** [github.com/danielpetho/super-hover/issues](https://github.com/danielpetho/super-hover/issues)
 

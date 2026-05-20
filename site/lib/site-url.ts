@@ -3,6 +3,6 @@ export function getSiteBaseUrl(): string {
   const raw =
     process.env.NEXT_PUBLIC_SITE_URL ??
     process.env.SITE_URL ??
-    "https://superhover.danielpetho.com";
+    "https://super-hover.danielpetho.com";
   return raw.replace(/\/+$/, "");
 }

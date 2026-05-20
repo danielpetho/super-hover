@@ -29,14 +29,14 @@ export default function ScrollListPreview() {
   }, []);
 
   return (
-    <div className="flex w-full flex-1 select-none flex-col gap-3 rounded-xl">
+    <div className="flex h-[min(27rem,70vh)] w-full select-none flex-col gap-3 rounded-xl">
       <HoverModeSwitch
         className="pt-2 pb-1"
         superHoverOn={superHoverOn}
         onSuperHoverOnChange={setSuperHoverOn}
       />
 
-      <div className="relative ">
+      <div className="relative min-h-0 flex-1">
         <div
           aria-hidden
           className="pointer-events-none absolute left-0 right-2 top-0 z-10 h-24 transition-opacity duration-500 ease-in-out"
@@ -56,7 +56,7 @@ export default function ScrollListPreview() {
 
         <div
           ref={listRootRef}
-          className="max-h-[min(380px,52vh)] cursor-pointer overflow-auto overscroll-contain pr-2"
+          className="h-full cursor-pointer overflow-auto overscroll-contain pr-2"
         >
           <div className="text-foreground grid w-full grid-cols-[minmax(0,46%)_minmax(0,42%)_minmax(0,12%)] text-sm">
             {albums.map((album, index) => (

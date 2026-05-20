@@ -168,13 +168,13 @@ export default function ScrollMenuPreview() {
   );
 
   return (
-    <div className="flex h-full min-h-[23rem] w-full select-none flex-col gap-2">
+    <div className="flex h-[min(27rem,70vh)] w-full select-none flex-col gap-2">
       <HoverModeSwitch
         superHoverOn={superHoverOn}
         onSuperHoverOnChange={setSuperHoverOn}
       />
 
-      <div className="relative h-[calc(23rem-3rem)] min-h-0 overflow-hidden">
+      <div className="relative min-h-0 flex-1 overflow-hidden">
         <div
           className="absolute inset-y-0 left-0 z-10 flex w-full overflow-hidden rounded-xl border-[0.5px] border-border bg-background outline-none"
           role="menu"
