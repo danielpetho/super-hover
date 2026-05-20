@@ -76,7 +76,7 @@ In TypeScript, listen for those events on the root. They bubble from the active 
   showCode={false}
   className="p-0! rounded-none! border-none!"
 >
-  [Images](https://www.are.na/hugo-von-hofsten/grafik-j9_shkfbj2e) on the right are synced on the enter event.
+  [Images](https://www.are.na/hugo-von-hofsten/grafik-j9_shkfbj2e) on the right are synced when the enter event fires.
 </Preview>
 
 <CodeSnippet
@@ -142,7 +142,7 @@ root.addEventListener("superhoverenter", (event) => {
 
 ## How it works
 
-The library is very simple and short, so please read the [source code](https://github.com/danielpetho/super-hover/blob/main/packages/super-hover/src/index.ts), (or ask your agent) for the full details. 
+The library is very simple and short, so please read the [source code](https://github.com/danielpetho/super-hover/blob/main/packages/super-hover/src/index.ts) (or ask your agent) for the full details.
 
 In short, Super Hover keeps track of the last pointer and when the pointer moves, the page scrolls, or the viewport changes, it schedules a hit-test with `requestAnimationFrame`. Multiple updates in the same frame are coalesced, so they only produce one hit-test.
 
@@ -154,9 +154,9 @@ If the active element changes, Super Hover removes `data-super-hover-active` fro
 
 Optimizing heavy content with `content-visibility: auto` can also make native hover feel more responsive. It lets the browser [skip rendering](https://developer.mozilla.org/en-US/docs/Web/CSS/content-visibility) for content until it is needed, which can leave enough room for `:hover` to update more often while scrolling.
 
-That said, what and how the browser schedules these updates is a bit of a black box to me, and the result does not seem fully deterministic. Super Hover on the other hand it recomputes the active element from the last pointer position **every frame**. Of course, if the page is overloaded enough to drop frames, Super Hover can drop frames too.
+That said, what the browser schedules, and how it prioritizes those updates is a bit of a black box to me, and the result does not seem fully deterministic. Super Hover, on the other hand, recomputes the active element from the last pointer position **every frame**. Of course, if the page is overloaded enough to drop frames, Super Hover can drop frames too.
 
-If you have better insight into how browsers prioritize this, please <MailTo email="hi@danielpetho.com">reach out</MailTo>, I would genuinely love to hear it.
+If you have better insight into how browsers prioritize this, please <MailTo email="hi@danielpetho.com">reach out</MailTo>. I would genuinely love to hear it.
 
 ## API
 

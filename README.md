@@ -9,6 +9,8 @@ This repo is a **pnpm monorepo**:
 | **`packages/super-hover`** | Published npm package (`super-hover`). |
 | **`site`** | Next.js docs and demos (MDX aligned with the package README). |
 
+Docs: **[superhover.danielpetho.com](https://superhover.danielpetho.com)**.
+
 Full API, examples, and option tables: **[`packages/super-hover/README.md`](./packages/super-hover/README.md)**.
 
 ## Developing

@@ -1,11 +1,9 @@
 import type { ReactNode } from "react";
 
 import type { DocFrameworkId } from "@/lib/doc-framework";
-import { SCROLL_TARGET_FLASH_INNER_CLASS } from "@/lib/flash-scroll-target";
 import { DocScrollTargetFlash } from "@/components/doc-scroll-target-flash";
 import { DocToc } from "@/components/doc-toc";
 import { DocFrameworkSelector } from "@/components/doc-framework-selector";
-import { cn } from "@/lib/utils";
 
 export function DocsLayout({
   framework,
@@ -27,9 +25,7 @@ export function DocsLayout({
             id="super-hover"
             className="min-w-0 text-[44px] font-satoshi font-medium tracking-tighter text-pretty leading-tight text-foreground"
           >
-            <span className={cn(SCROLL_TARGET_FLASH_INNER_CLASS, "inline")}>
-              Super Hover
-            </span>
+            Super Hover
           </h1>
           <div className="mt-3 shrink-0">
             <DocFrameworkSelector value={framework} />

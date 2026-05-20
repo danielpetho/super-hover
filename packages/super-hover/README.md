@@ -4,9 +4,7 @@ A super tiny library that hit-tests hover every frame. Unlike native `:hover`, i
 
 ## Why use this?
 
-Well, you probably don't need this. While scrolling, browsers mostly skip updating `:hover` for performance reasons, which most sites actually need. But super-hover recomputes a hover-like hit every frame, which opens up some fun creative effects!
-
-Under the hood it listens for pointer moves, scroll, and resize, then hit-tests **once per animation frame** (updates are **coalesced** with `requestAnimationFrame`): [`document.elementFromPoint`](https://developer.mozilla.org/en-US/docs/Web/API/Document/elementFromPoint) plus [`Element.closest(selector)`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest).
+Well, you probably shouldn't. While scrolling, browsers mostly skip updating `:hover` to prioritize other important rendering work, which in most cases is the desired behavior. But Super Hover recomputes a hover-like hit every frame, which opens up the possibility of some fun creative effects and interactions.
 
 ## Install
 
@@ -19,33 +17,155 @@ The **`super-hover`** entry is framework-free. **`super-hover/react`**, **`super
 
 ## Usage
 
-- Mark participating nodes with **`data-super-hover`** (or pass a custom `selector`).
-- The active matched element gets **`data-super-hover-active`** (customizable). Style it with attribute selectors, e.g. Tailwind `data-[super-hover-active]:…`.
-- **`pause()`** / **`resume()`**: pause clears active state and skips hit-tests until resume, but **pointer position still updates** while paused, so **`resume()`** immediately matches whatever is under the cursor (no extra move required).
+Wrap the area you care about, then mark the things that should act hoverable.
+
+The active element gets `data-super-hover-active`, which is usually enough if you only want styling.
 
 ```ts
 import { createSuperHover } from "super-hover";
 
-const list = document.querySelector("#list") as HTMLElement | null;
-const ctrl = createSuperHover({ root: list ?? undefined });
+const root = document.querySelector<HTMLElement>("#list")!;
 
-// Later:
-ctrl.destroy();
+const superHover = createSuperHover({ root });
+
+// later
+superHover.destroy();
 ```
 
-#### Options (`SuperHoverOptions`)
+```html
+<ul id="list">
+  <li data-super-hover>Inbox</li>
+  <li data-super-hover>Projects</li>
+  <li data-super-hover>Settings</li>
+</ul>
+```
+
+## Events
+
+If styling is not enough, you can run code when the active element changes. Super Hover dispatches three custom events:
+
+- `superhoverenter` when an element becomes active
+- `superhoverleave` when an element stops being active
+- `superhovermove` while an element is active
+
+```ts
+import {
+  createSuperHover,
+  type SuperHoverEventDetail,
+} from "super-hover";
+
+const root = document.querySelector<HTMLElement>("#list")!;
+
+root.addEventListener("superhoverenter", (event) => {
+  const e = event as CustomEvent<SuperHoverEventDetail>;
+  console.log("entered", e.detail.current);
+});
+
+const superHover = createSuperHover({ root });
+```
+
+`superhovermove` is on by default in the core library. If you do not need move events, pass `moveEventType: false`.
+
+## Framework helpers
+
+React:
+
+```tsx
+import { useSuperHoverRef } from "super-hover/react";
+
+export function Example() {
+  const rootRef = useSuperHoverRef({
+    onEnter(event) {
+      console.log(event.detail.current);
+    },
+  });
+
+  return <ul ref={rootRef}>{/* data-super-hover items */}</ul>;
+}
+```
+
+Vue:
+
+```vue
+<script setup lang="ts">
+  import { useSuperHover } from "super-hover/vue";
+
+  const rootRef = useSuperHover({
+    onEnter(event) {
+      console.log(event.detail.current);
+    },
+  });
+</script>
+
+<template>
+  <ul ref="rootRef"><!-- data-super-hover items --></ul>
+</template>
+```
+
+Svelte:
+
+```svelte
+<script lang="ts">
+  import { superHover } from "super-hover/svelte";
+</script>
+
+<ul use:superHover={{ onEnter: (event) => console.log(event.detail.current) }}>
+  <!-- data-super-hover items -->
+</ul>
+```
+
+Framework helpers only listen for move events when `onMove` is passed. If neither `onMove` nor `moveEventType` is passed, they disable move events for you.
+
+## How it works
+
+The library is very simple and short, so please read the [source code](https://github.com/danielpetho/super-hover/blob/main/packages/super-hover/src/index.ts) for the full details.
+
+In short, Super Hover keeps track of the last pointer and when the pointer moves, the page scrolls, or the viewport changes, it schedules a hit-test with `requestAnimationFrame`. Multiple updates in the same frame are coalesced, so they only produce one hit-test.
+
+On that frame, Super Hover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
+
+If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
+
+## API
+
+### `SuperHoverOptions`
 
 | Option | Default | Purpose |
-|--------|---------|---------|
-| `enabled` | `true` | When `false`, starts paused (same as `.pause()` until `.resume()`). |
-| `root` | omit (whole document) | Hit-tested nodes must be **inside** this subtree. Does **not** opt in every descendant—that’s still gated by `selector`. |
-| `selector` | `[data-super-hover]` | Passed to `closest()` from the node under the pointer. |
-| `activeAttribute` | `data-super-hover-active` | Set on the active element while active (empty string), removed when inactive. |
-| `enterEventType` | `superhoverenter` | `CustomEvent` when an element becomes active (`bubbles: true`). |
-| `leaveEventType` | `superhoverleave` | `CustomEvent` when it stops being active. |
+| --- | --- | --- |
+| `enabled` | `true` | When `false`, starts paused and waits for `resume()`. |
+| `pointerTypes` | `["mouse", "pen"]` | Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state. |
+| `root` | omit, whole document | Optional boundary: the matched element must be inside this subtree. Can be a `Document` or `Element`, including same-origin iframe documents/elements. |
+| `selector` | `[data-super-hover]` | CSS selector passed to `element.closest` from the hit-tested node. Independent of `root`. |
+| `activeAttribute` | `data-super-hover-active` | Attribute toggled on the active matched element while active. |
+| `enterEventType` | `superhoverenter` | `CustomEvent` type dispatched on the matched element when it becomes active. |
+| `leaveEventType` | `superhoverleave` | `CustomEvent` type dispatched on the matched element when it stops being active. |
+| `moveEventType` | `superhovermove` | `CustomEvent` type dispatched on each scheduled hit-test while an element is active. Set to `false` to disable. |
+
+### `SuperHoverController`
+
+| Method | Purpose |
+| --- | --- |
+| `pause()` | Pauses hit-testing and clears the active element. |
+| `resume()` | Resumes hit-testing and schedules a fresh hit-test. |
+| `refresh()` | Schedules a fresh hit-test without changing the paused or destroyed state. |
+| `destroy()` | Removes listeners, cancels pending animation frames, and clears the active element. |
+
+### Event detail
+
+For `superhoverenter` and `superhoverleave`, `event.detail` has:
+
+- `x` and `y`: the last pointer position, in viewport coordinates
+- `previous`: the element that was active before this change, or `null`
+- `current`: the element that is active after this change, or `null`
+
+For `superhovermove`, `event.detail` has:
+
+- `x` and `y`: the last pointer position, in viewport coordinates
+- `current`: the currently active element
 
 ## Links
 
+- **Docs:** [superhover.danielpetho.com](https://superhover.danielpetho.com)
 - **Repository:** [github.com/danielpetho/super-hover](https://github.com/danielpetho/super-hover)
 - **Issues:** [github.com/danielpetho/super-hover/issues](https://github.com/danielpetho/super-hover/issues)
 
