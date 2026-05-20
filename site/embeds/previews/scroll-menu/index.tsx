@@ -181,7 +181,7 @@ export default function ScrollMenuPreview() {
           className="absolute inset-y-0 left-0 z-10 flex w-full overflow-hidden rounded-xl border-[0.5px] border-border bg-background outline-none"
           role="menu"
         >
-          <div className="relative h-full w-[12rem] shrink-0">
+          <div className="relative h-full w-[8.5rem] shrink-0 sm:w-[12rem]">
             <div
               ref={setListRef}
               className="h-full overflow-y-auto overscroll-contain"
@@ -208,9 +208,9 @@ export default function ScrollMenuPreview() {
           >
             {activeItem ? (
               <div className="absolute inset-0 flex flex-col overflow-hidden">
-                <div className="flex items-start justify-between gap-3 pt-4 px-4 pb-2">
+                <div className="flex items-start justify-between gap-2 px-3 pt-3 pb-2 sm:gap-3 sm:px-4 sm:pt-4">
                   <div className="min-w-0 leading-tight">
-                    <div className="truncate text-xl font-medium text-foreground">
+                    <div className="truncate text-base font-medium text-foreground sm:text-xl">
                       {activeItem.label}
                     </div>
                     {/* <div className="inline-flex items-center text-xs text-muted-foreground tabular-nums">
@@ -222,13 +222,13 @@ export default function ScrollMenuPreview() {
                       </span>
                     </div> */}
                   </div>
-                  <div className="rounded-full px-2 py-0.5 text-xs text-muted-foreground tabular-nums">
+                  <div className="rounded-full px-1.5 py-0.5 text-[10px] text-muted-foreground tabular-nums sm:px-2 sm:text-xs">
                     {activeItem.imageCount} file{activeItem.imageCount === 1 ? "" : "s"}
                   </div>
                 </div>
 
-                <div className="mt-4 min-h-0 flex-1 overflow-y-auto px-4">
-                  <div className="grid grid-cols-4 gap-1">
+                <div className="mt-2 min-h-0 flex-1 overflow-y-auto px-3 sm:mt-4 sm:px-4">
+                  <div className="grid grid-cols-2 gap-1 sm:grid-cols-4">
                     {isLoadingArenaImages ? (
                       <ArenaImageLoader count={activeItem.imageCount} />
                     ) : (
@@ -323,13 +323,13 @@ function MenuRow({
       role="menuitem"
       tabIndex={0}
       className={cn(
-        "flex cursor-default items-center gap-2 px-2 py-1.5 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
+        "flex cursor-default items-center gap-2 px-1.5 py-1 text-xs outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset sm:px-2 sm:py-1.5 sm:text-sm",
         active && "bg-editor-bg",
       )}
     >
       <div className="min-w-0 flex-1">
         <div className="truncate text-foreground">{item.label}</div>
-        <div className="truncate text-[11px] text-muted-foreground">
+        <div className="truncate text-[10px] text-muted-foreground sm:text-[11px]">
           {item.createdAt}
         </div>
       </div>
