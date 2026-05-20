@@ -27,6 +27,7 @@ import VideoPlayer from "./components/video";
 import ImageComponent from "./components/image";
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
+import { MailTo } from "./components/mail-to";
 import { SCROLL_TARGET_FLASH_INNER_CLASS } from "@/lib/flash-scroll-target";
 
 export function useMDXComponents(components?: MDXComponents): MDXComponents {
@@ -291,6 +292,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       showRestart,
       border,
       description,
+      children,
       ...props
     }: React.HTMLAttributes<HTMLElement> & {
       name?: string;
@@ -305,7 +307,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
           showCode={showCode}
           showRestart={showRestart}
           border={border}
-          description={description}
+          description={description ?? children}
           className={cn("my-8", className)}
           frameClassName={className}
           {...props}
@@ -364,6 +366,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
     ApiProp,
     DocCodeHeading,
     DocMobileHoverNotice,
+    MailTo,
     Callout: ({
       className,
       variant,

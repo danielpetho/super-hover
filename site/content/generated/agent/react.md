@@ -6,13 +6,13 @@ A super tiny library that hit-tests hover every frame. Unlike native `:hover`, i
 
 
 
-**Interactive demo (`scroll-list`):** Scrollable list comparing native vs super-hover; Scroll without moving the pointer.
+**Interactive demo (`scroll-list`):** Scrollable list comparing native vs Super Hover with hover-triggered styling
 
 
 
 ## Why use this?
 
-Well, you probably don't need this. While scrolling, browsers mostly skip updating `:hover` for performance reasons, which most sites actually need. But super-hover recomputes a hover-like hit every frame, which opens up the possibility of some fun creative effects!
+Well, you probably shouldn't. While scrolling, browsers mostly skip updating `:hover` to prioritize other important rendering work, which in most cases is the desired behavior. But Super Hover recomputes a hover-like hit every frame, which opens up the possibility of some fun creative effects and interactions.
 
 ## Installation
 
@@ -60,7 +60,7 @@ export function Example() {
 
 ## Events
 
-If styling is not enough, you can run code when the active element changes. SuperHover dispatches three custom events:
+If styling is not enough, you can run code when the active element changes. Super Hover dispatches three custom events:
 
 - `superhoverenter` when an element becomes active
 - `superhoverleave` when an element stops being active
@@ -68,7 +68,7 @@ If styling is not enough, you can run code when the active element changes. Supe
 
 In React, `useSuperHoverRef` exposes these as `onEnter`, `onLeave`, and `onMove`.
 
-**Interactive demo (`scroll-menu`):** Detail panel data on the right side is synced on superhoverenter. 
+**Interactive demo (`scroll-menu`):** [Images](https://www.are.na/hugo-von-hofsten/grafik-j9_shkfbj2e) on the right are synced on the enter event.
 
 
 
@@ -108,7 +108,7 @@ export function Example() {
 
 `onMove` is off by default. If you need pointer coordinates for things like tooltips or previews, pass `onMove` and read `event.detail.x` / `event.detail.y`.
 
-## Event detail
+### Event detail
 
 The events are `CustomEvent`s, so the useful data lives on `event.detail`.
 
@@ -154,17 +154,21 @@ export function Example() {
 
 ## How it works
 
-The library is very simple and short, so please read the [source code](https://github.com/danielpetho/super-hover/blob/main/packages/super-hover/src/index.ts) for the full details. 
+The library is very simple and short, so please read the [source code](https://github.com/danielpetho/super-hover/blob/main/packages/super-hover/src/index.ts), (or ask your agent) for the full details. 
 
-In short, SuperHover keeps track of the last pointer and when the pointer moves, the page scrolls, or the viewport changes, it schedules a hit-test with `requestAnimationFrame`. Multiple updates in the same frame are coalesced, so they only produce one hit-test.
+In short, Super Hover keeps track of the last pointer and when the pointer moves, the page scrolls, or the viewport changes, it schedules a hit-test with `requestAnimationFrame`. Multiple updates in the same frame are coalesced, so they only produce one hit-test.
 
-On that frame, SuperHover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
+On that frame, Super Hover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
 
-If the active element changes, SuperHover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
+If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
 
-### What about `content-visibility: auto`?
+### What about content-visibility?
 
-While working on this library, I noticed that using the fairly new `content-visibility: auto` can 
+Optimizing heavy content with `content-visibility: auto` can also make native hover feel more responsive. It lets the browser [skip rendering](https://developer.mozilla.org/en-US/docs/Web/CSS/content-visibility) for content until it is needed, which can leave enough room for `:hover` to update more often while scrolling.
+
+That said, what and how the browser schedules these updates is a bit of a black box to me, and the result does not seem fully deterministic. Super Hover on the other hand it recomputes the active element from the last pointer position **every frame**. Of course, if the page is overloaded enough to drop frames, Super Hover can drop frames too.
+
+If you have better insight into how browsers prioritize this, please reach out (hi@danielpetho.com), I would genuinely love to hear it.
 
 ## API
 
@@ -201,7 +205,7 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 
 | Property | Type | Default | Description |
 | --- | --- | --- | --- |
-| enabled | boolean | true | When `false`, the React helper does not mount SuperHover on the root. |
+| enabled | boolean | true | When `false`, the React helper does not mount Super Hover on the root. |
 | pointerTypes |  | `["mouse", "pen"]` | Pointer types allowed to update the tracked pointer position. Touch is off by default. |
 | selector | string | [data-super-hover] | CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate (default `[data-super-hover]`). Independent of `root`, which only scopes where hits count. |
 | activeAttribute | string | data-super-hover-active | Attribute toggled on the active matched element (empty string while active, removed otherwise). Use it for styling, e.g. `data-[super-hover-active]:…`. |

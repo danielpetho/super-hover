@@ -3,7 +3,9 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { DocSiteFooter } from "@/components/doc-site-footer";
 import { RouteTransition } from "@/components/route-transition";
+import { Toaster } from "@/components/ui/sonner";
 import { getSiteBaseUrl } from "@/lib/site-url";
+import { Agentation } from "agentation";
 
 const isDev = process.env.NODE_ENV === "development";
 const siteUrl = getSiteBaseUrl();
@@ -174,6 +176,8 @@ export default function RootLayout({
             <DocSiteFooter className="pb-12" />
           </>
         </RouteTransition>
+        <Toaster />
+        {isDev && <Agentation />}
       </body>
     </html>
   );

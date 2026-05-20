@@ -362,9 +362,12 @@ function replaceApiPropLists(src: string): string {
   }
 }
 
-function extractPreviewAttrs(block: string): { name: string; description: string } {
+function extractPreviewAttrs(
+  block: string,
+  fallbackDescription = "",
+): { name: string; description: string } {
   const name = extractQuoted(block, "name") ?? "";
-  const desc = extractQuoted(block, "description") ?? "";
+  const desc = extractQuoted(block, "description") ?? fallbackDescription;
   return { name, description: desc };
 }
 
@@ -376,15 +379,32 @@ function replacePreviewBlocks(src: string): string {
     const idx = src.indexOf(marker, i);
     if (idx === -1) return out + src.slice(i);
     out += src.slice(i, idx);
-    const close = src.indexOf("/>", idx);
-    if (close === -1) throw new Error("generate-agent-markdown: unclosed <Preview />");
-    const block = src.slice(idx, close + 2);
-    const { name, description } = extractPreviewAttrs(block);
+    const openEnd = jsxOpeningTagEnd(src, idx);
+    if (openEnd === -1) throw new Error("generate-agent-markdown: unclosed <Preview>");
+
+    const isSelfClosing = src[openEnd - 2] === "/";
+    let end = openEnd;
+    let fallbackDescription = "";
+
+    if (!isSelfClosing) {
+      const closeIdx = src.indexOf("</Preview>", openEnd);
+      if (closeIdx === -1) {
+        throw new Error("generate-agent-markdown: missing </Preview>");
+      }
+      fallbackDescription = normalizeDescBlock(src.slice(openEnd, closeIdx));
+      end = closeIdx + "</Preview>".length;
+    }
+
+    const block = src.slice(idx, openEnd);
+    const { name, description } = extractPreviewAttrs(
+      block,
+      fallbackDescription,
+    );
     const line = description
       ? `**Interactive demo (\`${name}\`):** ${description}\n\n`
       : `**Interactive demo:** \`${name}\`\n\n`;
     out += line;
-    i = close + 2;
+    i = end;
   }
 }
 
@@ -436,6 +456,13 @@ function replaceDocCodeHeading(src: string): string {
   );
 }
 
+function replaceMailTo(src: string): string {
+  return src.replace(
+    /<MailTo\s+email="([^"]+)">([\s\S]*?)<\/MailTo>/g,
+    (_, email: string, label: string) => `${normalizeDescBlock(label)} (${email})`,
+  );
+}
+
 export function mdxSourceToAgentMarkdown(src: string): string {
   let s = src;
   s = replaceCodeSnippets(s);
@@ -445,6 +472,7 @@ export function mdxSourceToAgentMarkdown(src: string): string {
   s = replaceInstallTabs(s);
   s = replaceDocMobileHoverNotice(s);
   s = replaceDocCodeHeading(s);
+  s = replaceMailTo(s);
   return s.trim() + "\n";
 }
 
@@ -464,4 +492,3 @@ export async function generateAgentMarkdownDocs(): Promise<void> {
     console.log(`[agent-md] ${path.relative(ROOT, absOut)}`);
   }
 }
-
