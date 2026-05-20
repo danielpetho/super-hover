@@ -93,7 +93,9 @@ type MenuItem = (typeof menuItems)[number];
 
 export default function ScrollMenuPreview() {
   const [superHoverOn, setSuperHoverOn] = React.useState(true);
-  const [activeId, setActiveId] = React.useState<string | null>(null);
+  const [activeId, setActiveId] = React.useState<string | null>(
+    menuItems[0]?.id ?? null,
+  );
   const [arenaImages, setArenaImages] = React.useState<ArenaImage[]>([]);
   const [isLoadingArenaImages, setIsLoadingArenaImages] = React.useState(true);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
@@ -190,6 +192,7 @@ export default function ScrollMenuPreview() {
                     active={item.id === activeId}
                     item={item}
                     key={item.id}
+                    onClick={() => setActiveId(item.id)}
                     onNativeEnter={() => {
                       if (!superHoverOn) setActiveId(item.id);
                     }}
@@ -298,20 +301,29 @@ function ArenaImageTile({ image }: { image: ArenaImage }) {
 function MenuRow({
   active,
   item,
+  onClick,
   onNativeEnter,
 }: {
   active: boolean;
   item: MenuItem;
+  onClick: () => void;
   onNativeEnter: () => void;
 }) {
   return (
     <div
       data-super-hover
       data-option-id={item.id}
+      onClick={onClick}
+      onKeyDown={(event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        onClick();
+      }}
       onMouseEnter={onNativeEnter}
       role="menuitem"
+      tabIndex={0}
       className={cn(
-        "flex cursor-default items-center gap-2 px-2 py-1.5 text-sm outline-none transition-colors",
+        "flex cursor-default items-center gap-2 px-2 py-1.5 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
         active && "bg-editor-bg",
       )}
     >

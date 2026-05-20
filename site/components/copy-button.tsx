@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { Copy } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { canUseHover } from "@/lib/hover-capability";
 import { motion, Variants } from 'motion/react';
 
 interface CopyButtonProps {
@@ -74,6 +75,10 @@ export const CopyButton: React.FC<CopyButtonProps> = ({ onCopy }) => {
 
   const handleCopy = async () => {
     if (status !== "idle") return;
+
+    if (!canUseHover()) {
+      setBackgroundState("hidden");
+    }
     
     setStatus("copying");
     await onCopy();
@@ -110,6 +115,8 @@ export const CopyButton: React.FC<CopyButtonProps> = ({ onCopy }) => {
   };
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!canUseHover()) return;
+
     const direction = calculateDirection(e);
     setEntryDirection(direction);
     
@@ -123,6 +130,8 @@ export const CopyButton: React.FC<CopyButtonProps> = ({ onCopy }) => {
   };
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!canUseHover()) return;
+
     const direction = calculateDirection(e);
     setLeaveDirection(direction);
     
@@ -195,7 +204,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({ onCopy }) => {
         onMouseLeave={handleMouseLeave}
         variant="ghost"
         size="icon"
-        className="relative h-8 w-8 cursor-pointer text-neutral-500 duration-200 ease-out hover:scale-105 hover:text-neutral-900 dark:text-muted-foreground dark:hover:text-white"
+        className="relative h-8 w-8 cursor-pointer text-neutral-500 duration-200 ease-out hover:text-neutral-500 dark:text-muted-foreground dark:hover:text-muted-foreground [@media(hover:hover)_and_(pointer:fine)]:hover:scale-105 [@media(hover:hover)_and_(pointer:fine)]:hover:text-neutral-900 dark:[@media(hover:hover)_and_(pointer:fine)]:hover:text-white"
         aria-label="Copy code"
         whileTap={{ scale: 0.9 }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
