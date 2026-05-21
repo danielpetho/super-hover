@@ -6,6 +6,7 @@ import { mdxAnchorClassName } from "@/lib/mdx-anchor-class";
 
 const SITE_URL = "https://super-hover.danielpetho.com";
 const GITHUB_REPO_URL = "https://github.com/danielpetho/super-hover";
+const DP_URL = "https://x.com/nonzeroexitcode";
 
 export function DocSiteFooter({
   className,
@@ -50,7 +51,7 @@ export function DocSiteFooter({
       <p>
         Built by{" "}
         <a
-          href={SITE_URL}
+          href={DP_URL}
           target="_blank"
           rel="noreferrer"
           className={mdxAnchorClassName()}
