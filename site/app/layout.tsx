@@ -1,8 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
-import { DocSiteFooter } from "@/components/doc-site-footer";
-import { RouteTransition } from "@/components/route-transition";
+import { SiteShell } from "@/components/site-shell";
 import { Toaster } from "@/components/ui/sonner";
 import { getSiteBaseUrl } from "@/lib/site-url";
 import { Agentation } from "agentation";
@@ -170,12 +169,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-overused-grotesk antialiased">
-        <RouteTransition>
-          <>
-            {children}
-            <DocSiteFooter className="pb-12" />
-          </>
-        </RouteTransition>
+        <SiteShell>{children}</SiteShell>
         <Toaster />
         {isDev && <Agentation />}
       </body>
