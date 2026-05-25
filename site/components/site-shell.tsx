@@ -7,7 +7,7 @@ import { RouteTransition } from "@/components/route-transition";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const showFooter = pathname !== "/demo-1";
+  const showFooter = !pathname.startsWith("/demo-");
 
   return (
     <RouteTransition>
