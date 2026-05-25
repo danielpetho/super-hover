@@ -267,7 +267,7 @@ export default function DemoTwoPage() {
                 data-commit-index={index}
                 className={cn(
                   "group/commit relative grid min-h-6 cursor-default grid-cols-[0.7rem_minmax(0,1fr)] items-center gap-1 px-2.5 text-[13px] leading-none text-neutral-600",
-                  "before:absolute before:bottom-0 before:left-[0.625rem] before:top-0 before:w-px before:bg-[#f97316]/45",
+                  "before:absolute before:bottom-0 before:left-[0.641rem] before:top-0 before:w-px before:bg-[#f97316]/45",
                   "transition-colors ease-out",
                   "[&[data-super-hover-active]]:bg-neutral-100 [&[data-super-hover-active]]:text-neutral-950",
                   isPanelVisible && activeIndex === index
