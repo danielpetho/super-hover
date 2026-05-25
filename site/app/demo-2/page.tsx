@@ -253,11 +253,11 @@ export default function DemoTwoPage() {
   }, [updateActiveCommit]);
 
   return (
-    <main className="flex h-svh w-full items-center justify-center overflow-hidden bg-neutral-950 px-6 pr-[320px] py-6 font-overused-grotesk text-[#e8e8e8]">
+    <main className="flex h-svh w-full items-center justify-center overflow-hidden bg-[#f0f0f0] px-6 pr-[320px] py-6 font-overused-grotesk text-neutral-900">
       <div className="relative flex h-[min(25rem,82svh)] w-[min(40rem,80%)] items-center justify-center">
         <div
           ref={listRef}
-          className="relative h-full w-[20rem] overflow-visible rounded-sm border-[0.5px] border-white/10 bg-neutral-900"
+          className="relative h-full w-[20rem] overflow-visible rounded-none border-[0.5px] border-neutral-300 bg-white"
         >
           <div className="h-full overflow-y-auto overflow-x-hidden py-1.5">
             {commits.map((item, index) => (
@@ -266,12 +266,12 @@ export default function DemoTwoPage() {
                 data-super-hover
                 data-commit-index={index}
                 className={cn(
-                  "group/commit relative grid min-h-6 cursor-default grid-cols-[0.7rem_minmax(0,1fr)] items-center gap-1 px-2.5 text-[13px] leading-none text-neutral-400",
+                  "group/commit relative grid min-h-6 cursor-default grid-cols-[0.7rem_minmax(0,1fr)] items-center gap-1 px-2.5 text-[13px] leading-none text-neutral-600",
                   "before:absolute before:bottom-0 before:left-[0.625rem] before:top-0 before:w-px before:bg-[#f97316]/45",
                   "transition-colors ease-out",
-                  "[&[data-super-hover-active]]:bg-white/[0.07] [&[data-super-hover-active]]:text-white",
+                  "[&[data-super-hover-active]]:bg-neutral-100 [&[data-super-hover-active]]:text-neutral-950",
                   isPanelVisible && activeIndex === index
-                    ? "bg-white/[0.07] text-white"
+                    ? "bg-neutral-100 text-neutral-950"
                     : null,
                 )}
               >
@@ -279,7 +279,7 @@ export default function DemoTwoPage() {
                 <span aria-hidden />
                 <div className="flex min-w-0 items-baseline gap-2">
                   <span className="truncate">{item.message}</span>
-                  <span className="shrink-0 truncate text-xs text-[#77777d]">
+                  <span className="shrink-0 truncate text-xs text-neutral-600">
                     {item.author}
                   </span>
                 </div>
@@ -308,20 +308,20 @@ function CommitDetails({
   return (
     <aside
       ref={ref}
-      className="absolute left-[calc(100%+0.25rem)] z-30 w-[22rem] overflow-hidden rounded-sm border-[0.5px] border-white/10 bg-neutral-900 text-[13px] text-[#f4f4f5] "
-      style={{ top }}
+      className="absolute left-[calc(100%+0.25rem)] top-0 z-30 w-[22rem] overflow-hidden rounded-none border-[0.5px] border-neutral-300 bg-white text-[13px] text-neutral-900 transition-transform duration-300 ease-out"
+      style={{ transform: `translate3d(0, ${top}px, 0)` }}
     >
-      <div className="border-b border-white/10 px-1.5 py-1.5">
+      <div className="border-b border-neutral-200 px-1.5 py-1.5">
         <div className="flex min-w-0 items-center gap-2">
           {commit.avatarUrl ? (
             <div
               aria-hidden
-              className="size-6 shrink-0 rounded-full bg-cover bg-center outline outline-1 outline-white/20"
+              className="size-6 shrink-0 rounded-full bg-cover bg-center outline outline-1 outline-black/10"
               style={{ backgroundImage: `url(${commit.avatarUrl})` }}
             />
           ) : (
             <div
-              className="grid size-6 shrink-0 place-items-center rounded-full text-[10px] font-semibold text-white outline outline-1 outline-white/20"
+              className="grid size-6 shrink-0 place-items-center rounded-full text-[10px] font-semibold text-white outline outline-1 outline-black/10"
               style={{ backgroundImage: commit.avatarGradient }}
             >
               {commit.avatar}
@@ -329,13 +329,13 @@ function CommitDetails({
           )}
           <div className="min-w-0">
             <div className="flex min-w-0 items-center gap-1.5 leading-none">
-              <span className="font-semibold text-[#7dd3fc]">{commit.author}</span>
-              <Clock3Icon aria-hidden className="size-3.5 text-neutral-400" />
-              <span className="truncate text-xs tabular-nums text-neutral-400">
+              <span className="font-semibold text-neutral-700">{commit.author}</span>
+              <Clock3Icon aria-hidden className="size-3 text-neutral-600" />
+              <span className="truncate text-xs tabular-nums text-neutral-600">
                 {commit.relativeTime} ({commit.timestamp})
               </span>
             </div>
-            <div className="mt-1 text-xs truncate leading-none text-neutral-400">
+            <div className="mt-1 text-xs truncate leading-none text-neutral-600">
               {commit.message}
             </div>
           </div>
@@ -343,24 +343,24 @@ function CommitDetails({
       </div>
 
       <div className="space-y-1.5 px-2.5 py-2">
-        <div className="flex items-center gap-1.5 text-neutral-400">
+        <div className="flex items-center gap-1.5 text-neutral-600">
           <span className="tabular-nums text-xs">
             {commit.filesChanged} {commit.filesChanged === 1 ? "file" : "files"} changed,
           </span>
-          <span className="font-medium tabular-nums text-xs text-[#86efac]">
+          <span className="font-medium tabular-nums text-xs text-emerald-600">
             {commit.additions} insertions(+),
           </span>
-          <span className="font-medium tabular-nums text-xs text-[#f87171]">
+          <span className="font-medium tabular-nums text-xs text-red-500">
             {commit.deletions} deletions(-)
           </span>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1 rounded-[2px] bg-[#0f172a] py-0.5 font-mono text-xs tabular-nums text-blue-300 text-xs">
+          <span className="inline-flex items-center gap-1 rounded-[2px] bg-neutral-100 py-0.5 font-mono text-xs tabular-nums text-neutral-600 text-xs">
             <FileIcon aria-hidden className="size-3" />
             {commit.hash}
           </span>
-          <span className="inline-flex items-center gap-1 text-xs text-neutral-400">
+          <span className="inline-flex items-center gap-1 text-xs text-neutral-600">
             <GithubMarkIcon aria-hidden className="size-3.5" />
             Open on GitHub
           </span>
