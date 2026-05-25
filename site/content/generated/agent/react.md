@@ -133,11 +133,10 @@ import { useSuperHoverRef } from "super-hover/react";
 export function Example() {
     const rootRef = useSuperHoverRef({
       onEnter(event) {
-        const { x, y, previous, current } = event.detail;
-
+        const { x, y, previous, current } = event.detail;   
         console.log(x, y);
         console.log(previous?.id);
-        console.log(current?.id);
+        console.log(current?.dataset.superHoverIndex);
       },
     });
 

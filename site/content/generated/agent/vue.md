@@ -132,7 +132,6 @@ For `superhovermove`, `detail` has:
     const rootRef = useSuperHover({
       onEnter(event) {
         const { x, y, previous, current } = event.detail;
-
         console.log(x, y);
         console.log(previous?.id);
         console.log(current?.id);

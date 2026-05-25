@@ -127,7 +127,6 @@ For `superhovermove`, `detail` has:
 
     function handleEnter(event) {
       const { x, y, previous, current } = event.detail;
-
       console.log(x, y);
       console.log(previous?.id);
       console.log(current?.id);
