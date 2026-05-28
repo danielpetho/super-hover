@@ -88,7 +88,7 @@ function HoverModeSwitch({
   const switchId = React.useId();
 
   return (
-    <div className={cn("flex w-full items-center px-2", className)}>
+    <div className={cn("flex w-full items-center font-satoshi px-2", className)}>
       <button
         type="button"
         aria-pressed={superHoverOn}
@@ -158,8 +158,8 @@ export default function DemoOnePage() {
   }, []);
 
   return (
-    <main className="flex h-svh w-full items-center justify-center overflow-hidden bg-background px-4 py-4 font-mono text-foreground sm:px-6 sm:py-6 lg:px-8">
-      <div className="flex h-[min(42rem,82svh)] min-h-0 w-full max-w-7xl flex-col rounded-xl bg-background p-3 sm:p-4">
+    <main className="flex h-svh w-full items-center justify-center overflow-hidden bg-background px-4 py-4 font-mono text-foreground sm:px-6 sm:py-6 lg:px-32">
+      <div className="flex h-[min(45rem,90svh)] min-h-0 w-full max-w-7xl flex-col rounded-xl bg-background p-3 sm:p-4">
         <div className="relative min-h-0 flex-1 overflow-hidden">
           <div
             aria-hidden
@@ -220,7 +220,7 @@ export default function DemoOnePage() {
         </div>
 
         <HoverModeSwitch
-          className="shrink-0 pt-3 pb-1"
+          className="shrink-0 pt-12 pb-1"
           superHoverOn={superHoverOn}
           onSuperHoverOnChange={setSuperHoverOn}
         />

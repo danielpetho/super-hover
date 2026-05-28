@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { createSuperHover } from "super-hover";
 
+import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
 type Commit = {
@@ -22,6 +23,12 @@ type Commit = {
   additions: number;
   deletions: number;
 };
+
+const MODE_LABEL_GRID =
+  "inline-grid shrink-0 origin-center grid-cols-1 grid-rows-1 text-base select-none after:pointer-events-none after:col-start-1 after:row-start-1 after:invisible after:origin-center after:whitespace-nowrap after:font-medium after:content-[attr(data-ghost)]";
+
+const MODE_LABEL_BTN =
+  "cursor-pointer rounded-sm border-0 bg-transparent p-0 font-inherit outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const GIT_COMMITS_RAW = `
 d3e9a47|Daniel Petho|2026-05-22T10:15:22+02:00|demo|3|252|8
@@ -197,7 +204,78 @@ function getPointerY(event: Event): number | null {
   return typeof detail?.y === "number" ? detail.y : null;
 }
 
+type HoverModeSwitchProps = {
+  className?: string;
+  superHoverOn: boolean;
+  onSuperHoverOnChange: (superHoverOn: boolean) => void;
+};
+
+function HoverModeSwitch({
+  className,
+  superHoverOn,
+  onSuperHoverOnChange,
+}: HoverModeSwitchProps) {
+  const switchId = React.useId();
+
+  return (
+    <div className={cn("flex w-full items-center font-satoshi px-2", className)}>
+      <button
+        type="button"
+        aria-pressed={superHoverOn}
+        className={cn(
+          MODE_LABEL_BTN,
+          "flex min-h-11 min-w-0 flex-1 basis-0 items-center justify-end py-2 pl-1 pr-3",
+        )}
+        onClick={() => onSuperHoverOnChange(true)}
+      >
+        <span data-ghost="Super hover" className={MODE_LABEL_GRID}>
+          <span
+            className={cn(
+              "col-start-1 row-start-1 origin-center transition-[color,font-weight] duration-200 ease-out",
+              superHoverOn
+                ? "font-medium text-neutral-950"
+                : "font-normal text-neutral-500",
+            )}
+          >
+            Super hover
+          </span>
+        </span>
+      </button>
+      <Switch
+        id={switchId}
+        className="relative z-10"
+        checked={!superHoverOn}
+        onCheckedChange={(checked) => onSuperHoverOnChange(!checked)}
+        aria-label="Hover mode: Super hover when on, native when off"
+      />
+      <button
+        type="button"
+        aria-pressed={!superHoverOn}
+        className={cn(
+          MODE_LABEL_BTN,
+          "flex min-h-11 min-w-0 flex-1 basis-0 items-center justify-start py-2 pl-3 pr-1",
+        )}
+        onClick={() => onSuperHoverOnChange(false)}
+      >
+        <span data-ghost="Native hover" className={MODE_LABEL_GRID}>
+          <span
+            className={cn(
+              "col-start-1 row-start-1 origin-center transition-[color,font-weight] duration-200 ease-out",
+              !superHoverOn
+                ? "font-medium text-neutral-950"
+                : "font-normal text-neutral-500",
+            )}
+          >
+            Native hover
+          </span>
+        </span>
+      </button>
+    </div>
+  );
+}
+
 export default function DemoTwoPage() {
+  const [superHoverOn, setSuperHoverOn] = React.useState(true);
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
   const [isPanelVisible, setIsPanelVisible] = React.useState(false);
   const [panelTop, setPanelTop] = React.useState(0);
@@ -232,66 +310,80 @@ export default function DemoTwoPage() {
     const root = listRef.current;
     if (!root) return;
 
-    const ctrl = createSuperHover({ root });
+    const ctrl = superHoverOn ? createSuperHover({ root }) : null;
     const handleLeave = () => {
       setIsPanelVisible(false);
       setActiveIndex(null);
     };
 
-    root.addEventListener("superhoverenter", updateActiveCommit);
-    root.addEventListener("superhovermove", updateActiveCommit);
+    if (superHoverOn) {
+      root.addEventListener("superhoverenter", updateActiveCommit);
+      root.addEventListener("superhovermove", updateActiveCommit);
+    }
     root.addEventListener("mousemove", updateActiveCommit);
+    root.addEventListener("mouseover", updateActiveCommit);
     root.addEventListener("mouseleave", handleLeave);
 
     return () => {
       root.removeEventListener("superhoverenter", updateActiveCommit);
       root.removeEventListener("superhovermove", updateActiveCommit);
       root.removeEventListener("mousemove", updateActiveCommit);
+      root.removeEventListener("mouseover", updateActiveCommit);
       root.removeEventListener("mouseleave", handleLeave);
-      ctrl.destroy();
+      ctrl?.destroy();
     };
-  }, [updateActiveCommit]);
+  }, [superHoverOn, updateActiveCommit]);
 
   return (
-    <main className="flex h-svh w-full items-center justify-center overflow-hidden bg-[#f0f0f0] px-6 pr-[320px] py-6 font-overused-grotesk text-neutral-900">
-      <div className="relative flex h-[min(25rem,82svh)] w-[min(40rem,80%)] items-center justify-center">
-        <div
-          ref={listRef}
-          className="relative h-full w-[20rem] overflow-visible rounded-none border-[0.5px] border-neutral-300 bg-white"
-        >
-          <div className="h-full overflow-y-auto overflow-x-hidden py-1.5">
-            {commits.map((item, index) => (
-              <div
-                key={item.hash}
-                data-super-hover
-                data-commit-index={index}
-                className={cn(
-                  "group/commit relative grid min-h-6 cursor-default grid-cols-[0.7rem_minmax(0,1fr)] items-center gap-1 px-2.5 text-[13px] leading-none text-neutral-600",
-                  "before:absolute before:bottom-0 before:left-[0.641rem] before:top-0 before:w-px before:bg-[#f97316]/45",
-                  "transition-colors ease-out",
-                  "[&[data-super-hover-active]]:bg-neutral-100 [&[data-super-hover-active]]:text-neutral-950",
-                  isPanelVisible && activeIndex === index
-                    ? "bg-neutral-100 text-neutral-950"
-                    : null,
-                )}
-              >
-                <span className="absolute left-[0.4375rem] top-1/2 size-2 -translate-y-1/2 rounded-full bg-[#f97316]" />
-                <span aria-hidden />
-                <div className="flex min-w-0 items-baseline gap-2">
-                  <span className="truncate">{item.message}</span>
-                  <span className="shrink-0 truncate text-xs text-neutral-600">
-                    {item.author}
-                  </span>
+    <main className="relative flex h-svh w-full items-center justify-center overflow-hidden bg-[#ffffff] px-6 pr-[320px] py-6 font-overused-grotesk text-neutral-900">
+      <div className="flex flex-col items-center gap-4">
+        <div className="relative flex h-[min(25rem,82svh)] w-[min(40rem,80%)] items-center justify-center">
+          <div
+            ref={listRef}
+            className="relative h-full w-[20rem] overflow-visible rounded-none border-[0.5px] border-neutral-300 bg-white shadow-xl/5"
+          >
+            <div className="h-full overflow-y-auto overflow-x-hidden py-1.5">
+              {commits.map((item, index) => (
+                <div
+                  key={item.hash}
+                  data-super-hover
+                  data-commit-index={index}
+                  className={cn(
+                    "group/commit relative grid min-h-7 cursor-default grid-cols-[0.7rem_minmax(0,1fr)] items-center gap-1 px-2.5 py-0.5 text-[13px] leading-[1.25] text-neutral-600",
+                    "before:absolute before:bottom-0 before:left-[0.641rem] before:top-0 before:w-px before:bg-[#f97316]/45",
+                    "transition-colors ease-out",
+                    superHoverOn
+                      ? "[&[data-super-hover-active]]:bg-neutral-100 [&[data-super-hover-active]]:text-neutral-950"
+                      : "hover:bg-neutral-100 hover:text-neutral-950",
+                    isPanelVisible && activeIndex === index
+                      ? "bg-neutral-100 text-neutral-950"
+                      : null,
+                  )}
+                >
+                  <span className="absolute left-[0.4375rem] top-1/2 size-2 -translate-y-1/2 rounded-full bg-[#f97316]" />
+                  <span aria-hidden />
+                  <div className="flex min-w-0 items-baseline gap-2">
+                    <span className="truncate leading-[1.25]">{item.message}</span>
+                    <span className="shrink-0 truncate text-xs leading-[1.25] text-neutral-600">
+                      {item.author}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          {isPanelVisible ? (
-            <CommitDetails commit={commit} ref={detailsRef} top={panelTop} />
-          ) : null}
+            {isPanelVisible ? (
+              <CommitDetails commit={commit} ref={detailsRef} top={panelTop} />
+            ) : null}
+          </div>
         </div>
+
       </div>
+      <HoverModeSwitch
+        className="absolute bottom-30 left-1/2 w-[20rem] -translate-x-1/2"
+        superHoverOn={superHoverOn}
+        onSuperHoverOnChange={setSuperHoverOn}
+      />
     </main>
   );
 }
@@ -308,7 +400,7 @@ function CommitDetails({
   return (
     <aside
       ref={ref}
-      className="absolute left-[calc(100%+0.25rem)] top-0 z-30 w-[22rem] overflow-hidden rounded-none border-[0.5px] border-neutral-300 bg-white text-[13px] text-neutral-900 transition-transform duration-400 ease-out"
+      className="absolute left-[calc(100%+0.25rem)] top-0 z-30 w-[22rem] overflow-hidden rounded-none border-[0.5px] border-neutral-300 bg-white text-[13px] text-neutral-900 transition-transform duration-400 ease-out shadow-xl/5"
       style={{ transform: `translate3d(0, ${top}px, 0)` }}
     >
       <div className="border-b border-neutral-200 px-1.5 py-1.5">
