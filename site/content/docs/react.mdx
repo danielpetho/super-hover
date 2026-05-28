@@ -127,11 +127,10 @@ import { useSuperHoverRef } from "super-hover/react";
 export function Example() {
     const rootRef = useSuperHoverRef({
       onEnter(event) {
-        const { x, y, previous, current } = event.detail;
-
+        const { x, y, previous, current } = event.detail;   
         console.log(x, y);
         console.log(previous?.id);
-        console.log(current?.id);
+        console.log(current?.dataset.superHoverIndex);
       },
     });
 
@@ -158,7 +157,7 @@ If the active element changes, Super Hover removes `data-super-hover-active` fro
 
 ### What about content-visibility?
 
-Optimizing heavy content with `content-visibility: auto` can also make native hover feel more responsive. It lets the browser [skip rendering](https://developer.mozilla.org/en-US/docs/Web/CSS/content-visibility) for content until it is needed, which can leave enough room for `:hover` to update more often while scrolling.
+Optimizing heavy content with `content-visibility: auto` can also make native hover feel more responsive. It lets the browser [skip rendering](https://web.dev/articles/content-visibility) for content until it is needed, which can leave enough room for `:hover` to update more often while scrolling.
 
 That said, what the browser schedules, and how it prioritizes those updates is a bit of a black box to me, and the result does not seem fully deterministic. Super Hover, on the other hand, recomputes the active element from the last pointer position **every frame**. Of course, if the page is overloaded enough to drop frames, Super Hover can drop frames too.
 
