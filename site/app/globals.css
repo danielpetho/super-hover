@@ -164,6 +164,7 @@
 
 @layer base {
   html {
+    color-scheme: light;
     scroll-behavior: smooth;
     scroll-padding-top: 7rem;
   }
