@@ -221,39 +221,10 @@ function HoverModeSwitch({
     <div className={cn("flex w-full items-center font-satoshi px-2", className)}>
       <button
         type="button"
-        aria-pressed={superHoverOn}
-        className={cn(
-          MODE_LABEL_BTN,
-          "flex min-h-11 min-w-0 flex-1 basis-0 items-center justify-end py-2 pl-1 pr-3",
-        )}
-        onClick={() => onSuperHoverOnChange(true)}
-      >
-        <span data-ghost="Super hover" className={MODE_LABEL_GRID}>
-          <span
-            className={cn(
-              "col-start-1 row-start-1 origin-center transition-[color,font-weight] duration-200 ease-out",
-              superHoverOn
-                ? "font-medium text-neutral-950"
-                : "font-normal text-neutral-500",
-            )}
-          >
-            Super hover
-          </span>
-        </span>
-      </button>
-      <Switch
-        id={switchId}
-        className="relative z-10"
-        checked={!superHoverOn}
-        onCheckedChange={(checked) => onSuperHoverOnChange(!checked)}
-        aria-label="Hover mode: Super hover when on, native when off"
-      />
-      <button
-        type="button"
         aria-pressed={!superHoverOn}
         className={cn(
           MODE_LABEL_BTN,
-          "flex min-h-11 min-w-0 flex-1 basis-0 items-center justify-start py-2 pl-3 pr-1",
+          "flex min-h-11 min-w-0 flex-1 basis-0 items-center justify-end py-2 pl-1 pr-3",
         )}
         onClick={() => onSuperHoverOnChange(false)}
       >
@@ -270,12 +241,41 @@ function HoverModeSwitch({
           </span>
         </span>
       </button>
+      <Switch
+        id={switchId}
+        className="relative z-10"
+        checked={superHoverOn}
+        onCheckedChange={onSuperHoverOnChange}
+        aria-label="Hover mode: Native hover when off, super hover when on"
+      />
+      <button
+        type="button"
+        aria-pressed={superHoverOn}
+        className={cn(
+          MODE_LABEL_BTN,
+          "flex min-h-11 min-w-0 flex-1 basis-0 items-center justify-start py-2 pl-3 pr-1",
+        )}
+        onClick={() => onSuperHoverOnChange(true)}
+      >
+        <span data-ghost="Super hover" className={MODE_LABEL_GRID}>
+          <span
+            className={cn(
+              "col-start-1 row-start-1 origin-center transition-[color,font-weight] duration-200 ease-out",
+              superHoverOn
+                ? "font-medium text-neutral-950"
+                : "font-normal text-neutral-500",
+            )}
+          >
+            Super hover
+          </span>
+        </span>
+      </button>
     </div>
   );
 }
 
 export default function DemoTwoPage() {
-  const [superHoverOn, setSuperHoverOn] = React.useState(true);
+  const [superHoverOn, setSuperHoverOn] = React.useState(false);
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
   const [isPanelVisible, setIsPanelVisible] = React.useState(false);
   const [panelTop, setPanelTop] = React.useState(0);

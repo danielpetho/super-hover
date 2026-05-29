@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 const albums = discogsData.albums;
 
 const SCROLL_EDGE_EPS = 4;
+const ARTWORK_DROP_OFFSET_PX = 4;
 
 const SCROLL_FADE_STOPS = [
   "hsl(0, 0%, 100%) 0%",
@@ -91,39 +92,10 @@ function HoverModeSwitch({
     <div className={cn("flex w-full items-center font-satoshi px-2", className)}>
       <button
         type="button"
-        aria-pressed={superHoverOn}
-        className={cn(
-          MODE_LABEL_BTN,
-          "flex min-h-11 min-w-0 flex-1 basis-0 items-center justify-end py-2 pl-1 pr-3",
-        )}
-        onClick={() => onSuperHoverOnChange(true)}
-      >
-        <span data-ghost="Super hover" className={MODE_LABEL_GRID}>
-          <span
-            className={cn(
-              "col-start-1 row-start-1 origin-center transition-[color,font-weight] duration-200 ease-out",
-              superHoverOn
-                ? "font-medium text-foreground"
-                : "font-normal text-muted-foreground",
-            )}
-          >
-            Super hover
-          </span>
-        </span>
-      </button>
-      <Switch
-        id={switchId}
-        className="relative z-10"
-        checked={!superHoverOn}
-        onCheckedChange={(checked) => onSuperHoverOnChange(!checked)}
-        aria-label="Hover mode: Super hover when on, native when off"
-      />
-      <button
-        type="button"
         aria-pressed={!superHoverOn}
         className={cn(
           MODE_LABEL_BTN,
-          "flex min-h-11 min-w-0 flex-1 basis-0 items-center justify-start py-2 pl-3 pr-1",
+          "flex min-h-11 min-w-0 flex-1 basis-0 items-center justify-end py-2 pl-1 pr-3",
         )}
         onClick={() => onSuperHoverOnChange(false)}
       >
@@ -140,12 +112,41 @@ function HoverModeSwitch({
           </span>
         </span>
       </button>
+      <Switch
+        id={switchId}
+        className="relative z-10"
+        checked={superHoverOn}
+        onCheckedChange={onSuperHoverOnChange}
+        aria-label="Hover mode: Native hover when off, super hover when on"
+      />
+      <button
+        type="button"
+        aria-pressed={superHoverOn}
+        className={cn(
+          MODE_LABEL_BTN,
+          "flex min-h-11 min-w-0 flex-1 basis-0 items-center justify-start py-2 pl-3 pr-1",
+        )}
+        onClick={() => onSuperHoverOnChange(true)}
+      >
+        <span data-ghost="Super hover" className={MODE_LABEL_GRID}>
+          <span
+            className={cn(
+              "col-start-1 row-start-1 origin-center transition-[color,font-weight] duration-200 ease-out",
+              superHoverOn
+                ? "font-medium text-foreground"
+                : "font-normal text-muted-foreground",
+            )}
+          >
+            Super hover
+          </span>
+        </span>
+      </button>
     </div>
   );
 }
 
 export default function DemoOnePage() {
-  const [superHoverOn, setSuperHoverOn] = React.useState(true);
+  const [superHoverOn, setSuperHoverOn] = React.useState(false);
   const listRootRef = React.useRef<HTMLDivElement>(null);
 
   const { showTopFade, showBottomFade } = useScrollEdgeFade(listRootRef);
@@ -157,9 +158,47 @@ export default function DemoOnePage() {
     return () => ctrl.destroy();
   }, []);
 
+  React.useEffect(() => {
+    const root = listRootRef.current;
+    if (!root) return;
+
+    const updateArtworkPlacement = (target: EventTarget | null) => {
+      if (!(target instanceof Element)) return;
+
+      const row = target.closest<HTMLElement>("[data-super-hover]");
+      if (!row || !root.contains(row)) return;
+
+      const artwork = row.querySelector<HTMLElement>(".album-artwork");
+      const artworkHeight = artwork?.offsetHeight ?? 128;
+      const rootRect = root.getBoundingClientRect();
+      const rowRect = row.getBoundingClientRect();
+      const wouldOverflowTop = rowRect.bottom - artworkHeight < rootRect.top;
+
+      row.toggleAttribute("data-artwork-drop-below", wouldOverflowTop);
+    };
+
+    const handleSuperHover = (event: Event) => {
+      updateArtworkPlacement(event.target);
+    };
+
+    const handleNativeHover = (event: MouseEvent) => {
+      updateArtworkPlacement(event.target);
+    };
+
+    root.addEventListener("superhoverenter", handleSuperHover);
+    root.addEventListener("superhovermove", handleSuperHover);
+    root.addEventListener("mouseover", handleNativeHover);
+
+    return () => {
+      root.removeEventListener("superhoverenter", handleSuperHover);
+      root.removeEventListener("superhovermove", handleSuperHover);
+      root.removeEventListener("mouseover", handleNativeHover);
+    };
+  }, []);
+
   return (
-    <main className="flex h-svh w-full items-center justify-center overflow-hidden bg-background px-4 py-4 font-mono text-foreground sm:px-6 sm:py-6 lg:px-32">
-      <div className="flex h-[min(45rem,90svh)] min-h-0 w-full max-w-7xl flex-col rounded-xl bg-background p-3 sm:p-4">
+    <main className="flex h-svh w-full items-center justify-center overflow-hidden bg-background px-4 py-4 font-mono text-foreground sm:px-6 sm:py-6 lg:px-32 uppercase">
+      <div className="flex h-[min(45rem,90svh)] min-h-0 w-full max-w-6xl flex-col rounded-xl bg-background p-3 sm:p-4">
         <div className="relative min-h-0 flex-1 overflow-hidden">
           <div
             aria-hidden
@@ -182,13 +221,13 @@ export default function DemoOnePage() {
             ref={listRootRef}
             className="h-full cursor-pointer overflow-auto pr-2"
           >
-            <div className="grid w-full grid-cols-[5rem_minmax(0,32%)_minmax(0,24%)_minmax(8rem,24%)_minmax(0,10%)] text-sm text-foreground sm:text-base">
+            <div className="grid w-full grid-cols-[5rem_minmax(0,40%)_minmax(0,24%)_minmax(8rem,24%)_minmax(0,10%)] text-sm text-foreground sm:text-base">
               {albums.map((album, index) => (
                 <div
                   key={`${album.id}-${index}`}
                   data-super-hover
                   className={cn(
-                    "group/album col-span-5 grid grid-cols-subgrid items-center gap-x-1 border-b border-transparent py-0.5",
+                    "group/album col-span-5 grid grid-cols-subgrid items-center gap-x-1 border-b border-transparent py-0.5 [&[data-artwork-drop-below]_.album-artwork]:bottom-auto [&[data-artwork-drop-below]_.album-artwork]:top-[calc(100%+var(--artwork-drop-offset))]",
                     superHoverOn
                       ? "[&[data-super-hover-active]]:border-b-foreground [&[data-super-hover-active]_.album-artwork]:opacity-100"
                       : "hover:border-b-foreground [&:hover_.album-artwork]:opacity-100",
@@ -207,7 +246,12 @@ export default function DemoOnePage() {
                     <div
                       aria-hidden
                       className="album-artwork absolute bottom-0 left-1/2 z-20 size-24 -translate-x-1/2 bg-cover bg-center opacity-0 shadow-sm sm:size-32"
-                      style={{ backgroundImage: `url(${album.thumb})` }}
+                      style={
+                        {
+                          "--artwork-drop-offset": `${ARTWORK_DROP_OFFSET_PX}px`,
+                          backgroundImage: `url(${album.thumb})`,
+                        } as React.CSSProperties
+                      }
                     />
                   </div>
                   <div className="min-w-0 pr-2 text-right tabular-nums">

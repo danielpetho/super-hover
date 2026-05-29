@@ -94,7 +94,7 @@ export default function ScrollListPreview() {
 
         <div
           ref={listRootRef}
-          className="h-full cursor-pointer overflow-auto overscroll-contain pr-2"
+          className="h-full cursor-pointer overflow-auto overscroll-contain pr-2 "
         >
           <div className="grid w-full grid-cols-[2.75rem_minmax(0,32%)_minmax(0,27%)_minmax(4rem,18%)_minmax(0,10%)] text-[10px] text-foreground sm:text-xs">
             {albums.map((album, index) => (
