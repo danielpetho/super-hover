@@ -58,31 +58,6 @@ export function Example() {
 ```
 
 
-## Accessibility
-
-Super Hover can make the interface change quickly during scroll or animated layout changes, which can be jarring for people who are sensitive to motion.
-
-If you use it in production, please respect reduced-motion preferences. Either disable it when it makes sense,or provide an equivalent opt-out.
-
-**Respect reduced motion**
-
-```tsx
-import { useEffect, useState } from "react";
-import { useSuperHoverRef } from "super-hover/react";
-import { useReducedMotion } from "motion/react"
-
-export function Example() {
-    const prefersReducedMotion = useReducedMotion();
-
-    const rootRef = useSuperHoverRef({
-      enabled: !prefersReducedMotion,
-    });
-
-    return <ul ref={rootRef}>{/* ... */}</ul>;
-}
-```
-
-
 ## Events
 
 If styling is not enough, you can run code when the active element changes. Super Hover dispatches three custom events:
@@ -193,6 +168,31 @@ Optimizing heavy content with `content-visibility: auto` can also make native ho
 That said, what the browser schedules, and how it prioritizes those updates is a bit of a black box to me, and the result does not seem fully deterministic. Super Hover, on the other hand, recomputes the active element from the last pointer position **every frame**. Of course, if the page is overloaded enough to drop frames, Super Hover can drop frames too.
 
 If you have better insight into how browsers prioritize this, please reach out (hi@danielpetho.com). I would genuinely love to hear it.
+
+## Accessibility
+
+Super Hover can make the interface change quickly during scroll or animated layout changes, which can be jarring for people who are sensitive to motion.
+
+If you use it in production, please respect reduced-motion preferences. Either disable it when it makes sense,or provide an equivalent opt-out.
+
+**Respect reduced motion**
+
+```tsx
+import { useEffect, useState } from "react";
+import { useSuperHoverRef } from "super-hover/react";
+import { useReducedMotion } from "motion/react"
+
+export function Example() {
+    const prefersReducedMotion = useReducedMotion();
+
+    const rootRef = useSuperHoverRef({
+      enabled: !prefersReducedMotion,
+    });
+
+    return <ul ref={rootRef}>{/* ... */}</ul>;
+}
+```
+
 
 ## API
 
