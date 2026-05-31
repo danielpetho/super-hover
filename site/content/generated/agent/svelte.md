@@ -54,6 +54,27 @@ The active element gets `data-super-hover-active`, which is usually enough if yo
 ```
 
 
+## Accessibility
+
+Super Hover can make the interface change quickly during scroll or animated layout changes, which can be jarring for people who are sensitive to motion.
+
+If you use it in production, please respect reduced-motion preferences. Either disable it when it makes sense,or provide an equivalent opt-out.
+
+**Respect reduced motion**
+
+```svelte
+<script lang="ts">
+    import { onMount } from "svelte";
+    import { superHover } from "super-hover/svelte";
+    import { prefersReducedMotion } from 'svelte/motion';
+</script>
+
+<ul use:superHover={{ enabled: !prefersReducedMotion.current }}>
+    <!-- ... -->
+</ul>
+```
+
+
 ## Events
 
 If styling is not enough, you can run code when the active element changes. Super Hover dispatches three custom events:

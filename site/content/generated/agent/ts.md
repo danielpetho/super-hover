@@ -72,6 +72,35 @@ superHover.destroy();
 ```
 
 
+## Accessibility
+
+Super Hover can make the interface change quickly during scroll or animated layout changes, which can be jarring for people who are sensitive to motion.
+
+If you use it in production, please respect reduced-motion preferences. Either disable it when it makes sense,or provide an equivalent opt-out.
+
+**Respect reduced motion**
+
+```typescript
+import { createSuperHover } from "super-hover";
+
+const root = document.querySelector<HTMLElement>("#list")!;
+const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+const superHover = createSuperHover({
+    root,
+    enabled: !media.matches,
+});
+
+media.addEventListener("change", (event) => {
+    if (event.matches) {
+      superHover.pause();
+    } else {
+      superHover.resume();
+    }
+});
+```
+
+
 ## Events
 
 If styling is not enough, you can run code when the active element changes. Super Hover dispatches three custom events:
