@@ -19,7 +19,7 @@ Wrap the area you care about, then mark the things that should act hoverable.
 
 The active element gets `data-super-hover-active`, which is usually enough if you only want styling.
 
-Pass `superHover` from `super-hover/svelte` to [`{@attach}`](https://svelte.dev/docs/svelte/@attach) on the list root. It is an [attachment factory](https://svelte.dev/docs/svelte/@attach#Attachment-factories), pass options to `superHover(...)`, and Svelte handles cleanup when the element is removed or options change.
+Pass `superHover` from `super-hover/svelte` to [`{@attach}`](https://svelte.dev/docs/svelte/@attach) on the list root. It is an [attachment factory](https://svelte.dev/docs/svelte/@attach#Attachment-factories), pass options to `superHover(...)`, and Svelte handles cleanup when the element is removed or options change. Attachments require Svelte 5.29 or newer.
 
 <CodeSnippet
   title="Basic usage"

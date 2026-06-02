@@ -32,6 +32,8 @@ Wrap the area you care about, then mark the things that should act hoverable.
 
 The active element gets `data-super-hover-active`, which is usually enough if you only want styling.
 
+Pass `superHover` from `super-hover/svelte` to [`{@attach}`](https://svelte.dev/docs/svelte/@attach) on the list root. It is an [attachment factory](https://svelte.dev/docs/svelte/@attach#Attachment-factories), pass options to `superHover(...)`, and Svelte handles cleanup when the element is removed or options change. Attachments require Svelte 5.29 or newer.
+
 **Basic usage**
 
 ```svelte
@@ -41,7 +43,7 @@ The active element gets `data-super-hover-active`, which is usually enough if yo
     const items = ["Inbox", "Projects", "Settings"];
 </script>
 
-<ul use:superHover class="space-y-1">
+<ul {@attach superHover()} class="space-y-1">
     {#each items as item (item)}
       <li
         data-super-hover
@@ -62,7 +64,7 @@ If styling is not enough, you can run code when the active element changes. Supe
 - `superhoverleave` when an element stops being active
 - `superhovermove` while an element is active
 
-In Svelte, pass `onEnter`, `onLeave`, and `onMove` to the `superHover` action.
+In Svelte, pass `onEnter`, `onLeave`, and `onMove` to `superHover`.
 
 **Interactive demo (`scroll-menu`):** [Images](https://www.are.na/hugo-von-hofsten/grafik-j9_shkfbj2e) on the right are synced when the enter event fires.
 
@@ -78,14 +80,17 @@ In Svelte, pass `onEnter`, `onLeave`, and `onMove` to the `superHover` action.
 </script>
 
 <ul
-    use:superHover={{
+    {@attach superHover({
       onEnter(event) {
         console.log("entered", event.detail.current);
       },
-      onLeave(event) {
-        console.log("left", event.detail.previous);
+      onMove(event) {
+        console.log("move", event.detail.current);
       },
-    }}
+      onLeave(event) {
+        console.log("left", event.detail.current);
+      },
+    })}
     class="space-y-1"
   >
     {#each items as item (item)}
@@ -133,7 +138,7 @@ For `superhovermove`, `detail` has:
     }
 </script>
 
-<ul use:superHover={{ onEnter: handleEnter }}>
+<ul {@attach superHover({ onEnter: handleEnter })}>
     <li id="inbox" data-super-hover>Inbox</li>
     <li id="projects" data-super-hover>Projects</li>
     <li id="settings" data-super-hover>Settings</li>
@@ -163,18 +168,17 @@ If you have better insight into how browsers prioritize this, please reach out (
 
 Super Hover can make the interface change quickly during scroll or animated layout changes, which can be jarring for people who are sensitive to motion.
 
-If you use it in production, please respect reduced-motion preferences. Either disable it when it makes sense,or provide an equivalent opt-out.
+If you use it in production, please respect reduced-motion preferences. Either disable it when it makes sense, or provide an equivalent opt-out.
 
 **Respect reduced motion**
 
 ```svelte
 <script lang="ts">
-    import { onMount } from "svelte";
     import { superHover } from "super-hover/svelte";
     import { prefersReducedMotion } from 'svelte/motion';
 </script>
 
-<ul use:superHover={{ enabled: !prefersReducedMotion.current }}>
+<ul {@attach superHover({ enabled: !prefersReducedMotion.current })}>
     <!-- ... -->
 </ul>
 ```
@@ -196,6 +200,7 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 | --- | --- | --- | --- |
 | enabled | boolean | true | Starts the controller running. When `false`, it starts paused and waits for `resume()`. |
 | pointerTypes |  | `["mouse", "pen"]` | Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state. |
+| disableWhilePointerDown | boolean | false | Clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release. |
 | root | Document, Element, or omit | whole document | Optional boundary: the matched element must lie inside this subtree; omit for the whole document. You can pass an iframe `Document` or an element inside a same-origin iframe. Does not make every descendant node a target; that is controlled by `selector` instead. |
 | selector | string | [data-super-hover] | CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate. Independent of `root`, which only scopes where hits count. |
 | activeAttribute | string | data-super-hover-active | Attribute toggled on the active matched element while active, then removed when inactive. |
@@ -209,22 +214,25 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 
 
 
-`UseSuperHoverOptions` for the `superHover` action (`use:superHover`) from `super-hover/svelte`, on the element that hosts the action.
+`UseSuperHoverOptions` for the `superHover` attachment factory from `super-hover/svelte`.
+
+Because attachments are reactive, `{@attach superHover({ enabled: !paused })}` re-runs automatically when reactive values inside the options change.
 
 
 
 | Property | Type | Default | Description |
 | --- | --- | --- | --- |
-| enabled | boolean | true | When `false`, the Svelte action does not mount Super Hover on the root. |
+| enabled | boolean | true | When `false`, Super Hover does not mount on the root. |
 | pointerTypes |  | `["mouse", "pen"]` | Pointer types allowed to update the tracked pointer position. Touch is off by default. |
+| disableWhilePointerDown | boolean | false | Clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release. |
 | selector | string | [data-super-hover] | CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate. Independent of `root`, which only scopes where hits count. |
 | activeAttribute | string | data-super-hover-active | Attribute toggled on the active matched element while active, then removed when inactive. |
 | enterEventType | string | superhoverenter | `CustomEvent` type dispatched on the matched element when it becomes active. |
 | leaveEventType | string | superhoverleave | `CustomEvent` type dispatched on the matched element when it stops being active. |
-| moveEventType | string or false | auto | Custom move event name, or `false` to disable move events. If neither `onMove` nor `moveEventType` is passed, the Svelte action disables move events for you. |
+| moveEventType | string or false | auto | Custom move event name, or `false` to disable move events. If neither `onMove` nor `moveEventType` is passed, the helper disables move events for you. |
 | onEnter | (event: SuperHoverEnterEvent) => void | no-op | Runs when an enter event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`. |
 | onLeave | (event: SuperHoverLeaveEvent) => void | no-op | Runs when a leave event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`. |
-| onMove | (event: SuperHoverMoveEvent) => void | off | Runs on move events while an element is active. The action only listens for move events when `onMove` is passed. |
+| onMove | (event: SuperHoverMoveEvent) => void | off | Runs on move events while an element is active. The helper only listens for move events when `onMove` is passed. |
 
 
 

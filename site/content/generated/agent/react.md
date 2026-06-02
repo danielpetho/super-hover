@@ -173,7 +173,7 @@ If you have better insight into how browsers prioritize this, please reach out (
 
 Super Hover can make the interface change quickly during scroll or animated layout changes, which can be jarring for people who are sensitive to motion.
 
-If you use it in production, please respect reduced-motion preferences. Either disable it when it makes sense,or provide an equivalent opt-out.
+If you use it in production, please respect reduced-motion preferences. Either disable it when it makes sense, or provide an equivalent opt-out.
 
 **Respect reduced motion**
 
@@ -210,6 +210,7 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 | --- | --- | --- | --- |
 | enabled | boolean | true | Starts the controller running. When `false`, it starts paused and waits for `resume()`. |
 | pointerTypes |  | `["mouse", "pen"]` | Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state. |
+| disableWhilePointerDown | boolean | false | Clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release. |
 | root | Document, Element, or omit | whole document | Optional boundary: the matched element must lie inside this subtree; omit for the whole document. You can pass an iframe `Document` or an element inside a same-origin iframe. Does not make every descendant node a target; that is controlled by `selector` instead. |
 | selector | string | [data-super-hover] | CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate (default `[data-super-hover]`). Independent of `root`, which only scopes where hits count. |
 | activeAttribute | string | data-super-hover-active | Attribute toggled on the active matched element (empty string while active, removed otherwise). Use it for styling, e.g. `data-[super-hover-active]:…`. |
@@ -231,6 +232,7 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 | --- | --- | --- | --- |
 | enabled | boolean | true | When `false`, the React helper does not mount Super Hover on the root. |
 | pointerTypes |  | `["mouse", "pen"]` | Pointer types allowed to update the tracked pointer position. Touch is off by default. |
+| disableWhilePointerDown | boolean | false | Clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release. |
 | selector | string | [data-super-hover] | CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate (default `[data-super-hover]`). Independent of `root`, which only scopes where hits count. |
 | activeAttribute | string | data-super-hover-active | Attribute toggled on the active matched element (empty string while active, removed otherwise). Use it for styling, e.g. `data-[super-hover-active]:…`. |
 | enterEventType | string | superhoverenter | `CustomEvent` type dispatched on the matched element when it becomes active (`bubbles: true`). |

@@ -104,6 +104,8 @@ Vue:
 
 Svelte:
 
+Requires Svelte 5.29 or newer.
+
 ```svelte
 <script lang="ts">
   import { superHover } from "super-hover/svelte";
