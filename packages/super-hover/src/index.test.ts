@@ -8,6 +8,7 @@ type PointerMoveInit = {
   x?: number;
   y?: number;
   pointerType?: string;
+  buttons?: number;
 };
 
 const activeAttribute = "data-super-hover-active";
@@ -44,6 +45,7 @@ function createPointerMove({
   x = 10,
   y = 20,
   pointerType = "mouse",
+  buttons = 0,
 }: PointerMoveInit = {}) {
   const event = new Event("pointermove") as PointerEvent;
 
@@ -51,6 +53,28 @@ function createPointerMove({
     clientX: { value: x },
     clientY: { value: y },
     pointerType: { value: pointerType },
+    buttons: { value: buttons },
+  });
+
+  return event;
+}
+
+function createPointerEvent(
+  type: "pointerdown" | "pointerup",
+  {
+    x = 10,
+    y = 20,
+    pointerType = "mouse",
+    buttons = type === "pointerdown" ? 1 : 0,
+  }: PointerMoveInit = {},
+) {
+  const event = new Event(type) as PointerEvent;
+
+  Object.defineProperties(event, {
+    clientX: { value: x },
+    clientY: { value: y },
+    pointerType: { value: pointerType },
+    buttons: { value: buttons },
   });
 
   return event;
@@ -160,6 +184,57 @@ describe("createSuperHover", () => {
     flushFrame();
 
     expect(target.hasAttribute(activeAttribute)).toBe(true);
+
+    controller.destroy();
+  });
+
+  it("keeps hover active while a pointer button is down by default", () => {
+    const target = createTarget("Pressed target");
+
+    hitTarget = target;
+
+    const controller = createSuperHover();
+    window.dispatchEvent(createPointerMove({ buttons: 1 }));
+    flushFrame();
+
+    expect(target.hasAttribute(activeAttribute)).toBe(true);
+
+    controller.destroy();
+  });
+
+  it("clears hover while an allowed pointer is down when opted in", () => {
+    const target = createTarget("Selectable target");
+    const leave = vi.fn();
+    const enter = vi.fn();
+
+    target.addEventListener("superhoverleave", leave);
+    target.addEventListener("superhoverenter", enter);
+    hitTarget = target;
+
+    const controller = createSuperHover({ disableWhilePointerDown: true });
+    window.dispatchEvent(createPointerMove());
+    flushFrame();
+
+    expect(target.hasAttribute(activeAttribute)).toBe(true);
+    expect(enter).toHaveBeenCalledTimes(1);
+
+    window.dispatchEvent(createPointerEvent("pointerdown"));
+    flushFrame();
+
+    expect(target.hasAttribute(activeAttribute)).toBe(false);
+    expect(leave).toHaveBeenCalledTimes(1);
+
+    window.dispatchEvent(createPointerMove({ buttons: 1 }));
+    flushFrame();
+
+    expect(target.hasAttribute(activeAttribute)).toBe(false);
+    expect(enter).toHaveBeenCalledTimes(1);
+
+    window.dispatchEvent(createPointerEvent("pointerup"));
+    flushFrame();
+
+    expect(target.hasAttribute(activeAttribute)).toBe(true);
+    expect(enter).toHaveBeenCalledTimes(2);
 
     controller.destroy();
   });

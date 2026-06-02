@@ -196,6 +196,10 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
     Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state.
   </ApiProp>
 
+  <ApiProp name="disableWhilePointerDown" type="boolean" defaultValue="false">
+    Clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release.
+  </ApiProp>
+
   <ApiProp name="root" type="Document, Element, or omit" defaultValue={<em className="text-muted-foreground">whole document</em>}>
     Optional boundary: the matched element must lie inside this subtree; omit for the whole document. You can pass an iframe `Document` or an element inside a same-origin iframe. Does not make every descendant node a target; that is controlled by `selector` instead.
   </ApiProp>
@@ -234,6 +238,10 @@ Because attachments are reactive, `{@attach superHover({ enabled: !paused })}` r
 
   <ApiProp name="pointerTypes" type={`("mouse" | "pen" | "touch")[]`} defaultValue={`["mouse", "pen"]`}>
     Pointer types allowed to update the tracked pointer position. Touch is off by default.
+  </ApiProp>
+
+  <ApiProp name="disableWhilePointerDown" type="boolean" defaultValue="false">
+    Clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release.
   </ApiProp>
 
   <ApiProp name="selector" type="string" defaultValue="[data-super-hover]">

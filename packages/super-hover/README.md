@@ -134,6 +134,7 @@ If the active element changes, Super Hover removes `data-super-hover-active` fro
 | --- | --- | --- |
 | `enabled` | `true` | When `false`, starts paused and waits for `resume()`. |
 | `pointerTypes` | `["mouse", "pen"]` | Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state. |
+| `disableWhilePointerDown` | `false` | When `true`, clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release. |
 | `root` | omit, whole document | Optional boundary: the matched element must be inside this subtree. Can be a `Document` or `Element`, including same-origin iframe documents/elements. |
 | `selector` | `[data-super-hover]` | CSS selector passed to `element.closest` from the hit-tested node. Independent of `root`. |
 | `activeAttribute` | `data-super-hover-active` | Attribute toggled on the active matched element while active. |

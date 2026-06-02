@@ -73,6 +73,9 @@ export function superHover(
       ...(options.pointerTypes !== undefined && {
         pointerTypes: options.pointerTypes,
       }),
+      ...(options.disableWhilePointerDown !== undefined && {
+        disableWhilePointerDown: options.disableWhilePointerDown,
+      }),
       enterEventType,
       leaveEventType,
       ...(options.moveEventType !== undefined
