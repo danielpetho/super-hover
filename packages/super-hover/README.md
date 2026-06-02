@@ -107,16 +107,9 @@ Svelte:
 ```svelte
 <script lang="ts">
   import { superHover } from "super-hover/svelte";
-
-  const hover = (node: HTMLElement) => {
-    const hv = superHover(node, {
-      onEnter: (event) => console.log(event.detail.current),
-    });
-    return () => hv.destroy();
-  };
 </script>
 
-<ul {@attach hover}>
+<ul {@attach superHover({ onEnter: (event) => console.log(event.detail.current) })}>
   <!-- data-super-hover items -->
 </ul>
 ```

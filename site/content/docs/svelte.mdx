@@ -19,7 +19,7 @@ Wrap the area you care about, then mark the things that should act hoverable.
 
 The active element gets `data-super-hover-active`, which is usually enough if you only want styling.
 
-Pass `superHover` from `super-hover/svelte` to [`{@attach}`](https://svelte.dev/docs/svelte/@attach) on the list root. Call it from an attach function and return `() => hv.destroy()` as cleanup.
+Pass `superHover` from `super-hover/svelte` to [`{@attach}`](https://svelte.dev/docs/svelte/@attach) on the list root. It is an [attachment factory](https://svelte.dev/docs/svelte/@attach#Attachment-factories), pass options to `superHover(...)`, and Svelte handles cleanup when the element is removed or options change.
 
 <CodeSnippet
   title="Basic usage"
@@ -29,14 +29,9 @@ Pass `superHover` from `super-hover/svelte` to [`{@attach}`](https://svelte.dev/
     import { superHover } from "super-hover/svelte";
 
     const items = ["Inbox", "Projects", "Settings"];
-
-    const hover = (node: HTMLElement) => {
-      const hv = superHover(node);
-      return () => hv.destroy();
-    };
 </script>
 
-<ul {@attach hover} class="space-y-1">
+<ul {@attach superHover()} class="space-y-1">
     {#each items as item (item)}
       <li
         data-super-hover
@@ -57,7 +52,7 @@ If styling is not enough, you can run code when the active element changes. Supe
 - `superhoverleave` when an element stops being active
 - `superhovermove` while an element is active
 
-In Svelte, pass `onEnter`, `onLeave`, and `onMove` to `superHover` inside your attach function.
+In Svelte, pass `onEnter`, `onLeave`, and `onMove` to `superHover`.
 
 <Preview
   name="scroll-menu"
@@ -75,25 +70,22 @@ In Svelte, pass `onEnter`, `onLeave`, and `onMove` to `superHover` inside your a
     import { superHover } from "super-hover/svelte";
 
     const items = ["Inbox", "Projects", "Settings"];
-
-    const hover = (node: HTMLElement) => {
-      const hv = superHover(node, {
-        onEnter(event) {
-          console.log("entered", event.detail.current);
-        },
-        onMove(event) {
-          console.log("move", event.detail.current);
-        },
-        onLeave(event) {
-          console.log("left", event.detail.current);
-        },
-      });
-
-      return () => hv.destroy();
-    };
 </script>
 
-<ul {@attach hover} class="space-y-1">
+<ul
+    {@attach superHover({
+      onEnter(event) {
+        console.log("entered", event.detail.current);
+      },
+      onMove(event) {
+        console.log("move", event.detail.current);
+      },
+      onLeave(event) {
+        console.log("left", event.detail.current);
+      },
+    })}
+    class="space-y-1"
+  >
     {#each items as item (item)}
       <li
         data-super-hover
@@ -138,14 +130,9 @@ For `superhovermove`, `detail` has:
       console.log(previous?.id);
       console.log(current?.id);
     }
-
-    const hover = (node: HTMLElement) => {
-      const hv = superHover(node, { onEnter: handleEnter });
-      return () => hv.destroy();
-    };
 </script>
 
-<ul {@attach hover}>
+<ul {@attach superHover({ onEnter: handleEnter })}>
     <li id="inbox" data-super-hover>Inbox</li>
     <li id="projects" data-super-hover>Projects</li>
     <li id="settings" data-super-hover>Settings</li>
@@ -184,14 +171,9 @@ If you use it in production, please respect reduced-motion preferences. Either d
 <script lang="ts">
     import { superHover } from "super-hover/svelte";
     import { prefersReducedMotion } from 'svelte/motion';
-
-    const hover = (node: HTMLElement) => {
-      const hv = superHover(node, { enabled: !prefersReducedMotion.current });
-      return () => hv.destroy();
-    };
 </script>
 
-<ul {@attach hover}>
+<ul {@attach superHover({ enabled: !prefersReducedMotion.current })}>
     <!-- ... -->
 </ul>
 `}
@@ -241,9 +223,9 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 
 <DocCodeHeading id="usesuperhoveroptions">UseSuperHoverOptions</DocCodeHeading>
 
-`UseSuperHoverOptions` for `superHover` from `super-hover/svelte`, passed as the second argument inside your attach function.
+`UseSuperHoverOptions` for the `superHover` attachment factory from `super-hover/svelte`.
 
-If options need to update reactively, define a new attach function when they change — for example with `$derived.by`.
+Because attachments are reactive, `{@attach superHover({ enabled: !paused })}` re-runs automatically when reactive values inside the options change.
 
 <ApiPropList aria-label="UseSuperHoverOptions" anchorPrefix="svelte-attach-super-hover">
   <ApiProp name="enabled" type="boolean" defaultValue="true">
