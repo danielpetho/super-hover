@@ -109,10 +109,21 @@ Requires Svelte 5.29 or newer.
 ```svelte
 <script lang="ts">
   import { superHover } from "super-hover/svelte";
+
+  const hover = superHover({
+    onEnter(event) {
+      console.log("entered", event.detail.current);
+    },
+    onLeave(event) {
+      console.log("left", event.detail.previous);
+    },
+  });
 </script>
 
-<ul {@attach superHover({ onEnter: (event) => console.log(event.detail.current) })}>
-  <!-- data-super-hover items -->
+<ul {@attach hover}>
+  <li data-super-hover>Inbox</li>
+  <li data-super-hover>Projects</li>
+  <li data-super-hover>Settings</li>
 </ul>
 ```
 
