@@ -42,6 +42,7 @@ export function useSuperHover(
     selector,
     activeAttribute,
     pointerTypes,
+    disableWhilePointerDown,
     enterEventType = "superhoverenter",
     leaveEventType = "superhoverleave",
     moveEventType,
@@ -83,6 +84,7 @@ export function useSuperHover(
       ...(selector !== undefined && { selector }),
       ...(activeAttribute !== undefined && { activeAttribute }),
       ...(pointerTypes !== undefined && { pointerTypes }),
+      ...(disableWhilePointerDown !== undefined && { disableWhilePointerDown }),
       enterEventType,
       leaveEventType,
       ...(moveEventType !== undefined
@@ -106,6 +108,7 @@ export function useSuperHover(
     selector,
     activeAttribute,
     pointerTypes,
+    disableWhilePointerDown,
     enterEventType,
     leaveEventType,
     moveEventType,

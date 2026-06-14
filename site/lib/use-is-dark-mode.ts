@@ -7,20 +7,17 @@ export function useIsDarkMode() {
 
   React.useEffect(() => {
     const root = document.documentElement;
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
 
     const update = () => {
-      setIsDark(root.classList.contains("dark") || media.matches);
+      setIsDark(root.classList.contains("dark"));
     };
 
     const observer = new MutationObserver(update);
     observer.observe(root, { attributes: true, attributeFilter: ["class"] });
     update();
-    media.addEventListener("change", update);
 
     return () => {
       observer.disconnect();
-      media.removeEventListener("change", update);
     };
   }, []);
 

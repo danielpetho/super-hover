@@ -155,13 +155,47 @@ On that frame, Super Hover calls `elementFromPoint(x, y)`, finds the closest ele
 
 If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
 
-### What about content-visibility?
+## Other approaches
+
+### Track the pointer path yourself
+
+If you know the layout of your targets, you can measure their bounding boxes and test whether the pointer path crossed them between frames. Motion.dev has a [great article](https://motion.dev/magazine/collision-detection-in-hover-detection) on this approach, framing it as a collision-detection problem: fast pointer movement can skip over elements when you only test discrete pointer positions, so you test the line between the previous and current pointer position instead.
+
+This can be more accurate than Super Hover for effects where every crossed item matters, because it can detect elements between sampled pointer positions. The tradeoff is that you need to own the measuring, caching, invalidation, geometry checks, and performance work yourself.
+
+### Content visibility
 
 Optimizing heavy content with `content-visibility: auto` can also make native hover feel more responsive. It lets the browser [skip rendering](https://web.dev/articles/content-visibility) for content until it is needed, which can leave enough room for `:hover` to update more often while scrolling.
 
 That said, what the browser schedules, and how it prioritizes those updates is a bit of a black box to me, and the result does not seem fully deterministic. Super Hover, on the other hand, recomputes the active element from the last pointer position **every frame**. Of course, if the page is overloaded enough to drop frames, Super Hover can drop frames too.
 
 If you have better insight into how browsers prioritize this, please <MailTo email="hi@danielpetho.com">reach out</MailTo>. I would genuinely love to hear it.
+
+## Accessibility
+
+Super Hover can make the interface change quickly during scroll or animated layout changes, which can be jarring for people who are sensitive to motion.
+
+If you use it in production, please respect reduced-motion preferences. Either disable it when it makes sense, or provide an equivalent opt-out.
+
+<CodeSnippet
+  title="Respect reduced motion"
+  language="tsx"
+  code={`
+import { useEffect, useState } from "react";
+import { useSuperHoverRef } from "super-hover/react";
+import { useReducedMotion } from "motion/react"
+
+export function Example() {
+    const prefersReducedMotion = useReducedMotion();
+
+    const rootRef = useSuperHoverRef({
+      enabled: !prefersReducedMotion,
+    });
+
+    return <ul ref={rootRef}>{/* ... */}</ul>;
+}
+`}
+/>
 
 ## API
 
@@ -178,6 +212,10 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 
   <ApiProp name="pointerTypes" type={`("mouse" | "pen" | "touch")[]`} defaultValue={`["mouse", "pen"]`}>
     Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state.
+  </ApiProp>
+
+  <ApiProp name="disableWhilePointerDown" type="boolean" defaultValue="false">
+    Clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release.
   </ApiProp>
 
   <ApiProp name="root" type="Document, Element, or omit" defaultValue={<em className="text-muted-foreground">whole document</em>}>
@@ -216,6 +254,10 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 
   <ApiProp name="pointerTypes" type={`("mouse" | "pen" | "touch")[]`} defaultValue={`["mouse", "pen"]`}>
     Pointer types allowed to update the tracked pointer position. Touch is off by default.
+  </ApiProp>
+
+  <ApiProp name="disableWhilePointerDown" type="boolean" defaultValue="false">
+    Clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release.
   </ApiProp>
 
   <ApiProp name="selector" type="string" defaultValue="[data-super-hover]">

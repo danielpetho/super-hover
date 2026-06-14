@@ -104,13 +104,26 @@ Vue:
 
 Svelte:
 
+Requires Svelte 5.29 or newer.
+
 ```svelte
 <script lang="ts">
   import { superHover } from "super-hover/svelte";
+
+  const hover = superHover({
+    onEnter(event) {
+      console.log("entered", event.detail.current);
+    },
+    onLeave(event) {
+      console.log("left", event.detail.previous);
+    },
+  });
 </script>
 
-<ul use:superHover={{ onEnter: (event) => console.log(event.detail.current) }}>
-  <!-- data-super-hover items -->
+<ul {@attach hover}>
+  <li data-super-hover>Inbox</li>
+  <li data-super-hover>Projects</li>
+  <li data-super-hover>Settings</li>
 </ul>
 ```
 
@@ -134,6 +147,7 @@ If the active element changes, Super Hover removes `data-super-hover-active` fro
 | --- | --- | --- |
 | `enabled` | `true` | When `false`, starts paused and waits for `resume()`. |
 | `pointerTypes` | `["mouse", "pen"]` | Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state. |
+| `disableWhilePointerDown` | `false` | When `true`, clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release. |
 | `root` | omit, whole document | Optional boundary: the matched element must be inside this subtree. Can be a `Document` or `Element`, including same-origin iframe documents/elements. |
 | `selector` | `[data-super-hover]` | CSS selector passed to `element.closest` from the hit-tested node. Independent of `root`. |
 | `activeAttribute` | `data-super-hover-active` | Attribute toggled on the active matched element while active. |

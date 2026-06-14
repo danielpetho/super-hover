@@ -13,49 +13,51 @@ export type {
   UseSuperHoverOptions,
 };
 
+/** Attachment returned by {@link superHover}. */
+export type SuperHoverAttachment = (node: HTMLElement) => () => void;
+
 const noopEnter: (event: SuperHoverEnterEvent) => void = () => {};
 const noopLeave: (event: SuperHoverLeaveEvent) => void = () => {};
 
 /**
- * Svelte action: attach enter/leave on the list root (and move when `onMove` is passed).
+ * Attachment factory for Svelte 5 `{@attach}`. Pass the result directly to
+ * `{@attach superHover(options)}`, cleanup runs automatically when the element
+ * is removed or when reactive options change.
+ * https://svelte.dev/docs/svelte/@attach
  *
  * @example
  * ```svelte
  * <script lang="ts">
  *   import { superHover } from "super-hover/svelte";
  * </script>
- * <ul use:superHover={{ onEnter(e) {}, onLeave(e) {}, onMove(e) {} }} class="space-y-1">
+ * <ul {@attach superHover({ onEnter(e) {}, onLeave(e) {} })}>
  *   <li data-super-hover>…</li>
  * </ul>
  * ```
  */
 export function superHover(
-  node: HTMLElement,
   options: UseSuperHoverOptions = {},
-): {
-  update(next: UseSuperHoverOptions): void;
-  destroy(): void;
-} {
-  let cleanup: () => void = () => {};
-
-  function mount(opts: UseSuperHoverOptions): () => void {
-    const enabled = opts.enabled ?? true;
+): SuperHoverAttachment {
+  return (node) => {
+    const enabled = options.enabled ?? true;
     if (!enabled) return () => {};
 
-    const enterEventType = opts.enterEventType ?? "superhoverenter";
-    const leaveEventType = opts.leaveEventType ?? "superhoverleave";
+    const enterEventType = options.enterEventType ?? "superhoverenter";
+    const leaveEventType = options.leaveEventType ?? "superhoverleave";
     const resolvedMove =
-      opts.moveEventType === false ? null : (opts.moveEventType ?? "superhovermove");
+      options.moveEventType === false
+        ? null
+        : (options.moveEventType ?? "superhovermove");
 
     const handleEnter = (e: Event) =>
-      (opts.onEnter ?? noopEnter)(e as SuperHoverEnterEvent);
+      (options.onEnter ?? noopEnter)(e as SuperHoverEnterEvent);
     const handleLeave = (e: Event) =>
-      (opts.onLeave ?? noopLeave)(e as SuperHoverLeaveEvent);
+      (options.onLeave ?? noopLeave)(e as SuperHoverLeaveEvent);
     const handleMove = (e: Event) =>
-      opts.onMove?.(e as SuperHoverMoveEvent);
+      options.onMove?.(e as SuperHoverMoveEvent);
 
     const listenMove =
-      resolvedMove !== null && opts.onMove !== undefined;
+      resolvedMove !== null && options.onMove !== undefined;
 
     node.addEventListener(enterEventType, handleEnter);
     node.addEventListener(leaveEventType, handleLeave);
@@ -64,14 +66,21 @@ export function superHover(
     }
     const ctrl = createSuperHover({
       root: node,
-      ...(opts.selector !== undefined && { selector: opts.selector }),
-      ...(opts.activeAttribute !== undefined && { activeAttribute: opts.activeAttribute }),
-      ...(opts.pointerTypes !== undefined && { pointerTypes: opts.pointerTypes }),
+      ...(options.selector !== undefined && { selector: options.selector }),
+      ...(options.activeAttribute !== undefined && {
+        activeAttribute: options.activeAttribute,
+      }),
+      ...(options.pointerTypes !== undefined && {
+        pointerTypes: options.pointerTypes,
+      }),
+      ...(options.disableWhilePointerDown !== undefined && {
+        disableWhilePointerDown: options.disableWhilePointerDown,
+      }),
       enterEventType,
       leaveEventType,
-      ...(opts.moveEventType !== undefined
-        ? { moveEventType: opts.moveEventType }
-        : opts.onMove !== undefined
+      ...(options.moveEventType !== undefined
+        ? { moveEventType: options.moveEventType }
+        : options.onMove !== undefined
           ? {}
           : { moveEventType: false }),
     });
@@ -84,18 +93,5 @@ export function superHover(
       }
       ctrl.destroy();
     };
-  }
-
-  cleanup = mount(options);
-
-  return {
-    update(next: UseSuperHoverOptions) {
-      cleanup();
-      cleanup = mount(next);
-    },
-    destroy() {
-      cleanup();
-      cleanup = () => {};
-    },
   };
 }

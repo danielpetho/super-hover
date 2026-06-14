@@ -155,13 +155,50 @@ On that frame, Super Hover calls `elementFromPoint(x, y)`, finds the closest ele
 
 If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
 
-### What about content-visibility?
+## Other approaches
+
+### Track the pointer path yourself
+
+If you know the layout of your targets, you can measure their bounding boxes and test whether the pointer path crossed them between frames. Motion.dev has a [great article](https://motion.dev/magazine/collision-detection-in-hover-detection) on this approach, framing it as a collision-detection problem: fast pointer movement can skip over elements when you only test discrete pointer positions, so you test the line between the previous and current pointer position instead.
+
+This can be more accurate than Super Hover for effects where every crossed item matters, because it can detect elements between sampled pointer positions. The tradeoff is that you need to own the measuring, caching, invalidation, geometry checks, and performance work yourself.
+
+### Content visibility
 
 Optimizing heavy content with `content-visibility: auto` can also make native hover feel more responsive. It lets the browser [skip rendering](https://web.dev/articles/content-visibility) for content until it is needed, which can leave enough room for `:hover` to update more often while scrolling.
 
 That said, what the browser schedules, and how it prioritizes those updates is a bit of a black box to me, and the result does not seem fully deterministic. Super Hover, on the other hand, recomputes the active element from the last pointer position **every frame**. Of course, if the page is overloaded enough to drop frames, Super Hover can drop frames too.
 
 If you have better insight into how browsers prioritize this, please reach out (hi@danielpetho.com). I would genuinely love to hear it.
+
+## Accessibility
+
+Super Hover can make the interface change quickly during scroll or animated layout changes, which can be jarring for people who are sensitive to motion.
+
+If you use it in production, please respect reduced-motion preferences. Either disable it when it makes sense, or provide an equivalent opt-out.
+
+**Respect reduced motion**
+
+```typescript
+import { createSuperHover } from "super-hover";
+
+const root = document.querySelector<HTMLElement>("#list")!;
+const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+const superHover = createSuperHover({
+    root,
+    enabled: !media.matches,
+});
+
+media.addEventListener("change", (event) => {
+    if (event.matches) {
+      superHover.pause();
+    } else {
+      superHover.resume();
+    }
+});
+```
+
 
 ## API
 
@@ -179,6 +216,7 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 | --- | --- | --- | --- |
 | enabled | boolean | true | Starts the controller running. When `false`, it starts paused and waits for `resume()`. |
 | pointerTypes |  | `["mouse", "pen"]` | Pointer types allowed to update the tracked pointer position. Touch is off by default so finger scrolling does not create hover state. |
+| disableWhilePointerDown | boolean | false | Clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release. |
 | root | Document, Element, or omit | whole document | Optional boundary: the matched element must lie inside this subtree; omit for the whole document. You can pass an iframe `Document` or an element inside a same-origin iframe. Does not make every descendant node a target; that is controlled by `selector` instead. |
 | selector | string | [data-super-hover] | CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate. Independent of `root`, which only scopes where hits count. |
 | activeAttribute | string | data-super-hover-active | Attribute toggled on the active matched element while active, then removed when inactive. |

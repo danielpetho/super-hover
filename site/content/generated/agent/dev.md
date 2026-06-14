@@ -2,7 +2,7 @@
 
 # Dev Sandboxes
 
-## TypeScript
+{/* ## TypeScript
 
 ### Attribute-driven
 
@@ -10,7 +10,7 @@
 
 
 
-{/* ### Event-driven
+### Event-driven
 
 **Sandbox (`vanilla-events`):** bundled sources are published at `/l/vanilla-events.json` on the docs site.
 
@@ -22,9 +22,9 @@
 
 **Sandbox (`react-use-super-hover`):** bundled sources are published at `/l/react-use-super-hover.json` on the docs site.
 
- */}
 
-{/* ### Attribute-driven
+
+### Attribute-driven
 
 **Sandbox (`react-attributes`):** bundled sources are published at `/l/react-attributes.json` on the docs site.
 
@@ -34,7 +34,7 @@
 
 **Sandbox (`react-events`):** bundled sources are published at `/l/react-events.json` on the docs site.
 
-
+ */}
 
 ## Svelte
 
@@ -50,13 +50,13 @@
 
 
 
-### `superHover` action
+### `superHover` attachment
 
-**Sandbox (`svelte-super-hover`):** bundled sources are published at `/l/svelte-super-hover.json` on the docs site.
+**Sandbox (`svelte-use-super-hover`):** bundled sources are published at `/l/svelte-use-super-hover.json` on the docs site.
 
 
 
-## Vue
+{/* ## Vue
 
 ### Attribute-driven
 

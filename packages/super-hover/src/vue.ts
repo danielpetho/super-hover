@@ -71,6 +71,9 @@ export function useSuperHover(
       ...(opts.selector !== undefined && { selector: opts.selector }),
       ...(opts.activeAttribute !== undefined && { activeAttribute: opts.activeAttribute }),
       ...(opts.pointerTypes !== undefined && { pointerTypes: opts.pointerTypes }),
+      ...(opts.disableWhilePointerDown !== undefined && {
+        disableWhilePointerDown: opts.disableWhilePointerDown,
+      }),
       enterEventType,
       leaveEventType,
       ...(opts.moveEventType !== undefined

@@ -37,6 +37,11 @@ export type SuperHoverOptions = {
    */
   pointerTypes?: SuperHoverPointerType[];
   /**
+   * When true, clears hover state while an allowed pointer is pressed (for example during text selection).
+   * Default false.
+   */
+  disableWhilePointerDown?: boolean;
+  /**
    * Optional subtree boundary: the matched element must be contained here (or in the active `document` when omitted).
    * Does not opt in every descendant; see `selector` for which nodes can activate.
    *
@@ -134,6 +139,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
   const allowedPointerTypes = new Set<string>(
     options.pointerTypes ?? [...DEFAULT_POINTER_TYPES],
   );
+  const disableWhilePointerDown = options.disableWhilePointerDown ?? false;
 
   let running = options.enabled ?? true;
   let destroyed = false;
@@ -141,6 +147,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
   let lastX = 0;
   let lastY = 0;
   let hasPointer = false;
+  let pointerDown = false;
   let current: Element | null = null;
   let rafId = 0;
   let pending = false;
@@ -173,6 +180,8 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
 
   function resolveTarget(): Element | null {
     if (!running || !hasPointer) return null;
+    if (disableWhilePointerDown && pointerDown) return null;
+
     const hit = scopeDoc.elementFromPoint(lastX, lastY);
 
     if (!hit) return null;
@@ -252,13 +261,46 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
     lastY = e.clientY;
     hasPointer = true;
 
+    if (disableWhilePointerDown) {
+      pointerDown = e.buttons !== 0;
+    }
+
     // Keep coordinates fresh while paused so resume() can hit-test the latest pointer position.
     if (running) schedule();
   }
 
   function onPointerLeaveDocument(): void {
     hasPointer = false;
+    pointerDown = false;
     schedule();
+  }
+
+  function onPointerDown(e: PointerEvent): void {
+    if (destroyed) return;
+    if (!disableWhilePointerDown) return;
+    if (!allowedPointerTypes.has(e.pointerType)) return;
+
+    lastX = e.clientX;
+    lastY = e.clientY;
+    hasPointer = true;
+    pointerDown = true;
+
+    if (running) schedule();
+  }
+
+  function onPointerUp(e: PointerEvent): void {
+    if (destroyed) return;
+    if (!disableWhilePointerDown) return;
+
+    if (allowedPointerTypes.has(e.pointerType)) {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      hasPointer = true;
+    }
+
+    pointerDown = false;
+
+    if (running) schedule();
   }
 
   function onPointerOut(e: PointerEvent): void {
@@ -273,6 +315,8 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
   }
 
   scopeWin.addEventListener("pointermove", onPointerMove, { passive: true });
+  scopeWin.addEventListener("pointerdown", onPointerDown, { passive: true });
+  scopeWin.addEventListener("pointerup", onPointerUp, { passive: true });
   scopeDoc.addEventListener("scroll", schedule, {
     capture: true,
     passive: true,
@@ -311,6 +355,8 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
       destroyed = true;
 
       scopeWin.removeEventListener("pointermove", onPointerMove);
+      scopeWin.removeEventListener("pointerdown", onPointerDown);
+      scopeWin.removeEventListener("pointerup", onPointerUp);
       scopeDoc.removeEventListener("scroll", schedule, { capture: true });
       scopeWin.removeEventListener("resize", schedule);
       scopeWin.removeEventListener("blur", onPointerLeaveDocument);
@@ -321,6 +367,7 @@ export function createSuperHover(options: SuperHoverOptions = {}): SuperHoverCon
 
       cancelPendingFrame();
       hasPointer = false;
+      pointerDown = false;
       clearActive();
     },
   };
