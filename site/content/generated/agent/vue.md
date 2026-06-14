@@ -159,7 +159,15 @@ On that frame, Super Hover calls `elementFromPoint(x, y)`, finds the closest ele
 
 If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
 
-### What about content-visibility?
+## Other approaches
+
+### Track the pointer path yourself
+
+If you know the layout of your targets, you can measure their bounding boxes and test whether the pointer path crossed them between frames. Motion.dev has a [great article](https://motion.dev/magazine/collision-detection-in-hover-detection) on this approach, framing it as a collision-detection problem: fast pointer movement can skip over elements when you only test discrete pointer positions, so you test the line between the previous and current pointer position instead.
+
+This can be more accurate than Super Hover for effects where every crossed item matters, because it can detect elements between sampled pointer positions. The tradeoff is that you need to own the measuring, caching, invalidation, geometry checks, and performance work yourself.
+
+### Content visibility
 
 Optimizing heavy content with `content-visibility: auto` can also make native hover feel more responsive. It lets the browser [skip rendering](https://web.dev/articles/content-visibility) for content until it is needed, which can leave enough room for `:hover` to update more often while scrolling.
 
