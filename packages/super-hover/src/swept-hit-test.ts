@@ -75,32 +75,90 @@ function lineSlabRange(
 }
 
 /**
- * Detects the inverse case of pointer movement: the pointer stayed still,
- * but an element's rect moved across it, usually because of scroll.
- * This lets Super Hover catch elements that pass under a fixed cursor.
+ * Returns when a moving rectangle first contains a fixed pointer point.
+ *
+ * This is the inverse of pointer segment vs. rectangle hit-testing: during
+ * scroll, the pointer can stay still while element rectangles move underneath
+ * it. Each axis gives a time range where the pointer lies inside that moving
+ * range; intersecting those ranges gives the first crossing time.
  */
-function rectCrossedPointer(
+function movingRectContainsPointTime(
   px: number,
   py: number,
   prev: RectLike,
   curr: RectLike,
-): boolean {
-  const xInSweep =
-    px >= Math.min(prev.left, curr.left) &&
-    px <= Math.max(prev.right, curr.right);
-  const yInSweep =
-    py >= Math.min(prev.top, curr.top) &&
-    py <= Math.max(prev.bottom, curr.bottom);
+): number | null {
+  const [enterX, exitX] = movingRangeContainsPointTime(
+    px,
+    prev.left,
+    prev.right,
+    curr.left,
+    curr.right,
+  );
+  const [enterY, exitY] = movingRangeContainsPointTime(
+    py,
+    prev.top,
+    prev.bottom,
+    curr.top,
+    curr.bottom,
+  );
 
-  if (!xInSweep || !yInSweep) return false;
-  if (pointInRect(px, py, prev) || pointInRect(px, py, curr)) return true;
+  const enter = Math.max(enterX, enterY);
+  const exit = Math.min(exitX, exitY);
 
-  const passedLeft = prev.left > px && curr.right < px;
-  const passedRight = prev.right < px && curr.left > px;
-  const passedUp = prev.top > py && curr.bottom < py;
-  const passedDown = prev.bottom < py && curr.top > py;
+  if (enter > exit) return null;
+  if (exit < 0 || enter > 1) return null;
 
-  return passedLeft || passedRight || passedUp || passedDown;
+  return Math.max(0, Math.min(1, enter));
+}
+
+/**
+ * Returns the time range where a moving 1D interval contains a fixed point.
+ */
+function movingRangeContainsPointTime(
+  point: number,
+  prevMin: number,
+  prevMax: number,
+  currMin: number,
+  currMax: number,
+): [enter: number, exit: number] {
+  const deltaMin = currMin - prevMin;
+  const deltaMax = currMax - prevMax;
+
+  const [enterMin, exitMin] = movingBoundaryLessThanOrEqualPointTime(
+    prevMin,
+    deltaMin,
+    point,
+  );
+  const [enterMax, exitMax] = movingBoundaryGreaterThanOrEqualPointTime(
+    prevMax,
+    deltaMax,
+    point,
+  );
+
+  return [Math.max(enterMin, enterMax), Math.min(exitMin, exitMax)];
+}
+
+function movingBoundaryLessThanOrEqualPointTime(
+  start: number,
+  delta: number,
+  point: number,
+): [enter: number, exit: number] {
+  if (delta === 0) return start <= point ? [0, 1] : [1, 0];
+
+  const t = (point - start) / delta;
+  return delta > 0 ? [0, t] : [t, 1];
+}
+
+function movingBoundaryGreaterThanOrEqualPointTime(
+  start: number,
+  delta: number,
+  point: number,
+): [enter: number, exit: number] {
+  if (delta === 0) return start >= point ? [0, 1] : [1, 0];
+
+  const t = (point - start) / delta;
+  return delta > 0 ? [t, 1] : [0, t];
 }
 
 /**
@@ -159,10 +217,7 @@ export function elementsCrossedByPointerMotion(
   candidates: readonly Element[],
   previousRects: ReadonlyMap<Element, RectLike>,
 ): Element[] {
-  const hits: { element: Element; orderX: number; orderY: number }[] = [];
-  let totalDeltaX = 0;
-  let totalDeltaY = 0;
-  let movedCount = 0;
+  const hits: { element: Element; enter: number }[] = [];
 
   for (const element of candidates) {
     const prev = previousRects.get(element);
@@ -184,29 +239,13 @@ export function elementsCrossedByPointerMotion(
 
     if (!moved) continue;
 
-    movedCount += 1;
-    totalDeltaX += currRect.left - prev.left;
-    totalDeltaY += currRect.top - prev.top;
+    const enter = movingRectContainsPointTime(px, py, prev, currRect);
+    if (enter === null) continue;
 
-    if (!rectCrossedPointer(px, py, prev, currRect)) continue;
-
-    hits.push({
-      element,
-      orderX: (prev.left + currRect.left) / 2,
-      orderY: (prev.top + currRect.top) / 2,
-    });
+    hits.push({ element, enter });
   }
 
-  const movedMostlyHorizontally = Math.abs(totalDeltaX) > Math.abs(totalDeltaY);
-  const contentMovedNegative =
-    movedCount === 0 ||
-    (movedMostlyHorizontally ? totalDeltaX : totalDeltaY) / movedCount < 0;
-
-  hits.sort((a, b) => {
-    const aOrder = movedMostlyHorizontally ? a.orderX : a.orderY;
-    const bOrder = movedMostlyHorizontally ? b.orderX : b.orderY;
-    return contentMovedNegative ? aOrder - bOrder : bOrder - aOrder;
-  });
+  hits.sort((a, b) => a.enter - b.enter);
 
   return hits.map((hit) => hit.element);
 }
