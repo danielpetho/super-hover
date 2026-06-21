@@ -167,6 +167,12 @@ The visible cost also depends on what you do when hover changes. Toggling a back
 
 If you enable `sweptHitTest`, keep the `root` as narrow as possible and tune `sweptHitTestMargin` for your layout. Larger margins catch bigger pointer/scroll jumps but test more elements per frame; smaller margins can be faster but may miss elements that jump across the pointer between frames.
 
+<Preview
+  name="swept-hit-test-grid"
+  description="A scrollable two-dimensional grid using `sweptHitTest`. Each crossed cell flashes briefly, even when fast pointer movement or diagonal scrolling would normally skip intermediate cells."
+  showCode={false} className="p-0! border-none!"
+/>
+
 ## Other approaches
 
 ### Own the geometry yourself

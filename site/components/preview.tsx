@@ -99,7 +99,7 @@ export function Preview({
     <div
       className={cn(
         "bg-background relative flex min-h-[240px] max-h-[min(70vh,560px)] w-full flex-col overflow-hidden rounded-xl",
-        frameBorder && "border-border border",
+        frameBorder && "border-border border-[0.5px]",
         frameClassName ?? className,
       )}
     >
@@ -144,11 +144,17 @@ export function Preview({
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="demo" className="mt-0 w-full p-0! focus-visible:outline-none">
+      <TabsContent
+        value="demo"
+        className="mt-0 w-full p-0! focus-visible:outline-none"
+      >
         {DemoFrame}
       </TabsContent>
 
-      <TabsContent value="code" className="mt-0 w-full p-0! focus-visible:outline-none">
+      <TabsContent
+        value="code"
+        className="mt-0 w-full p-0! focus-visible:outline-none"
+      >
         <CodeSnippet
           title={`${name}/index.tsx`}
           code={sourceCode}

@@ -4,9 +4,11 @@ import type { ComponentType } from "react";
 import Preview0 from "@/embeds/previews/scroll-list";
 import Preview1 from "@/embeds/previews/scroll-menu";
 import Preview2 from "@/embeds/previews/super-hover-events";
+import Preview3 from "@/embeds/previews/swept-hit-test-grid";
 
 export const previewRegistry: Record<string, ComponentType<object>> = {
   "scroll-list": Preview0,
   "scroll-menu": Preview1,
-  "super-hover-events": Preview2
+  "super-hover-events": Preview2,
+  "swept-hit-test-grid": Preview3
 };
