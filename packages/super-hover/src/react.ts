@@ -46,6 +46,8 @@ export function useSuperHover(
     enterEventType = "superhoverenter",
     leaveEventType = "superhoverleave",
     moveEventType,
+    sweptHitTest,
+    sweptHitTestMargin,
   }: UseSuperHoverOptions = {},
 ): void {
   const onEnterRef = useRef(onEnter);
@@ -85,6 +87,8 @@ export function useSuperHover(
       ...(activeAttribute !== undefined && { activeAttribute }),
       ...(pointerTypes !== undefined && { pointerTypes }),
       ...(disableWhilePointerDown !== undefined && { disableWhilePointerDown }),
+      ...(sweptHitTest !== undefined && { sweptHitTest }),
+      ...(sweptHitTestMargin !== undefined && { sweptHitTestMargin }),
       enterEventType,
       leaveEventType,
       ...(moveEventType !== undefined
@@ -113,6 +117,8 @@ export function useSuperHover(
     leaveEventType,
     moveEventType,
     hasOnMove,
+    sweptHitTest,
+    sweptHitTestMargin,
   ]);
 }
 

@@ -53,11 +53,9 @@ export function superHover(
       (options.onEnter ?? noopEnter)(e as SuperHoverEnterEvent);
     const handleLeave = (e: Event) =>
       (options.onLeave ?? noopLeave)(e as SuperHoverLeaveEvent);
-    const handleMove = (e: Event) =>
-      options.onMove?.(e as SuperHoverMoveEvent);
+    const handleMove = (e: Event) => options.onMove?.(e as SuperHoverMoveEvent);
 
-    const listenMove =
-      resolvedMove !== null && options.onMove !== undefined;
+    const listenMove = resolvedMove !== null && options.onMove !== undefined;
 
     node.addEventListener(enterEventType, handleEnter);
     node.addEventListener(leaveEventType, handleLeave);
@@ -75,6 +73,12 @@ export function superHover(
       }),
       ...(options.disableWhilePointerDown !== undefined && {
         disableWhilePointerDown: options.disableWhilePointerDown,
+      }),
+      ...(options.sweptHitTest !== undefined && {
+        sweptHitTest: options.sweptHitTest,
+      }),
+      ...(options.sweptHitTestMargin !== undefined && {
+        sweptHitTestMargin: options.sweptHitTestMargin,
       }),
       enterEventType,
       leaveEventType,

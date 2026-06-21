@@ -264,4 +264,106 @@ describe("createSuperHover", () => {
 
     expect(target.hasAttribute(activeAttribute)).toBe(false);
   });
+
+  it("briefly activates crossed elements when sweptHitTest is enabled", () => {
+    const a = createTarget("A");
+    const b = createTarget("B");
+    const c = createTarget("C");
+
+    const rectFor = (top: number) =>
+      ({
+        left: 0,
+        right: 100,
+        top,
+        bottom: top + 10,
+        width: 100,
+        height: 10,
+        x: 0,
+        y: top,
+        toJSON: () => ({}),
+      }) as DOMRect;
+
+    a.getBoundingClientRect = () => rectFor(0);
+    b.getBoundingClientRect = () => rectFor(10);
+    c.getBoundingClientRect = () => rectFor(20);
+
+    const enters: string[] = [];
+    for (const target of [a, b, c]) {
+      target.addEventListener("superhoverenter", () => {
+        enters.push(target.textContent ?? "");
+      });
+    }
+
+    hitTarget = a;
+    const controller = createSuperHover({
+      root: document.body,
+      sweptHitTest: true,
+    });
+
+    window.dispatchEvent(createPointerMove({ x: 50, y: 5 }));
+    flushFrame();
+
+    hitTarget = c;
+    window.dispatchEvent(createPointerMove({ x: 50, y: 25 }));
+    flushFrame();
+
+    expect(enters).toEqual(expect.arrayContaining(["A", "B", "C"]));
+    expect(c.hasAttribute(activeAttribute)).toBe(true);
+
+    controller.destroy();
+  });
+
+  it("briefly activates rows that scroll through a fixed pointer when sweptHitTest is enabled", () => {
+    const a = createTarget("A");
+    const b = createTarget("B");
+    const c = createTarget("C");
+
+    const rectFor = (top: number) =>
+      ({
+        left: 0,
+        right: 100,
+        top,
+        bottom: top + 10,
+        width: 100,
+        height: 10,
+        x: 0,
+        y: top,
+        toJSON: () => ({}),
+      }) as DOMRect;
+
+    let aTop = 40;
+    let bTop = 50;
+    let cTop = 60;
+
+    a.getBoundingClientRect = () => rectFor(aTop);
+    b.getBoundingClientRect = () => rectFor(bTop);
+    c.getBoundingClientRect = () => rectFor(cTop);
+
+    const enters: string[] = [];
+    for (const target of [a, b, c]) {
+      target.addEventListener("superhoverenter", () => {
+        enters.push(target.textContent ?? "");
+      });
+    }
+
+    hitTarget = b;
+    const controller = createSuperHover({
+      root: document.body,
+      sweptHitTest: true,
+    });
+
+    window.dispatchEvent(createPointerMove({ x: 50, y: 45 }));
+    flushFrame();
+
+    aTop = 20;
+    bTop = 30;
+    cTop = 40;
+    hitTarget = c;
+    controller.refresh();
+    flushFrame();
+
+    expect(enters).toEqual(expect.arrayContaining(["A", "B", "C"]));
+
+    controller.destroy();
+  });
 });
