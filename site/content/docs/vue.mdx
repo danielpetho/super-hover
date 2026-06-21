@@ -153,13 +153,27 @@ On that frame, Super Hover calls `elementFromPoint(x, y)`, finds the closest ele
 
 If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
 
+## Performance
+
+Super Hover is inherently more expensive than leaving native `:hover` alone. The browser can skip or delay hover updates during scroll when it needs to prioritize other rendering work; Super Hover opts into doing extra work by scheduling its own hit-test and updating hover-like state.
+
+For the default mode, that work is relatively small: it calls `elementFromPoint`, walks up to the closest matching `selector`, and toggles an attribute when the active element changes.
+
+`sweptHitTest` does more. It queries matching candidates, reads their bounding boxes, compares current and previous geometry, and checks whether the pointer path crossed any candidate rectangles between frames. This helps catch fast pointer movement and scroll-driven misses, but it is intentionally opt-in because the extra geometry work can matter on large lists, grids, or frequently changing layouts.
+
+The visible cost also depends on what you do when hover changes. Toggling a background color on a small list is usually cheap. Running expensive JavaScript in `onEnter`, triggering state updates for many components, or animating costly CSS properties can make the difference much more noticeable. Prefer cheap visual changes and GPU-friendly animations where possible; animating properties like `box-shadow` or layout-affecting dimensions can be more expensive than transforms or opacity.
+
+If you enable `sweptHitTest`, keep the `root` as narrow as possible and tune `sweptHitTestMargin` for your layout. Larger margins catch bigger pointer/scroll jumps but test more elements per frame; smaller margins can be faster but may miss elements that jump across the pointer between frames.
+
 ## Other approaches
 
-### Track the pointer path yourself
+### Own the geometry yourself
 
-If you know the layout of your targets, you can measure their bounding boxes and test whether the pointer path crossed them between frames. Motion.dev has a [great article](https://motion.dev/magazine/collision-detection-in-hover-detection) on this approach, framing it as a collision-detection problem: fast pointer movement can skip over elements when you only test discrete pointer positions, so you test the line between the previous and current pointer position instead.
+Super Hover's `sweptHitTest` is based on the collision-detection approach from Motion.dev's [hover detection article](https://motion.dev/magazine/collision-detection-in-hover-detection): fast pointer movement can skip over elements when you only test discrete pointer positions, so you test the line between the previous and current pointer position instead.
 
-This can be more accurate than Super Hover for effects where every crossed item matters, because it can detect elements between sampled pointer positions. The tradeoff is that you need to own the measuring, caching, invalidation, geometry checks, and performance work yourself.
+The important difference is that Super Hover works with arbitrary DOM elements. It does not own your layout, so it has to query matching elements and ask the browser for their current geometry with `getBoundingClientRect`. In a custom component where you own the list/grid geometry, item sizes, scroll offset, and invalidation rules, you can often make a faster and more exact version because you can avoid some DOM reads and cache more aggressively.
+
+So if every crossed item matters and you control the layout, a bespoke Motion-style implementation may be the fastest path. If you want a reusable hover-like behavior that works on arbitrary elements, Super Hover handles that plumbing for you, with the performance tradeoff that comes from measuring real DOM.
 
 ### Content visibility
 
@@ -243,6 +257,14 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
   <ApiProp name="moveEventType" type="string or false" defaultValue="superhovermove">
     `CustomEvent` type dispatched on each scheduled hit-test while an element is active. Set to `false` to disable move events.
   </ApiProp>
+
+  <ApiProp name="sweptHitTest" type="boolean" defaultValue="false">
+    Enables swept hit-testing for fast pointer movement and scroll-driven misses. When enabled, Super Hover checks whether the pointer path, or moving element geometry, crossed matching candidates between frames and briefly activates crossed elements in path order before the final target stays active.
+  </ApiProp>
+
+  <ApiProp name="sweptHitTestMargin" type="number" defaultValue="320">
+    Pixel radius around the pointer used to pre-filter swept-hit-test candidates in both axes. Larger values catch bigger jumps but test more elements per frame; smaller values can be faster but may miss elements that jump across the pointer between frames. Only used when `sweptHitTest` is true.
+  </ApiProp>
 </ApiPropList>
 
 <DocCodeHeading id="usesuperhoveroptions">UseSuperHoverOptions</DocCodeHeading>
@@ -280,6 +302,14 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 
   <ApiProp name="moveEventType" type="string or false" defaultValue={<em className="text-muted-foreground">auto</em>}>
     Custom move event name, or `false` to disable move events. If neither `onMove` nor `moveEventType` is passed, the Vue helper disables move events for you.
+  </ApiProp>
+
+  <ApiProp name="sweptHitTest" type="boolean" defaultValue="false">
+    Enables swept hit-testing for fast pointer movement and scroll-driven misses. When enabled, Super Hover checks whether the pointer path, or moving element geometry, crossed matching candidates between frames and briefly activates crossed elements in path order before the final target stays active.
+  </ApiProp>
+
+  <ApiProp name="sweptHitTestMargin" type="number" defaultValue="320">
+    Pixel radius around the pointer used to pre-filter swept-hit-test candidates in both axes. Larger values catch bigger jumps but test more elements per frame; smaller values can be faster but may miss elements that jump across the pointer between frames. Only used when `sweptHitTest` is true.
   </ApiProp>
 
   <ApiProp name="onEnter" type="(event: SuperHoverEnterEvent) => void" defaultValue="no-op">
