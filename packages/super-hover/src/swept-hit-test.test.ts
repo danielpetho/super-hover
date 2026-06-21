@@ -8,7 +8,7 @@ import {
   elementsCrossedBySegment,
   lineSegmentIntersectsRect,
   readRects,
-} from "./swept-hit-test";
+} from "./swept-hit-test.js";
 
 describe("lineSegmentIntersectsRect", () => {
   const rect = { left: 0, right: 100, top: 10, bottom: 20 };
@@ -155,6 +155,89 @@ describe("elementsCrossedByPointerMotion", () => {
     expect(
       elementsCrossedByPointerMotion(50, 100, [row], previousRects),
     ).toEqual([row]);
+  });
+
+  it("detects columns that scroll horizontally through a fixed pointer", () => {
+    const a = document.createElement("div");
+    const b = document.createElement("div");
+    const c = document.createElement("div");
+
+    const rectFor = (left: number) => ({
+      left,
+      right: left + 10,
+      top: 0,
+      bottom: 100,
+    });
+
+    const previousRects = new Map([
+      [a, rectFor(40)],
+      [b, rectFor(50)],
+      [c, rectFor(60)],
+    ]);
+
+    a.getBoundingClientRect = () =>
+      ({
+        ...rectFor(20),
+        width: 10,
+        height: 100,
+        x: 20,
+        y: 0,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    b.getBoundingClientRect = () =>
+      ({
+        ...rectFor(30),
+        width: 10,
+        height: 100,
+        x: 30,
+        y: 0,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    c.getBoundingClientRect = () =>
+      ({
+        ...rectFor(40),
+        width: 10,
+        height: 100,
+        x: 40,
+        y: 0,
+        toJSON: () => ({}),
+      }) as DOMRect;
+
+    expect(
+      elementsCrossedByPointerMotion(45, 50, [a, b, c], previousRects),
+    ).toEqual([a, b, c]);
+  });
+
+  it("detects columns that jump horizontally past the pointer in a single frame", () => {
+    const column = document.createElement("div");
+    const previousRects = new Map([
+      [
+        column,
+        {
+          left: 220,
+          right: 230,
+          top: 0,
+          bottom: 100,
+        },
+      ],
+    ]);
+
+    column.getBoundingClientRect = () =>
+      ({
+        left: 80,
+        right: 90,
+        top: 0,
+        bottom: 100,
+        width: 10,
+        height: 100,
+        x: 80,
+        y: 0,
+        toJSON: () => ({}),
+      }) as DOMRect;
+
+    expect(
+      elementsCrossedByPointerMotion(100, 50, [column], previousRects),
+    ).toEqual([column]);
   });
 });
 

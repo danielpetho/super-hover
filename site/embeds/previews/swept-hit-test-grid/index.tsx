@@ -28,7 +28,7 @@ export default function SweptHitTestGridPreview() {
     const ctrl = createSuperHover({
       root,
       sweptHitTest: mode === "swept",
-      sweptHitTestMargin: 420,
+      sweptHitTestMargin: 1600,
     });
 
     return () => ctrl.destroy();

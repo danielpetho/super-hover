@@ -88,14 +88,19 @@ function rectCrossedPointer(
   const xInSweep =
     px >= Math.min(prev.left, curr.left) &&
     px <= Math.max(prev.right, curr.right);
+  const yInSweep =
+    py >= Math.min(prev.top, curr.top) &&
+    py <= Math.max(prev.bottom, curr.bottom);
 
-  if (!xInSweep) return false;
+  if (!xInSweep || !yInSweep) return false;
   if (pointInRect(px, py, prev) || pointInRect(px, py, curr)) return true;
 
+  const passedLeft = prev.left > px && curr.right < px;
+  const passedRight = prev.right < px && curr.left > px;
   const passedUp = prev.top > py && curr.bottom < py;
   const passedDown = prev.bottom < py && curr.top > py;
 
-  return passedUp || passedDown;
+  return passedLeft || passedRight || passedUp || passedDown;
 }
 
 /**
@@ -154,8 +159,9 @@ export function elementsCrossedByPointerMotion(
   candidates: readonly Element[],
   previousRects: ReadonlyMap<Element, RectLike>,
 ): Element[] {
-  const hits: { element: Element; order: number }[] = [];
-  let totalDelta = 0;
+  const hits: { element: Element; orderX: number; orderY: number }[] = [];
+  let totalDeltaX = 0;
+  let totalDeltaY = 0;
   let movedCount = 0;
 
   for (const element of candidates) {
@@ -179,15 +185,28 @@ export function elementsCrossedByPointerMotion(
     if (!moved) continue;
 
     movedCount += 1;
-    totalDelta += currRect.top - prev.top;
+    totalDeltaX += currRect.left - prev.left;
+    totalDeltaY += currRect.top - prev.top;
 
     if (!rectCrossedPointer(px, py, prev, currRect)) continue;
 
-    hits.push({ element, order: (prev.top + currRect.top) / 2 });
+    hits.push({
+      element,
+      orderX: (prev.left + currRect.left) / 2,
+      orderY: (prev.top + currRect.top) / 2,
+    });
   }
 
-  const contentMovedUp = movedCount === 0 || totalDelta / movedCount < 0;
-  hits.sort((a, b) => (contentMovedUp ? a.order - b.order : b.order - a.order));
+  const movedMostlyHorizontally = Math.abs(totalDeltaX) > Math.abs(totalDeltaY);
+  const contentMovedNegative =
+    movedCount === 0 ||
+    (movedMostlyHorizontally ? totalDeltaX : totalDeltaY) / movedCount < 0;
+
+  hits.sort((a, b) => {
+    const aOrder = movedMostlyHorizontally ? a.orderX : a.orderY;
+    const bOrder = movedMostlyHorizontally ? b.orderX : b.orderY;
+    return contentMovedNegative ? aOrder - bOrder : bOrder - aOrder;
+  });
 
   return hits.map((hit) => hit.element);
 }
