@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { motion, useReducedMotion } from "motion/react";
 import { createSuperHover } from "super-hover";
 
 import { cn } from "@/lib/utils";
@@ -21,13 +20,8 @@ const MODES: { value: Mode; label: string }[] = [
 const MODE_LABEL_GRID =
   "inline-grid shrink-0 origin-center grid-cols-1 grid-rows-1 select-none before:pointer-events-none before:invisible before:col-start-1 before:row-start-1 before:origin-center before:whitespace-nowrap before:font-medium before:content-[attr(data-ghost)]";
 
-const modeTransition = (reduced: boolean) =>
-  reduced ? { duration: 0 } : { duration: 0.25, ease: "easeOut" as const };
-
 export default function SweptHitTestGridPreview() {
   const rootRef = React.useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
-  const transition = modeTransition(Boolean(reduceMotion));
   const [mode, setMode] = React.useState<Mode>("swept");
 
   React.useEffect(() => {
@@ -55,27 +49,19 @@ export default function SweptHitTestGridPreview() {
               type="button"
               onClick={() => setMode(m.value)}
               aria-pressed={active}
-              className="h-auto cursor-pointer rounded-none border-0 bg-transparent px-0 py-1 text-base text-muted-foreground shadow-none outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="group h-auto cursor-pointer rounded-none border-0 bg-transparent px-0 py-1 text-base text-muted-foreground shadow-none outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               <span data-ghost={m.label} className={MODE_LABEL_GRID}>
-                <motion.span
-                  className="col-start-1 row-start-1 inline-block origin-center"
-                  initial={false}
-                  whileHover={{
-                    fontVariationSettings: "'wght' 500",
-                    color: "var(--foreground)",
-                    transition,
-                  }}
-                  animate={{
-                    fontVariationSettings: active ? "'wght' 500" : "'wght' 400",
-                    color: active
-                      ? "var(--foreground)"
-                      : "var(--muted-foreground)",
-                    transition,
-                  }}
+                <span
+                  className={cn(
+                    "col-start-1 row-start-1 origin-center transition-[color,font-weight] duration-200 ease-out group-hover:text-foreground",
+                    active
+                      ? "font-medium text-foreground"
+                      : "font-normal text-muted-foreground",
+                  )}
                 >
                   {m.label}
-                </motion.span>
+                </span>
               </span>
             </button>
           );

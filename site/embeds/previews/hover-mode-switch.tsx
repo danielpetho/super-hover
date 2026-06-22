@@ -9,7 +9,7 @@ const MODE_LABEL_GRID =
   "inline-grid shrink-0 origin-center grid-cols-1 grid-rows-1 text-base select-none after:pointer-events-none after:col-start-1 after:row-start-1 after:invisible after:origin-center after:whitespace-nowrap after:font-medium after:content-[attr(data-ghost)]";
 
 const MODE_LABEL_BTN =
-  "cursor-pointer rounded-sm border-0 bg-transparent p-0 font-inherit outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "group cursor-pointer rounded-sm border-0 bg-transparent p-0 font-inherit outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 type HoverModeSwitchProps = {
   className?: string;
@@ -38,7 +38,7 @@ export function HoverModeSwitch({
         <span data-ghost="Super hover" className={MODE_LABEL_GRID}>
           <span
             className={cn(
-              "col-start-1 row-start-1 origin-center transition-[color,font-weight] duration-200 ease-out",
+              "col-start-1 row-start-1 origin-center transition-[color,font-weight] duration-200 ease-out group-hover:text-foreground",
               superHoverOn
                 ? "font-medium text-foreground"
                 : "font-normal text-muted-foreground",
@@ -67,7 +67,7 @@ export function HoverModeSwitch({
         <span data-ghost="Native hover" className={MODE_LABEL_GRID}>
           <span
             className={cn(
-              "col-start-1 row-start-1 origin-center transition-[color,font-weight] duration-200 ease-out",
+              "col-start-1 row-start-1 origin-center transition-[color,font-weight] duration-200 ease-out group-hover:text-foreground",
               !superHoverOn
                 ? "font-medium text-foreground"
                 : "font-normal text-muted-foreground",
