@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { createSuperHover } from "super-hover";
 
 import { cn } from "@/lib/utils";
@@ -17,8 +18,16 @@ const MODES: { value: Mode; label: string }[] = [
   { value: "swept", label: "Super hover + swept" },
 ];
 
+const MODE_LABEL_GRID =
+  "inline-grid shrink-0 origin-center grid-cols-1 grid-rows-1 select-none before:pointer-events-none before:invisible before:col-start-1 before:row-start-1 before:origin-center before:whitespace-nowrap before:font-medium before:content-[attr(data-ghost)]";
+
+const modeTransition = (reduced: boolean) =>
+  reduced ? { duration: 0 } : { duration: 0.25, ease: "easeOut" as const };
+
 export default function SweptHitTestGridPreview() {
   const rootRef = React.useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const transition = modeTransition(Boolean(reduceMotion));
   const [mode, setMode] = React.useState<Mode>("swept");
 
   React.useEffect(() => {
@@ -36,23 +45,41 @@ export default function SweptHitTestGridPreview() {
 
   return (
     <div className="flex h-[min(28rem,70vh)] w-full flex-col bg-background">
-      <div className="flex items-center justify-center gap-2 px-4 py-3">
-        {MODES.map((m) => (
-          <button
-            key={m.value}
-            type="button"
-            onClick={() => setMode(m.value)}
-            aria-pressed={mode === m.value}
-            className={cn(
-              "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
-              mode === m.value
-                ? "bg-foreground text-background"
-                : "text-muted-foreground hover:text-foreground",
-            )}
-          >
-            {m.label}
-          </button>
-        ))}
+      <div className="flex items-center justify-center gap-4 px-4 py-3">
+        {MODES.map((m) => {
+          const active = mode === m.value;
+
+          return (
+            <button
+              key={m.value}
+              type="button"
+              onClick={() => setMode(m.value)}
+              aria-pressed={active}
+              className="h-auto cursor-pointer rounded-none border-0 bg-transparent px-0 py-1 text-base text-muted-foreground shadow-none outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              <span data-ghost={m.label} className={MODE_LABEL_GRID}>
+                <motion.span
+                  className="col-start-1 row-start-1 inline-block origin-center"
+                  initial={false}
+                  whileHover={{
+                    fontVariationSettings: "'wght' 500",
+                    color: "var(--foreground)",
+                    transition,
+                  }}
+                  animate={{
+                    fontVariationSettings: active ? "'wght' 500" : "'wght' 400",
+                    color: active
+                      ? "var(--foreground)"
+                      : "var(--muted-foreground)",
+                    transition,
+                  }}
+                >
+                  {m.label}
+                </motion.span>
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       <div
