@@ -176,18 +176,14 @@ export function elementsCrossedBySegment(
   x1: number,
   y1: number,
   candidates: readonly Element[],
+  currentRects: ReadonlyMap<Element, RectLike>,
   previousRects?: ReadonlyMap<Element, RectLike>,
 ): Element[] {
   const hits: { element: Element; enter: number }[] = [];
 
   for (const element of candidates) {
-    const curr = element.getBoundingClientRect();
-    const currRect: RectLike = {
-      left: curr.left,
-      right: curr.right,
-      top: curr.top,
-      bottom: curr.bottom,
-    };
+    const currRect = currentRects.get(element);
+    if (!currRect) continue;
 
     let enter = lineSegmentIntersectsRect(x0, y0, x1, y1, currRect);
 
@@ -216,20 +212,14 @@ export function elementsCrossedByPointerMotion(
   py: number,
   candidates: readonly Element[],
   previousRects: ReadonlyMap<Element, RectLike>,
+  currentRects: ReadonlyMap<Element, RectLike>,
 ): Element[] {
   const hits: { element: Element; enter: number }[] = [];
 
   for (const element of candidates) {
     const prev = previousRects.get(element);
-    if (!prev) continue;
-
-    const curr = element.getBoundingClientRect();
-    const currRect: RectLike = {
-      left: curr.left,
-      right: curr.right,
-      top: curr.top,
-      bottom: curr.bottom,
-    };
+    const currRect = currentRects.get(element);
+    if (!prev || !currRect) continue;
 
     const moved =
       prev.top !== currRect.top ||
@@ -282,15 +272,17 @@ export function candidatesNearPointer(
   px: number,
   py: number,
   previousRects: ReadonlyMap<Element, RectLike>,
+  currentRects: ReadonlyMap<Element, RectLike>,
   margin: number,
 ): Element[] {
   const near: Element[] = [];
 
   for (const element of candidates) {
-    const curr = element.getBoundingClientRect();
+    const curr = currentRects.get(element);
     const prev = previousRects.get(element);
 
     const currNear =
+      curr !== undefined &&
       curr.right >= px - margin &&
       curr.left <= px + margin &&
       curr.bottom >= py - margin &&

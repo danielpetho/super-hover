@@ -67,9 +67,40 @@ describe("elementsCrossedBySegment", () => {
         toJSON: () => ({}),
       }) as DOMRect;
 
+    const currentRects = readRects([a, b, c]);
+
     expect(
-      elementsCrossedBySegment(50, 5, 50, 25, [a, b, c]).map((el) => el),
+      elementsCrossedBySegment(50, 5, 50, 25, [a, b, c], currentRects).map(
+        (el) => el,
+      ),
     ).toEqual([a, b, c]);
+  });
+
+  it("reuses the current rect snapshot instead of reading layout again", () => {
+    const element = document.createElement("div");
+    let reads = 0;
+
+    element.getBoundingClientRect = () => {
+      reads += 1;
+      return {
+        left: 0,
+        right: 100,
+        top: 0,
+        bottom: 10,
+        width: 100,
+        height: 10,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      } as DOMRect;
+    };
+
+    const currentRects = readRects([element]);
+    expect(reads).toBe(1);
+
+    elementsCrossedBySegment(50, -10, 50, 20, [element], currentRects);
+
+    expect(reads).toBe(1);
   });
 });
 
@@ -120,8 +151,16 @@ describe("elementsCrossedByPointerMotion", () => {
         toJSON: () => ({}),
       }) as DOMRect;
 
+    const currentRects = readRects([a, b, c]);
+
     expect(
-      elementsCrossedByPointerMotion(50, 45, [a, b, c], previousRects),
+      elementsCrossedByPointerMotion(
+        50,
+        45,
+        [a, b, c],
+        previousRects,
+        currentRects,
+      ),
     ).toEqual([a, b, c]);
   });
 
@@ -152,8 +191,16 @@ describe("elementsCrossedByPointerMotion", () => {
         toJSON: () => ({}),
       }) as DOMRect;
 
+    const currentRects = readRects([row]);
+
     expect(
-      elementsCrossedByPointerMotion(50, 100, [row], previousRects),
+      elementsCrossedByPointerMotion(
+        50,
+        100,
+        [row],
+        previousRects,
+        currentRects,
+      ),
     ).toEqual([row]);
   });
 
@@ -203,8 +250,16 @@ describe("elementsCrossedByPointerMotion", () => {
         toJSON: () => ({}),
       }) as DOMRect;
 
+    const currentRects = readRects([a, b, c]);
+
     expect(
-      elementsCrossedByPointerMotion(45, 50, [a, b, c], previousRects),
+      elementsCrossedByPointerMotion(
+        45,
+        50,
+        [a, b, c],
+        previousRects,
+        currentRects,
+      ),
     ).toEqual([a, b, c]);
   });
 
@@ -235,8 +290,16 @@ describe("elementsCrossedByPointerMotion", () => {
         toJSON: () => ({}),
       }) as DOMRect;
 
+    const currentRects = readRects([column]);
+
     expect(
-      elementsCrossedByPointerMotion(100, 50, [column], previousRects),
+      elementsCrossedByPointerMotion(
+        100,
+        50,
+        [column],
+        previousRects,
+        currentRects,
+      ),
     ).toEqual([column]);
   });
 });
@@ -309,8 +372,17 @@ describe("candidatesNearPointer", () => {
         toJSON: () => ({}),
       }) as DOMRect;
 
+    const currentRects = readRects([near, farX, farY]);
+
     expect(
-      candidatesNearPointer([near, farX, farY], 100, 100, new Map(), 50),
+      candidatesNearPointer(
+        [near, farX, farY],
+        100,
+        100,
+        new Map(),
+        currentRects,
+        50,
+      ),
     ).toEqual([near]);
   });
 
@@ -329,6 +401,8 @@ describe("candidatesNearPointer", () => {
         toJSON: () => ({}),
       }) as DOMRect;
 
+    const currentRects = readRects([element]);
+
     expect(
       candidatesNearPointer(
         [element],
@@ -345,6 +419,7 @@ describe("candidatesNearPointer", () => {
             },
           ],
         ]),
+        currentRects,
         50,
       ),
     ).toEqual([element]);

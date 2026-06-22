@@ -162,8 +162,8 @@ function rootContains(
 /**
  * Gathers every element that matches `selector` and is contained by `root`.
  *
- * This is the full set of elements swept-hit-testing can consider on a frame.
- * We collect them once per tick rather than testing the whole document,
+ * This is the full set of elements swept-hit-testing can consider.
+ * We cache this list between ticks rather than querying the DOM every frame,
  * and the `rootContains` guard keeps behavior consistent whether `root` is
  * a Document, an Element, or omitted.
  */
@@ -224,6 +224,10 @@ export function createSuperHover(
   let pointerDown = false;
   let current: Element | null = null;
   let previousRects = new Map<Element, RectLike>();
+  let cachedCandidates: Element[] | null = null;
+  const candidateObserver = sweptHitTest
+    ? new scopeWin.MutationObserver(invalidateCandidates)
+    : null;
   let flashCleanupId = 0;
   let rafId = 0;
   let pending = false;
@@ -338,13 +342,59 @@ export function createSuperHover(
   }
 
   /**
+   * Returns the cached swept-hit-test candidate list.
+   *
+   * `querySelectorAll` is cheaper than geometry reads, but it is still avoidable
+   * work in large static grids/lists. We refresh this cache on explicit
+   * `refresh()` calls and when DOM nodes are added/removed under `root`.
+   */
+  function getCandidates(): Element[] {
+    if (cachedCandidates === null) {
+      cachedCandidates = queryCandidates(root, selector);
+    }
+
+    return cachedCandidates;
+  }
+
+  function invalidateCandidates(): void {
+    cachedCandidates = null;
+  }
+
+  /**
+   * Invalidates the candidate cache when elements are added/removed.
+   *
+   * We intentionally do not observe attributes: toggling
+   * `data-super-hover-active` would otherwise invalidate the cache on every
+   * hover update. If code changes whether an existing element matches
+   * `selector`, call `refresh()` to rebuild the candidate list.
+   */
+  function observeCandidateChanges(): void {
+    if (!candidateObserver) return;
+
+    const target =
+      root?.nodeType === DOCUMENT_NODE
+        ? (root as Document).documentElement
+        : (root ?? scopeDoc.documentElement);
+
+    if (!target) return;
+
+    candidateObserver.observe(target, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  /**
    * Combines the two swept-hit-test cases:
    * 1. pointer moved across elements between samples
    * 2. elements moved under a fixed pointer because of scroll/layout
    *
    * Results are deduped while preserving segment hits before scroll-motion hits.
    */
-  function resolveCrossedElements(candidates: Element[]): Element[] {
+  function resolveCrossedElements(
+    candidates: Element[],
+    currentRects: ReadonlyMap<Element, RectLike>,
+  ): Element[] {
     const sweepCandidates =
       previousRects.size > 0
         ? candidatesNearPointer(
@@ -352,6 +402,7 @@ export function createSuperHover(
             lastX,
             lastY,
             previousRects,
+            currentRects,
             sweptHitTestMargin,
           )
         : candidates;
@@ -364,6 +415,7 @@ export function createSuperHover(
             lastX,
             lastY,
             sweepCandidates,
+            currentRects,
             previousRects,
           )
         : [];
@@ -375,6 +427,7 @@ export function createSuperHover(
             lastY,
             sweepCandidates,
             previousRects,
+            currentRects,
           )
         : [];
 
@@ -390,28 +443,23 @@ export function createSuperHover(
     return merged;
   }
 
-  /**
-   * Store current candidate geometry after each tick so the next tick can
-   * detect elements that moved through the pointer.
-   */
-  function snapshotRects(candidates: Element[]): void {
-    previousRects = readRects(candidates);
-  }
-
   function apply(): void {
     if (destroyed || !running) {
       clearActive();
       return;
     }
 
-    const candidates = sweptHitTest ? queryCandidates(root, selector) : [];
+    const candidates = sweptHitTest ? getCandidates() : [];
+    const currentRects = sweptHitTest ? readRects(candidates) : previousRects;
     const next = resolveTarget();
-    const crossed = sweptHitTest ? resolveCrossedElements(candidates) : [];
+    const crossed = sweptHitTest
+      ? resolveCrossedElements(candidates, currentRects)
+      : [];
 
     if (next === current && crossed.length === 0) {
       sampleX = lastX;
       sampleY = lastY;
-      if (sweptHitTest) snapshotRects(candidates);
+      if (sweptHitTest) previousRects = currentRects;
       return;
     }
 
@@ -420,7 +468,7 @@ export function createSuperHover(
 
       sampleX = lastX;
       sampleY = lastY;
-      snapshotRects(candidates);
+      previousRects = currentRects;
       return;
     }
 
@@ -455,7 +503,7 @@ export function createSuperHover(
 
     sampleX = lastX;
     sampleY = lastY;
-    if (sweptHitTest) snapshotRects(candidates);
+    if (sweptHitTest) previousRects = currentRects;
   }
 
   function schedule(): void {
@@ -549,6 +597,8 @@ export function createSuperHover(
     }
   }
 
+  observeCandidateChanges();
+
   scopeWin.addEventListener("pointermove", onPointerMove, { passive: true });
   scopeWin.addEventListener("pointerdown", onPointerDown, { passive: true });
   scopeWin.addEventListener("pointerup", onPointerUp, { passive: true });
@@ -581,6 +631,7 @@ export function createSuperHover(
 
     refresh() {
       if (destroyed) return;
+      invalidateCandidates();
       schedule();
     },
 
@@ -589,6 +640,7 @@ export function createSuperHover(
 
       destroyed = true;
       flashCleanupId += 1;
+      candidateObserver?.disconnect();
 
       scopeWin.removeEventListener("pointermove", onPointerMove);
       scopeWin.removeEventListener("pointerdown", onPointerDown);
