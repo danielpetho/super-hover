@@ -155,13 +155,35 @@ On that frame, Super Hover calls `elementFromPoint(x, y)`, finds the closest ele
 
 If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
 
+## Swept hit test
+
+While Super Hover computes what is under the pointer on each frame, very large or fast movements can still skip over some elements. `sweptHitTest` handles that with a collision-detection algorithm based on Motion.dev's wonderful [hover detection article](https://motion.dev/magazine/collision-detection-in-hover-detection). Basically, it checks whether your pointer swept through matching elements and briefly adds super-hover state to them too.
+
+**Interactive demo (`swept-hit-test-grid`):** A scrollable two-dimensional grid comparing native hover, Super Hover, and Super Hover with `sweptHitTest`.
+
+
+
+Enable `sweptHitTest` when the skipped elements matter: dense grids, paint-like trails, scrubbers, or flash effects where every crossed item should briefly react. Leave it off when you only care about the final hovered element.
+
+The tradeoff is that Super Hover works on arbitrary DOM elements, so it has to query matching candidates and read real browser geometry with `getBoundingClientRect`. If you own all item geometry yourself, a custom implementation can usually be faster.
+
+If you enable `sweptHitTest`, keep the `root` as narrow as possible and tune `sweptHitTestMargin` for your layout. Larger margins catch bigger pointer/scroll jumps but test more elements per frame; smaller margins can be faster but may miss elements that jump across the pointer between frames.
+
+## Performance
+
+Super Hover is inherently more expensive than leaving native `:hover` alone. The browser can skip or delay hover updates during scroll when it needs to prioritize other rendering work; Super Hover opts into doing extra work by scheduling its own hit-test and updating hover-like state.
+
+For the default mode, that work is relatively small: it calls `elementFromPoint`, walks up to the closest matching `selector`, and toggles an attribute when the active element changes. Swept hit-testing does more geometry work, so it is intentionally opt-in.
+
+The visible cost also depends on what you do when hover changes. Toggling a background color on a small list is usually cheap. Running expensive JavaScript in event handlers, triggering application state updates for many components, or animating costly CSS properties can make the difference much more noticeable. Prefer cheap visual changes and GPU-friendly animations where possible; animating properties like `box-shadow` or layout-affecting dimensions can be more expensive than transforms or opacity.
+
 ## Other approaches
 
-### Track the pointer path yourself
+### Own the geometry yourself
 
-If you know the layout of your targets, you can measure their bounding boxes and test whether the pointer path crossed them between frames. Motion.dev has a [great article](https://motion.dev/magazine/collision-detection-in-hover-detection) on this approach, framing it as a collision-detection problem: fast pointer movement can skip over elements when you only test discrete pointer positions, so you test the line between the previous and current pointer position instead.
+If every crossed item matters and you control the layout, a bespoke Motion-style implementation may be the fastest path. For example, if you know every item size, position, scroll offset, and invalidation rule, you can avoid some DOM queries and geometry reads that Super Hover needs in order to work with arbitrary elements.
 
-This can be more accurate than Super Hover for effects where every crossed item matters, because it can detect elements between sampled pointer positions. The tradeoff is that you need to own the measuring, caching, invalidation, geometry checks, and performance work yourself.
+If you want a reusable hover-like behavior that works on real DOM nodes across layouts, Super Hover handles that plumbing for you, with the performance tradeoff that comes from measuring real DOM.
 
 ### Content visibility
 
@@ -223,6 +245,8 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 | enterEventType | string | superhoverenter | `CustomEvent` type dispatched on the matched element when it becomes active. `event.detail` includes `x`, `y`, `previous`, and `current`. |
 | leaveEventType | string | superhoverleave | `CustomEvent` type dispatched on the matched element when it stops being active. `event.detail` includes `x`, `y`, `previous`, and `current`. |
 | moveEventType | string or false | superhovermove | `CustomEvent` type dispatched on each scheduled hit-test while an element is active. Set to `false` to disable move events. |
+| sweptHitTest | boolean | false | Enables swept hit-testing for fast pointer movement and scroll-driven misses. When enabled, Super Hover checks whether the pointer path, or moving element geometry, crossed matching candidates between frames and briefly activates crossed elements in path order before the final target stays active. |
+| sweptHitTestMargin | number | 320 | Pixel radius around the pointer used to pre-filter swept-hit-test candidates in both axes. Larger values catch bigger jumps but test more elements per frame; smaller values can be faster but may miss elements that jump across the pointer between frames. Only used when `sweptHitTest` is true. |
 
 
 
