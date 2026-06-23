@@ -157,7 +157,7 @@ If the active element changes, Super Hover removes `data-super-hover-active` fro
 
 ## Swept hit test
 
-Very small targets can be skipped when the pointer or scroll position moves a long way between frames. `sweptHitTest` handles that with a collision-detection algorithm based on Motion.dev's [hover detection article](https://motion.dev/magazine/collision-detection-in-hover-detection).
+While Super Hover computes what is under the pointer on each frame, very large or fast movements can still skip over some elements. `sweptHitTest` handles that with a collision-detection algorithm based on Motion.dev's wonderful [hover detection article](https://motion.dev/magazine/collision-detection-in-hover-detection). Basically, it checks whether your pointer swept through matching elements and briefly adds super-hover state to them too.
 
 **Interactive demo (`swept-hit-test-grid`):** A scrollable two-dimensional grid comparing native hover, Super Hover, and Super Hover with `sweptHitTest`.
 
