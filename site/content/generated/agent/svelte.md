@@ -182,9 +182,9 @@ The visible cost also depends on what you do when hover changes. Toggling a back
 
 ### Own the geometry yourself
 
-If every crossed item matters and you control the layout, a bespoke Motion-style implementation may be the fastest path. For example, if you know every item size, position, scroll offset, and invalidation rule, you can avoid some DOM queries and geometry reads that Super Hover needs in order to work with arbitrary elements.
+If every crossed item matters and you control the layout, a an implementation covered in [Motion's hover article](https://motion.dev/magazine/collision-detection-in-hover-detection)  may be the most performant. For example, if you know every item size, position, scroll offset, and invalidation rule, you can avoid DOM queries and geometry reads that Super Hover needs in order to work with arbitrary elements.
 
-If you want a reusable hover-like behavior that works on real DOM nodes across layouts, Super Hover handles that plumbing for you, with the performance tradeoff that comes from measuring real DOM.
+If you want a reusable hover-like behavior that works on real DOM nodes, with even arbitrary or dynamic layouts, Super Hover handles that for you, with the performance tradeoff that comes from measuring real DOM.
 
 ### Content visibility
 
