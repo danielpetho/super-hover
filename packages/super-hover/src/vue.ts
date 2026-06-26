@@ -1,4 +1,10 @@
-import { ref, watchEffect, toValue, type MaybeRefOrGetter, type Ref } from "vue";
+import {
+  ref,
+  watchEffect,
+  toValue,
+  type MaybeRefOrGetter,
+  type Ref,
+} from "vue";
 
 import { createSuperHover } from "./index.js";
 import type {
@@ -49,17 +55,17 @@ export function useSuperHover(
     const enterEventType = opts.enterEventType ?? "superhoverenter";
     const leaveEventType = opts.leaveEventType ?? "superhoverleave";
     const resolvedMove =
-      opts.moveEventType === false ? null : (opts.moveEventType ?? "superhovermove");
+      opts.moveEventType === false
+        ? null
+        : (opts.moveEventType ?? "superhovermove");
 
     const handleEnter = (e: Event) =>
       (opts.onEnter ?? noopEnter)(e as SuperHoverEnterEvent);
     const handleLeave = (e: Event) =>
       (opts.onLeave ?? noopLeave)(e as SuperHoverLeaveEvent);
-    const handleMove = (e: Event) =>
-      opts.onMove?.(e as SuperHoverMoveEvent);
+    const handleMove = (e: Event) => opts.onMove?.(e as SuperHoverMoveEvent);
 
-    const listenMove =
-      resolvedMove !== null && opts.onMove !== undefined;
+    const listenMove = resolvedMove !== null && opts.onMove !== undefined;
 
     el.addEventListener(enterEventType, handleEnter);
     el.addEventListener(leaveEventType, handleLeave);
@@ -69,10 +75,20 @@ export function useSuperHover(
     const ctrl = createSuperHover({
       root: el,
       ...(opts.selector !== undefined && { selector: opts.selector }),
-      ...(opts.activeAttribute !== undefined && { activeAttribute: opts.activeAttribute }),
-      ...(opts.pointerTypes !== undefined && { pointerTypes: opts.pointerTypes }),
+      ...(opts.activeAttribute !== undefined && {
+        activeAttribute: opts.activeAttribute,
+      }),
+      ...(opts.pointerTypes !== undefined && {
+        pointerTypes: opts.pointerTypes,
+      }),
       ...(opts.disableWhilePointerDown !== undefined && {
         disableWhilePointerDown: opts.disableWhilePointerDown,
+      }),
+      ...(opts.sweptHitTest !== undefined && {
+        sweptHitTest: opts.sweptHitTest,
+      }),
+      ...(opts.sweptHitTestMargin !== undefined && {
+        sweptHitTestMargin: opts.sweptHitTestMargin,
       }),
       enterEventType,
       leaveEventType,
