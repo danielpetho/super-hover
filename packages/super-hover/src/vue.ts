@@ -21,9 +21,6 @@ export type {
   UseSuperHoverOptions,
 };
 
-const noopEnter: (event: SuperHoverEnterEvent) => void = () => {};
-const noopLeave: (event: SuperHoverLeaveEvent) => void = () => {};
-
 /**
  * Composable that returns a template ref for the list root: wires
  * `createSuperHover` plus enter/leave listeners, and move when `onMove` is passed.
@@ -54,23 +51,39 @@ export function useSuperHover(
 
     const enterEventType = opts.enterEventType ?? "superhoverenter";
     const leaveEventType = opts.leaveEventType ?? "superhoverleave";
-    const resolvedMove =
-      opts.moveEventType === false
-        ? null
-        : (opts.moveEventType ?? "superhovermove");
+    const moveEventType = opts.moveEventType ?? "superhovermove";
+    const enabledEvents = new Set(
+      opts.events === true
+        ? ["enter", "leave"]
+        : Array.isArray(opts.events)
+          ? opts.events
+          : opts.events === undefined
+            ? [
+                ...(opts.onEnter !== undefined ? ["enter" as const] : []),
+                ...(opts.onLeave !== undefined ? ["leave" as const] : []),
+                ...(opts.onMove !== undefined ? ["move" as const] : []),
+              ]
+            : [],
+    );
 
-    const handleEnter = (e: Event) =>
-      (opts.onEnter ?? noopEnter)(e as SuperHoverEnterEvent);
-    const handleLeave = (e: Event) =>
-      (opts.onLeave ?? noopLeave)(e as SuperHoverLeaveEvent);
+    const handleEnter = (e: Event) => opts.onEnter?.(e as SuperHoverEnterEvent);
+    const handleLeave = (e: Event) => opts.onLeave?.(e as SuperHoverLeaveEvent);
     const handleMove = (e: Event) => opts.onMove?.(e as SuperHoverMoveEvent);
 
-    const listenMove = resolvedMove !== null && opts.onMove !== undefined;
+    const listenEnter =
+      enabledEvents.has("enter") && opts.onEnter !== undefined;
+    const listenLeave =
+      enabledEvents.has("leave") && opts.onLeave !== undefined;
+    const listenMove = enabledEvents.has("move") && opts.onMove !== undefined;
 
-    el.addEventListener(enterEventType, handleEnter);
-    el.addEventListener(leaveEventType, handleLeave);
+    if (listenEnter) {
+      el.addEventListener(enterEventType, handleEnter);
+    }
+    if (listenLeave) {
+      el.addEventListener(leaveEventType, handleLeave);
+    }
     if (listenMove) {
-      el.addEventListener(resolvedMove, handleMove);
+      el.addEventListener(moveEventType, handleMove);
     }
     const ctrl = createSuperHover({
       root: el,
@@ -90,20 +103,25 @@ export function useSuperHover(
       ...(opts.sweptHitTestMargin !== undefined && {
         sweptHitTestMargin: opts.sweptHitTestMargin,
       }),
+      events: opts.events ?? [
+        ...(opts.onEnter !== undefined ? ["enter" as const] : []),
+        ...(opts.onLeave !== undefined ? ["leave" as const] : []),
+        ...(opts.onMove !== undefined ? ["move" as const] : []),
+      ],
       enterEventType,
       leaveEventType,
-      ...(opts.moveEventType !== undefined
-        ? { moveEventType: opts.moveEventType }
-        : opts.onMove !== undefined
-          ? {}
-          : { moveEventType: false }),
+      moveEventType,
     });
 
     onCleanup(() => {
-      el.removeEventListener(enterEventType, handleEnter);
-      el.removeEventListener(leaveEventType, handleLeave);
+      if (listenEnter) {
+        el.removeEventListener(enterEventType, handleEnter);
+      }
+      if (listenLeave) {
+        el.removeEventListener(leaveEventType, handleLeave);
+      }
       if (listenMove) {
-        el.removeEventListener(resolvedMove, handleMove);
+        el.removeEventListener(moveEventType, handleMove);
       }
       ctrl.destroy();
     });

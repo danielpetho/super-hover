@@ -24,6 +24,9 @@ export type SuperHoverEventDetail = {
 /** Pointer kinds accepted for position updates https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/pointerType. */
 export type SuperHoverPointerType = "mouse" | "pen" | "touch";
 
+/** Custom event groups that Super Hover can dispatch. */
+export type SuperHoverEventKind = "enter" | "leave" | "move";
+
 /** Controller for a {@link createSuperHover} instance. */
 export type SuperHoverController = {
   pause(): void;
@@ -68,6 +71,13 @@ export type SuperHoverOptions = {
    */
   activeAttribute?: string;
   /**
+   * Custom events to dispatch. Omit or pass `false` for attribute-only mode.
+   * Pass `true` to dispatch enter/leave events. Include `"move"` explicitly for high-frequency move events.
+   *
+   * Default false.
+   */
+  events?: boolean | SuperHoverEventKind[];
+  /**
    * `CustomEvent` type dispatched on the matched element when it becomes active (`bubbles: true`).
    * `detail` is {@link SuperHoverEventDetail} (hit coordinates and previous/current targets).
    * Default `superhoverenter`.
@@ -83,9 +93,9 @@ export type SuperHoverOptions = {
    * `CustomEvent` type dispatched on each hit-test tick while an element is active
    * (after updates from that tick, including the enter event when the active target changed; `bubbles: true`).
    * `detail` is {@link SuperHoverMoveEventDetail}.
-   * Set to `false` to disable. Default `superhovermove`.
+   * Default `superhovermove`.
    */
-  moveEventType?: string | false;
+  moveEventType?: string;
   /**
    * When true, tests the line segment from the previous hit-test position to the current pointer
    * against target bounding boxes (slab method) so fast pointer movement does not skip elements.
@@ -186,22 +196,30 @@ function queryCandidates(
  *
  * Resolves `elementFromPoint` on the same `Document` as `root` (or the active document when `root` is omitted),
  * walks ancestors with `closest(selector)` to pick the active
- * matched element, optionally constrains with `root`, then toggles `activeAttribute` and dispatches
- * enter/leave events (default `superhoverenter` / `superhoverleave`) on that element,
- * each with {@link SuperHoverEventDetail} on `event.detail`; optionally `superhovermove` once per scheduled
- * tick while active (see {@link SuperHoverOptions.moveEventType}).
+ * matched element, optionally constrains with `root`, then toggles `activeAttribute`.
+ * Custom events are opt-in via `events`; event type options only customize names.
  */
 export function createSuperHover(
   options: SuperHoverOptions = {},
 ): SuperHoverController {
   const selector = options.selector ?? DEFAULT_SELECTOR;
   const activeAttribute = options.activeAttribute ?? DEFAULT_ACTIVE;
-  const enterEventType = options.enterEventType ?? DEFAULT_ENTER_EVENT;
-  const leaveEventType = options.leaveEventType ?? DEFAULT_LEAVE_EVENT;
-  const moveEventName =
-    options.moveEventType === false
-      ? null
-      : (options.moveEventType ?? DEFAULT_MOVE_EVENT);
+  const enabledEvents = new Set<SuperHoverEventKind>(
+    options.events === true
+      ? ["enter", "leave"]
+      : Array.isArray(options.events)
+        ? options.events
+        : [],
+  );
+  const enterEventName = enabledEvents.has("enter")
+    ? (options.enterEventType ?? DEFAULT_ENTER_EVENT)
+    : null;
+  const leaveEventName = enabledEvents.has("leave")
+    ? (options.leaveEventType ?? DEFAULT_LEAVE_EVENT)
+    : null;
+  const moveEventName = enabledEvents.has("move")
+    ? (options.moveEventType ?? DEFAULT_MOVE_EVENT)
+    : null;
   const root = options.root;
   const scopeDoc = getScopeDocument(root);
   const scopeWin = scopeDoc.defaultView ?? window;
@@ -242,13 +260,15 @@ export function createSuperHover(
 
   function deactivate(prev: Element, next: Element | null): void {
     prev.removeAttribute(activeAttribute);
-    prev.dispatchEvent(
-      new CustomEvent<SuperHoverEventDetail>(leaveEventType, {
-        bubbles: true,
-        cancelable: false,
-        detail: { x: lastX, y: lastY, previous: prev, current: next },
-      }),
-    );
+    if (leaveEventName !== null) {
+      prev.dispatchEvent(
+        new CustomEvent<SuperHoverEventDetail>(leaveEventName, {
+          bubbles: true,
+          cancelable: false,
+          detail: { x: lastX, y: lastY, previous: prev, current: next },
+        }),
+      );
+    }
   }
 
   function clearActive(): void {
@@ -267,18 +287,20 @@ export function createSuperHover(
     if (el.hasAttribute(activeAttribute)) return;
 
     el.setAttribute(activeAttribute, "");
-    el.dispatchEvent(
-      new CustomEvent<SuperHoverEventDetail>(enterEventType, {
-        bubbles: true,
-        cancelable: false,
-        detail: {
-          x: lastX,
-          y: lastY,
-          previous: null,
-          current: el,
-        },
-      }),
-    );
+    if (enterEventName !== null) {
+      el.dispatchEvent(
+        new CustomEvent<SuperHoverEventDetail>(enterEventName, {
+          bubbles: true,
+          cancelable: false,
+          detail: {
+            x: lastX,
+            y: lastY,
+            previous: null,
+            current: el,
+          },
+        }),
+      );
+    }
   }
 
   /**
@@ -487,18 +509,20 @@ export function createSuperHover(
     current = next;
     if (current) {
       current.setAttribute(activeAttribute, "");
-      current.dispatchEvent(
-        new CustomEvent<SuperHoverEventDetail>(enterEventType, {
-          bubbles: true,
-          cancelable: false,
-          detail: {
-            x: lastX,
-            y: lastY,
-            previous: previousElement,
-            current,
-          },
-        }),
-      );
+      if (enterEventName !== null) {
+        current.dispatchEvent(
+          new CustomEvent<SuperHoverEventDetail>(enterEventName, {
+            bubbles: true,
+            cancelable: false,
+            detail: {
+              x: lastX,
+              y: lastY,
+              previous: previousElement,
+              current,
+            },
+          }),
+        );
+      }
     }
 
     sampleX = lastX;

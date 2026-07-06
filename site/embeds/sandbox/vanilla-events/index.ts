@@ -76,7 +76,7 @@ if (!(pauseInput instanceof HTMLInputElement)) {
   throw new Error("Pause control missing");
 }
 
-const hover: SuperHoverController = createSuperHover({ root: eventList });
+const hover: SuperHoverController = createSuperHover({ root: eventList, events: ["enter", "leave"] });
 
 pauseInput.addEventListener("change", () => {
   if (pauseInput.checked) hover.pause();

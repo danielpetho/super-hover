@@ -48,11 +48,11 @@ export function Example() {
 
 ## Events
 
-If styling is not enough, you can run code when the active element changes. Super Hover dispatches three custom events:
+If styling is not enough, you can run code when the active element changes. Super Hover can dispatch these custom events:
 
-- `superhoverenter` when an element becomes active
-- `superhoverleave` when an element stops being active
-- `superhovermove` while an element is active
+- `superhoverenter` when an element becomes active, when enabled
+- `superhoverleave` when an element stops being active, when enabled
+- `superhovermove` while an element is active, when enabled
 
 In React, `useSuperHoverRef` exposes these as `onEnter`, `onLeave`, and `onMove`.
 
@@ -153,7 +153,7 @@ In short, Super Hover keeps track of the last pointer and when the pointer moves
 
 On that frame, Super Hover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
 
-If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
+If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches any enabled custom events.
 
 ## Swept hit test
 
@@ -255,16 +255,20 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
     Attribute toggled on the active matched element (empty string while active, removed otherwise). Use it for styling, e.g. `data-[super-hover-active]:…`.
   </ApiProp>
 
+  <ApiProp name="events" type={`boolean | ("enter" | "leave" | "move")[]`} defaultValue="false">
+    Custom events to dispatch. Pass `true` for enter/leave, or an array like `["enter", "leave", "move"]`.
+  </ApiProp>
+
   <ApiProp name="enterEventType" type="string" defaultValue="superhoverenter">
-    `CustomEvent` type dispatched on the matched element when it becomes active (`bubbles: true`).
+    Name for the enter custom event when `events` includes `"enter"` (`bubbles: true`).
   </ApiProp>
 
   <ApiProp name="leaveEventType" type="string" defaultValue="superhoverleave">
-    `CustomEvent` type dispatched on the matched element when it stops being active. `event.detail` includes `x`, `y`, `previous`, and `current`.
+    Name for the leave custom event when `events` includes `"leave"`. `event.detail` includes `x`, `y`, `previous`, and `current`.
   </ApiProp>
 
-  <ApiProp name="moveEventType" type="string or false" defaultValue="superhovermove">
-    `CustomEvent` type dispatched on each scheduled hit-test while an element is active. Set to `false` to disable move events.
+  <ApiProp name="moveEventType" type="string" defaultValue="superhovermove">
+    Name for the move custom event when `events` includes `"move"`.
   </ApiProp>
 
   <ApiProp name="sweptHitTest" type="boolean" defaultValue="false">
@@ -301,16 +305,20 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
     Attribute toggled on the active matched element (empty string while active, removed otherwise). Use it for styling, e.g. `data-[super-hover-active]:…`.
   </ApiProp>
 
+  <ApiProp name="events" type={`boolean | ("enter" | "leave" | "move")[]`} defaultValue={<em className="text-muted-foreground">auto</em>}>
+    Events to dispatch. If omitted, callbacks enable their matching events; no callbacks means attribute-only mode.
+  </ApiProp>
+
   <ApiProp name="enterEventType" type="string" defaultValue="superhoverenter">
-    `CustomEvent` type dispatched on the matched element when it becomes active (`bubbles: true`).
+    Name for the enter custom event.
   </ApiProp>
 
   <ApiProp name="leaveEventType" type="string" defaultValue="superhoverleave">
-    `CustomEvent` type dispatched on the matched element when it stops being active.
+    Name for the leave custom event.
   </ApiProp>
 
-  <ApiProp name="moveEventType" type="string or false" defaultValue={<em className="text-muted-foreground">auto</em>}>
-    Custom move event name, or `false` to disable move events. If neither `onMove` nor `moveEventType` is passed, the React helper disables move events for you.
+  <ApiProp name="moveEventType" type="string" defaultValue="superhovermove">
+    Name for the move custom event.
   </ApiProp>
 
   <ApiProp name="sweptHitTest" type="boolean" defaultValue="false">
@@ -321,15 +329,15 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
     Pixel radius around the pointer used to pre-filter swept-hit-test candidates in both axes. Larger values catch bigger jumps but test more elements per frame; smaller values can be faster but may miss elements that jump across the pointer between frames. Only used when `sweptHitTest` is true.
   </ApiProp>
 
-  <ApiProp name="onEnter" type="(event: SuperHoverEnterEvent) => void" defaultValue="no-op">
-    Runs when an enter event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`.
+  <ApiProp name="onEnter" type="(event: SuperHoverEnterEvent) => void" defaultValue={<em className="text-muted-foreground">omit</em>}>
+    Runs when an enter event bubbles within `root`. The helper only enables/listens for enter events when `onEnter` is passed. `event.detail` includes `x`, `y`, `previous`, and `current`.
   </ApiProp>
 
-  <ApiProp name="onLeave" type="(event: SuperHoverLeaveEvent) => void" defaultValue="no-op">
-    Runs when a leave event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`.
+  <ApiProp name="onLeave" type="(event: SuperHoverLeaveEvent) => void" defaultValue={<em className="text-muted-foreground">omit</em>}>
+    Runs when a leave event bubbles within `root`. The helper only enables/listens for leave events when `onLeave` is passed. `event.detail` includes `x`, `y`, `previous`, and `current`.
   </ApiProp>
 
-  <ApiProp name="onMove" type="(event: SuperHoverMoveEvent) => void" defaultValue="off">
+  <ApiProp name="onMove" type="(event: SuperHoverMoveEvent) => void" defaultValue={<em className="text-muted-foreground">omit</em>}>
     Runs on move events while an element is active. The helper only listens for move events when `onMove` is passed.
   </ApiProp>
 </ApiPropList>

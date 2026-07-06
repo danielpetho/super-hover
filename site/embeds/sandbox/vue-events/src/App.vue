@@ -74,7 +74,7 @@ onMounted(async () => {
   root.addEventListener("superhoverenter", onEnter);
   root.addEventListener("superhoverleave", onLeave);
   root.addEventListener("superhovermove", onMove);
-  superHover = createSuperHover({ root });
+  superHover = createSuperHover({ root, events: ["enter", "leave"] });
   if (paused.value) superHover.pause();
 });
 

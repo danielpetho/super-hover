@@ -44,7 +44,7 @@
     elEvent.addEventListener("superhoverenter", onEnter);
     elEvent.addEventListener("superhoverleave", onLeave);
     elEvent.addEventListener("superhovermove", onMove);
-    ctrl = createSuperHover({ root: elEvent });
+    ctrl = createSuperHover({ root: elEvent, events: ["enter", "leave"] });
     if (paused) ctrl.pause();
   });
 

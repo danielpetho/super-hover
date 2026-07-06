@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { createSuperHover } from "super-hover";
+import { useSuperHoverRef } from "super-hover/react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -23,48 +23,36 @@ export default function ScrollListPreview() {
 
   const { showTopFade, showBottomFade } = useScrollEdgeFade(listRootRef);
 
-  React.useEffect(() => {
+  const updateArtworkPlacement = React.useCallback((target: Element | null) => {
     const root = listRootRef.current;
-    if (!root) return;
-    const ctrl = createSuperHover({ root });
-    return () => ctrl.destroy();
+    if (!root || !target) return;
+
+    const row = target.closest<HTMLElement>("[data-super-hover]");
+    if (!row || !root.contains(row)) return;
+
+    const rootRect = root.getBoundingClientRect();
+    const rowRect = row.getBoundingClientRect();
+    const wouldOverflowTop = rowRect.bottom - ARTWORK_SIZE_PX < rootRect.top;
+
+    row.toggleAttribute("data-artwork-drop-below", wouldOverflowTop);
   }, []);
 
-  React.useEffect(() => {
-    const root = listRootRef.current;
-    if (!root) return;
+  const superHoverRef = useSuperHoverRef({
+    onEnter(event) {
+      updateArtworkPlacement(event.detail.current);
+    },
+    onMove(event) {
+      updateArtworkPlacement(event.detail.current);
+    },
+  });
 
-    const updateArtworkPlacement = (target: EventTarget | null) => {
-      if (!(target instanceof Element)) return;
-
-      const row = target.closest<HTMLElement>("[data-super-hover]");
-      if (!row || !root.contains(row)) return;
-
-      const rootRect = root.getBoundingClientRect();
-      const rowRect = row.getBoundingClientRect();
-      const wouldOverflowTop = rowRect.bottom - ARTWORK_SIZE_PX < rootRect.top;
-
-      row.toggleAttribute("data-artwork-drop-below", wouldOverflowTop);
-    };
-
-    const handleSuperHover = (event: Event) => {
-      updateArtworkPlacement(event.target);
-    };
-
-    const handleNativeHover = (event: MouseEvent) => {
-      updateArtworkPlacement(event.target);
-    };
-
-    root.addEventListener("superhoverenter", handleSuperHover);
-    root.addEventListener("superhovermove", handleSuperHover);
-    root.addEventListener("mouseover", handleNativeHover);
-
-    return () => {
-      root.removeEventListener("superhoverenter", handleSuperHover);
-      root.removeEventListener("superhovermove", handleSuperHover);
-      root.removeEventListener("mouseover", handleNativeHover);
-    };
-  }, []);
+  const setListRootRef = React.useCallback(
+    (node: HTMLDivElement | null) => {
+      listRootRef.current = node;
+      superHoverRef(node);
+    },
+    [superHoverRef],
+  );
 
   return (
     <div className="flex h-[min(27rem,70vh)] w-full select-none flex-col rounded-xl font-mono">
@@ -93,7 +81,7 @@ export default function ScrollListPreview() {
         />
 
         <div
-          ref={listRootRef}
+          ref={setListRootRef}
           className="h-full cursor-pointer overflow-auto overscroll-contain pr-2"
         >
           <div className="grid w-full grid-cols-[2.75rem_minmax(0,32%)_minmax(0,27%)_minmax(4rem,18%)_minmax(0,10%)] text-[10px] text-foreground sm:text-xs">
@@ -104,8 +92,8 @@ export default function ScrollListPreview() {
                 className={cn(
                   "group/album col-span-5 grid grid-cols-subgrid items-center gap-x-1 border-b border-transparent py-0.5 [&[data-artwork-drop-below]_.album-artwork]:bottom-auto [&[data-artwork-drop-below]_.album-artwork]:top-[calc(100%+var(--artwork-drop-offset))]",
                   superHoverOn
-                    ? "[&[data-super-hover-active]]:border-b-foreground [&[data-super-hover-active]_.album-artwork]:opacity-100"
-                    : "hover:border-b-foreground [&:hover_.album-artwork]:opacity-100",
+                    ? "data-super-hover-active:border-b-foreground data-super-hover-active:[&_.album-artwork]:opacity-100"
+                    : "hover:border-b-foreground hover:[&_.album-artwork]:opacity-100",
                 )}
                 // style={{ contentVisibility: "auto" }}
               >

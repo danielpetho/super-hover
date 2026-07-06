@@ -42,11 +42,11 @@ superHover.destroy();
 
 ## Events
 
-If styling is not enough, you can run code when the active element changes. Super Hover dispatches three custom events:
+If styling is not enough, you can run code when the active element changes. Super Hover can dispatch these custom events:
 
-- `superhoverenter` when an element becomes active
-- `superhoverleave` when an element stops being active
-- `superhovermove` while an element is active
+- `superhoverenter` when an element becomes active, when enabled
+- `superhoverleave` when an element stops being active, when enabled
+- `superhovermove` while an element is active, when enabled
 
 ```ts
 import {
@@ -61,10 +61,13 @@ root.addEventListener("superhoverenter", (event) => {
   console.log("entered", e.detail.current);
 });
 
-const superHover = createSuperHover({ root });
+const superHover = createSuperHover({
+  root,
+  events: ["enter", "leave"],
+});
 ```
 
-`superhovermove` is on by default in the core library. If you do not need move events, pass `moveEventType: false`.
+All custom events are off by default in the core library. If you need events, pass `events: ["enter", "leave"]`; add `"move"` for high-frequency move events. Event type options only customize the event names.
 
 ## Framework helpers
 
@@ -127,7 +130,7 @@ Requires Svelte 5.29 or newer.
 </ul>
 ```
 
-Framework helpers only listen for move events when `onMove` is passed. If neither `onMove` nor `moveEventType` is passed, they disable move events for you.
+Framework helpers enable and listen for matching events when callbacks are passed. If you do not pass `onEnter`, `onLeave`, or `onMove` (and do not pass an explicit `events` option), helpers use attribute-only mode and skip event dispatch for you.
 
 ## How it works
 
@@ -137,7 +140,7 @@ In short, Super Hover keeps track of the last pointer and when the pointer moves
 
 On that frame, Super Hover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
 
-If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
+If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches any enabled custom events.
 
 ## API
 
@@ -151,9 +154,10 @@ If the active element changes, Super Hover removes `data-super-hover-active` fro
 | `root` | omit, whole document | Optional boundary: the matched element must be inside this subtree. Can be a `Document` or `Element`, including same-origin iframe documents/elements. |
 | `selector` | `[data-super-hover]` | CSS selector passed to `element.closest` from the hit-tested node. Independent of `root`. |
 | `activeAttribute` | `data-super-hover-active` | Attribute toggled on the active matched element while active. |
-| `enterEventType` | `superhoverenter` | `CustomEvent` type dispatched on the matched element when it becomes active. |
-| `leaveEventType` | `superhoverleave` | `CustomEvent` type dispatched on the matched element when it stops being active. |
-| `moveEventType` | `superhovermove` | `CustomEvent` type dispatched on each scheduled hit-test while an element is active. Set to `false` to disable. |
+| `events` | `false` | Custom events to dispatch. Pass `true` for enter/leave, or an array like `["enter", "leave", "move"]`. |
+| `enterEventType` | `superhoverenter` | Name for the enter custom event when `events` includes `"enter"`. |
+| `leaveEventType` | `superhoverleave` | Name for the leave custom event when `events` includes `"leave"`. |
+| `moveEventType` | `superhovermove` | Name for the move custom event when `events` includes `"move"`. |
 
 ### `SuperHoverController`
 

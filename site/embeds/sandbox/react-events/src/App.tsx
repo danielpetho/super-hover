@@ -27,7 +27,7 @@ export default function App() {
     }
 
     ctrlRef.current?.destroy();
-    const ctrl = createSuperHover({ root: eventRoot });
+    const ctrl = createSuperHover({ root: eventRoot, events: ["enter", "leave"] });
     ctrlRef.current = ctrl;
 
     const onEnter = (e: Event) => {

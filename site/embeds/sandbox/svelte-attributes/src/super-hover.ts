@@ -5,15 +5,11 @@ export type SuperHoverOptions = {
   selector?: string;
   /** Attribute set on the element under the cursor. Default `data-super-hover-active`. */
   activeAttribute?: string;
-  /**
-   * Dispatched on the target row when it becomes the hit target.
-   * Default `superhoverenter`.
-   */
+  /** Custom events to dispatch. Pass `true` for enter/leave, or an array of event kinds. Default false. */
+  events?: boolean | ("enter" | "leave")[];
+  /** Name for the enter custom event. Default `superhoverenter`. */
   enterEventType?: string;
-  /**
-   * Dispatched on the target row when it stops being the hit target.
-   * Default `superhoverleave`.
-   */
+  /** Name for the leave custom event. Default `superhoverleave`. */
   leaveEventType?: string;
 };
 
@@ -26,13 +22,24 @@ const DEFAULT_LEAVE_EVENT = "superhoverleave";
  * Tracks pointer position and hit-tests on each frame (and on scroll) so
  * “hover” state updates while scrolling, unlike native `:hover`.
  *
- * Dispatches customizable events (default `superhoverenter` / `superhoverleave`) on the target element.
+ * Toggles the active attribute by default. Custom events are opt-in.
  */
 export function createSuperHover(options: SuperHoverOptions = {}): () => void {
   const selector = options.selector ?? DEFAULT_SELECTOR;
   const activeAttribute = options.activeAttribute ?? DEFAULT_ACTIVE;
-  const enterEventType = options.enterEventType ?? DEFAULT_ENTER_EVENT;
-  const leaveEventType = options.leaveEventType ?? DEFAULT_LEAVE_EVENT;
+  const enabledEvents = new Set(
+    options.events === true
+      ? ["enter", "leave"]
+      : Array.isArray(options.events)
+        ? options.events
+        : [],
+  );
+  const enterEventType = enabledEvents.has("enter")
+    ? (options.enterEventType ?? DEFAULT_ENTER_EVENT)
+    : null;
+  const leaveEventType = enabledEvents.has("leave")
+    ? (options.leaveEventType ?? DEFAULT_LEAVE_EVENT)
+    : null;
   const root = options.root;
 
   let lastX = 0;
@@ -47,9 +54,11 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
     const prev = current;
     current = null;
     prev.removeAttribute(activeAttribute);
-    prev.dispatchEvent(
-      new CustomEvent(leaveEventType, { bubbles: true, cancelable: false }),
-    );
+    if (leaveEventType !== null) {
+      prev.dispatchEvent(
+        new CustomEvent(leaveEventType, { bubbles: true, cancelable: false }),
+      );
+    }
   }
 
   function resolveTarget(): Element | null {
@@ -70,17 +79,21 @@ export function createSuperHover(options: SuperHoverOptions = {}): () => void {
       const prev = current;
       current = null;
       prev.removeAttribute(activeAttribute);
-      prev.dispatchEvent(
-        new CustomEvent(leaveEventType, { bubbles: true, cancelable: false }),
-      );
+      if (leaveEventType !== null) {
+        prev.dispatchEvent(
+          new CustomEvent(leaveEventType, { bubbles: true, cancelable: false }),
+        );
+      }
     }
 
     current = next;
     if (current) {
       current.setAttribute(activeAttribute, "");
-      current.dispatchEvent(
-        new CustomEvent(enterEventType, { bubbles: true, cancelable: false }),
-      );
+      if (enterEventType !== null) {
+        current.dispatchEvent(
+          new CustomEvent(enterEventType, { bubbles: true, cancelable: false }),
+        );
+      }
     }
   }
 

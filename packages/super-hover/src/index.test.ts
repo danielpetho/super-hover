@@ -97,12 +97,14 @@ function createTarget(label: string) {
 }
 
 describe("createSuperHover", () => {
-  it("activates the hit data-super-hover element and dispatches enter and move events", () => {
+  it("activates the hit data-super-hover element without dispatching events by default", () => {
     const target = createTarget("Target");
     const enter = vi.fn();
+    const leave = vi.fn();
     const move = vi.fn();
 
     target.addEventListener("superhoverenter", enter);
+    target.addEventListener("superhoverleave", leave);
     target.addEventListener("superhovermove", move);
     hitTarget = target;
 
@@ -111,8 +113,25 @@ describe("createSuperHover", () => {
     flushFrame();
 
     expect(target.hasAttribute(activeAttribute)).toBe(true);
+    expect(enter).not.toHaveBeenCalled();
+    expect(leave).not.toHaveBeenCalled();
+    expect(move).not.toHaveBeenCalled();
+
+    controller.destroy();
+  });
+
+  it("dispatches enter events when events includes enter", () => {
+    const target = createTarget("Target");
+    const enter = vi.fn();
+
+    target.addEventListener("superhoverenter", enter);
+    hitTarget = target;
+
+    const controller = createSuperHover({ events: ["enter"] });
+    window.dispatchEvent(createPointerMove({ x: 12, y: 34 }));
+    flushFrame();
+
     expect(enter).toHaveBeenCalledTimes(1);
-    expect(move).toHaveBeenCalledTimes(1);
     expect(enter.mock.calls[0]?.[0]).toMatchObject({
       detail: {
         x: 12,
@@ -121,6 +140,77 @@ describe("createSuperHover", () => {
         current: target,
       },
     });
+
+    controller.destroy();
+  });
+
+  it("dispatches move events when events includes move", () => {
+    const target = createTarget("Target");
+    const move = vi.fn();
+
+    target.addEventListener("superhovermove", move);
+    hitTarget = target;
+
+    const controller = createSuperHover({ events: ["move"] });
+    window.dispatchEvent(createPointerMove({ x: 12, y: 34 }));
+    flushFrame();
+
+    expect(move).toHaveBeenCalledTimes(1);
+    expect(move.mock.calls[0]?.[0]).toMatchObject({
+      detail: {
+        x: 12,
+        y: 34,
+        current: target,
+      },
+    });
+
+    controller.destroy();
+  });
+
+  it("uses custom event names when provided", () => {
+    const target = createTarget("Target");
+    const enter = vi.fn();
+
+    target.addEventListener("customenter", enter);
+    hitTarget = target;
+
+    const controller = createSuperHover({
+      events: ["enter"],
+      enterEventType: "customenter",
+    });
+    window.dispatchEvent(createPointerMove({ x: 12, y: 34 }));
+    flushFrame();
+
+    expect(enter).toHaveBeenCalledTimes(1);
+
+    controller.destroy();
+  });
+
+  it("can explicitly disable events while still toggling the active attribute", () => {
+    const previous = createTarget("Previous");
+    const next = createTarget("Next");
+    const previousLeave = vi.fn();
+    const previousEnter = vi.fn();
+    const nextEnter = vi.fn();
+
+    previous.addEventListener("superhoverenter", previousEnter);
+    previous.addEventListener("superhoverleave", previousLeave);
+    next.addEventListener("superhoverenter", nextEnter);
+
+    hitTarget = previous;
+    const controller = createSuperHover({ events: false });
+    window.dispatchEvent(createPointerMove());
+    flushFrame();
+
+    hitTarget = next;
+    controller.refresh();
+    flushFrame();
+
+    expect(previous.hasAttribute(activeAttribute)).toBe(false);
+    expect(next.hasAttribute(activeAttribute)).toBe(true);
+    expect(previousEnter).not.toHaveBeenCalled();
+    expect(previousLeave).not.toHaveBeenCalled();
+    expect(nextEnter).not.toHaveBeenCalled();
 
     controller.destroy();
   });
@@ -135,7 +225,7 @@ describe("createSuperHover", () => {
     next.addEventListener("superhoverenter", nextEnter);
 
     hitTarget = previous;
-    const controller = createSuperHover();
+    const controller = createSuperHover({ events: ["enter", "leave"] });
     window.dispatchEvent(createPointerMove());
     flushFrame();
 
@@ -211,7 +301,10 @@ describe("createSuperHover", () => {
     target.addEventListener("superhoverenter", enter);
     hitTarget = target;
 
-    const controller = createSuperHover({ disableWhilePointerDown: true });
+    const controller = createSuperHover({
+      disableWhilePointerDown: true,
+      events: ["enter", "leave"],
+    });
     window.dispatchEvent(createPointerMove());
     flushFrame();
 
@@ -241,9 +334,7 @@ describe("createSuperHover", () => {
 
   it("pauses, resumes, and destroys without leaving the active attribute behind", () => {
     const target = createTarget("Lifecycle target");
-    const leave = vi.fn();
 
-    target.addEventListener("superhoverleave", leave);
     hitTarget = target;
 
     const controller = createSuperHover();
@@ -253,7 +344,6 @@ describe("createSuperHover", () => {
     controller.pause();
 
     expect(target.hasAttribute(activeAttribute)).toBe(false);
-    expect(leave).toHaveBeenCalledTimes(1);
 
     controller.resume();
     flushFrame();
@@ -297,6 +387,7 @@ describe("createSuperHover", () => {
     hitTarget = a;
     const controller = createSuperHover({
       root: document.body,
+      events: ["enter"],
       sweptHitTest: true,
     });
 
@@ -349,6 +440,7 @@ describe("createSuperHover", () => {
     hitTarget = b;
     const controller = createSuperHover({
       root: document.body,
+      events: ["enter"],
       sweptHitTest: true,
     });
 

@@ -39,7 +39,10 @@ import { createSuperHover } from "super-hover";
 
 const root = document.querySelector<HTMLElement>("#list")!;
 
-const superHover = createSuperHover({ root });
+const superHover = createSuperHover({
+  root,
+  events: ["enter", "leave"],
+});
 
 // later
 superHover.destroy();
@@ -74,11 +77,11 @@ superHover.destroy();
 
 ## Events
 
-If styling is not enough, you can run code when the active element changes. Super Hover dispatches three custom events:
+If styling is not enough, you can run code when the active element changes. Super Hover can dispatch these custom events:
 
-- `superhoverenter` when an element becomes active
-- `superhoverleave` when an element stops being active
-- `superhovermove` while an element is active
+- `superhoverenter` when an element becomes active, when enabled
+- `superhoverleave` when an element stops being active, when enabled
+- `superhovermove` while an element is active, when enabled
 
 In TypeScript, listen for those events on the root. They bubble from the active element.
 
@@ -106,11 +109,14 @@ root.addEventListener("superhoverleave", (event) => {
     console.log("left", e.detail.previous);
 });
 
-const superHover = createSuperHover({ root });
+const superHover = createSuperHover({
+  root,
+  events: ["enter", "leave"],
+});
 ```
 
 
-`superhovermove` is on by default in the core library. If you do not need move events, pass `moveEventType: false`.
+All custom events are off by default in the core library. If you need events, pass `events: ["enter", "leave"]`; add `"move"` for high-frequency move events. Event type options only customize the event names.
 
 ### Event detail
 
@@ -153,7 +159,7 @@ In short, Super Hover keeps track of the last pointer and when the pointer moves
 
 On that frame, Super Hover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
 
-If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
+If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches any enabled custom events.
 
 ## Swept hit test
 
@@ -242,9 +248,10 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 | root | Document, Element, or omit | whole document | Optional boundary: the matched element must lie inside this subtree; omit for the whole document. You can pass an iframe `Document` or an element inside a same-origin iframe. Does not make every descendant node a target; that is controlled by `selector` instead. |
 | selector | string | [data-super-hover] | CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate. Independent of `root`, which only scopes where hits count. |
 | activeAttribute | string | data-super-hover-active | Attribute toggled on the active matched element while active, then removed when inactive. |
-| enterEventType | string | superhoverenter | `CustomEvent` type dispatched on the matched element when it becomes active. `event.detail` includes `x`, `y`, `previous`, and `current`. |
-| leaveEventType | string | superhoverleave | `CustomEvent` type dispatched on the matched element when it stops being active. `event.detail` includes `x`, `y`, `previous`, and `current`. |
-| moveEventType | string or false | superhovermove | `CustomEvent` type dispatched on each scheduled hit-test while an element is active. Set to `false` to disable move events. |
+| events |  | false | Custom events to dispatch. Pass `true` for enter/leave, or an array like `["enter", "leave", "move"]`. |
+| enterEventType | string | superhoverenter | Name for the enter custom event when `events` includes `"enter"`. `event.detail` includes `x`, `y`, `previous`, and `current`. |
+| leaveEventType | string | superhoverleave | Name for the leave custom event when `events` includes `"leave"`. `event.detail` includes `x`, `y`, `previous`, and `current`. |
+| moveEventType | string | superhovermove | Name for the move custom event when `events` includes `"move"`. |
 | sweptHitTest | boolean | false | Enables swept hit-testing for fast pointer movement and scroll-driven misses. When enabled, Super Hover checks whether the pointer path, or moving element geometry, crossed matching candidates between frames and briefly activates crossed elements in path order before the final target stays active. |
 | sweptHitTestMargin | number | 320 | Pixel radius around the pointer used to pre-filter swept-hit-test candidates in both axes. Larger values catch bigger jumps but test more elements per frame; smaller values can be faster but may miss elements that jump across the pointer between frames. Only used when `sweptHitTest` is true. |
 

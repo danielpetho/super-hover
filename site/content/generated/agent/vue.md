@@ -59,11 +59,11 @@ The active element gets `data-super-hover-active`, which is usually enough if yo
 
 ## Events
 
-If styling is not enough, you can run code when the active element changes. Super Hover dispatches three custom events:
+If styling is not enough, you can run code when the active element changes. Super Hover can dispatch these custom events:
 
-- `superhoverenter` when an element becomes active
-- `superhoverleave` when an element stops being active
-- `superhovermove` while an element is active
+- `superhoverenter` when an element becomes active, when enabled
+- `superhoverleave` when an element stops being active, when enabled
+- `superhovermove` while an element is active, when enabled
 
 In Vue, `useSuperHover` exposes these as `onEnter`, `onLeave`, and `onMove`.
 
@@ -157,7 +157,7 @@ In short, Super Hover keeps track of the last pointer and when the pointer moves
 
 On that frame, Super Hover calls `elementFromPoint(x, y)`, finds the closest element matching `[data-super-hover]`, and updates the active element.
 
-If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches the custom events.
+If the active element changes, Super Hover removes `data-super-hover-active` from the old element, adds it to the new one, and dispatches any enabled custom events.
 
 ## Swept hit test
 
@@ -246,9 +246,10 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 | root | Document, Element, or omit | whole document | Optional boundary: the matched element must lie inside this subtree; omit for the whole document. You can pass an iframe `Document` or an element inside a same-origin iframe. Does not make every descendant node a target; that is controlled by `selector` instead. |
 | selector | string | [data-super-hover] | CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate. Independent of `root`, which only scopes where hits count. |
 | activeAttribute | string | data-super-hover-active | Attribute toggled on the active matched element while active, then removed when inactive. |
-| enterEventType | string | superhoverenter | `CustomEvent` type dispatched on the matched element when it becomes active. `event.detail` includes `x`, `y`, `previous`, and `current`. |
-| leaveEventType | string | superhoverleave | `CustomEvent` type dispatched on the matched element when it stops being active. `event.detail` includes `x`, `y`, `previous`, and `current`. |
-| moveEventType | string or false | superhovermove | `CustomEvent` type dispatched on each scheduled hit-test while an element is active. Set to `false` to disable move events. |
+| events |  | false | Custom events to dispatch. Pass `true` for enter/leave, or an array like `["enter", "leave", "move"]`. |
+| enterEventType | string | superhoverenter | Name for the enter custom event when `events` includes `"enter"`. `event.detail` includes `x`, `y`, `previous`, and `current`. |
+| leaveEventType | string | superhoverleave | Name for the leave custom event when `events` includes `"leave"`. `event.detail` includes `x`, `y`, `previous`, and `current`. |
+| moveEventType | string | superhovermove | Name for the move custom event when `events` includes `"move"`. |
 | sweptHitTest | boolean | false | Enables swept hit-testing for fast pointer movement and scroll-driven misses. When enabled, Super Hover checks whether the pointer path, or moving element geometry, crossed matching candidates between frames and briefly activates crossed elements in path order before the final target stays active. |
 | sweptHitTestMargin | number | 320 | Pixel radius around the pointer used to pre-filter swept-hit-test candidates in both axes. Larger values catch bigger jumps but test more elements per frame; smaller values can be faster but may miss elements that jump across the pointer between frames. Only used when `sweptHitTest` is true. |
 
@@ -269,14 +270,15 @@ On each scheduled hit-test, the library calls `elementFromPoint`, walks ancestor
 | disableWhilePointerDown | boolean | false | Clears hover state while an allowed pointer is pressed, such as during text selection, and resumes hit-testing after release. |
 | selector | string | [data-super-hover] | CSS selector passed to `element.closest` from the hit-tested node; defines which elements may activate. Independent of `root`, which only scopes where hits count. |
 | activeAttribute | string | data-super-hover-active | Attribute toggled on the active matched element while active, then removed when inactive. |
-| enterEventType | string | superhoverenter | `CustomEvent` type dispatched on the matched element when it becomes active. |
-| leaveEventType | string | superhoverleave | `CustomEvent` type dispatched on the matched element when it stops being active. |
-| moveEventType | string or false | auto | Custom move event name, or `false` to disable move events. If neither `onMove` nor `moveEventType` is passed, the Vue helper disables move events for you. |
+| events |  | auto | Events to dispatch. If omitted, callbacks enable their matching events; no callbacks means attribute-only mode. |
+| enterEventType | string | superhoverenter | Name for the enter custom event. |
+| leaveEventType | string | superhoverleave | Name for the leave custom event. |
+| moveEventType | string | superhovermove | Name for the move custom event. |
 | sweptHitTest | boolean | false | Enables swept hit-testing for fast pointer movement and scroll-driven misses. When enabled, Super Hover checks whether the pointer path, or moving element geometry, crossed matching candidates between frames and briefly activates crossed elements in path order before the final target stays active. |
 | sweptHitTestMargin | number | 320 | Pixel radius around the pointer used to pre-filter swept-hit-test candidates in both axes. Larger values catch bigger jumps but test more elements per frame; smaller values can be faster but may miss elements that jump across the pointer between frames. Only used when `sweptHitTest` is true. |
-| onEnter | (event: SuperHoverEnterEvent) => void | no-op | Runs when an enter event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`. |
-| onLeave | (event: SuperHoverLeaveEvent) => void | no-op | Runs when a leave event bubbles within `root`. `event.detail` includes `x`, `y`, `previous`, and `current`. |
-| onMove | (event: SuperHoverMoveEvent) => void | off | Runs on move events while an element is active. The helper only listens for move events when `onMove` is passed. |
+| onEnter | (event: SuperHoverEnterEvent) => void | omit | Runs when an enter event bubbles within `root`. The helper only enables/listens for enter events when `onEnter` is passed. `event.detail` includes `x`, `y`, `previous`, and `current`. |
+| onLeave | (event: SuperHoverLeaveEvent) => void | omit | Runs when a leave event bubbles within `root`. The helper only enables/listens for leave events when `onLeave` is passed. `event.detail` includes `x`, `y`, `previous`, and `current`. |
+| onMove | (event: SuperHoverMoveEvent) => void | omit | Runs on move events while an element is active. The helper only listens for move events when `onMove` is passed. |
 
 
 

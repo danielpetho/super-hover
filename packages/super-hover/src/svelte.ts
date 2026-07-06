@@ -16,9 +16,6 @@ export type {
 /** Attachment returned by {@link superHover}. */
 export type SuperHoverAttachment = (node: HTMLElement) => () => void;
 
-const noopEnter: (event: SuperHoverEnterEvent) => void = () => {};
-const noopLeave: (event: SuperHoverLeaveEvent) => void = () => {};
-
 /**
  * Attachment factory for Svelte 5 `{@attach}`. Pass the result directly to
  * `{@attach superHover(options)}`, cleanup runs automatically when the element
@@ -44,23 +41,42 @@ export function superHover(
 
     const enterEventType = options.enterEventType ?? "superhoverenter";
     const leaveEventType = options.leaveEventType ?? "superhoverleave";
-    const resolvedMove =
-      options.moveEventType === false
-        ? null
-        : (options.moveEventType ?? "superhovermove");
+    const moveEventType = options.moveEventType ?? "superhovermove";
+    const enabledEvents = new Set(
+      options.events === true
+        ? ["enter", "leave"]
+        : Array.isArray(options.events)
+          ? options.events
+          : options.events === undefined
+            ? [
+                ...(options.onEnter !== undefined ? ["enter" as const] : []),
+                ...(options.onLeave !== undefined ? ["leave" as const] : []),
+                ...(options.onMove !== undefined ? ["move" as const] : []),
+              ]
+            : [],
+    );
 
     const handleEnter = (e: Event) =>
-      (options.onEnter ?? noopEnter)(e as SuperHoverEnterEvent);
+      options.onEnter?.(e as SuperHoverEnterEvent);
     const handleLeave = (e: Event) =>
-      (options.onLeave ?? noopLeave)(e as SuperHoverLeaveEvent);
+      options.onLeave?.(e as SuperHoverLeaveEvent);
     const handleMove = (e: Event) => options.onMove?.(e as SuperHoverMoveEvent);
 
-    const listenMove = resolvedMove !== null && options.onMove !== undefined;
+    const listenEnter =
+      enabledEvents.has("enter") && options.onEnter !== undefined;
+    const listenLeave =
+      enabledEvents.has("leave") && options.onLeave !== undefined;
+    const listenMove =
+      enabledEvents.has("move") && options.onMove !== undefined;
 
-    node.addEventListener(enterEventType, handleEnter);
-    node.addEventListener(leaveEventType, handleLeave);
+    if (listenEnter) {
+      node.addEventListener(enterEventType, handleEnter);
+    }
+    if (listenLeave) {
+      node.addEventListener(leaveEventType, handleLeave);
+    }
     if (listenMove) {
-      node.addEventListener(resolvedMove, handleMove);
+      node.addEventListener(moveEventType, handleMove);
     }
     const ctrl = createSuperHover({
       root: node,
@@ -80,20 +96,25 @@ export function superHover(
       ...(options.sweptHitTestMargin !== undefined && {
         sweptHitTestMargin: options.sweptHitTestMargin,
       }),
+      events: options.events ?? [
+        ...(options.onEnter !== undefined ? ["enter" as const] : []),
+        ...(options.onLeave !== undefined ? ["leave" as const] : []),
+        ...(options.onMove !== undefined ? ["move" as const] : []),
+      ],
       enterEventType,
       leaveEventType,
-      ...(options.moveEventType !== undefined
-        ? { moveEventType: options.moveEventType }
-        : options.onMove !== undefined
-          ? {}
-          : { moveEventType: false }),
+      moveEventType,
     });
 
     return () => {
-      node.removeEventListener(enterEventType, handleEnter);
-      node.removeEventListener(leaveEventType, handleLeave);
+      if (listenEnter) {
+        node.removeEventListener(enterEventType, handleEnter);
+      }
+      if (listenLeave) {
+        node.removeEventListener(leaveEventType, handleLeave);
+      }
       if (listenMove) {
-        node.removeEventListener(resolvedMove, handleMove);
+        node.removeEventListener(moveEventType, handleMove);
       }
       ctrl.destroy();
     };
