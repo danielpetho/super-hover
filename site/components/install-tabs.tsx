@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
+import { useSuperHoverRef } from "super-hover/react";
 import { CopyButton } from './copy-button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Highlight, PrismTheme } from 'prism-react-renderer';
@@ -28,6 +29,7 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<PackageManager>('pnpm');
   const isDark = useIsDarkMode();
+  const superHoverRef = useSuperHoverRef();
 
   const getCommandPrefix = (pm: PackageManager): string => {
     if (npx) {
@@ -70,7 +72,7 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border-[0.5px] border-neutral-200 bg-editor-bg dark:border-editor-border">
+    <div ref={superHoverRef} className="overflow-hidden rounded-2xl border-[0.5px] border-neutral-200 bg-editor-bg dark:border-editor-border">
       <div className="flex h-11 items-center justify-between border-b-[0.5px] border-neutral-200 bg-editor-bg py-2 pl-4 pr-3 dark:border-editor-border">
         <Tabs 
           value={activeTab} 
@@ -107,7 +109,8 @@ export const InstallTabs: React.FC<InstallTabsProps> = ({
                   <div
                     key={i}
                     {...getLineProps({ line })}
-                    className="flex w-full shrink-0 items-center px-4 py-px hover:bg-neutral-200/60 dark:hover:bg-editor-border"
+                    data-super-hover
+                    className="flex w-full shrink-0 items-center px-4 py-px data-super-hover-active:bg-neutral-200/60 dark:data-super-hover-active:bg-editor-border"
                   >
                     <span className="mr-4 flex items-center text-right text-[10px] text-neutral-500 select-none dark:text-muted-foreground">
                       1
