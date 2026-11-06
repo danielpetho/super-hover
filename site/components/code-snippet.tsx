@@ -1,6 +1,7 @@
 "use client"
 
 import React from 'react';
+import { useSuperHoverRef } from "super-hover/react";
 import { CopyButton } from './copy-button';
 import { Highlight, PrismTheme } from 'prism-react-renderer';
 import lightTheme from '@/prism-theme.json';
@@ -37,6 +38,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
 }) => {
   const lines = code.trim().split('\n');
   const isDark = useIsDarkMode();
+  const superHoverRef = useSuperHoverRef();
   const prismLanguage = resolvePrismLanguage(language);
   const useSveltePrism = prismLanguage === "svelte";
 
@@ -46,6 +48,7 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
 
   return (
     <div
+      ref={superHoverRef}
       data-mdx-code-snippet
       className={cn("overflow-hidden", docSnippetSurfaceClasses)}
     >
@@ -80,7 +83,8 @@ export const CodeSnippet: React.FC<CodeSnippetProps> = ({
                   <div
                     key={i}
                     {...getLineProps({ line })}
-                    className="flex w-full shrink-0 items-center px-4 py-px hover:bg-neutral-200/60 dark:hover:bg-editor-border"
+                    data-super-hover
+                    className="flex w-full shrink-0 items-center px-4 py-px data-super-hover-active:bg-neutral-200/60 dark:data-super-hover-active:bg-editor-border"
                   >
                     <span className="mr-4 flex items-center text-right text-[10px] text-neutral-500 select-none dark:text-muted-foreground">
                       {i + 1}
